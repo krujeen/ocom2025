@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 1.1: จำนวนจริงและสมบัติ - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 1.1: จำนวนจริงและสมบัติ</span>
+            </nav>
+            <h1>บทที่ 1.1: จำนวนจริงและสมบัติ</h1>
+            <p class="chapter-intro">รากฐานสำคัญในวิชาคณิตศาสตร์ที่จำเป็นสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">1.1.1 ระบบจำนวนจริง (Real Number System)</a></li>
+                    <li><a href="#section-2">1.1.2 สมบัติของจำนวนจริง</a></li>
+                    <li><a href="#section-3">1.1.3 ค่าสัมบูรณ์ (Absolute Value)</a></li>
+                    <li><a href="#section-4">1.1.4 จำนวนจริงในรูปกรณฑ์และเลขยกกำลัง</a></li>
+                    <li><a href="#section-5">1.1.5 ตัวอย่างโจทย์และแนวทางการแก้ปัญหา</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1.1.1 -->
+            <section id="section-1" class="content-section">
+                <h2>1.1.1 ระบบจำนวนจริง (Real Number System)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>จำนวนจริง ($\mathbb{R}$)</strong> คือ จำนวนทุกชนิดที่สามารถแทนได้ด้วยจุดบนเส้นจำนวน (Number Line)</p>
+                </div>
+
+                <h3>ประเภทของจำนวนจริง</h3>
+                
+                <div class="subsection">
+                    <h4>1. จำนวนตรรกยะ (Rational Numbers: $\mathbb{Q}$)</h4>
+                    <p>จำนวนที่สามารถเขียนในรูปเศษส่วน $\frac{a}{b}$ ได้ โดยที่ $a$ และ $b$ เป็นจำนวนเต็ม และ $b \neq 0$</p>
+                    
+                    <div class="subcategory">
+                        <h5>จำนวนเต็ม (Integers: $\mathbb{Z}$)</h5>
+                        <p>$\ldots, -3, -2, -1, 0, 1, 2, 3, \ldots$</p>
+                        <ul>
+                            <li><strong>จำนวนเต็มลบ:</strong> $-1, -2, -3, \ldots$</li>
+                            <li><strong>ศูนย์:</strong> $0$</li>
+                            <li><strong>จำนวนเต็มบวก (หรือ จำนวนนับ: $\mathbb{N}$):</strong> $1, 2, 3, \ldots$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="subcategory">
+                        <h5>เศษส่วนและทศนิยมซ้ำ</h5>
+                        <p>ตัวอย่าง: $\frac{1}{2}$, $0.5$, $-3\frac{1}{4}$, $0.333\ldots$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>2. จำนวนอตรรกยะ (Irrational Numbers: $\mathbb{Q}'$)</h4>
+                    <p>จำนวนที่ไม่สามารถเขียนในรูปเศษส่วน $\frac{a}{b}$ ได้ และมีค่าเป็นทศนิยมไม่ซ้ำไม่รู้จบ</p>
+                    <p><strong>ตัวอย่าง:</strong> $\sqrt{2}$, $\pi$ (พาย), $e$ (ประมาณ 2.718), รากที่ไม่ลงตัว (เช่น $\sqrt{3}$, $\sqrt[3]{5}$)</p>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>แผนภาพแสดงระบบจำนวนจริง</h4>
+                    <div class="number-system-diagram">
+                        <div class="level-1">จำนวนจริง ($\mathbb{R}$)</div>
+                        <div class="level-2">
+                            <div class="branch-left">จำนวนตรรกยะ ($\mathbb{Q}$)</div>
+                            <div class="branch-right">จำนวนอตรรกยะ ($\mathbb{Q}'$)<br><small>(ทศนิยมไม่ซ้ำไม่รู้จบ, เช่น $\sqrt{2}$, $\pi$)</small></div>
+                        </div>
+                        <div class="level-3">
+                            <div class="sub-branch-left">จำนวนเต็ม ($\mathbb{Z}$)</div>
+                            <div class="sub-branch-center">เศษส่วนและทศนิยมซ้ำ</div>
+                        </div>
+                        <div class="level-4">
+                            <div class="final-left">จำนวนเต็มลบ</div>
+                            <div class="final-center">$0$</div>
+                            <div class="final-right">จำนวนเต็มบวก ($\mathbb{N}$)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1.1.2 -->
+            <section id="section-2" class="content-section">
+                <h2>1.1.2 สมบัติของจำนวนจริง</h2>
+                
+                <h3>ก. สมบัติการเท่ากันของจำนวนจริง</h3>
+                
+                <div class="property-list">
+                    <div class="property-item">
+                        <h4>สมบัติการสะท้อน (Reflexive Property)</h4>
+                        <p>$a = a$ (เช่น $5 = 5$)</p>
+                    </div>
+                    
+                    <div class="property-item">
+                        <h4>สมบัติการสมมาตร (Symmetric Property)</h4>
+                        <p>ถ้า $a = b$ แล้ว $b = a$ (เช่น ถ้า $x = 3$ แล้ว $3 = x$)</p>
+                    </div>
+                    
+                    <div class="property-item">
+                        <h4>สมบัติการถ่ายทอด (Transitive Property)</h4>
+                        <p>ถ้า $a = b$ และ $b = c$ แล้ว $a = c$ (เช่น ถ้า $x = y$ และ $y = 7$ แล้ว $x = 7$)</p>
+                    </div>
+                    
+                    <div class="property-item">
+                        <h4>สมบัติการบวกด้วยจำนวนที่เท่ากัน (Additive Property)</h4>
+                        <p>ถ้า $a = b$ แล้ว $a + c = b + c$</p>
+                    </div>
+                    
+                    <div class="property-item">
+                        <h4>สมบัติการคูณด้วยจำนวนที่เท่ากัน (Multiplicative Property)</h4>
+                        <p>ถ้า $a = b$ แล้ว $ac = bc$</p>
+                    </div>
+                    
+                    <div class="property-item">
+                        <h4>สมบัติการแจกแจง (Distributive Property)</h4>
+                        <p>$a(b + c) = ab + ac$ และ $(a + b)c = ac + bc$</p>
+                    </div>
+                </div>
+
+                <h3>ข. สมบัติเกี่ยวกับการบวกและการคูณของจำนวนจริง</h3>
+                <p>ให้ $a, b, c$ เป็นจำนวนจริง</p>
+
+                <div class="property-grid">
+                    <div class="property-category">
+                        <h4>สมบัติการปิด (Closure Property)</h4>
+                        <ul>
+                            <li><strong>การบวก:</strong> $a + b$ เป็นจำนวนจริง</li>
+                            <li><strong>การคูณ:</strong> $ab$ เป็นจำนวนจริง</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="property-category">
+                        <h4>สมบัติการสลับที่ (Commutative Property)</h4>
+                        <ul>
+                            <li><strong>การบวก:</strong> $a + b = b + a$</li>
+                            <li><strong>การคูณ:</strong> $ab = ba$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="property-category">
+                        <h4>สมบัติการเปลี่ยนกลุ่ม (Associative Property)</h4>
+                        <ul>
+                            <li><strong>การบวก:</strong> $(a + b) + c = a + (b + c)$</li>
+                            <li><strong>การคูณ:</strong> $(ab)c = a(bc)$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="property-category">
+                        <h4>การมีเอกลักษณ์ (Identity Element)</h4>
+                        <ul>
+                            <li><strong>เอกลักษณ์การบวก:</strong> $0$ เพราะ $a + 0 = a = 0 + a$</li>
+                            <li><strong>เอกลักษณ์การคูณ:</strong> $1$ เพราะ $a \cdot 1 = a = 1 \cdot a$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="property-category">
+                        <h4>การมีอินเวอร์ส (Inverse Element)</h4>
+                        <ul>
+                            <li><strong>อินเวอร์สการบวก:</strong> $-a$ เพราะ $a + (-a) = 0 = (-a) + a$</li>
+                            <li><strong>อินเวอร์สการคูณ:</strong> $a^{-1}$ หรือ $\frac{1}{a}$ เพราะ $a \cdot a^{-1} = 1 = a^{-1} \cdot a$ (โดยที่ $a \neq 0$)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1.1.3 -->
+            <section id="section-3" class="content-section">
+                <h2>1.1.3 ค่าสัมบูรณ์ (Absolute Value)</h2>
+                
+                <div class="definition-box">
+                    <h4>ความหมาย</h4>
+                    <p>ค่าสัมบูรณ์ของจำนวนจริง $a$ เขียนแทนด้วย $|a|$ คือระยะทางจาก $0$ ถึง $a$ บนเส้นจำนวนเสมอ ซึ่งค่าที่ได้จะเป็นบวกหรือศูนย์เสมอ</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>นิยาม</h4>
+                    <p>$$|a| = \begin{cases} 
+                    a & \text{เมื่อ } a \geq 0 \\
+                    -a & \text{เมื่อ } a < 0 
+                    \end{cases}$$</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>ตัวอย่าง</h4>
+                    <ul>
+                        <li>$|5| = 5$</li>
+                        <li>$|-5| = 5$</li>
+                        <li>$|0| = 0$</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 1.1.4 -->
+            <section id="section-4" class="content-section">
+                <h2>1.1.4 จำนวนจริงในรูปกรณฑ์ (Radicals) และเลขยกกำลัง (Exponents)</h2>
+                
+                <h3>กรณฑ์ที่ n (n-th Root)</h3>
+                <p>$\sqrt[n]{a}$ หมายถึง รากที่ $n$ ของ $a$</p>
+                
+                <div class="rule-box">
+                    <h4>กฎสำคัญ</h4>
+                    <ul>
+                        <li>ถ้า $n$ เป็นจำนวนคู่และ $a \geq 0$, $\sqrt[n]{a}$ จะมีค่าเดียวคือค่าที่ไม่เป็นลบ</li>
+                        <li>ถ้า $n$ เป็นจำนวนคี่, $\sqrt[n]{a}$ จะมีค่าเดียว</li>
+                    </ul>
+                </div>
+
+                <div class="property-box">
+                    <h4>คุณสมบัติสำคัญ</h4>
+                    <ul>
+                        <li>$\sqrt[n]{a^n} = |a|$ เมื่อ $n$ เป็นจำนวนคู่</li>
+                        <li>$\sqrt[n]{a^n} = a$ เมื่อ $n$ เป็นจำนวนคี่</li>
+                    </ul>
+                </div>
+
+                <h3>เลขยกกำลัง (Exponents): $a^n$</h3>
+                
+                <div class="formula-grid">
+                    <div class="formula-item">
+                        <h4>สมบัติสำคัญ</h4>
+                        <ul>
+                            <li>$a^m \cdot a^n = a^{m+n}$</li>
+                            <li>$\frac{a^m}{a^n} = a^{m-n}$</li>
+                            <li>$(a^m)^n = a^{mn}$</li>
+                            <li>$(ab)^n = a^n b^n$</li>
+                            <li>$\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$</li>
+                            <li>$a^0 = 1$ ($a \neq 0$)</li>
+                            <li>$a^{-n} = \frac{1}{a^n}$ ($a \neq 0$)</li>
+                            <li>$a^{\frac{m}{n}} = \sqrt[n]{a^m}$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 1.1.5 -->
+            <section id="section-5" class="content-section">
+                <h2>1.1.5 ตัวอย่างโจทย์และแนวทางการแก้ปัญหา</h2>
+                
+                <p class="section-intro">การทำความเข้าใจเรื่องจำนวนจริงและสมบัติจะช่วยให้แก้ปัญหาคณิตศาสตร์พื้นฐานได้อย่างแม่นยำ รวมถึงเป็นพื้นฐานสำคัญสำหรับหัวข้อที่ซับซ้อนขึ้นในวิทยาการคำนวณ เช่น การวิเคราะห์โดเมน/เรนจ์ของฟังก์ชัน, การจัดการข้อมูลเชิงตัวเลข, และการวิเคราะห์เงื่อนไขต่างๆ ในโปรแกรม</p>
+
+                <div class="example-container">
+                    <h3>ตัวอย่างที่ 1: การจำแนกประเภทจำนวน</h3>
+                    
+                    <div class="problem-box">
+                        <h4>โจทย์</h4>
+                        <p>จงจำแนกจำนวนต่อไปนี้ว่าเป็นจำนวนชนิดใด: $\sqrt{9}$, $-3.14$, $\frac{22}{7}$, $\sqrt{5}$, $0$, $0.666\ldots$, $\frac{\pi}{2}$, $100$</p>
+                    </div>
+                    
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>พิจารณาจากนิยามของจำนวนแต่ละประเภท</p>
+                        <ul>
+                            <li>$\sqrt{9} = 3$</li>
+                            <li>$0.666\ldots = \frac{2}{3}$</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li><strong>จำนวนนับ ($\mathbb{N}$):</strong> $100$</li>
+                            <li><strong>จำนวนเต็ม ($\mathbb{Z}$):</strong> $\sqrt{9}$ ($=3$), $0$, $100$</li>
+                            <li><strong>จำนวนตรรกยะ ($\mathbb{Q}$):</strong> $\sqrt{9}$ ($=3$), $-3.14$, $\frac{22}{7}$, $0$, $0.666\ldots$, $100$</li>
+                            <li><strong>จำนวนอตรรกยะ ($\mathbb{Q}'$):</strong> $\sqrt{5}$, $\frac{\pi}{2}$</li>
+                            <li><strong>จำนวนจริง ($\mathbb{R}$):</strong> ทุกจำนวนที่กำหนดให้</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h3>ตัวอย่างที่ 2: การใช้สมบัติค่าสัมบูรณ์</h3>
+                    
+                    <div class="problem-box">
+                        <h4>โจทย์</h4>
+                        <p>จงหาค่าของ $|2 - \sqrt{7}| + |1 - \sqrt{7}|$</p>
+                    </div>
+                    
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ol>
+                            <li>ประเมินค่าของ $\sqrt{7}$ (ประมาณ $2.64$)</li>
+                            <li>พิจารณาเครื่องหมายของนิพจน์ภายในค่าสัมบูรณ์แต่ละตัว</li>
+                            <li>$2 - \sqrt{7}: 2 - 2.64 = -0.64$ (ติดลบ)</li>
+                            <li>$1 - \sqrt{7}: 1 - 2.64 = -1.64$ (ติดลบ)</li>
+                            <li>ใช้คุณสมบัติของค่าสัมบูรณ์: $|a| = -a$ ถ้า $a < 0$</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$|2 - \sqrt{7}| = -(2 - \sqrt{7}) = -2 + \sqrt{7}$ (เนื่องจาก $2 < \sqrt{7}$)</p>
+                        <p>$|1 - \sqrt{7}| = -(1 - \sqrt{7}) = -1 + \sqrt{7}$ (เนื่องจาก $1 < \sqrt{7}$)</p>
+                        <p>ดังนั้น:</p>
+                        <p>$$|2 - \sqrt{7}| + |1 - \sqrt{7}| = (-2 + \sqrt{7}) + (-1 + \sqrt{7})$$</p>
+                        <p>$$= -2 + \sqrt{7} - 1 + \sqrt{7} = -3 + 2\sqrt{7}$$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h3>ตัวอย่างที่ 3: การใช้สมบัติเลขยกกำลังและกรณฑ์</h3>
+                    
+                    <div class="problem-box">
+                        <h4>โจทย์</h4>
+                        <p>จงหาค่าของ $\frac{(2^3 \cdot 3^2)^2}{6^3} \cdot \sqrt[3]{-125}$</p>
+                    </div>
+                    
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ol>
+                            <li>ใช้สมบัติเลขยกกำลัง: $(ab)^n = a^n b^n$ และ $(a^m)^n = a^{mn}$</li>
+                            <li>แปลงฐานให้เป็นเลขเดียวกัน (ถ้าเป็นไปได้): $6^3 = (2 \cdot 3)^3 = 2^3 \cdot 3^3$</li>
+                            <li>หาค่าของกรณฑ์ที่สาม: $\sqrt[3]{-125}$</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$$\frac{(2^3 \cdot 3^2)^2}{6^3} \cdot \sqrt[3]{-125}$$</p>
+                        <p>$$= \frac{2^{3 \cdot 2} \cdot 3^{2 \cdot 2}}{(2 \cdot 3)^3} \cdot (-5)$$</p>
+                        <p>$$= \frac{2^6 \cdot 3^4}{2^3 \cdot 3^3} \cdot (-5)$$</p>
+                        <p>$$= (2^{6-3} \cdot 3^{4-3}) \cdot (-5)$$</p>
+                        <p>$$= (2^3 \cdot 3^1) \cdot (-5)$$</p>
+                        <p>$$= (8 \cdot 3) \cdot (-5) = 24 \cdot (-5) = -120$$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h3>ตัวอย่างที่ 4: การแก้ปัญหาผสมผสาน</h3>
+                    
+                    <div class="problem-box">
+                        <h4>โจทย์</h4>
+                        <p>ถ้า $x$ เป็นจำนวนเต็มบวก และ $\sqrt{256^x} = 2^{x+6}$ จงหาค่าของ $x$</p>
+                    </div>
+                    
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ol>
+                            <li>แปลงฐานของเลขยกกำลังให้เป็นฐานเดียวกัน (ในที่นี้คือฐาน $2$)</li>
+                            <li>$256 = 2^8$</li>
+                            <li>ใช้สมบัติเลขยกกำลังและกรณฑ์: $\sqrt{a^m} = a^{\frac{m}{2}}$</li>
+                            <li>แก้สมการเลขยกกำลัง</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$$\sqrt{256^x} = 2^{x+6}$$</p>
+                        <p>$$\sqrt{(2^8)^x} = 2^{x+6}$$</p>
+                        <p>$$\sqrt{2^{8x}} = 2^{x+6}$$</p>
+                        <p>$$2^{\frac{8x}{2}} = 2^{x+6}$$</p>
+                        <p>$$2^{4x} = 2^{x+6}$$</p>
+                        <p>เนื่องจากฐานเท่ากัน เลขชี้กำลังจึงต้องเท่ากัน:</p>
+                        <p>$$4x = x + 6$$</p>
+                        <p>$$4x - x = 6$$</p>
+                        <p>$$3x = 6$$</p>
+                        <p>$$x = 2$$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <div class="chapter-navigation">
+                <a href="../index.html#mathematics" class="nav-button prev">← กลับสู่รายการบท</a>
+                <a href="ch1-2.html" class="nav-button next">บทถัดไป: พหุนาม →</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>

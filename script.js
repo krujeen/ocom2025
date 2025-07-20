@@ -110,13 +110,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const chapterLinks = document.querySelectorAll('.chapter-card a');
     chapterLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            // For now, prevent navigation since content pages don't exist yet
-            e.preventDefault();
-            
             const chapterName = this.textContent;
             trackChapterClick(chapterName);
             
-            // Show placeholder message
+            // Check if this is the ch1-1.html link (which now exists)
+            if (this.getAttribute('href') === 'chapters/ch1-1.html') {
+                // Allow normal navigation for existing chapter
+                return true;
+            }
+            
+            // For other chapters, prevent navigation and show placeholder
+            e.preventDefault();
             alert(`เนื้อหา "${chapterName}" จะเพิ่มในขั้นตอนถัดไป`);
         });
     });
