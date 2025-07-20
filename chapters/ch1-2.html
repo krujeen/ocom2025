@@ -3,56 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บทที่ 1.2: พหุนาม - POSN Computer Science Camp 1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>บทที่ 1.2: พหุนาม - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../chapter-styles.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
     <script>
         MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
+                processEscapes: true,
+                processEnvironments: true
             },
             options: {
                 skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
             }
         };
     </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="container">
             <nav class="breadcrumb">
                 <a href="../index.html">หน้าหลัก</a> > 
-                <a href="../index.html#section-1">ส่วนที่ 1: คณิตศาสตร์</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
                 <span>บทที่ 1.2: พหุนาม</span>
             </nav>
-            <h1>บทที่ 1.2: พหุนาม (Polynomials)</h1>
-            <p class="subtitle">เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 ปี พ.ศ. 2568</p>
+            <h1>บทที่ 1.2: พหุนาม</h1>
+            <p class="chapter-intro">เรียนรู้เกี่ยวกับพหุนามและการดำเนินการต่าง ๆ ที่สำคัญสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
         </div>
     </header>
 
-    <!-- Table of Contents -->
-    <nav class="toc-container">
-        <div class="container">
-            <h3>สารบัญ</h3>
-            <div class="toc">
-                <a href="#section-1">1.2.1 ความหมายของพหุนาม</a>
-                <a href="#section-2">1.2.2 การดำเนินการกับพหุนาม</a>
-                <a href="#section-3">1.2.3 การแยกตัวประกอบพหุนาม</a>
-                <a href="#section-4">1.2.4 ทฤษฎีเศษเหลือและตัวประกอบ</a>
-                <a href="#section-5">1.2.5 ตัวอย่างการใช้งาน</a>
-                <a href="#section-6">1.2.6 แบบฝึกหัด</a>
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">1.2.1 ความหมายของพหุนาม</a></li>
+                    <li><a href="#section-2">1.2.2 การดำเนินการกับพหุนาม</a></li>
+                    <li><a href="#section-3">1.2.3 การแยกตัวประกอบพหุนาม</a></li>
+                    <li><a href="#section-4">1.2.4 ทฤษฎีเศษเหลือและตัวประกอบ</a></li>
+                    <li><a href="#section-5">1.2.5 ตัวอย่างการใช้งาน</a></li>
+                    <li><a href="#section-6">1.2.6 แบบฝึกหัด</a></li>
+                </ul>
             </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main>
-        <div class="container">
             <!-- Section 1: ความหมายของพหุนาม -->
             <section id="section-1" class="content-section">
                 <h2>1.2.1 ความหมายของพหุนาม</h2>
@@ -93,25 +93,24 @@
                 </div>
 
                 <h3>ประเภทของพหุนาม</h3>
-                <div class="content-grid">
-                    <div class="content-section">
-                        <h4>แยกตามองศา</h4>
-                        <ul>
-                            <li><strong>พหุนามคงที่:</strong> องศา 0 เช่น $P(x) = 5$</li>
-                            <li><strong>พหุนามเชิงเส้น:</strong> องศา 1 เช่น $P(x) = 2x + 3$</li>
-                            <li><strong>พหุนามกำลังสอง:</strong> องศา 2 เช่น $P(x) = x^2 + 2x + 1$</li>
-                            <li><strong>พหุนามกำลังสาม:</strong> องศา 3 เช่น $P(x) = x^3 - 3x + 2$</li>
-                        </ul>
-                    </div>
-                    <div class="content-section">
-                        <h4>แยกตามจำนวนพจน์</h4>
-                        <ul>
-                            <li><strong>โมโนเมียล:</strong> 1 พจน์ เช่น $3x^2$</li>
-                            <li><strong>ไบโนเมียล:</strong> 2 พจน์ เช่น $x + 1$</li>
-                            <li><strong>ไตรโนเมียล:</strong> 3 พจน์ เช่น $x^2 + 2x + 1$</li>
-                            <li><strong>พหุนาม:</strong> มากกว่า 3 พจน์</li>
-                        </ul>
-                    </div>
+                <div class="subsection">
+                    <h4>แยกตามองศา</h4>
+                    <ul>
+                        <li><strong>พหุนามคงที่:</strong> องศา 0 เช่น $P(x) = 5$</li>
+                        <li><strong>พหุนามเชิงเส้น:</strong> องศา 1 เช่น $P(x) = 2x + 3$</li>
+                        <li><strong>พหุนามกำลังสอง:</strong> องศา 2 เช่น $P(x) = x^2 + 2x + 1$</li>
+                        <li><strong>พหุนามกำลังสาม:</strong> องศา 3 เช่น $P(x) = x^3 - 3x + 2$</li>
+                    </ul>
+                </div>
+                
+                <div class="subsection">
+                    <h4>แยกตามจำนวนพจน์</h4>
+                    <ul>
+                        <li><strong>โมโนเมียล:</strong> 1 พจน์ เช่น $3x^2$</li>
+                        <li><strong>ไบโนเมียล:</strong> 2 พจน์ เช่น $x + 1$</li>
+                        <li><strong>ไตรโนเมียล:</strong> 3 พจน์ เช่น $x^2 + 2x + 1$</li>
+                        <li><strong>พหุนาม:</strong> มากกว่า 3 พจน์</li>
+                    </ul>
                 </div>
             </section>
 
@@ -196,35 +195,33 @@
 
                 <h3>วิธีการแยกตัวประกอบ</h3>
                 
-                <div class="content-grid">
-                    <div class="content-section">
-                        <h4>1. การดึงตัวประกอบร่วม</h4>
-                        <p>ดึงตัวประกอบร่วมมากที่สุดออกมา</p>
-                        <div class="example-box">
-                            <p>$6x^3 + 9x^2 - 3x = 3x(2x^2 + 3x - 1)$</p>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <h4>2. การใช้สูตรพิเศษ</h4>
-                        <ul>
-                            <li>$a^2 - b^2 = (a+b)(a-b)$</li>
-                            <li>$a^2 + 2ab + b^2 = (a+b)^2$</li>
-                            <li>$a^2 - 2ab + b^2 = (a-b)^2$</li>
-                        </ul>
+                <div class="subsection">
+                    <h4>1. การดึงตัวประกอบร่วม</h4>
+                    <p>ดึงตัวประกอบร่วมมากที่สุดออกมา</p>
+                    <div class="example-box">
+                        <p>$6x^3 + 9x^2 - 3x = 3x(2x^2 + 3x - 1)$</p>
                     </div>
                 </div>
+                
+                <div class="subsection">
+                    <h4>2. การใช้สูตรพิเศษ</h4>
+                    <ul>
+                        <li>$a^2 - b^2 = (a+b)(a-b)$</li>
+                        <li>$a^2 + 2ab + b^2 = (a+b)^2$</li>
+                        <li>$a^2 - 2ab + b^2 = (a-b)^2$</li>
+                    </ul>
+                </div>
 
-                <div class="content-grid">
-                    <div class="content-section">
-                        <h4>3. การแยกตัวประกอบแบบกลุ่ม</h4>
-                        <div class="example-box">
-                            <p>$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y)$</p>
-                        </div>
+                <div class="subsection">
+                    <h4>3. การแยกตัวประกอบแบบกลุ่ม</h4>
+                    <div class="example-box">
+                        <p>$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y)$</p>
                     </div>
-                    <div class="content-section">
-                        <h4>4. การแยกตัวประกอบไตรนาม</h4>
-                        <p>สำหรับ $ax^2 + bx + c$ หาจำนวน 2 จำนวนที่คูณกันได้ $ac$ และบวกกันได้ $b$</p>
-                    </div>
+                </div>
+                
+                <div class="subsection">
+                    <h4>4. การแยกตัวประกอบไตรนาม</h4>
+                    <p>สำหรับ $ax^2 + bx + c$ หาจำนวน 2 จำนวนที่คูณกันได้ $ac$ และบวกกันได้ $b$</p>
                 </div>
 
                 <div class="example-container">
