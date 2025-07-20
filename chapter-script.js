@@ -258,4 +258,189 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     addProgressIndicator();
+    
+    // Practice problems interactive features
+    const addPracticeFeatures = () => {
+        const practiceProblems = document.querySelectorAll('.practice-problem');
+        let completedProblems = 0;
+        
+        // Add toggle solution functionality
+        practiceProblems.forEach((problem, index) => {
+            const solutionBox = problem.querySelector('.solution-box');
+            const approachBox = problem.querySelector('.approach-box');
+            
+            if (solutionBox && approachBox) {
+                // Create toggle buttons
+                const toggleApproach = document.createElement('button');
+                toggleApproach.textContent = 'แสดงแนวคิด';
+                toggleApproach.className = 'toggle-solution';
+                toggleApproach.style.marginRight = '0.5rem';
+                
+                const toggleSolution = document.createElement('button');
+                toggleSolution.textContent = 'แสดงเฉลย';
+                toggleSolution.className = 'toggle-solution';
+                
+                // Initially hide solutions
+                approachBox.style.display = 'none';
+                solutionBox.style.display = 'none';
+                
+                // Add buttons after problem box
+                const problemBox = problem.querySelector('.problem-box');
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.padding = '1rem';
+                buttonContainer.style.textAlign = 'center';
+                buttonContainer.style.background = '#f8f9fa';
+                buttonContainer.appendChild(toggleApproach);
+                buttonContainer.appendChild(toggleSolution);
+                
+                problemBox.parentNode.insertBefore(buttonContainer, approachBox);
+                
+                // Toggle functionality
+                let approachVisible = false;
+                let solutionVisible = false;
+                
+                toggleApproach.addEventListener('click', () => {
+                    if (approachVisible) {
+                        approachBox.style.display = 'none';
+                        toggleApproach.textContent = 'แสดงแนวคิด';
+                        approachVisible = false;
+                    } else {
+                        approachBox.style.display = 'block';
+                        approachBox.classList.add('solution-visible');
+                        toggleApproach.textContent = 'ซ่อนแนวคิด';
+                        approachVisible = true;
+                    }
+                });
+                
+                toggleSolution.addEventListener('click', () => {
+                    if (solutionVisible) {
+                        solutionBox.style.display = 'none';
+                        toggleSolution.textContent = 'แสดงเฉลย';
+                        solutionVisible = false;
+                        completedProblems = Math.max(0, completedProblems - 1);
+                    } else {
+                        solutionBox.style.display = 'block';
+                        solutionBox.classList.add('solution-visible');
+                        toggleSolution.textContent = 'ซ่อนเฉลย';
+                        solutionVisible = true;
+                        completedProblems++;
+                    }
+                    updateProgress();
+                });
+            }
+        });
+        
+        // Add practice progress tracker
+        const addProgressTracker = () => {
+            const progressTracker = document.createElement('div');
+            progressTracker.className = 'problem-progress';
+            progressTracker.innerHTML = `
+                <div>ความคืบหน้า</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div id="progress-text">0/${practiceProblems.length}</div>
+            `;
+            
+            document.body.appendChild(progressTracker);
+        };
+        
+        const updateProgress = () => {
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            
+            if (progressFill && progressText) {
+                const percentage = (completedProblems / practiceProblems.length) * 100;
+                progressFill.style.width = percentage + '%';
+                progressText.textContent = `${completedProblems}/${practiceProblems.length}`;
+                
+                // Change color based on progress
+                if (percentage === 100) {
+                    progressFill.style.background = '#27ae60';
+                } else if (percentage >= 50) {
+                    progressFill.style.background = '#f39c12';
+                } else {
+                    progressFill.style.background = '#3498db';
+                }
+            }
+        };
+        
+        if (practiceProblems.length > 0) {
+            addProgressTracker();
+            updateProgress();
+        }
+        
+        // Add difficulty indicators
+        const difficulties = ['easy', 'medium', 'easy', 'medium', 'easy', 'medium', 'hard', 'medium', 'hard', 'hard'];
+        const difficultyLabels = {
+            'easy': 'ง่าย',
+            'medium': 'ปานกลาง', 
+            'hard': 'ยาก'
+        };
+        
+        practiceProblems.forEach((problem, index) => {
+            const h3 = problem.querySelector('h3');
+            const difficulty = difficulties[index] || 'medium';
+            const difficultySpan = document.createElement('span');
+            difficultySpan.className = `problem-difficulty difficulty-${difficulty}`;
+            difficultySpan.textContent = difficultyLabels[difficulty];
+            h3.appendChild(difficultySpan);
+        });
+        
+        // Add timer functionality
+        const addTimer = () => {
+            let startTime = Date.now();
+            let timerInterval;
+            
+            const timerDisplay = document.createElement('div');
+            timerDisplay.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: rgba(0,0,0,0.8);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 25px;
+                font-family: monospace;
+                font-size: 1rem;
+                z-index: 1000;
+            `;
+            timerDisplay.textContent = '00:00';
+            document.body.appendChild(timerDisplay);
+            
+            const updateTimer = () => {
+                const elapsed = Date.now() - startTime;
+                const minutes = Math.floor(elapsed / 60000);
+                const seconds = Math.floor((elapsed % 60000) / 1000);
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            };
+            
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // Stop timer when all problems are completed
+            const checkCompletion = () => {
+                if (completedProblems === practiceProblems.length) {
+                    clearInterval(timerInterval);
+                    timerDisplay.style.background = '#27ae60';
+                    
+                    // Show completion message
+                    setTimeout(() => {
+                        alert(`🎉 ยินดีด้วย! คุณทำข้อสอบครบทุกข้อแล้ว\nเวลาที่ใช้: ${timerDisplay.textContent} นาที`);
+                    }, 500);
+                }
+            };
+            
+            // Check completion every 2 seconds
+            setInterval(checkCompletion, 2000);
+        };
+        
+        if (practiceProblems.length > 0) {
+            addTimer();
+        }
+    };
+    
+    // Initialize practice features if we're on a page with practice problems
+    if (document.querySelector('.practice-problem')) {
+        addPracticeFeatures();
+    }
 });

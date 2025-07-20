@@ -424,6 +424,280 @@ header {
     background: #7f8c8d;
 }
 
+/* Practice Problems Styling */
+.practice-problem {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    margin: 2rem 0;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.practice-problem:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+}
+
+.practice-problem h3 {
+    background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+    color: white;
+    margin: 0;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    border-bottom: 3px solid #3498db;
+}
+
+.practice-problem .problem-box {
+    background: linear-gradient(135deg, #fef9e7 0%, #fdfbf0 100%);
+    border-left: 4px solid #f39c12;
+    padding: 1.2rem;
+    margin: 0;
+}
+
+.practice-problem .problem-box h4 {
+    color: #d68910;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.practice-problem .problem-box ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.practice-problem .problem-box li {
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+}
+
+.practice-problem .approach-box {
+    background: linear-gradient(135deg, #ebf3fd 0%, #f4f8fc 100%);
+    border-left: 4px solid #3498db;
+    padding: 1.2rem;
+    margin: 0;
+}
+
+.practice-problem .approach-box h4 {
+    color: #2980b9;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.practice-problem .solution-box {
+    background: linear-gradient(135deg, #eafaf1 0%, #f0fdf4 100%);
+    border-left: 4px solid #27ae60;
+    padding: 1.2rem;
+    margin: 0;
+}
+
+.practice-problem .solution-box h4 {
+    color: #27ae60;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.practice-problem .solution-box p {
+    margin-bottom: 0.6rem;
+    line-height: 1.7;
+}
+
+.practice-summary {
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 2px solid #3498db;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 3rem 0;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);
+}
+
+.practice-summary h3 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.summary-item {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border-top: 4px solid #3498db;
+}
+
+.summary-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    border-top-color: #e74c3c;
+}
+
+.summary-item h4 {
+    color: #2c3e50;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.summary-item p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Interactive elements for practice problems */
+.toggle-solution {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Sarabun', sans-serif;
+    margin: 0.5rem 0;
+    transition: background 0.3s ease;
+}
+
+.toggle-solution:hover {
+    background: #2980b9;
+}
+
+.solution-hidden {
+    display: none;
+}
+
+.solution-visible {
+    animation: fadeInDown 0.5s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.problem-difficulty {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.difficulty-easy {
+    background: #d4edda;
+    color: #155724;
+}
+
+.difficulty-medium {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.difficulty-hard {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Answer reveal functionality */
+.answer-reveal {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.answer-reveal .reveal-button {
+    background: #17a2b8;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.answer-reveal .reveal-button:hover {
+    background: #138496;
+}
+
+.answer-content {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    display: none;
+}
+
+.answer-content.revealed {
+    display: block;
+    animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 200px;
+    }
+}
+
+/* Progress tracking */
+.problem-progress {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #2c3e50;
+    color: white;
+    padding: 1rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.problem-progress:hover {
+    transform: scale(1.05);
+}
+
+.progress-bar {
+    width: 60px;
+    height: 4px;
+    background: #34495e;
+    border-radius: 2px;
+    margin: 0.5rem 0;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #3498db;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+}
+
 /* Responsive design for chapter pages */
 @media (max-width: 768px) {
     .chapter-content {
@@ -454,6 +728,32 @@ header {
     
     .number-system-diagram {
         font-size: 0.9rem;
+    }
+    
+    .practice-problem {
+        margin: 1.5rem 0;
+    }
+    
+    .practice-problem h3 {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+    
+    .practice-problem .problem-box,
+    .practice-problem .approach-box,
+    .practice-problem .solution-box {
+        padding: 1rem;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .problem-progress {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.8rem;
     }
 }
 
