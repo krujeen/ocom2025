@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 1.2: พหุนาม - POSN Computer Science Camp 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#section-1">ส่วนที่ 1: คณิตศาสตร์</a> > 
+                <span>บทที่ 1.2: พหุนาม</span>
+            </nav>
+            <h1>บทที่ 1.2: พหุนาม (Polynomials)</h1>
+            <p class="subtitle">เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 ปี พ.ศ. 2568</p>
+        </div>
+    </header>
+
+    <!-- Table of Contents -->
+    <nav class="toc-container">
+        <div class="container">
+            <h3>สารบัญ</h3>
+            <div class="toc">
+                <a href="#section-1">1.2.1 ความหมายของพหุนาม</a>
+                <a href="#section-2">1.2.2 การดำเนินการกับพหุนาม</a>
+                <a href="#section-3">1.2.3 การแยกตัวประกอบพหุนาม</a>
+                <a href="#section-4">1.2.4 ทฤษฎีเศษเหลือและตัวประกอบ</a>
+                <a href="#section-5">1.2.5 ตัวอย่างการใช้งาน</a>
+                <a href="#section-6">1.2.6 แบบฝึกหัด</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Section 1: ความหมายของพหุนาม -->
+            <section id="section-1" class="content-section">
+                <h2>1.2.1 ความหมายของพหุนาม</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม: พหุนาม</h4>
+                    <p><strong>พหุนาม (Polynomial)</strong> คือ นิพจน์ทางคณิตศาสตร์ที่เกิดจากการบวก ลบ และคูณของตัวแปรและค่าคงที่ โดยตัวแปรมีเลขยกกำลังเป็นจำนวนเต็มไม่ติดลบ</p>
+                </div>
+
+                <h3>รูปแบบทั่วไปของพหุนาม</h3>
+                <p>พหุนามในตัวแปร $x$ มีรูปแบบทั่วไป:</p>
+                <div class="formula-box">
+                    $$P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$$
+                    <p>โดยที่:</p>
+                    <ul>
+                        <li>$a_0, a_1, a_2, \ldots, a_n$ เป็นค่าสัมประสิทธิ์ (coefficients)</li>
+                        <li>$n$ เป็นจำนวนเต็มไม่ติดลบ</li>
+                        <li>$a_n \neq 0$ (สัมประสิทธิ์นำหน้าไม่เป็นศูนย์)</li>
+                    </ul>
+                </div>
+
+                <h3>องศา (Degree) ของพหุนาม</h3>
+                <div class="definition-box">
+                    <h4>องศาของพหุนาม</h4>
+                    <p><strong>องศา</strong> หรือ <strong>ดีกรี</strong> ของพหุนาม คือ เลขยกกำลังสูงสุดของตัวแปรที่ปรากฏในพหุนามนั้น</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>$P(x) = 3x^4 - 2x^3 + x - 5$ มีองศา 4</li>
+                            <li>$Q(x) = x^2 + 3x + 2$ มีองศา 2</li>
+                            <li>$R(x) = 7x + 1$ มีองศา 1</li>
+                            <li>$S(x) = 5$ มีองศา 0</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>ประเภทของพหุนาม</h3>
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h4>แยกตามองศา</h4>
+                        <ul>
+                            <li><strong>พหุนามคงที่:</strong> องศา 0 เช่น $P(x) = 5$</li>
+                            <li><strong>พหุนามเชิงเส้น:</strong> องศา 1 เช่น $P(x) = 2x + 3$</li>
+                            <li><strong>พหุนามกำลังสอง:</strong> องศา 2 เช่น $P(x) = x^2 + 2x + 1$</li>
+                            <li><strong>พหุนามกำลังสาม:</strong> องศา 3 เช่น $P(x) = x^3 - 3x + 2$</li>
+                        </ul>
+                    </div>
+                    <div class="content-section">
+                        <h4>แยกตามจำนวนพจน์</h4>
+                        <ul>
+                            <li><strong>โมโนเมียล:</strong> 1 พจน์ เช่น $3x^2$</li>
+                            <li><strong>ไบโนเมียล:</strong> 2 พจน์ เช่น $x + 1$</li>
+                            <li><strong>ไตรโนเมียล:</strong> 3 พจน์ เช่น $x^2 + 2x + 1$</li>
+                            <li><strong>พหุนาม:</strong> มากกว่า 3 พจน์</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: การดำเนินการกับพหุนาม -->
+            <section id="section-2" class="content-section">
+                <h2>1.2.2 การดำเนินการกับพหุนาม</h2>
+
+                <h3>การบวกและลบพหุนาม</h3>
+                <p>การบวกหรือลบพหุนาม ทำได้โดยการรวมพจน์ที่มีตัวแปรเหมือนกัน (like terms)</p>
+                
+                <div class="example-container">
+                    <h4>ตัวอย่าง การบวกพหุนาม</h4>
+                    <div class="example-box">
+                        <p>ให้ $P(x) = 3x^3 + 2x^2 - x + 5$ และ $Q(x) = x^3 - 3x^2 + 4x - 2$</p>
+                        <p>หา $P(x) + Q(x)$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        $$\begin{align}
+                        P(x) + Q(x) &= (3x^3 + 2x^2 - x + 5) + (x^3 - 3x^2 + 4x - 2)\\
+                        &= 3x^3 + x^3 + 2x^2 - 3x^2 - x + 4x + 5 - 2\\
+                        &= 4x^3 - x^2 + 3x + 3
+                        \end{align}$$
+                    </div>
+                </div>
+
+                <h3>การคูณพหุนาม</h3>
+                <p>การคูณพหุนาม ใช้หลักการแจกแจง (distributive property)</p>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การคูณพหุนาม</h4>
+                    <div class="example-box">
+                        <p>ให้ $P(x) = x + 2$ และ $Q(x) = x^2 - 3x + 1$</p>
+                        <p>หา $P(x) \times Q(x)$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        $$\begin{align}
+                        P(x) \times Q(x) &= (x + 2)(x^2 - 3x + 1)\\
+                        &= x(x^2 - 3x + 1) + 2(x^2 - 3x + 1)\\
+                        &= x^3 - 3x^2 + x + 2x^2 - 6x + 2\\
+                        &= x^3 - x^2 - 5x + 2
+                        \end{align}$$
+                    </div>
+                </div>
+
+                <h3>การหารพหุนาม</h3>
+                <p>การหารพหุนาม ใช้วิธีการหารยาวเหมือนการหารจำนวนเต็ม</p>
+
+                <div class="formula-box">
+                    <h4>ทฤษฎีการหาร</h4>
+                    <p>ถ้า $P(x)$ และ $D(x)$ เป็นพหุนาม และ $D(x) \neq 0$ แล้ว จะมีพหุนาม $Q(x)$ และ $R(x)$ ที่เป็นเอกลักษณ์ ซึ่ง:</p>
+                    $$P(x) = D(x) \cdot Q(x) + R(x)$$
+                    <p>โดยที่ องศาของ $R(x) <$ องศาของ $D(x)$ หรือ $R(x) = 0$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การหารพหุนาม</h4>
+                    <div class="example-box">
+                        <p>หาร $x^3 + 2x^2 - x - 2$ ด้วย $x + 1$</p>
+                        <p><strong>วิธีทำ:</strong> ใช้การหารยาว</p>
+                        <div style="font-family: monospace; white-space: pre;">
+                                    x² + x - 2
+                            ________________
+                    x + 1 ) x³ + 2x² - x - 2
+                            x³ + x²
+                            ___________
+                                 x² - x
+                                 x² + x
+                                 _______
+                                   -2x - 2
+                                   -2x - 2
+                                   _______
+                                        0
+                        </div>
+                        <p>ดังนั้น $x^3 + 2x^2 - x - 2 = (x + 1)(x^2 + x - 2) + 0$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: การแยกตัวประกอบพหุนาม -->
+            <section id="section-3" class="content-section">
+                <h2>1.2.3 การแยกตัวประกอบพหุนาม</h2>
+
+                <p>การแยกตัวประกอบพหุนาม คือ การเขียนพหุนามให้อยู่ในรูปผลคูณของพหุนามที่มีองศาต่ำกว่า</p>
+
+                <h3>วิธีการแยกตัวประกอบ</h3>
+                
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h4>1. การดึงตัวประกอบร่วม</h4>
+                        <p>ดึงตัวประกอบร่วมมากที่สุดออกมา</p>
+                        <div class="example-box">
+                            <p>$6x^3 + 9x^2 - 3x = 3x(2x^2 + 3x - 1)$</p>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <h4>2. การใช้สูตรพิเศษ</h4>
+                        <ul>
+                            <li>$a^2 - b^2 = (a+b)(a-b)$</li>
+                            <li>$a^2 + 2ab + b^2 = (a+b)^2$</li>
+                            <li>$a^2 - 2ab + b^2 = (a-b)^2$</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-section">
+                        <h4>3. การแยกตัวประกอบแบบกลุ่ม</h4>
+                        <div class="example-box">
+                            <p>$ax + ay + bx + by = a(x+y) + b(x+y) = (a+b)(x+y)$</p>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <h4>4. การแยกตัวประกอบไตรนาม</h4>
+                        <p>สำหรับ $ax^2 + bx + c$ หาจำนวน 2 จำนวนที่คูณกันได้ $ac$ และบวกกันได้ $b$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การแยกตัวประกอบ</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่างที่ 1:</strong> แยกตัวประกอบ $x^2 + 5x + 6$</p>
+                        <p>หาจำนวน 2 จำนวนที่คูณกันได้ 6 และบวกกันได้ 5</p>
+                        <p>จำนวนนั้นคือ 2 และ 3</p>
+                        <p>ดังนั้น $x^2 + 5x + 6 = (x + 2)(x + 3)$</p>
+                        
+                        <br>
+                        
+                        <p><strong>ตัวอย่างที่ 2:</strong> แยกตัวประกอบ $2x^2 + 7x + 3$</p>
+                        <p>หาจำนวน 2 จำนวนที่คูณกันได้ $2 \times 3 = 6$ และบวกกันได้ 7</p>
+                        <p>จำนวนนั้นคือ 1 และ 6</p>
+                        <p>เขียนใหม่: $2x^2 + x + 6x + 3 = x(2x + 1) + 3(2x + 1) = (x + 3)(2x + 1)$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ทฤษฎีเศษเหลือและตัวประกอบ -->
+            <section id="section-4" class="content-section">
+                <h2>1.2.4 ทฤษฎีเศษเหลือและตัวประกอบ</h2>
+
+                <h3>ทฤษฎีเศษเหลือ (Remainder Theorem)</h3>
+                <div class="definition-box">
+                    <h4>ทฤษฎีเศษเหลือ</h4>
+                    <p>ถ้าพหุนาม $P(x)$ หารด้วย $(x - a)$ จะได้เศษเหลือเป็น $P(a)$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การใช้ทฤษฎีเศษเหลือ</h4>
+                    <div class="example-box">
+                        <p>หาเศษเหลือเมื่อ $P(x) = x^3 - 2x^2 + 3x - 5$ หารด้วย $(x - 2)$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>ตามทฤษฎีเศษเหลือ เศษเหลือ = $P(2)$</p>
+                        $$P(2) = 2^3 - 2(2^2) + 3(2) - 5 = 8 - 8 + 6 - 5 = 1$$
+                        <p>ดังนั้น เศษเหลือเป็น 1</p>
+                    </div>
+                </div>
+
+                <h3>ทฤษฎีตัวประกอบ (Factor Theorem)</h3>
+                <div class="definition-box">
+                    <h4>ทฤษฎีตัวประกอบ</h4>
+                    <p>$(x - a)$ เป็นตัวประกอบของพหุนาม $P(x)$ ก็ต่อเมื่อ $P(a) = 0$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การใช้ทฤษฎีตัวประกอบ</h4>
+                    <div class="example-box">
+                        <p>ตรวจสอบว่า $(x - 1)$ เป็นตัวประกอบของ $P(x) = x^3 - 3x + 2$ หรือไม่</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>คำนวณ $P(1)$:</p>
+                        $$P(1) = 1^3 - 3(1) + 2 = 1 - 3 + 2 = 0$$
+                        <p>เนื่องจาก $P(1) = 0$ ดังนั้น $(x - 1)$ เป็นตัวประกอบของ $P(x)$</p>
+                    </div>
+                </div>
+
+                <h3>การหารากของพหุนาม</h3>
+                <p>ราก (root) หรือ ศูนย์ (zero) ของพหุนาม $P(x)$ คือ ค่า $a$ ที่ทำให้ $P(a) = 0$</p>
+
+                <div class="formula-box">
+                    <h4>ทฤษฎีพื้นฐานของพีชคณิต</h4>
+                    <p>พหุนามองศา $n$ (โดย $n \geq 1$) มีรากเป็นจำนวนเชิงซ้อนอย่างมาก $n$ รากรวมทั้งรากซ้ำ</p>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างการใช้งาน -->
+            <section id="section-5" class="content-section">
+                <h2>1.2.5 ตัวอย่างการใช้งาน</h2>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 1: การหาค่าของพหุนาม</h4>
+                    <div class="example-box">
+                        <p><strong>โจทย์:</strong> ให้ $P(x) = 2x^3 - 5x^2 + 3x - 1$ หาค่า $P(2)$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        $$\begin{align}
+                        P(2) &= 2(2)^3 - 5(2)^2 + 3(2) - 1\\
+                        &= 2(8) - 5(4) + 6 - 1\\
+                        &= 16 - 20 + 6 - 1\\
+                        &= 1
+                        \end{align}$$
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 2: การแยกตัวประกอบแบบครบถ้วน</h4>
+                    <div class="example-box">
+                        <p><strong>โจทย์:</strong> แยกตัวประกอบ $x^4 - 5x^2 + 4$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>ให้ $y = x^2$ แล้วพหุนามจะกลายเป็น:</p>
+                        $$y^2 - 5y + 4$$
+                        <p>แยกตัวประกอบ: $(y - 1)(y - 4)$</p>
+                        <p>แทนค่า $y = x^2$ กลับ:</p>
+                        $$(x^2 - 1)(x^2 - 4) = (x + 1)(x - 1)(x + 2)(x - 2)$$
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 3: การหาราก</h4>
+                    <div class="example-box">
+                        <p><strong>โจทย์:</strong> หารากของ $P(x) = x^3 - 6x^2 + 11x - 6$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>ทดลองค่าที่เป็นตัวประกอบของค่าคงที่ (6): $\pm 1, \pm 2, \pm 3, \pm 6$</p>
+                        <p>ทดลอง $x = 1$: $P(1) = 1 - 6 + 11 - 6 = 0$ ✓</p>
+                        <p>ดังนั้น $(x - 1)$ เป็นตัวประกอบ</p>
+                        <p>หาร $P(x)$ ด้วย $(x - 1)$:</p>
+                        $$P(x) = (x - 1)(x^2 - 5x + 6) = (x - 1)(x - 2)(x - 3)$$
+                        <p>ดังนั้น รากคือ $x = 1, 2, 3$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: แบบฝึกหัด -->
+            <section id="section-6" class="content-section">
+                <h2>1.2.6 แบบฝึกหัด</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>ให้ $P(x) = 3x^3 - 2x^2 + x - 5$ และ $Q(x) = x^2 + 2x - 1$</p>
+                        <p>หาค่าของ $P(x) + Q(x)$ และ $P(x) - Q(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>การบวกลบพหุนาม ทำโดยการรวมพจน์ที่เหมือนกัน โดยต้องระวังเรื่องเครื่องหมาย</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $P(x) + Q(x)$:</strong></p>
+                        $$\begin{align}
+                        P(x) + Q(x) &= (3x^3 - 2x^2 + x - 5) + (x^2 + 2x - 1)\\
+                        &= 3x^3 + (-2x^2 + x^2) + (x + 2x) + (-5 - 1)\\
+                        &= 3x^3 - x^2 + 3x - 6
+                        \end{align}$$
+                        
+                        <p><strong>หา $P(x) - Q(x)$:</strong></p>
+                        $$\begin{align}
+                        P(x) - Q(x) &= (3x^3 - 2x^2 + x - 5) - (x^2 + 2x - 1)\\
+                        &= 3x^3 - 2x^2 + x - 5 - x^2 - 2x + 1\\
+                        &= 3x^3 - 3x^2 - x - 4
+                        \end{align}$$
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>แยกตัวประกอบของ $x^3 + 2x^2 - 5x - 6$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้ทฤษฎีตัวประกอบ ทดลองค่าที่เป็นตัวประกอบของค่าคงที่ เพื่อหารากแล้วแยกตัวประกอบ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ทดลองค่าที่เป็นตัวประกอบของ $-6$: $\pm 1, \pm 2, \pm 3, \pm 6$</p>
+                        <p>ทดลอง $x = 1$: $1 + 2 - 5 - 6 = -8 \neq 0$</p>
+                        <p>ทดลอง $x = -1$: $-1 + 2 + 5 - 6 = 0$ ✓</p>
+                        <p>ดังนั้น $(x + 1)$ เป็นตัวประกอบ</p>
+                        <p>หาร $x^3 + 2x^2 - 5x - 6$ ด้วย $(x + 1)$:</p>
+                        $$x^3 + 2x^2 - 5x - 6 = (x + 1)(x^2 + x - 6)$$
+                        <p>แยกตัวประกอบ $x^2 + x - 6 = (x + 3)(x - 2)$</p>
+                        <p><strong>ตัวประกอบสุดท้าย:</strong> $(x + 1)(x + 3)(x - 2)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>คูณ $(2x + 3)(x^2 - x + 4)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้หลักการแจกแจง คูณทุกพจน์ในวงเล็บแรกกับทุกพจน์ในวงเล็บหลัง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        $$\begin{align}
+                        &(2x + 3)(x^2 - x + 4)\\
+                        &= 2x(x^2 - x + 4) + 3(x^2 - x + 4)\\
+                        &= 2x^3 - 2x^2 + 8x + 3x^2 - 3x + 12\\
+                        &= 2x^3 + x^2 + 5x + 12
+                        \end{align}$$
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>หาเศษเหลือเมื่อ $P(x) = x^4 - 3x^3 + 2x - 1$ หารด้วย $(x - 2)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้ทฤษฎีเศษเหลือ เศษเหลือเมื่อหารด้วย $(x - a)$ คือ $P(a)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีเศษเหลือ เศษเหลือ = $P(2)$</p>
+                        $$\begin{align}
+                        P(2) &= 2^4 - 3(2^3) + 2(2) - 1\\
+                        &= 16 - 3(8) + 4 - 1\\
+                        &= 16 - 24 + 4 - 1\\
+                        &= -5
+                        \end{align}$$
+                        <p><strong>เศษเหลือคือ $-5$</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>แยกตัวประกอบ $6x^2 + 7x - 3$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สำหรับ $ax^2 + bx + c$ หาจำนวน 2 จำนวนที่คูณกันได้ $ac$ และบวกกันได้ $b$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>สำหรับ $6x^2 + 7x - 3$</p>
+                        <p>หาจำนวน 2 จำนวนที่คูณกันได้ $6 \times (-3) = -18$ และบวกกันได้ $7$</p>
+                        <p>จำนวนนั้นคือ $9$ และ $-2$ (เพราะ $9 \times (-2) = -18$ และ $9 + (-2) = 7$)</p>
+                        <p>เขียนใหม่:</p>
+                        $$6x^2 + 7x - 3 = 6x^2 + 9x - 2x - 3$$
+                        <p>แยกตัวประกอบแบบกลุ่ม:</p>
+                        $$= 3x(2x + 3) - 1(2x + 3) = (3x - 1)(2x + 3)$$
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>หารากของพหุนาม $P(x) = x^3 - 7x + 6$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ทดลองค่าที่เป็นตัวประกอบของค่าคงที่ หาราก 1 ตัวแล้วแยกตัวประกอบต่อ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ทดลองค่าที่เป็นตัวประกอบของ $6$: $\pm 1, \pm 2, \pm 3, \pm 6$</p>
+                        <p>ทดลอง $x = 1$: $1 - 7 + 6 = 0$ ✓</p>
+                        <p>ดังนั้น $(x - 1)$ เป็นตัวประกอบ</p>
+                        <p>หาร $P(x)$ ด้วย $(x - 1)$:</p>
+                        $$P(x) = (x - 1)(x^2 + x - 6)$$
+                        <p>แยกตัวประกอบ $x^2 + x - 6 = (x + 3)(x - 2)$</p>
+                        <p>ดังนั้น $P(x) = (x - 1)(x + 3)(x - 2)$</p>
+                        <p><strong>รากคือ $x = 1, -3, 2$</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>หาค่า $k$ ที่ทำให้ $(x + 2)$ เป็นตัวประกอบของ $P(x) = x^3 + kx^2 - 5x + 6$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้ทฤษฎีตัวประกอบ ถ้า $(x + 2)$ เป็นตัวประกอบ แล้ว $P(-2) = 0$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ถ้า $(x + 2)$ เป็นตัวประกอบของ $P(x)$ แล้ว $P(-2) = 0$</p>
+                        $$\begin{align}
+                        P(-2) &= (-2)^3 + k(-2)^2 - 5(-2) + 6\\
+                        &= -8 + 4k + 10 + 6\\
+                        &= 4k + 8
+                        \end{align}$$
+                        <p>ให้ $P(-2) = 0$:</p>
+                        $$4k + 8 = 0$$
+                        $$k = -2$$
+                        <p><strong>ดังนั้น $k = -2$</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>แยกตัวประกอบ $x^4 - 1$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรผลต่างของกำลังสอง $a^2 - b^2 = (a+b)(a-b)$ ซ้ำ ๆ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$x^4 - 1 = (x^2)^2 - 1^2$</p>
+                        <p>ใช้สูตร $a^2 - b^2 = (a+b)(a-b)$:</p>
+                        $$x^4 - 1 = (x^2 + 1)(x^2 - 1)$$
+                        <p>แยกตัวประกอบ $x^2 - 1$ ต่อ:</p>
+                        $$x^2 - 1 = (x + 1)(x - 1)$$
+                        <p><strong>ตัวประกอบสุดท้าย:</strong> $(x^2 + 1)(x + 1)(x - 1)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>หาร $2x^3 - 3x^2 + x + 5$ ด้วย $x - 2$ และแสดงผลลัพธ์ในรูป $P(x) = D(x) \cdot Q(x) + R(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้การหารยาวของพหุนาม หรือใช้ทฤษฎีเศษเหลือเพื่อหา $R(x)$ ก่อน</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ใช้การหารยาว:</p>
+                        <div style="font-family: monospace; white-space: pre; background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                                    2x² + x + 3
+                            ________________
+                    x - 2 ) 2x³ - 3x² + x + 5
+                            2x³ - 4x²
+                            ___________
+                                 x² + x
+                                 x² - 2x
+                                 _______
+                                   3x + 5
+                                   3x - 6
+                                   _______
+                                       11
+                        </div>
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        $$2x^3 - 3x^2 + x + 5 = (x - 2)(2x^2 + x + 3) + 11$$
+                        <p>โดยที่ $Q(x) = 2x^2 + x + 3$ และ $R(x) = 11$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>แยกตัวประกอบ $x^6 - 1$ ให้สมบูรณ์ที่สุด</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรผลต่างของกำลัง และสูตรผลรวมกับผลต่างของลูกบาศก์</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$x^6 - 1 = (x^3)^2 - 1^2$</p>
+                        <p>ใช้สูตร $a^2 - b^2 = (a+b)(a-b)$:</p>
+                        $$x^6 - 1 = (x^3 + 1)(x^3 - 1)$$
+                        
+                        <p>แยกตัวประกอบ $x^3 + 1$ ด้วยสูตร $a^3 + b^3 = (a+b)(a^2 - ab + b^2)$:</p>
+                        $$x^3 + 1 = (x + 1)(x^2 - x + 1)$$
+                        
+                        <p>แยกตัวประกอบ $x^3 - 1$ ด้วยสูตร $a^3 - b^3 = (a-b)(a^2 + ab + b^2)$:</p>
+                        $$x^3 - 1 = (x - 1)(x^2 + x + 1)$$
+                        
+                        <p><strong>ตัวประกอบสุดท้าย:</strong></p>
+                        $$x^6 - 1 = (x + 1)(x - 1)(x^2 - x + 1)(x^2 + x + 1)$$
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="ch1-1.html" class="nav-button prev">← บทก่อนหน้า: จำนวนจริงและสมบัติ</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: ลำดับและอนุกรม →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
