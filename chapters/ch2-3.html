@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 2.3: เลขคณิตมอดุลาร์ - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 2.3: เลขคณิตมอดุลาร์</span>
+            </nav>
+            <h1>บทที่ 2.3: เลขคณิตมอดุลาร์</h1>
+            <p class="chapter-intro">เรียนรู้เลขคณิตนาฬิกาและการประยุกต์ใช้ในวิทยาการคำนวณและการเข้ารหัส</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">2.3.1 ความสัมพันธ์สมภาค (Congruence Relation)</a></li>
+                    <li><a href="#section-2">2.3.2 สมบัติของความสัมพันธ์สมภาค</a></li>
+                    <li><a href="#section-3">2.3.3 การดำเนินการในเลขคณิตมอดุลาร์</a></li>
+                    <li><a href="#section-4">2.3.4 ความสำคัญและการประยุกต์</a></li>
+                    <li><a href="#section-5">2.3.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-6">2.3.6 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ความสัมพันธ์สมภาค -->
+            <section id="section-1" class="content-section">
+                <h2>2.3.1 ความสัมพันธ์สมภาค (Congruence Relation)</h2>
+                
+                <p>เลขคณิตมอดุลาร์ เป็นระบบเลขคณิตของจำนวนเต็มที่เกี่ยวข้องกับแนวคิดของเศษเหลือจากการหาร มักถูกเรียกอีกชื่อว่า "เลขคณิตนาฬิกา" เนื่องจากลักษณะการวนซ้ำของตัวเลขที่คล้ายกับหน้าปัดนาฬิกา</p>
+
+                <div class="definition-box">
+                    <h4>นิยาม: ความสัมพันธ์สมภาค</h4>
+                    <p>เรากล่าวว่าจำนวนเต็ม $a$ <strong>สมภาค</strong> (congruent) กับจำนวนเต็ม $b$ มอดุโล $n$ ถ้า $a$ และ $b$ มีเศษเหลือเท่ากันเมื่อหารด้วย $n$ โดยที่ $n$ เป็นจำนวนเต็มบวกที่มากกว่า 1 (เรียกว่า มอดุลัส หรือ modulus)</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>สัญลักษณ์</h4>
+                    $$a \equiv b \pmod{n}$$
+                    
+                    <h4>นิยาม</h4>
+                    <p>$a \equiv b \pmod{n}$ ก็ต่อเมื่อ $n$ หาร $a - b$ ลงตัว</p>
+                    <p>(นั่นคือ $a - b = kn$ สำหรับบางจำนวนเต็ม $k$)</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง ความสัมพันธ์สมภาค</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่างที่ 1:</strong> $17 \equiv 5 \pmod{12}$</p>
+                        <p>เพราะ $17 - 5 = 12$ ซึ่ง 12 หาร 12 ลงตัว (และทั้ง 17 และ 5 หารด้วย 12 เหลือเศษ 5)</p>
+                        
+                        <br>
+                        
+                        <p><strong>ตัวอย่างที่ 2:</strong> $25 \equiv 1 \pmod{4}$</p>
+                        <p>เพราะ $25 - 1 = 24$ ซึ่ง 4 หาร 24 ลงตัว (และทั้ง 25 และ 1 หารด้วย 4 เหลือเศษ 1)</p>
+                        
+                        <br>
+                        
+                        <p><strong>ตัวอย่างที่ 3:</strong> $-7 \equiv 3 \pmod{10}$</p>
+                        <p>เพราะ $-7 - 3 = -10$ ซึ่ง 10 หาร $-10$ ลงตัว (และทั้ง $-7$ และ 3 หารด้วย 10 เหลือเศษ 3)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: สมบัติของความสัมพันธ์สมภาค -->
+            <section id="section-2" class="content-section">
+                <h2>2.3.2 สมบัติของความสัมพันธ์สมภาค (Properties of Congruence)</h2>
+
+                <p>ให้ $a, b, c, d$ เป็นจำนวนเต็ม และ $n$ เป็นจำนวนเต็มบวก</p>
+
+                <h3>สมบัติพื้นฐาน</h3>
+                <div class="subsection">
+                    <h4>สมบัติการสะท้อน (Reflexive)</h4>
+                    <p>$a \equiv a \pmod{n}$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>สมบัติการสมมาตร (Symmetric)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ แล้ว $b \equiv a \pmod{n}$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>สมบัติการถ่ายทอด (Transitive)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ และ $b \equiv c \pmod{n}$ แล้ว $a \equiv c \pmod{n}$</p>
+                </div>
+
+                <h3>สมบัติการดำเนินการ</h3>
+                <div class="subsection">
+                    <h4>สมบัติการบวก (Addition)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ และ $c \equiv d \pmod{n}$ แล้ว $a + c \equiv b + d \pmod{n}$</p>
+                    <p>นั่นคือ $(a + c) \bmod n = (b + d) \bmod n$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>สมบัติการลบ (Subtraction)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ และ $c \equiv d \pmod{n}$ แล้ว $a - c \equiv b - d \pmod{n}$</p>
+                    <p>นั่นคือ $(a - c) \bmod n = (b - d) \bmod n$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>สมบัติการคูณ (Multiplication)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ และ $c \equiv d \pmod{n}$ แล้ว $ac \equiv bd \pmod{n}$</p>
+                    <p>นั่นคือ $(a \cdot c) \bmod n = (b \cdot d) \bmod n$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>สมบัติการยกกำลัง (Exponentiation)</h4>
+                    <p>ถ้า $a \equiv b \pmod{n}$ แล้ว $a^k \equiv b^k \pmod{n}$ สำหรับจำนวนเต็มบวก $k$ ใดๆ</p>
+                </div>
+            </section>
+
+            <!-- Section 3: การดำเนินการในเลขคณิตมอดุลาร์ -->
+            <section id="section-3" class="content-section">
+                <h2>2.3.3 การดำเนินการในเลขคณิตมอดุลาร์ (Operations in Modular Arithmetic)</h2>
+
+                <p>จากสมบัติข้างต้น เราสามารถทำการบวก ลบ และคูณในเลขคณิตมอดุลาร์ได้โดยการนำเศษเหลือมาดำเนินการกัน</p>
+
+                <h3>ก. การบวก (Addition Modulo n)</h3>
+                <div class="formula-box">
+                    $$(a + b) \bmod n = ((a \bmod n) + (b \bmod n)) \bmod n$$
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การบวก</h4>
+                    <div class="example-box">
+                        <p><strong>โจทย์:</strong> จงหาค่าของ $(20 + 35) \bmod 10$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>1. หาเศษเหลือของแต่ละตัว:</p>
+                        <ul>
+                            <li>$20 \bmod 10 = 0$</li>
+                            <li>$35 \bmod 10 = 5$</li>
+                        </ul>
+                        <p>2. นำเศษเหลือมาบวกกัน:</p>
+                        <p>$(0 + 5) \bmod 10 = 5 \bmod 10 = 5$</p>
+                        <p><strong>ตรวจสอบ:</strong> $20 + 35 = 55$, และ $55 \bmod 10 = 5$</p>
+                    </div>
+                </div>
+
+                <h3>ข. การลบ (Subtraction Modulo n)</h3>
+                <div class="formula-box">
+                    $$(a - b) \bmod n = ((a \bmod n) - (b \bmod n)) \bmod n$$
+                </div>
+
+                <p><strong>ข้อควรระวัง:</strong> ถ้าผลลัพธ์เป็นลบ ต้องทำให้เป็นบวกโดยการบวก $n$ เข้าไปเรื่อย ๆ จนกว่าจะได้ค่าที่เป็นบวกและน้อยกว่า $n$</p>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การลบ</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่างที่ 1:</strong> จงหาค่าของ $(10 - 23) \bmod 7$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>1. หาเศษเหลือของแต่ละตัว:</p>
+                        <ul>
+                            <li>$10 \bmod 7 = 3$</li>
+                            <li>$23 \bmod 7 = 2$</li>
+                        </ul>
+                        <p>2. นำเศษเหลือมาลบกัน:</p>
+                        <p>$(3 - 2) \bmod 7 = 1 \bmod 7 = 1$</p>
+                        
+                        <br>
+                        
+                        <p><strong>ตัวอย่างที่ 2:</strong> จงหาค่าของ $(5 - 12) \bmod 7$ (ผลลัพธ์ติดลบ)</p>
+                        <p>1. หาเศษเหลือของแต่ละตัว:</p>
+                        <ul>
+                            <li>$5 \bmod 7 = 5$</li>
+                            <li>$12 \bmod 7 = 5$</li>
+                        </ul>
+                        <p>2. นำเศษเหลือมาลบกัน:</p>
+                        <p>$(5 - 5) \bmod 7 = 0 \bmod 7 = 0$</p>
+                        <p><strong>ตรวจสอบ:</strong> $5 - 12 = -7$, และ $-7 \bmod 7 = 0$</p>
+                    </div>
+                </div>
+
+                <h3>ค. การคูณ (Multiplication Modulo n)</h3>
+                <div class="formula-box">
+                    $$(a \cdot b) \bmod n = ((a \bmod n) \cdot (b \bmod n)) \bmod n$$
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การคูณ</h4>
+                    <div class="example-box">
+                        <p><strong>โจทย์:</strong> จงหาค่าของ $(15 \cdot 8) \bmod 11$</p>
+                        <p><strong>วิธีทำ:</strong></p>
+                        <p>1. หาเศษเหลือของแต่ละตัว:</p>
+                        <ul>
+                            <li>$15 \bmod 11 = 4$</li>
+                            <li>$8 \bmod 11 = 8$</li>
+                        </ul>
+                        <p>2. นำเศษเหลือมาคูณกัน:</p>
+                        <p>$(4 \cdot 8) \bmod 11 = 32 \bmod 11$</p>
+                        <p>3. หาเศษเหลือของผลคูณ:</p>
+                        <p>$32 \bmod 11 = 10$</p>
+                        <p><strong>ตรวจสอบ:</strong> $15 \cdot 8 = 120$, และ $120 \bmod 11 = 10$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ความสำคัญและการประยุกต์ -->
+            <section id="section-4" class="content-section">
+                <h2>2.3.4 ความสำคัญและการประยุกต์ (Importance and Applications)</h2>
+
+                <h3>การประยุกต์ใช้ในชีวิตประจำวัน</h3>
+                <div class="subsection">
+                    <h4>เลขคณิตนาฬิกา (Clock Arithmetic)</h4>
+                    <p>เป็นตัวอย่างที่ง่ายที่สุดของการใช้เลขคณิตมอดุลาร์ เช่น ถ้าตอนนี้ 9 โมงเช้า อีก 5 ชั่วโมงคือ 2 โมงบ่าย $(9 + 5 = 14 \equiv 2 \pmod{12})$</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>การหาหลักสุดท้ายของจำนวน</h4>
+                    <p>หลักหน่วยของจำนวนใดๆ คือค่ามอดุโล 10</p>
+                </div>
+
+                <h3>การประยุกต์ใช้ในวิทยาการคำนวณ</h3>
+                <div class="subsection">
+                    <h4>การเข้ารหัส (Cryptography)</h4>
+                    <p>เป็นพื้นฐานของวิธีการเข้ารหัสแบบกุญแจสาธารณะหลายชนิด เช่น RSA</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>โครงสร้างข้อมูล (Data Structures)</h4>
+                    <p>ใช้ในฟังก์ชันแฮช (hash functions) เพื่อแปลงคีย์ข้อมูลให้เป็นดัชนีในการจัดเก็บ</p>
+                </div>
+
+                <div class="subsection">
+                    <h4>การตรวจสอบความถูกต้อง (Error Detection)</h4>
+                    <p>เช่น ในรหัส ISBN, บัตรเครดิต</p>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-5" class="content-section">
+                <h2>2.3.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 1: การตรวจสอบความสัมพันธ์สมภาค</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> ข้อใดต่อไปนี้เป็นจริง?</p>
+                        <p>ก. $29 \equiv 5 \pmod{12}$</p>
+                        <p>ข. $-10 \equiv 4 \pmod{7}$</p>
+                        <p>ค. $100 \equiv 0 \pmod{10}$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ใช้คำนิยาม $a \equiv b \pmod{n}$ ก็ต่อเมื่อ $n$ หาร $a - b$ ลงตัว</li>
+                            <li>หรือตรวจสอบว่า $a \bmod n = b \bmod n$</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p><strong>ก.</strong> $29 \equiv 5 \pmod{12}$:</p>
+                        <p>$29 - 5 = 24$ และ 12 หาร 24 ลงตัว ($24 = 12 \times 2$) ⟹ จริง</p>
+                        
+                        <p><strong>ข.</strong> $-10 \equiv 4 \pmod{7}$:</p>
+                        <p>$-10 - 4 = -14$ และ 7 หาร $-14$ ลงตัว ($-14 = 7 \times (-2)$) ⟹ จริง</p>
+                        
+                        <p><strong>ค.</strong> $100 \equiv 0 \pmod{10}$:</p>
+                        <p>$100 - 0 = 100$ และ 10 หาร 100 ลงตัว ($100 = 10 \times 10$) ⟹ จริง</p>
+                        
+                        <p><strong>คำตอบ: ก, ข, ค (ทุกข้อเป็นจริง)</strong></p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 2: การหาหลักสุดท้ายของจำนวนยกกำลัง</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาหลักหน่วยของ $3^{2025}$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>หลักหน่วยของจำนวนคือค่ามอดุโล 10</li>
+                            <li>พิจารณารูปแบบการวนซ้ำของหลักหน่วยของกำลังของ 3: $3^1, 3^2, 3^3, \ldots$</li>
+                            <li>หาเศษเหลือของเลขชี้กำลังเมื่อหารด้วยความยาวของรอบการวนซ้ำ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>เราต้องการหา $3^{2025} \bmod 10$</p>
+                        <p>พิจารณารูปแบบของหลักหน่วยของกำลังของ 3:</p>
+                        <ul>
+                            <li>$3^1 = 3$</li>
+                            <li>$3^2 = 9$</li>
+                            <li>$3^3 = 27 \Rightarrow 7$</li>
+                            <li>$3^4 = 81 \Rightarrow 1$</li>
+                            <li>$3^5 = 243 \Rightarrow 3$</li>
+                        </ul>
+                        <p>รูปแบบหลักหน่วยวนซ้ำทุก 4 ตัว: $(3, 9, 7, 1)$</p>
+                        <p>ดังนั้น เราต้องหาเศษเหลือของเลขชี้กำลัง 2025 เมื่อหารด้วย 4:</p>
+                        <p>$2025 \div 4 = 506$ เศษ $1$</p>
+                        <p>$2025 \bmod 4 = 1$</p>
+                        <p>ดังนั้น หลักหน่วยของ $3^{2025}$ จะเหมือนกับหลักหน่วยของ $3^1$</p>
+                        <p><strong>คำตอบ: 3</strong></p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 3: การแก้สมการสมภาค</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาจำนวนเต็มบวก $x$ ที่น้อยที่สุดที่สอดคล้องกับ $3x \equiv 2 \pmod{5}$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ลองแทนค่า $x$ ที่เป็นจำนวนเต็มบวกทีละน้อย หรือ</li>
+                            <li>พยายามหาอินเวอร์สการคูณของ 3 มอดุโล 5</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>เราต้องการหา $x$ ที่ทำให้ $3x$ หารด้วย 5 เหลือเศษ 2</p>
+                        
+                        <ul>
+                            <li>ถ้า $x = 1$, $3(1) = 3 \equiv 3 \pmod{5}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 2$, $3(2) = 6 \equiv 1 \pmod{5}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 3$, $3(3) = 9 \equiv 4 \pmod{5}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 4$, $3(4) = 12 \equiv 2 \pmod{5}$ (ใช่!)</li>
+                        </ul>
+                        
+                        <p>ดังนั้น จำนวนเต็มบวก $x$ ที่น้อยที่สุดคือ 4</p>
+                        <p><strong>คำตอบ: 4</strong></p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 4: การประยุกต์ใช้เลขคณิตมอดุลาร์กับวันในสัปดาห์</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> ถ้าวันนี้เป็นวันจันทร์ และคุณมีนัดสำคัญในอีก 100 วันข้างหน้า นัดนั้นตรงกับวันอะไร?</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>วันในสัปดาห์มี 7 วัน ดังนั้น มอดุลัสคือ 7</li>
+                            <li>หาเศษเหลือของ 100 เมื่อหารด้วย 7</li>
+                            <li>นับวันจากวันจันทร์ไปตามจำนวนเศษเหลือ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>1. หาเศษเหลือของ 100 เมื่อหารด้วย 7:</p>
+                        <p>$100 = 7 \times 14 + 2$</p>
+                        <p>ดังนั้น เศษเหลือคือ 2 วัน</p>
+                        
+                        <p>2. นับวันจากวันจันทร์ไปอีก 2 วัน:</p>
+                        <p>วันจันทร์ (0) → วันอังคาร (1) → วันพุธ (2)</p>
+                        <p>ดังนั้น นัดนั้นตรงกับวันพุธ</p>
+                        
+                        <p><strong>คำตอบ: วันพุธ</strong></p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 5: การหาหลักสุดท้ายของผลบวกของกำลังจำนวนมาก</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาหลักหน่วยของ $2^{2024} + 3^{2024}$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>หลักหน่วยคือค่ามอดุโล 10</li>
+                            <li>พิจารณารูปแบบการวนซ้ำของหลักหน่วยของกำลังของ 2 และ 3 แยกกัน</li>
+                            <li>หาเศษเหลือของเลขชี้กำลังเมื่อหารด้วยความยาวของรอบการวนซ้ำของแต่ละฐาน</li>
+                            <li>นำหลักหน่วยที่ได้มารวมกันแล้วหาหลักหน่วยอีกครั้ง</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>เราต้องการหา $(2^{2024} + 3^{2024}) \bmod 10$</p>
+                        
+                        <p><strong>สำหรับ $2^{2024} \bmod 10$:</strong></p>
+                        <p>รูปแบบหลักหน่วยของกำลังของ 2:</p>
+                        <ul>
+                            <li>$2^1 = 2$</li>
+                            <li>$2^2 = 4$</li>
+                            <li>$2^3 = 8$</li>
+                            <li>$2^4 = 16 \Rightarrow 6$</li>
+                            <li>$2^5 = 32 \Rightarrow 2$</li>
+                        </ul>
+                        <p>วนซ้ำทุก 4 ตัว</p>
+                        <p>หา $2024 \bmod 4$: $2024 \div 4 = 506$ เศษ $0$ (เมื่อหารลงตัว จะใช้เลขชี้กำลังเป็น 4 หรือหมายถึงตัวสุดท้ายของรอบ)</p>
+                        <p>ดังนั้น $2^{2024} \bmod 10 = 6$</p>
+                        
+                        <p><strong>สำหรับ $3^{2024} \bmod 10$:</strong></p>
+                        <p>รูปแบบหลักหน่วยของกำลังของ 3:</p>
+                        <ul>
+                            <li>$3^1 = 3$</li>
+                            <li>$3^2 = 9$</li>
+                            <li>$3^3 = 27 \Rightarrow 7$</li>
+                            <li>$3^4 = 81 \Rightarrow 1$</li>
+                            <li>$3^5 = 243 \Rightarrow 3$</li>
+                        </ul>
+                        <p>วนซ้ำทุก 4 ตัว</p>
+                        <p>หา $2024 \bmod 4$: $2024 \div 4 = 506$ เศษ $0$ (หมายถึงตัวสุดท้ายของรอบ)</p>
+                        <p>ดังนั้น $3^{2024} \bmod 10 = 1$</p>
+                        
+                        <p><strong>รวมหลักหน่วย:</strong></p>
+                        <p>$(6 + 1) \bmod 10 = 7 \bmod 10 = 7$</p>
+                        <p>หลักหน่วยของ $2^{2024} + 3^{2024}$ คือ 7</p>
+                        
+                        <p><strong>คำตอบ: 7</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-6" class="content-section">
+                <h2>2.3.6 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>ข้อใดต่อไปนี้เป็นจริง?</p>
+                        <p>ก. $45 \equiv 13 \pmod{16}$</p>
+                        <p>ข. $-20 \equiv 7 \pmod{9}$</p>
+                        <p>ค. $200 \equiv 0 \pmod{20}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้คำนิยาม $a \equiv b \pmod{n}$ ก็ต่อเมื่อ $n$ หาร $a - b$ ลงตัว<br>
+                        หรือตรวจสอบว่า $a \bmod n = b \bmod n$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก.</strong> $45 \equiv 13 \pmod{16}$:</p>
+                        <p>$45 - 13 = 32$ และ 16 หาร 32 ลงตัว ($32 = 16 \times 2$) ⟹ จริง</p>
+                        
+                        <p><strong>ข.</strong> $-20 \equiv 7 \pmod{9}$:</p>
+                        <p>$-20 - 7 = -27$ และ 9 หาร $-27$ ลงตัว ($-27 = 9 \times (-3)$) ⟹ จริง</p>
+                        
+                        <p><strong>ค.</strong> $200 \equiv 0 \pmod{20}$:</p>
+                        <p>$200 - 0 = 200$ และ 20 หาร 200 ลงตัว ($200 = 20 \times 10$) ⟹ จริง</p>
+                        
+                        <p><strong>คำตอบ: ก, ข, ค (ทุกข้อเป็นจริง)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าของ</p>
+                        <p>ก. $(52 + 37) \bmod 15$</p>
+                        <p>ข. $(18 - 45) \bmod 13$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติการดำเนินการ: $(a \pm b) \bmod n = ((a \bmod n) \pm (b \bmod n)) \bmod n$<br>
+                        หากผลลัพธ์การลบเป็นลบ ต้องทำให้เป็นบวกโดยการบวก $n$ เข้าไปเรื่อย ๆ จนกว่าจะได้ค่าที่เป็นบวกและน้อยกว่า $n$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก.</strong> $(52 + 37) \bmod 15$:</p>
+                        <p>$52 \bmod 15 = 7$ ($52 = 15 \times 3 + 7$)</p>
+                        <p>$37 \bmod 15 = 7$ ($37 = 15 \times 2 + 7$)</p>
+                        <p>$(7 + 7) \bmod 15 = 14 \bmod 15 = 14$</p>
+                        
+                        <p><strong>ข.</strong> $(18 - 45) \bmod 13$:</p>
+                        <p>$18 \bmod 13 = 5$ ($18 = 13 \times 1 + 5$)</p>
+                        <p>$45 \bmod 13 = 6$ ($45 = 13 \times 3 + 6$)</p>
+                        <p>$(5 - 6) \bmod 13 = -1 \bmod 13$</p>
+                        <p>เนื่องจากผลลัพธ์เป็นลบ ให้บวก 13 เข้าไป: $-1 + 13 = 12$</p>
+                        <p>ดังนั้น $12 \bmod 13 = 12$</p>
+                        
+                        <p><strong>คำตอบ: ก. 14, ข. 12</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าของ $(31 \cdot 24) \bmod 8$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติการดำเนินการ: $(a \cdot b) \bmod n = ((a \bmod n) \cdot (b \bmod n)) \bmod n$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$31 \bmod 8 = 7$ ($31 = 8 \times 3 + 7$)</p>
+                        <p>$24 \bmod 8 = 0$ ($24 = 8 \times 3 + 0$)</p>
+                        <p>$(7 \cdot 0) \bmod 8 = 0 \bmod 8 = 0$</p>
+                        <p><strong>คำตอบ: 0</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงหาหลักหน่วยของ $7^{1234}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หลักหน่วยของจำนวนคือค่ามอดุโล 10<br>
+                        พิจารณารูปแบบการวนซ้ำของหลักหน่วยของกำลังของ 7: $7^1, 7^2, 7^3, \ldots$<br>
+                        หาเศษเหลือของเลขชี้กำลังเมื่อหารด้วยความยาวของรอบการวนซ้ำ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหา $7^{1234} \bmod 10$</p>
+                        <p>พิจารณารูปแบบของหลักหน่วยของกำลังของ 7:</p>
+                        <ul>
+                            <li>$7^1 = 7$</li>
+                            <li>$7^2 = 49 \Rightarrow 9$</li>
+                            <li>$7^3 = 343 \Rightarrow 3$</li>
+                            <li>$7^4 = 2401 \Rightarrow 1$</li>
+                            <li>$7^5 = 16807 \Rightarrow 7$</li>
+                        </ul>
+                        <p>รูปแบบหลักหน่วยวนซ้ำทุก 4 ตัว: $(7, 9, 3, 1)$</p>
+                        <p>ดังนั้น เราต้องหาเศษเหลือของเลขชี้กำลัง 1234 เมื่อหารด้วย 4:</p>
+                        <p>$1234 \div 4 = 308$ เศษ $2$</p>
+                        <p>$1234 \bmod 4 = 2$</p>
+                        <p>ดังนั้น หลักหน่วยของ $7^{1234}$ จะเหมือนกับหลักหน่วยของ $7^2$ ซึ่งคือ 9</p>
+                        <p><strong>คำตอบ: 9</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าของ $2^{100} \bmod 10$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>พิจารณารูปแบบการวนซ้ำของหลักหน่วยของกำลังของ 2: $2^1, 2^2, 2^3, \ldots$<br>
+                        หาเศษเหลือของเลขชี้กำลังเมื่อหารด้วยความยาวของรอบการวนซ้ำ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหา $2^{100} \bmod 10$</p>
+                        <p>พิจารณารูปแบบของหลักหน่วยของกำลังของ 2:</p>
+                        <ul>
+                            <li>$2^1 = 2$</li>
+                            <li>$2^2 = 4$</li>
+                            <li>$2^3 = 8$</li>
+                            <li>$2^4 = 16 \Rightarrow 6$</li>
+                            <li>$2^5 = 32 \Rightarrow 2$</li>
+                        </ul>
+                        <p>รูปแบบหลักหน่วยวนซ้ำทุก 4 ตัว: $(2, 4, 8, 6)$</p>
+                        <p>ดังนั้น เราต้องหาเศษเหลือของเลขชี้กำลัง 100 เมื่อหารด้วย 4:</p>
+                        <p>$100 \div 4 = 25$ เศษ $0$</p>
+                        <p>เมื่อหารลงตัว (เศษ 0) ให้ใช้ตัวสุดท้ายของรอบการวนซ้ำ หรือเทียบเท่ากับเลขชี้กำลังเป็น 4</p>
+                        <p>ดังนั้น $2^{100} \bmod 10 = 6$</p>
+                        <p><strong>คำตอบ: 6</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>ถ้าวันนี้เป็นวันศุกร์ อีก 200 วันข้างหน้าจะเป็นวันอะไร?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>วันในสัปดาห์มี 7 วัน ดังนั้น มอดุลัสคือ 7<br>
+                        หาเศษเหลือของ 200 เมื่อหารด้วย 7<br>
+                        นับวันจากวันศุกร์ไปตามจำนวนเศษเหลือ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>1. หาเศษเหลือของ 200 เมื่อหารด้วย 7:</p>
+                        <p>$200 = 7 \times 28 + 4$</p>
+                        <p>ดังนั้น เศษเหลือคือ 4 วัน</p>
+                        
+                        <p>2. นับวันจากวันศุกร์ไปอีก 4 วัน:</p>
+                        <p>วันศุกร์ (0) → วันเสาร์ (1) → วันอาทิตย์ (2) → วันจันทร์ (3) → วันอังคาร (4)</p>
+                        <p>ดังนั้น อีก 200 วันข้างหน้าจะเป็นวันอังคาร</p>
+                        
+                        <p><strong>คำตอบ: วันอังคาร</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>ถ้าตอนนี้เวลา 07:00 น. (เช้า) อีก 50 ชั่วโมงข้างหน้าจะเป็นเวลากี่นาฬิกา?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาร 50 ด้วย 12 เพื่อหาจำนวนรอบของนาฬิกาและเศษเหลือเป็นชั่วโมง<br>
+                        นำเศษเหลือที่ได้ไปบวกกับเวลาปัจจุบัน<br>
+                        ปรับเวลาให้อยู่ในระบบ 12 ชั่วโมง (ถ้าเกิน 12)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>1. หาเศษเหลือของ 50 เมื่อหารด้วย 12:</p>
+                        <p>$50 = 12 \times 4 + 2$</p>
+                        <p>ดังนั้น เศษเหลือคือ 2 ชั่วโมง</p>
+                        
+                        <p>2. นำเศษเหลือไปบวกกับเวลาปัจจุบัน:</p>
+                        <p>เวลาปัจจุบันคือ 07:00 น.</p>
+                        <p>$7 + 2 = 9$ ชั่วโมง</p>
+                        
+                        <p>3. ผลลัพธ์คือ 09:00 น. (ยังไม่เกิน 12)</p>
+                        
+                        <p><strong>คำตอบ: 09:00 น.</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าของ $((15 \cdot 7) + (30 - 11) - (5 \cdot 4)) \bmod 10$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดำเนินการตามลำดับเครื่องหมายทางคณิตศาสตร์ (คูณ/หาร ก่อน บวก/ลบ)<br>
+                        ใช้สมบัติของเลขคณิตมอดุลาร์ในการลดทอนตัวเลขให้เล็กลงก่อนการดำเนินการแต่ละขั้น</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>1. หา $(15 \cdot 7) \bmod 10$:</p>
+                        <p>$15 \bmod 10 = 5$</p>
+                        <p>$7 \bmod 10 = 7$</p>
+                        <p>$(5 \cdot 7) \bmod 10 = 35 \bmod 10 = 5$</p>
+                        
+                        <p>2. หา $(30 - 11) \bmod 10$:</p>
+                        <p>$30 \bmod 10 = 0$</p>
+                        <p>$11 \bmod 10 = 1$</p>
+                        <p>$(0 - 1) \bmod 10 = -1 \bmod 10 = 9$ (เพราะ $-1 + 10 = 9$)</p>
+                        
+                        <p>3. หา $(5 \cdot 4) \bmod 10$:</p>
+                        <p>$5 \bmod 10 = 5$</p>
+                        <p>$4 \bmod 10 = 4$</p>
+                        <p>$(5 \cdot 4) \bmod 10 = 20 \bmod 10 = 0$</p>
+                        
+                        <p>4. นำผลลัพธ์มารวมกัน:</p>
+                        <p>$(5 + 9 - 0) \bmod 10 = 14 \bmod 10 = 4$</p>
+                        
+                        <p><strong>คำตอบ: 4</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>จงหาจำนวนเต็มบวก $x$ ที่น้อยที่สุดที่สอดคล้องกับ $4x \equiv 3 \pmod{7}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ลองแทนค่า $x$ ที่เป็นจำนวนเต็มบวกทีละน้อย หรือ<br>
+                        พยายามหาอินเวอร์สการคูณของ 4 มอดุโล 7</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหา $x$ ที่ทำให้ $4x$ หารด้วย 7 เหลือเศษ 3</p>
+                        
+                        <ul>
+                            <li>ถ้า $x = 1$, $4(1) = 4 \equiv 4 \pmod{7}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 2$, $4(2) = 8 \equiv 1 \pmod{7}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 3$, $4(3) = 12 \equiv 5 \pmod{7}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 4$, $4(4) = 16 \equiv 2 \pmod{7}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 5$, $4(5) = 20 \equiv 6 \pmod{7}$ (ไม่ใช่)</li>
+                            <li>ถ้า $x = 6$, $4(6) = 24 \equiv 3 \pmod{7}$ (ใช่!)</li>
+                        </ul>
+                        
+                        <p>ดังนั้น จำนวนเต็มบวก $x$ ที่น้อยที่สุดคือ 6</p>
+                        
+                        <p><strong>คำตอบ: 6</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>จงหาหลักหน่วยของ $13^{2023} + 17^{2023}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หลักหน่วยคือค่ามอดุโล 10<br>
+                        พิจารณารูปแบบการวนซ้ำของหลักหน่วยของกำลังของ 3 และ 7 (จาก $13 \equiv 3 \pmod{10}$ และ $17 \equiv 7 \pmod{10}$)<br>
+                        หาเศษเหลือของเลขชี้กำลังเมื่อหารด้วยความยาวของรอบการวนซ้ำของแต่ละฐาน<br>
+                        นำหลักหน่วยที่ได้มารวมกันแล้วหาหลักหน่วยอีกครั้ง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหา $(13^{2023} + 17^{2023}) \bmod 10$</p>
+                        <p>ซึ่งเทียบเท่ากับการหา $(3^{2023} + 7^{2023}) \bmod 10$</p>
+                        
+                        <p><strong>สำหรับ $3^{2023} \bmod 10$:</strong></p>
+                        <p>รูปแบบหลักหน่วยของกำลังของ 3: $(3, 9, 7, 1)$ วนซ้ำทุก 4 ตัว</p>
+                        <p>หา $2023 \bmod 4$: $2023 = 4 \times 505 + 3$</p>
+                        <p>ดังนั้น $3^{2023} \bmod 10 = 7$ (ตัวที่ 3 ในรอบ)</p>
+                        
+                        <p><strong>สำหรับ $7^{2023} \bmod 10$:</strong></p>
+                        <p>รูปแบบหลักหน่วยของกำลังของ 7: $(7, 9, 3, 1)$ วนซ้ำทุก 4 ตัว</p>
+                        <p>หา $2023 \bmod 4$: $2023 = 4 \times 505 + 3$</p>
+                        <p>ดังนั้น $7^{2023} \bmod 10 = 3$ (ตัวที่ 3 ในรอบ)</p>
+                        
+                        <p><strong>รวมหลักหน่วย:</strong></p>
+                        <p>$(7 + 3) \bmod 10 = 10 \bmod 10 = 0$</p>
+                        <p>หลักหน่วยของ $13^{2023} + 17^{2023}$ คือ 0</p>
+                        
+                        <p><strong>คำตอบ: 0</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="ch2-2.html" class="nav-button prev">← บทก่อนหน้า: จำนวนเฉพาะและจำนวนประกอบ</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: ตัวหารร่วมมากและตัวคูณร่วมน้อย →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
