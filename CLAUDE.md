@@ -2,24 +2,56 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Status
+## Project Overview
 
-This appears to be a newly initialized Git repository with minimal content. The repository currently contains:
+This is a website for POSN Computer Science Camp 1 tutorial materials (เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 ปี พ.ศ. 2568). The website serves as a comprehensive study guide covering mathematics and computer science topics required for the POSN computer science competition.
 
-- `.gitattributes` - Standard Git configuration for text file normalization
-- No source code, build configuration, or documentation files yet
+## Project Structure
 
-## Development Setup
+```
+/
+├── index.html          # Main homepage with navigation to all chapters
+├── styles.css          # Main stylesheet with responsive design
+├── script.js          # JavaScript for navigation and interactivity
+├── chapters/          # Directory for individual chapter content pages
+└── .gitattributes     # Git configuration for text normalization
+```
 
-Since this is an empty repository, there are no established development commands or build processes yet. Future development will require:
+## Development Commands
 
-1. Determining the project type and technology stack
-2. Adding appropriate configuration files (package.json, requirements.txt, etc.)
-3. Setting up build, test, and lint commands
-4. Establishing project structure and architecture
+This is a static website project using vanilla HTML, CSS, and JavaScript. No build process is required.
 
-## Notes for Future Development
+### Local Development
+- Open `index.html` in a web browser to view the site
+- Use a local server for better development experience: `python -m http.server 8000`
+- Access at `http://localhost:8000`
 
-- The repository uses LF line ending normalization via `.gitattributes`
-- No programming language or framework has been established yet
-- No existing code patterns or architectural decisions to follow
+### Deployment
+- The site can be deployed to GitHub Pages directly from the main branch
+- All files should be in the root directory for GitHub Pages compatibility
+
+## Content Structure
+
+The website is organized into three main sections:
+
+1. **ส่วนที่ 1: คณิตศาสตร์** (Mathematics) - Chapters 1-8
+2. **ส่วนที่ 2: วิทยาการคำนวณ** (Computer Science) - Chapters 9-10  
+3. **ส่วนที่ 3: แนวข้อสอบและกลยุทธ์** (Exam Prep) - Chapters 11-12
+
+Each chapter is subdivided into multiple sections with individual HTML pages in the `chapters/` directory.
+
+## Technical Notes
+
+- Uses Thai language content with UTF-8 encoding
+- Responsive design supports mobile and desktop viewing
+- Navigation includes smooth scrolling and active state tracking
+- Search functionality for finding content across chapters
+- Font: Sarabun (Google Fonts) for Thai language support
+- Color scheme: Blue gradient header with clean white content cards
+
+## Content Development
+
+- Chapter content pages should be created in `chapters/` directory
+- Follow naming convention: `ch{chapter}-{section}.html` (e.g., `ch1-1.html`)
+- Each content page should include navigation back to main sections
+- Maintain consistent styling with the main page design
