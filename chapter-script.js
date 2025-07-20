@@ -528,180 +528,228 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         const generatePDF = (type, filename) => {
-            // Create a new window for PDF generation
-            const printWindow = window.open('', '_blank');
-            
-            // Get the content based on type
-            let contentToInclude = '';
-            const headerContent = document.querySelector('header').outerHTML;
-            
-            switch(type) {
-                case 'complete':
-                    // Include all content except PDF download section
-                    const allSections = document.querySelectorAll('.content-section');
-                    allSections.forEach((section, index) => {
-                        if (!section.id.includes('section-7')) { // Exclude PDF download section
-                            contentToInclude += section.outerHTML;
-                        }
-                    });
-                    break;
-                case 'summary':
-                    // Include only theory sections (1-4)
-                    const theorySections = document.querySelectorAll('#section-1, #section-2, #section-3, #section-4');
-                    theorySections.forEach(section => {
-                        contentToInclude += section.outerHTML;
-                    });
-                    break;
-                case 'problems':
-                    // Include only practice problems and examples
-                    const problemSections = document.querySelectorAll('#section-5, #section-6');
-                    problemSections.forEach(section => {
-                        contentToInclude += section.outerHTML;
-                    });
-                    break;
-            }
-            
-            // PDF-specific CSS
-            const pdfCSS = `
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
-                    @page { 
-                        margin: 2cm 1.5cm; 
-                        size: A4;
-                        @top-center {
-                            content: "บทที่ 1.1 จำนวนจริงและสมบัติ - เอกสารติว สอวน. คอมพิวเตอร์";
-                            font-size: 10pt;
-                            color: #666;
-                        }
-                        @bottom-center {
-                            content: counter(page);
-                            font-size: 10pt;
-                            color: #666;
-                        }
-                    }
-                    body { 
-                        font-family: 'Sarabun', sans-serif; 
-                        line-height: 1.6; 
-                        color: #333;
-                        background: white;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    header {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
-                        padding: 2rem;
-                        text-align: center;
-                        margin-bottom: 2rem;
-                        border-radius: 0;
-                    }
-                    .container { max-width: 100%; margin: 0; padding: 0 1rem; }
-                    .content-section { 
-                        background: white; 
-                        padding: 1.5rem; 
-                        margin-bottom: 2rem;
-                        border: 1px solid #e9ecef;
-                        border-radius: 8px;
-                        page-break-inside: avoid;
-                    }
-                    .practice-problem {
-                        background: white;
-                        border: 1px solid #ddd;
-                        border-radius: 8px;
-                        margin: 1rem 0;
-                        page-break-inside: avoid;
-                        overflow: hidden;
-                    }
-                    .practice-problem h3 {
-                        background: #34495e;
-                        color: white;
-                        margin: 0;
-                        padding: 1rem;
-                    }
-                    .problem-box, .approach-box, .solution-box {
-                        padding: 1rem;
-                        margin: 0;
-                        display: block !important;
-                    }
-                    .problem-box { background: #fef9e7; border-left: 4px solid #f39c12; }
-                    .approach-box { background: #ebf3fd; border-left: 4px solid #3498db; }
-                    .solution-box { background: #eafaf1; border-left: 4px solid #27ae60; }
-                    .number-system-diagram { 
-                        text-align: center; 
-                        margin: 1rem 0;
-                        page-break-inside: avoid;
-                    }
-                    .example-container {
-                        border: 1px solid #ddd;
-                        margin: 1rem 0;
-                        page-break-inside: avoid;
-                        border-radius: 8px;
-                        overflow: hidden;
-                    }
-                    .toc-container, .chapter-navigation, .pdf-download-container,
-                    .toggle-solution, .problem-progress, .timer-display,
-                    .problem-difficulty, .breadcrumb { display: none !important; }
-                    h1, h2, h3 { page-break-after: avoid; }
-                    .page-break { page-break-before: always; }
-                    img { max-width: 100%; height: auto; }
-                    table { width: 100%; border-collapse: collapse; }
-                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                    th { background-color: #f2f2f2; }
-                    .formula-box, .definition-box, .example-box {
-                        border: 1px solid #ddd;
-                        padding: 1rem;
-                        margin: 1rem 0;
-                        border-radius: 4px;
-                        page-break-inside: avoid;
-                    }
-                    .formula-box { background: #fff5e6; border-left: 4px solid #f39c12; }
-                    .definition-box { background: #e8f4fd; border-left: 4px solid #3498db; }
-                    .example-box { background: #e8f8f5; border-left: 4px solid #27ae60; }
-                </style>
-            `;
-            
-            // Create PDF content
-            const pdfContent = `
-                <!DOCTYPE html>
-                <html lang="th">
-                <head>
-                    <meta charset="UTF-8">
-                    <title>${filename}</title>
-                    ${pdfCSS}
-                    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-                    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-                    <script>
-                        MathJax = {
-                            tex: {
-                                inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
-                                displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-                                processEscapes: true
-                            },
-                            options: {
-                                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            // Method 1: Generate HTML content and use browser's print to PDF
+            try {
+                // Get the content based on type
+                let contentToInclude = '';
+                const headerContent = document.querySelector('header').innerHTML;
+                
+                switch(type) {
+                    case 'complete':
+                        // Include all content except PDF download section
+                        const allSections = document.querySelectorAll('.content-section');
+                        allSections.forEach((section, index) => {
+                            if (!section.id.includes('section-7')) { // Exclude PDF download section
+                                // Clone and clean the section
+                                const cleanSection = section.cloneNode(true);
+                                // Remove interactive elements
+                                const interactiveElements = cleanSection.querySelectorAll('.toggle-solution, .problem-difficulty, button');
+                                interactiveElements.forEach(el => el.remove());
+                                // Show all hidden content
+                                const hiddenElements = cleanSection.querySelectorAll('.approach-box, .solution-box');
+                                hiddenElements.forEach(el => el.style.display = 'block');
+                                contentToInclude += cleanSection.outerHTML;
                             }
-                        };
-                    </script>
-                </head>
-                <body>
-                    ${headerContent}
-                    <div class="container">
-                        ${contentToInclude}
-                    </div>
-                    <script>
-                        window.onload = function() {
-                            setTimeout(function() {
-                                window.print();
-                                window.close();
-                            }, 2000);
+                        });
+                        break;
+                    case 'summary':
+                        // Include only theory sections (1-4)
+                        const theorySections = document.querySelectorAll('#section-1, #section-2, #section-3, #section-4');
+                        theorySections.forEach(section => {
+                            const cleanSection = section.cloneNode(true);
+                            const interactiveElements = cleanSection.querySelectorAll('.toggle-solution, .problem-difficulty, button');
+                            interactiveElements.forEach(el => el.remove());
+                            contentToInclude += cleanSection.outerHTML;
+                        });
+                        break;
+                    case 'problems':
+                        // Include only practice problems and examples
+                        const problemSections = document.querySelectorAll('#section-5, #section-6');
+                        problemSections.forEach(section => {
+                            const cleanSection = section.cloneNode(true);
+                            const interactiveElements = cleanSection.querySelectorAll('.toggle-solution, .problem-difficulty, button');
+                            interactiveElements.forEach(el => el.remove());
+                            const hiddenElements = cleanSection.querySelectorAll('.approach-box, .solution-box');
+                            hiddenElements.forEach(el => el.style.display = 'block');
+                            contentToInclude += cleanSection.outerHTML;
+                        });
+                        break;
+                }
+                
+                // Create a new window with the content
+                const printWindow = window.open('', '_blank', 'width=800,height=600');
+                
+                if (!printWindow) {
+                    throw new Error('Popup blocked');
+                }
+                
+                // PDF-optimized CSS
+                const pdfCSS = `
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap');
+                        @page { 
+                            margin: 2cm 1.5cm; 
+                            size: A4;
                         }
-                    </script>
-                </body>
-                </html>
-            `;
-            
-            printWindow.document.write(pdfContent);
-            printWindow.document.close();
+                        * { 
+                            -webkit-print-color-adjust: exact !important;
+                            color-adjust: exact !important;
+                        }
+                        body { 
+                            font-family: 'Sarabun', sans-serif; 
+                            line-height: 1.6; 
+                            color: #333;
+                            background: white;
+                            margin: 0;
+                            padding: 20px;
+                            font-size: 14pt;
+                        }
+                        .pdf-header {
+                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                            color: white;
+                            padding: 2rem;
+                            text-align: center;
+                            margin-bottom: 2rem;
+                            border-radius: 8px;
+                            print-color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                        }
+                        .content-section { 
+                            background: white; 
+                            padding: 1.5rem; 
+                            margin-bottom: 2rem;
+                            border: 1px solid #e9ecef;
+                            border-radius: 8px;
+                            page-break-inside: avoid;
+                        }
+                        .practice-problem {
+                            background: white;
+                            border: 1px solid #ddd;
+                            border-radius: 8px;
+                            margin: 1rem 0;
+                            page-break-inside: avoid;
+                            overflow: hidden;
+                        }
+                        .practice-problem h3 {
+                            background: #34495e !important;
+                            color: white !important;
+                            margin: 0;
+                            padding: 1rem;
+                            print-color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                        }
+                        .problem-box, .approach-box, .solution-box {
+                            padding: 1rem;
+                            margin: 0;
+                            display: block !important;
+                            print-color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                        }
+                        .problem-box { background: #fef9e7 !important; border-left: 4px solid #f39c12; }
+                        .approach-box { background: #ebf3fd !important; border-left: 4px solid #3498db; }
+                        .solution-box { background: #eafaf1 !important; border-left: 4px solid #27ae60; }
+                        .formula-box, .definition-box, .example-box {
+                            border: 1px solid #ddd;
+                            padding: 1rem;
+                            margin: 1rem 0;
+                            border-radius: 4px;
+                            page-break-inside: avoid;
+                            print-color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                        }
+                        .formula-box { background: #fff5e6 !important; border-left: 4px solid #f39c12; }
+                        .definition-box { background: #e8f4fd !important; border-left: 4px solid #3498db; }
+                        .example-box { background: #e8f8f5 !important; border-left: 4px solid #27ae60; }
+                        .number-system-diagram { 
+                            text-align: center; 
+                            margin: 1rem 0;
+                            page-break-inside: avoid;
+                        }
+                        .example-container {
+                            border: 1px solid #ddd;
+                            margin: 1rem 0;
+                            page-break-inside: avoid;
+                            border-radius: 8px;
+                            overflow: hidden;
+                        }
+                        .toc-container, .chapter-navigation, .pdf-download-container,
+                        .toggle-solution, .problem-progress, .timer-display,
+                        .problem-difficulty, .breadcrumb, button { display: none !important; }
+                        h1, h2, h3 { page-break-after: avoid; color: #2c3e50; }
+                        h1 { font-size: 20pt; }
+                        h2 { font-size: 18pt; }
+                        h3 { font-size: 16pt; }
+                        h4 { font-size: 14pt; color: #34495e; }
+                        .page-break { page-break-before: always; }
+                        img { max-width: 100%; height: auto; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                        th { background-color: #f2f2f2; }
+                        .level-1, .branch-left, .branch-right, .sub-branch-left, .sub-branch-center,
+                        .final-left, .final-center, .final-right {
+                            print-color-adjust: exact;
+                            -webkit-print-color-adjust: exact;
+                        }
+                    </style>
+                `;
+                
+                // Create PDF content
+                const pdfContent = `
+                    <!DOCTYPE html>
+                    <html lang="th">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>${filename}</title>
+                        ${pdfCSS}
+                        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+                        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+                        <script>
+                            MathJax = {
+                                tex: {
+                                    inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],
+                                    displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
+                                    processEscapes: true
+                                },
+                                options: {
+                                    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                                }
+                            };
+                        </script>
+                    </head>
+                    <body>
+                        <div class="pdf-header">
+                            <h1>บทที่ 1.1: จำนวนจริงและสมบัติ</h1>
+                            <p>เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 ปี พ.ศ. 2568</p>
+                        </div>
+                        ${contentToInclude}
+                        <script>
+                            window.onload = function() {
+                                if (window.MathJax) {
+                                    MathJax.startup.promise.then(() => {
+                                        setTimeout(() => {
+                                            // Show print dialog
+                                            window.print();
+                                        }, 1000);
+                                    });
+                                } else {
+                                    setTimeout(() => {
+                                        window.print();
+                                    }, 2000);
+                                }
+                            }
+                        </script>
+                    </body>
+                    </html>
+                `;
+                
+                printWindow.document.write(pdfContent);
+                printWindow.document.close();
+                
+            } catch (error) {
+                console.error('PDF generation failed:', error);
+                // Fallback: Direct download instruction
+                alert('การสร้าง PDF อัตโนมัติไม่สำเร็จ\n\nวิธีการดาวน์โหลด PDF:\n1. กด Ctrl+P (หรือ Cmd+P บน Mac)\n2. เลือก "Save as PDF" ใน Destination\n3. กด Save\n\nหรือใช้เมนู Print ของเบราว์เซอร์แล้วเลือก Save as PDF');
+            }
         };
         
         const trackPDFDownload = (type) => {
