@@ -450,6 +450,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         downloadButtons.forEach(button => {
             button.addEventListener('click', function(e) {
+                // Skip Google Drive links - let them work normally
+                if (this.href && (this.href.includes('drive.google.com') || this.href.includes('docs.google.com'))) {
+                    return; // Let the link work normally
+                }
+                
                 e.preventDefault();
                 
                 const buttonId = this.id;
