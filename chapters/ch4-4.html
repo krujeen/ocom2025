@@ -270,213 +270,231 @@
             <section id="section-5" class="content-section">
                 <h2>4.4.5 ตัวอย่างข้อสอบฝึกทำ</h2>
                 
-                <div class="practice-problems">
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 1</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบของสมการ $x^3 + 3x^2 - x - 3 = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>จัดกลุ่ม: $(x^3 + 3x^2) - (x + 3) = 0$</p>
-                                <p>$x^2(x + 3) - 1(x + 3) = 0$</p>
-                                <p>$(x + 3)(x^2 - 1) = 0$</p>
-                                <p>$(x + 3)(x - 1)(x + 1) = 0$</p>
-                                <p><strong>ตอบ:</strong> $x = -3, -1, 1$</p>
-                            </div>
-                        </div>
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x^3 + 3x^2 - x - 3 = 0$</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 2</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบของสมการ $x^4 - 2x^3 - 7x^2 + 8x + 12 = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = -1$:</p>
-                                <p>$P(-1) = 1 + 2 - 7 - 8 + 12 = 0$</p>
-                                <p>ใช้การหารสังเคราะห์และแยกตัวประกอบต่อ:</p>
-                                <p>$P(x) = (x + 1)(x - 3)(x - 2)(x + 2) = 0$</p>
-                                <p><strong>ตอบ:</strong> $x = -2, -1, 2, 3$</p>
-                            </div>
-                        </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้วิธีการจัดหมู่ (กลุ่มละ 2 พจน์)</p>
+                        <p>ดึงตัวร่วมของแต่ละกลุ่ม</p>
+                        <p>แยกตัวประกอบที่เหลือ (ผลต่างกำลังสอง)</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 3</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงแก้อสมการ $x^3 + 2x^2 - 3x \geq 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ดึงตัวร่วม: $x(x^2 + 2x - 3) \geq 0$</p>
-                                <p>แยกตัวประกอบ: $x(x + 3)(x - 1) \geq 0$</p>
-                                <p>จุดวิกฤต: $x = -3, 0, 1$</p>
-                                <p>ทดสอบช่วงและพบว่า:</p>
-                                <p><strong>ตอบ:</strong> $[-3, 0] \cup [1, \infty)$</p>
-                            </div>
-                        </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จัดกลุ่ม: $(x^3 + 3x^2) - (x + 3) = 0$</p>
+                        <p>$x^2(x + 3) - 1(x + 3) = 0$</p>
+                        <p>$(x + 3)(x^2 - 1) = 0$</p>
+                        <p>$(x + 3)(x - 1)(x + 1) = 0$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3, -1, 1$</p>
                     </div>
+                </div>
 
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 4</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงแก้อสมการ $(x^2 - 9)(x^2 - 16) < 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>แยกตัวประกอบ: $(x - 3)(x + 3)(x - 4)(x + 4) < 0$</p>
-                                <p>จุดวิกฤต: $x = -4, -3, 3, 4$</p>
-                                <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบคือ:</p>
-                                <p><strong>ตอบ:</strong> $(-4, -3) \cup (3, 4)$</p>
-                            </div>
-                        </div>
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x^4 - 2x^3 - 7x^2 + 8x + 12 = 0$</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 5</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบของสมการ $x^4 - 10x^2 + 9 = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ให้ $u = x^2$</p>
-                                <p>$u^2 - 10u + 9 = 0$</p>
-                                <p>$(u - 1)(u - 9) = 0$</p>
-                                <p>$u = 1$ หรือ $u = 9$</p>
-                                <p>$x^2 = 1 \Rightarrow x = \pm 1$</p>
-                                <p>$x^2 = 9 \Rightarrow x = \pm 3$</p>
-                                <p><strong>ตอบ:</strong> $x = -3, -1, 1, 3$</p>
-                            </div>
-                        </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้ทฤษฎีบทรากตรรกยะเพื่อเดารากที่เป็นไปได้</p>
+                        <p>ตัวหารของ 12: $\pm1, \pm2, \pm3, \pm4, \pm6, \pm12$</p>
+                        <p>ใช้การหารสังเคราะห์เพื่อลดดีกรีของพหุนาม</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 6</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบของสมการ $2x^3 - 18x = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ดึงตัวร่วม $2x$: $2x(x^2 - 9) = 0$</p>
-                                <p>แยกตัวประกอบ: $2x(x - 3)(x + 3) = 0$</p>
-                                <p>$2x = 0 \Rightarrow x = 0$</p>
-                                <p>$x - 3 = 0 \Rightarrow x = 3$</p>
-                                <p>$x + 3 = 0 \Rightarrow x = -3$</p>
-                                <p><strong>ตอบ:</strong> $x = -3, 0, 3$</p>
-                            </div>
-                        </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = -1$:</p>
+                        <p>$P(-1) = 1 + 2 - 7 - 8 + 12 = 0$</p>
+                        <p>ใช้การหารสังเคราะห์และแยกตัวประกอบต่อ:</p>
+                        <p>$P(x) = (x + 1)(x - 3)(x - 2)(x + 2) = 0$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -2, -1, 2, 3$</p>
                     </div>
+                </div>
 
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 7</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงแก้อสมการ $x^4 - 5x^2 + 4 \leq 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>แยกตัวประกอบ: $(x^2 - 1)(x^2 - 4) \leq 0$</p>
-                                <p>$(x - 1)(x + 1)(x - 2)(x + 2) \leq 0$</p>
-                                <p>จุดวิกฤต: $x = -2, -1, 1, 2$</p>
-                                <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบหรือเท่ากับศูนย์คือ:</p>
-                                <p><strong>ตอบ:</strong> $[-2, -1] \cup [1, 2]$</p>
-                            </div>
-                        </div>
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $x^3 + 2x^2 - 3x \geq 0$</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 8</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบของสมการ $x^4 + 3x^3 - 4x^2 = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ดึงตัวร่วม $x^2$: $x^2(x^2 + 3x - 4) = 0$</p>
-                                <p>แยกตัวประกอบ: $x^2(x + 4)(x - 1) = 0$</p>
-                                <p>$x^2 = 0 \Rightarrow x = 0$ (รากซ้ำ)</p>
-                                <p>$x + 4 = 0 \Rightarrow x = -4$</p>
-                                <p>$x - 1 = 0 \Rightarrow x = 1$</p>
-                                <p><strong>ตอบ:</strong> $x = -4, 0, 1$</p>
-                            </div>
-                        </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดึงตัวร่วม $x$ ออกมา</p>
+                        <p>แยกตัวประกอบของพหุนามดีกรีสอง</p>
+                        <p>หาจุดวิกฤตและทดสอบช่วงเครื่องหมาย</p>
                     </div>
-
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 9</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงแก้อสมการ $x^2(x - 2)(x + 3) > 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>จุดวิกฤต: $x = -3, 0, 2$</p>
-                                <p>($x = 0$ เป็นรากซ้ำ จึงไม่สลับเครื่องหมาย)</p>
-                                <p>ทดสอบช่วง:</p>
-                                <ul>
-                                    <li>$x > 2$: บวก</li>
-                                    <li>$0 < x < 2$: ลบ</li>
-                                    <li>$-3 < x < 0$: ลบ</li>
-                                    <li>$x < -3$: บวก</li>
-                                </ul>
-                                <p><strong>ตอบ:</strong> $(-\infty, -3) \cup (2, \infty)$</p>
-                            </div>
-                        </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ดึงตัวร่วม: $x(x^2 + 2x - 3) \geq 0$</p>
+                        <p>แยกตัวประกอบ: $x(x + 3)(x - 1) \geq 0$</p>
+                        <p>จุดวิกฤต: $x = -3, 0, 1$</p>
+                        <p>ทดสอบช่วงและพบว่าช่วงที่เป็นบวกหรือเท่ากับศูนย์คือ:</p>
+                        
+                        <p><strong>คำตอบ:</strong> $[-3, 0] \cup [1, \infty)$</p>
                     </div>
+                </div>
 
-                    <div class="problem-container">
-                        <div class="problem-header">
-                            <span class="problem-number">ข้อ 10</span>
-                            <button class="toggle-solution">แสดงเฉลย</button>
-                        </div>
-                        <div class="problem-content">
-                            <p>จงหาคำตอบทั้งหมดของสมการ $x^4 + x^3 - 7x^2 - x + 6 = 0$</p>
-                        </div>
-                        <div class="solution-content" style="display: none;">
-                            <h4>เฉลย:</h4>
-                            <div class="solution-steps">
-                                <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = 1$:</p>
-                                <p>$P(1) = 1 + 1 - 7 - 1 + 6 = 0$</p>
-                                <p>ใช้การหารสังเคราะห์ต่อเนื่อง:</p>
-                                <p>$P(x) = (x - 1)(x + 1)(x + 3)(x - 2) = 0$</p>
-                                <p><strong>ตอบ:</strong> $x = -3, -1, 1, 2$</p>
-                            </div>
-                        </div>
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $(x^2 - 9)(x^2 - 16) < 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แยกตัวประกอบแต่ละพจน์ (ผลต่างกำลังสอง)</p>
+                        <p>หาจุดวิกฤตจากรากของแต่ละตัวประกอบ</p>
+                        <p>ทดสอบเครื่องหมายในแต่ละช่วง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>แยกตัวประกอบ: $(x - 3)(x + 3)(x - 4)(x + 4) < 0$</p>
+                        <p>จุดวิกฤต: $x = -4, -3, 3, 4$</p>
+                        <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบคือ:</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-4, -3) \cup (3, 4)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x^4 - 10x^2 + 9 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สังเกตว่าสมการอยู่ในรูปกำลังสองของ $x^2$</p>
+                        <p>ให้ $u = x^2$ เพื่อเปลี่ยนให้เป็นสมการกำลังสอง</p>
+                        <p>แก้หาค่า $u$ แล้วแทนกลับด้วย $x^2$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $u = x^2$</p>
+                        <p>$u^2 - 10u + 9 = 0$</p>
+                        <p>$(u - 1)(u - 9) = 0$</p>
+                        <p>$u = 1$ หรือ $u = 9$</p>
+                        <p>$x^2 = 1 \Rightarrow x = \pm 1$</p>
+                        <p>$x^2 = 9 \Rightarrow x = \pm 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3, -1, 1, 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $2x^3 - 18x = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดึงตัวร่วมที่มากที่สุดออกมา</p>
+                        <p>แยกตัวประกอบที่เหลือ (ผลต่างกำลังสอง)</p>
+                        <p>หาค่า $x$ จากแต่ละตัวประกอบ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ดึงตัวร่วม $2x$: $2x(x^2 - 9) = 0$</p>
+                        <p>แยกตัวประกอบ: $2x(x - 3)(x + 3) = 0$</p>
+                        <p>$2x = 0 \Rightarrow x = 0$</p>
+                        <p>$x - 3 = 0 \Rightarrow x = 3$</p>
+                        <p>$x + 3 = 0 \Rightarrow x = -3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3, 0, 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $x^4 - 5x^2 + 4 \leq 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แยกตัวประกอบ (คิดเป็นสมการกำลังสองของ $x^2$)</p>
+                        <p>แยกตัวประกอบอีกครั้งด้วยผลต่างกำลังสอง</p>
+                        <p>หาจุดวิกฤตและทดสอบช่วง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>แยกตัวประกอบ: $(x^2 - 1)(x^2 - 4) \leq 0$</p>
+                        <p>$(x - 1)(x + 1)(x - 2)(x + 2) \leq 0$</p>
+                        <p>จุดวิกฤต: $x = -2, -1, 1, 2$</p>
+                        <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบหรือเท่ากับศูนย์คือ:</p>
+                        
+                        <p><strong>คำตอบ:</strong> $[-2, -1] \cup [1, 2]$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x^4 + 3x^3 - 4x^2 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดึงตัวร่วมที่มากที่สุด ($x^2$) ออกมา</p>
+                        <p>แยกตัวประกอบของพหุนามดีกรีสองที่เหลือ</p>
+                        <p>หาค่า $x$ โดยระวังรากซ้ำ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ดึงตัวร่วม $x^2$: $x^2(x^2 + 3x - 4) = 0$</p>
+                        <p>แยกตัวประกอบ: $x^2(x + 4)(x - 1) = 0$</p>
+                        <p>$x^2 = 0 \Rightarrow x = 0$ (รากซ้ำ)</p>
+                        <p>$x + 4 = 0 \Rightarrow x = -4$</p>
+                        <p>$x - 1 = 0 \Rightarrow x = 1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -4, 0, 1$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $x^2(x - 2)(x + 3) > 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาจุดวิกฤต (ระวังรากซ้ำ $x = 0$)</p>
+                        <p>ทดสอบค่าในแต่ละช่วง</p>
+                        <p>เครื่องหมายจะไม่สลับเมื่อผ่านรากซ้ำ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จุดวิกฤต: $x = -3, 0, 2$</p>
+                        <p>($x = 0$ เป็นรากซ้ำ จึงไม่สลับเครื่องหมาย)</p>
+                        <p>ทดสอบช่วง:</p>
+                        <ul>
+                            <li>$x > 2$: บวก</li>
+                            <li>$0 < x < 2$: ลบ</li>
+                            <li>$-3 < x < 0$: ลบ</li>
+                            <li>$x < -3$: บวก</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> $(-\infty, -3) \cup (2, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบทั้งหมดของสมการ $x^4 + x^3 - 7x^2 - x + 6 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้ทฤษฎีบทรากตรรกยะ (ตัวหารของ 6: $\pm1, \pm2, \pm3, \pm6$)</p>
+                        <p>ใช้การหารสังเคราะห์ซ้ำ ๆ จนกว่าจะเหลือดีกรี 2</p>
+                        <p>แยกตัวประกอบที่เหลือหรือใช้สูตร</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = 1$:</p>
+                        <p>$P(1) = 1 + 1 - 7 - 1 + 6 = 0$</p>
+                        <p>ใช้การหารสังเคราะห์ต่อเนื่อง:</p>
+                        <p>$P(x) = (x - 1)(x + 1)(x + 3)(x - 2) = 0$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3, -1, 1, 2$</p>
                     </div>
                 </div>
             </section>
@@ -484,26 +502,5 @@
     </main>
 
     <script src="../chapter-script.js"></script>
-    <script>
-        // Toggle solution visibility
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleButtons = document.querySelectorAll('.toggle-solution');
-            
-            toggleButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const problemContainer = this.closest('.problem-container');
-                    const solutionContent = problemContainer.querySelector('.solution-content');
-                    
-                    if (solutionContent.style.display === 'none') {
-                        solutionContent.style.display = 'block';
-                        this.textContent = 'ซ่อนเฉลย';
-                    } else {
-                        solutionContent.style.display = 'none';
-                        this.textContent = 'แสดงเฉลย';
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
