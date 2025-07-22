@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 4.1: อสมการเชิงเส้นตัวแปรเดียว - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 4.1: อสมการเชิงเส้นตัวแปรเดียว</span>
+            </nav>
+            <h1>บทที่ 4.1: อสมการเชิงเส้นตัวแปรเดียว</h1>
+            <p class="chapter-intro">ศึกษาหลักการแก้อสมการเชิงเส้นตัวแปรเดียว ซึ่งเป็นหัวข้อพื้นฐานแต่สำคัญมากในคณิตศาสตร์ และเป็นแนวคิดที่ใช้ในการกำหนดเงื่อนไขต่างๆ ในการเขียนโปรแกรมคอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">4.1.1 ความหมายของอสมการเชิงเส้นตัวแปรเดียว</a></li>
+                    <li><a href="#section-2">4.1.2 สมบัติของอสมการ</a></li>
+                    <li><a href="#section-3">4.1.3 การแก้อสมการเชิงเส้นตัวแปรเดียว</a></li>
+                    <li><a href="#section-4">4.1.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">4.1.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ความหมายของอสมการเชิงเส้นตัวแปรเดียว -->
+            <section id="section-1" class="content-section">
+                <h2>4.1.1 ความหมายของอสมการเชิงเส้นตัวแปรเดียว</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม: อสมการ (Inequality)</h4>
+                    <p>อสมการ คือ ประโยคสัญลักษณ์ที่แสดงความสัมพันธ์ไม่เท่ากันของจำนวน โดยมีเครื่องหมายแสดงความไม่เท่ากัน ได้แก่:</p>
+                    <ul>
+                        <li>$<$ (น้อยกว่า)</li>
+                        <li>$>$ (มากกว่า)</li>
+                        <li>$\leq$ (น้อยกว่าหรือเท่ากับ)</li>
+                        <li>$\geq$ (มากกว่าหรือเท่ากับ)</li>
+                        <li>$\neq$ (ไม่เท่ากับ)</li>
+                    </ul>
+                </div>
+
+                <div class="definition-box">
+                    <h4>นิยาม: อสมการเชิงเส้นตัวแปรเดียว (Linear Inequality in One Variable)</h4>
+                    <p>อสมการเชิงเส้นตัวแปรเดียว คือ อสมการที่มีตัวแปรเพียงตัวเดียว และเลขชี้กำลังของตัวแปรนั้นเป็น 1 เท่านั้น โดยสามารถจัดรูปได้เป็น:</p>
+                    <div class="formula-box">
+                        $$ax + b < 0$$
+                        $$ax + b > 0$$
+                        $$ax + b \leq 0$$
+                        $$ax + b \geq 0$$
+                        $$ax + b \neq 0$$
+                    </div>
+                    <p>เมื่อ $a, b$ เป็นค่าคงที่ใดๆ โดยที่ $a \neq 0$ และ $x$ เป็นตัวแปร</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างอสมการเชิงเส้นตัวแปรเดียว</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>$3x + 5 < 10$</li>
+                            <li>$y - 7 \geq 2y$</li>
+                            <li>$5(z - 1) \neq 0$</li>
+                            <li>$-2x + 3 > 1$</li>
+                            <li>$\frac{x}{4} \leq 5$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: สมบัติของอสมการ -->
+            <section id="section-2" class="content-section">
+                <h2>4.1.2 สมบัติของอสมการ</h2>
+
+                <p>การแก้อสมการนั้นคล้ายกับการแก้สมการ แต่มีข้อควรระวังบางประการเกี่ยวกับสมบัติการคูณและการหารด้วยจำนวนลบ</p>
+
+                <p>ให้ $a, b, c$ เป็นจำนวนจริง</p>
+
+                <div class="subsection">
+                    <h3>1. สมบัติการบวกด้วยจำนวนที่เท่ากัน</h3>
+                    <div class="formula-box">
+                        $$\text{ถ้า } a < b \text{ แล้ว } a + c < b + c$$
+                    </div>
+                    <p>(ใช้ได้กับทุกเครื่องหมายอสมการ: $>, \leq, \geq$)</p>
+                    
+                    <div class="example-box">
+                        <p><strong>ตัวอย่าง:</strong> ถ้า $x - 3 < 5$, บวก 3 ทั้งสองข้าง:</p>
+                        <p>$x - 3 + 3 < 5 + 3 \Rightarrow x < 8$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. สมบัติการคูณด้วยจำนวนบวกที่เท่ากัน</h3>
+                    <div class="formula-box">
+                        $$\text{ถ้า } a < b \text{ และ } c > 0 \text{ แล้ว } ac < bc$$
+                    </div>
+                    <p>(ใช้ได้กับทุกเครื่องหมายอสมการ: $>, \leq, \geq$)</p>
+                    
+                    <div class="example-box">
+                        <p><strong>ตัวอย่าง:</strong> ถ้า $\frac{x}{2} < 4$, คูณ 2 ทั้งสองข้าง:</p>
+                        <p>$\frac{x}{2} \cdot 2 < 4 \cdot 2 \Rightarrow x < 8$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3. สมบัติการคูณด้วยจำนวนลบที่เท่ากัน</h3>
+                    <div class="formula-box">
+                        $$\text{ถ้า } a < b \text{ และ } c < 0 \text{ แล้ว } ac > bc \text{ (ต้องเปลี่ยนเครื่องหมายอสมการ)}$$
+                    </div>
+                    <p>(ใช้ได้กับทุกเครื่องหมายอสมการ: ถ้า $>$ เป็น $<$, ถ้า $\leq$ เป็น $\geq$ เป็นต้น)</p>
+                    
+                    <div class="example-box">
+                        <p><strong>ตัวอย่าง:</strong> ถ้า $-3x < 12$, คูณ $-\frac{1}{3}$ ทั้งสองข้าง:</p>
+                        <p>$(-3x) \cdot \left(-\frac{1}{3}\right) > 12 \cdot \left(-\frac{1}{3}\right) \Rightarrow x > -4$ (เปลี่ยนจาก $<$ เป็น $>$)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>4. สมบัติการถ่ายทอด</h3>
+                    <div class="formula-box">
+                        $$\text{ถ้า } a < b \text{ และ } b < c \text{ แล้ว } a < c$$
+                        $$\text{ถ้า } a > b \text{ และ } b > c \text{ แล้ว } a > c$$
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: การแก้อสมการเชิงเส้นตัวแปรเดียว -->
+            <section id="section-3" class="content-section">
+                <h2>4.1.3 การแก้อสมการเชิงเส้นตัวแปรเดียว</h2>
+
+                <p>การแก้อสมการคือการหาเซตของค่าตัวแปรที่ทำให้อสมการเป็นจริง มีขั้นตอนคล้ายการแก้สมการ:</p>
+
+                <div class="subsection">
+                    <h3>ขั้นตอนการแก้อสมการ</h3>
+                    <ol>
+                        <li>จัดรูปอสมการให้ตัวแปรอยู่ข้างหนึ่ง และค่าคงที่อีกข้างหนึ่ง</li>
+                        <li>ใช้สมบัติการบวก/ลบ เพื่อย้ายพจน์</li>
+                        <li>ใช้สมบัติการคูณ/หาร เพื่อกำจัดสัมประสิทธิ์หน้าตัวแปร</li>
+                        <li><strong>สำคัญมาก:</strong> หากคูณหรือหารด้วยจำนวนลบ ต้อง <strong>กลับเครื่องหมายอสมการ</strong></li>
+                    </ol>
+                </div>
+
+                <div class="subsection">
+                    <h3>การแสดงคำตอบของอสมการ</h3>
+                    
+                    <h4>1. บนเส้นจำนวน (Number Line)</h4>
+                    <p>ใช้จุดทึบ/วงกลมโปร่ง และลากเส้น:</p>
+                    <ul>
+                        <li>$<$ หรือ $>$ : ใช้วงกลมโปร่ง (ไม่รวมค่าที่จุดนั้น)</li>
+                        <li>$\leq$ หรือ $\geq$ : ใช้จุดทึบ (รวมค่าที่จุดนั้น)</li>
+                    </ul>
+
+                    <h4>2. สัญกรณ์ช่วง (Interval Notation)</h4>
+                    <ul>
+                        <li>$(a, b)$ : $a < x < b$ (ช่วงเปิด, ไม่รวม $a, b$)</li>
+                        <li>$[a, b]$ : $a \leq x \leq b$ (ช่วงปิด, รวม $a, b$)</li>
+                        <li>$(a, b]$ : $a < x \leq b$</li>
+                        <li>$[a, b)$ : $a \leq x < b$</li>
+                        <li>$(a, \infty)$ : $x > a$</li>
+                        <li>$[a, \infty)$ : $x \geq a$</li>
+                        <li>$(-\infty, a)$ : $x < a$</li>
+                        <li>$(-\infty, a]$ : $x \leq a$</li>
+                        <li>$(-\infty, \infty)$ : จำนวนจริงทั้งหมด $(\mathbb{R})$</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>4.1.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 1: การแก้อสมการพื้นฐาน</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงแก้อสมการ $2x - 7 < 3$ และแสดงคำตอบในรูปสัญกรณ์ช่วงและบนเส้นจำนวน</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ย้ายพจน์ที่เป็นค่าคงที่ไปอีกฝั่ง</li>
+                            <li>กำจัดสัมประสิทธิ์หน้าตัวแปร</li>
+                            <li>แสดงคำตอบ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$2x - 7 < 3$</p>
+                        <p>บวก 7 ทั้งสองข้าง:</p>
+                        <p>$2x - 7 + 7 < 3 + 7$</p>
+                        <p>$2x < 10$</p>
+                        <p>หารด้วย 2 (จำนวนบวก):</p>
+                        <p>$\frac{2x}{2} < \frac{10}{2}$</p>
+                        <p>$x < 5$</p>
+                        
+                        <p><strong>สัญกรณ์ช่วง:</strong> $(-\infty, 5)$</p>
+                        <p><strong>บนเส้นจำนวน:</strong> วงกลมโปร่งที่ 5 และลากเส้นไปทางซ้าย</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 2: การแก้อสมการที่มีการคูณด้วยจำนวนลบ</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงแก้อสมการ $-4x + 1 \geq 13$ และแสดงคำตอบในรูปสัญกรณ์ช่วงและบนเส้นจำนวน</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ย้ายพจน์ที่เป็นค่าคงที่ไปอีกฝั่ง</li>
+                            <li>กำจัดสัมประสิทธิ์หน้าตัวแปร (ระวังเรื่องการกลับเครื่องหมาย)</li>
+                            <li>แสดงคำตอบ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$-4x + 1 \geq 13$</p>
+                        <p>ลบ 1 ทั้งสองข้าง:</p>
+                        <p>$-4x + 1 - 1 \geq 13 - 1$</p>
+                        <p>$-4x \geq 12$</p>
+                        <p>หารด้วย -4 (ต้องกลับเครื่องหมายอสมการ):</p>
+                        <p>$\frac{-4x}{-4} \leq \frac{12}{-4}$</p>
+                        <p>$x \leq -3$</p>
+                        
+                        <p><strong>สัญกรณ์ช่วง:</strong> $(-\infty, -3]$</p>
+                        <p><strong>บนเส้นจำนวน:</strong> จุดทึบที่ -3 และลากเส้นไปทางซ้าย</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 3: การแก้อสมการที่มีตัวแปรทั้งสองข้าง</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงแก้อสมการ $5x - 2 \geq 3x + 8$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ย้ายพจน์ตัวแปรไปอยู่ข้างหนึ่ง และค่าคงที่ไปอีกข้างหนึ่ง</li>
+                            <li>แก้สমการที่เหลือ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$5x - 2 \geq 3x + 8$</p>
+                        <p>ลบ $3x$ ทั้งสองข้าง:</p>
+                        <p>$5x - 3x - 2 \geq 3x - 3x + 8$</p>
+                        <p>$2x - 2 \geq 8$</p>
+                        <p>บวก 2 ทั้งสองข้าง:</p>
+                        <p>$2x - 2 + 2 \geq 8 + 2$</p>
+                        <p>$2x \geq 10$</p>
+                        <p>หารด้วย 2:</p>
+                        <p>$\frac{2x}{2} \geq \frac{10}{2}$</p>
+                        <p>$x \geq 5$</p>
+                        
+                        <p><strong>สัญกรณ์ช่วง:</strong> $[5, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 4: การแก้อสมการที่มีวงเล็บ</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงแก้อสมการ $3(x + 1) - 2x < 5x - 1$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>กระจายค่าที่อยู่นอกวงเล็บเข้าไป</li>
+                            <li>รวมพจน์ที่คล้ายกัน</li>
+                            <li>ย้ายพจน์ตัวแปรและค่าคงที่ไปคนละข้าง</li>
+                            <li>ระวังการคูณ/หารด้วยจำนวนลบ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$3(x + 1) - 2x < 5x - 1$</p>
+                        <p>กระจาย 3 เข้าไป:</p>
+                        <p>$3x + 3 - 2x < 5x - 1$</p>
+                        <p>รวมพจน์ $x$ ทางซ้าย:</p>
+                        <p>$x + 3 < 5x - 1$</p>
+                        <p>ลบ $x$ ทั้งสองข้าง:</p>
+                        <p>$x - x + 3 < 5x - x - 1$</p>
+                        <p>$3 < 4x - 1$</p>
+                        <p>บวก 1 ทั้งสองข้าง:</p>
+                        <p>$3 + 1 < 4x - 1 + 1$</p>
+                        <p>$4 < 4x$</p>
+                        <p>หารด้วย 4:</p>
+                        <p>$\frac{4}{4} < \frac{4x}{4}$</p>
+                        <p>$1 < x$ หรือ $x > 1$</p>
+                        
+                        <p><strong>สัญกรณ์ช่วง:</strong> $(1, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 5: การแก้อสมการแบบสองชั้น</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงแก้อสมการ $-5 \leq 2x + 1 < 9$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>แก้อสมการแยกกัน หรือ</li>
+                            <li>ดำเนินการทุกส่วนของอสมการพร้อมกัน (บวก/ลบ/คูณ/หาร)</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$-5 \leq 2x + 1 < 9$</p>
+                        <p>ลบ 1 ตลอดอสมการ:</p>
+                        <p>$-5 - 1 \leq 2x + 1 - 1 < 9 - 1$</p>
+                        <p>$-6 \leq 2x < 8$</p>
+                        <p>หารด้วย 2 ตลอดอสมการ:</p>
+                        <p>$\frac{-6}{2} \leq \frac{2x}{2} < \frac{8}{2}$</p>
+                        <p>$-3 \leq x < 4$</p>
+                        
+                        <p><strong>สัญกรณ์ช่วง:</strong> $[-3, 4)$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>4.1.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $3x - 4 > 11$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ย้ายพจน์ที่เป็นค่าคงที่ไปอีกฝั่งด้วยการบวก/ลบ</p>
+                        <p>กำจัดสัมประสิทธิ์หน้าตัวแปรด้วยการคูณ/หาร (ระวังเครื่องหมาย)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$3x - 4 > 11$</p>
+                        <p>บวก 4 ทั้งสองข้าง:</p>
+                        <p>$3x > 11 + 4$</p>
+                        <p>$3x > 15$</p>
+                        <p>หารด้วย 3 (จำนวนบวก):</p>
+                        <p>$x > \frac{15}{3}$</p>
+                        <p>$x > 5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(5, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $-2x + 5 \leq 15$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ย้ายพจน์ที่เป็นค่าคงที่ไปอีกฝั่ง</p>
+                        <p>กำจัดสัมประสิทธิ์หน้าตัวแปร (ต้องกลับเครื่องหมายอสมการเมื่อคูณหรือหารด้วยจำนวนลบ)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$-2x + 5 \leq 15$</p>
+                        <p>ลบ 5 ทั้งสองข้าง:</p>
+                        <p>$-2x \leq 15 - 5$</p>
+                        <p>$-2x \leq 10$</p>
+                        <p>หารด้วย -2 (จำนวนลบ - กลับเครื่องหมาย):</p>
+                        <p>$x \geq \frac{10}{-2}$</p>
+                        <p>$x \geq -5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $[-5, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $7x + 2 < 4x - 7$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ย้ายพจน์ตัวแปรไปอยู่ข้างหนึ่ง และค่าคงที่ไปอีกข้างหนึ่ง</p>
+                        <p>แก้สมการที่เหลือ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$7x + 2 < 4x - 7$</p>
+                        <p>ลบ $4x$ ทั้งสองข้าง:</p>
+                        <p>$7x - 4x + 2 < -7$</p>
+                        <p>$3x + 2 < -7$</p>
+                        <p>ลบ 2 ทั้งสองข้าง:</p>
+                        <p>$3x < -7 - 2$</p>
+                        <p>$3x < -9$</p>
+                        <p>หารด้วย 3:</p>
+                        <p>$x < \frac{-9}{3}$</p>
+                        <p>$x < -3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-\infty, -3)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $4(x - 3) \geq 2x + 6$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กระจายค่าที่อยู่นอกวงเล็บเข้าไป</p>
+                        <p>รวมพจน์ที่คล้ายกัน</p>
+                        <p>ย้ายพจน์ตัวแปรและค่าคงที่ไปคนละข้าง</p>
+                        <p>ระวังการคูณ/หารด้วยจำนวนลบ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$4(x - 3) \geq 2x + 6$</p>
+                        <p>กระจาย 4 เข้าไป:</p>
+                        <p>$4x - 12 \geq 2x + 6$</p>
+                        <p>ลบ $2x$ ทั้งสองข้าง:</p>
+                        <p>$4x - 2x - 12 \geq 6$</p>
+                        <p>$2x - 12 \geq 6$</p>
+                        <p>บวก 12 ทั้งสองข้าง:</p>
+                        <p>$2x \geq 6 + 12$</p>
+                        <p>$2x \geq 18$</p>
+                        <p>หารด้วย 2:</p>
+                        <p>$x \geq \frac{18}{2}$</p>
+                        <p>$x \geq 9$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $[9, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $-10 < 3x + 2 \leq 8$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดำเนินการทุกส่วนของอสมการพร้อมกัน (บวก/ลบ/คูณ/หาร)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$-10 < 3x + 2 \leq 8$</p>
+                        <p>ลบ 2 ตลอดอสมการ:</p>
+                        <p>$-10 - 2 < 3x + 2 - 2 \leq 8 - 2$</p>
+                        <p>$-12 < 3x \leq 6$</p>
+                        <p>หารด้วย 3 ตลอดอสมการ:</p>
+                        <p>$\frac{-12}{3} < \frac{3x}{3} \leq \frac{6}{3}$</p>
+                        <p>$-4 < x \leq 2$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-4, 2]$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $\frac{x}{3} - \frac{1}{2} > \frac{5}{6}$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หา ค.ร.น. ของตัวส่วนทั้งหมด</p>
+                        <p>คูณอสมการด้วย ค.ร.น. เพื่อกำจัดตัวส่วน</p>
+                        <p>แก้อสมการเชิงเส้นที่เหลือ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$\frac{x}{3} - \frac{1}{2} > \frac{5}{6}$</p>
+                        <p>ค.ร.น. ของ 3, 2, 6 คือ 6</p>
+                        <p>คูณอสมการด้วย 6:</p>
+                        <p>$6\left(\frac{x}{3} - \frac{1}{2}\right) > 6\left(\frac{5}{6}\right)$</p>
+                        <p>$2x - 3 > 5$</p>
+                        <p>บวก 3 ทั้งสองข้าง:</p>
+                        <p>$2x > 5 + 3$</p>
+                        <p>$2x > 8$</p>
+                        <p>หารด้วย 2:</p>
+                        <p>$x > \frac{8}{2}$</p>
+                        <p>$x > 4$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(4, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการต่อไปนี้:</p>
+                        <p>ก. $2(x + 1) > 2x + 5$</p>
+                        <p>ข. $3x - 7 \leq 3x + 2$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แก้อสมการตามปกติ</p>
+                        <p>หากตัวแปรหายไป ให้พิจารณาว่าอสมการที่เหลือเป็นจริงหรือเท็จ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก.</strong> $2(x + 1) > 2x + 5$</p>
+                        <p>$2x + 2 > 2x + 5$</p>
+                        <p>ลบ $2x$ ทั้งสองข้าง:</p>
+                        <p>$2 > 5$</p>
+                        <p>ข้อความ "$2 > 5$" เป็นเท็จเสมอ ไม่ว่า $x$ จะเป็นค่าใด</p>
+                        <p>ดังนั้น อสมการนี้ <strong>ไม่มีคำตอบ</strong> (เซตว่าง: $\emptyset$)</p>
+                        
+                        <p><strong>ข.</strong> $3x - 7 \leq 3x + 2$</p>
+                        <p>ลบ $3x$ ทั้งสองข้าง:</p>
+                        <p>$-7 \leq 2$</p>
+                        <p>ข้อความ "$-7 \leq 2$" เป็นจริงเสมอ ไม่ว่า $x$ จะเป็นค่าใด</p>
+                        <p>ดังนั้น อสมการนี้เป็นจริงสำหรับ <strong>ทุกจำนวนจริง</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. $\emptyset$ (เซตว่าง), ข. $(-\infty, \infty)$ (จำนวนจริงทั้งหมด)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $5x - 1 \neq 9$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แก้อสมการเหมือนสมการปกติ แต่แทนที่จะเป็น = ให้เป็น $\neq$</p>
+                        <p>คำตอบคือจำนวนจริงทั้งหมด ยกเว้นค่าที่ทำให้สมการเท่ากับ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$5x - 1 \neq 9$</p>
+                        <p>บวก 1 ทั้งสองข้าง:</p>
+                        <p>$5x \neq 9 + 1$</p>
+                        <p>$5x \neq 10$</p>
+                        <p>หารด้วย 5:</p>
+                        <p>$x \neq \frac{10}{5}$</p>
+                        <p>$x \neq 2$</p>
+                        <p>คำตอบคือจำนวนจริงทั้งหมด ยกเว้น 2</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-\infty, 2) \cup (2, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>จงแก้อสมการ $\frac{x + 1}{2} - \frac{x - 2}{3} \geq 1$ และแสดงคำตอบในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หา ค.ร.น. ของตัวส่วนทั้งหมด</p>
+                        <p>คูณอสมการด้วย ค.ร.น. เพื่อกำจัดตัวส่วน (ระวังวงเล็บเมื่อมีหลายพจน์ในเศษ)</p>
+                        <p>แก้อสมการเชิงเส้นที่เหลือ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$\frac{x + 1}{2} - \frac{x - 2}{3} \geq 1$</p>
+                        <p>ค.ร.น. ของ 2, 3 คือ 6</p>
+                        <p>คูณอสมการด้วย 6:</p>
+                        <p>$6\left(\frac{x + 1}{2}\right) - 6\left(\frac{x - 2}{3}\right) \geq 6(1)$</p>
+                        <p>$3(x + 1) - 2(x - 2) \geq 6$</p>
+                        <p>กระจายค่าเข้าวงเล็บ:</p>
+                        <p>$3x + 3 - (2x - 4) \geq 6$</p>
+                        <p>$3x + 3 - 2x + 4 \geq 6$</p>
+                        <p>รวมพจน์ที่คล้ายกัน:</p>
+                        <p>$x + 7 \geq 6$</p>
+                        <p>ลบ 7 ทั้งสองข้าง:</p>
+                        <p>$x \geq 6 - 7$</p>
+                        <p>$x \geq -1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $[-1, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>ร้านขนมปังแห่งหนึ่งขายขนมปังเนยสดชิ้นละ 25 บาท และมีต้นทุนในการผลิตขนมปังชิ้นละ 10 บาท โดยมีค่าใช้จ่ายคงที่ของร้านอยู่ที่ 1,500 บาทต่อวัน หากร้านต้องการให้มีกำไรอย่างน้อย 500 บาทต่อวัน จะต้องขายขนมปังอย่างน้อยกี่ชิ้น?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กำหนดตัวแปรแทนจำนวนขนมปังที่ขาย</p>
+                        <p>สร้างฟังก์ชันกำไร: กำไร = รายรับรวม - ต้นทุนรวม</p>
+                        <p>รายรับรวม = (ราคาขายต่อชิ้น) × (จำนวนชิ้น)</p>
+                        <p>ต้นทุนรวม = (ต้นทุนผลิตต่อชิ้น) × (จำนวนชิ้น) + ค่าใช้จ่ายคงที่</p>
+                        <p>ตั้งอสมการตามเงื่อนไขกำไรที่ต้องการ</p>
+                        <p>แก้อสมการเพื่อหาจำนวนชิ้นขนมปัง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $x$ แทนจำนวนขนมปังที่ขาย (ชิ้น)</p>
+                        
+                        <p>รายรับรวม: $25x$ บาท</p>
+                        <p>ต้นทุนแปรผัน: $10x$ บาท</p>
+                        <p>ต้นทุนคงที่: $1,500$ บาท</p>
+                        
+                        <p>กำไร: รายรับรวม - (ต้นทุนแปรผัน + ต้นทุนคงที่)</p>
+                        <p>กำไร $= 25x - (10x + 1500)$</p>
+                        <p>กำไร $= 25x - 10x - 1500$</p>
+                        <p>กำไร $= 15x - 1500$</p>
+                        
+                        <p>ร้านต้องการกำไรอย่างน้อย 500 บาท:</p>
+                        <p>$15x - 1500 \geq 500$</p>
+                        <p>บวก 1500 ทั้งสองข้าง:</p>
+                        <p>$15x \geq 500 + 1500$</p>
+                        <p>$15x \geq 2000$</p>
+                        <p>หารด้วย 15:</p>
+                        <p>$x \geq \frac{2000}{15}$</p>
+                        <p>$x \geq \frac{400}{3}$</p>
+                        <p>$x \geq 133.33...$</p>
+                        
+                        <p>เนื่องจากจำนวนขนมปังต้องเป็นจำนวนเต็มและต้องขาย "อย่างน้อย" ที่สุดตามที่กำหนด</p>
+                        <p>จะต้องขายอย่างน้อย 134 ชิ้น</p>
+                        
+                        <p><strong>คำตอบ:</strong> 134 ชิ้น</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="../index.html" class="nav-button prev">← กลับสู่หน้าหลัก</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: อสมการกำลังสอง →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
