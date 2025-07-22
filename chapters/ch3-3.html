@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 3.3: ประเภทของฟังก์ชัน (การบวก, ลบ, คูณ, หารฟังก์ชัน, ฟังก์ชันประกอบ, ฟังก์ชันผกผัน) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 3.3: ประเภทของฟังก์ชัน</span>
+            </nav>
+            <h1>บทที่ 3.3: ประเภทของฟังก์ชัน</h1>
+            <p class="chapter-intro">ศึกษาการดำเนินการต่าง ๆ ที่สามารถทำได้กับฟังก์ชัน ไม่ว่าจะเป็นการบวก ลบ คูณ หาร รวมถึงฟังก์ชันที่ซ้อนกัน และฟังก์ชันผกผัน ซึ่งเป็นพื้นฐานสำคัญในการแก้ปัญหาทางคณิตศาสตร์และวิทยาการคอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">3.3.1 การดำเนินการของฟังก์ชัน (Algebra of Functions)</a></li>
+                    <li><a href="#section-2">3.3.2 ฟังก์ชันประกอบ (Composite Functions)</a></li>
+                    <li><a href="#section-3">3.3.3 ฟังก์ชันผกผัน (Inverse Functions)</a></li>
+                    <li><a href="#section-4">3.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">3.3.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: การดำเนินการของฟังก์ชัน -->
+            <section id="section-1" class="content-section">
+                <h2>3.3.1 การดำเนินการของฟังก์ชัน (Algebra of Functions)</h2>
+                
+                <p>ให้ $f$ และ $g$ เป็นฟังก์ชันที่มีโดเมนเป็น $D_f$ และ $D_g$ ตามลำดับ การดำเนินการทางพีชคณิตระหว่างฟังก์ชันสามารถทำได้ดังนี้ โดยโดเมนของฟังก์ชันใหม่ที่เกิดขึ้นจะเท่ากับ $D_f \cap D_g$ (ยกเว้นการหาร)</p>
+
+                <div class="subsection">
+                    <h3>ก. การบวกฟังก์ชัน (Sum of Functions)</h3>
+                    <div class="formula-box">
+                        $$(f+g)(x) = f(x) + g(x)$$
+                        $$\text{โดเมน: } D_{f+g} = D_f \cap D_g$$
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. การลบฟังก์ชัน (Difference of Functions)</h3>
+                    <div class="formula-box">
+                        $$(f-g)(x) = f(x) - g(x)$$
+                        $$\text{โดเมน: } D_{f-g} = D_f \cap D_g$$
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ค. การคูณฟังก์ชัน (Product of Functions)</h3>
+                    <div class="formula-box">
+                        $$(fg)(x) = f(x) \cdot g(x)$$
+                        $$\text{โดเมน: } D_{fg} = D_f \cap D_g$$
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ง. การหารฟังก์ชัน (Quotient of Functions)</h3>
+                    <div class="formula-box">
+                        $$\left(\frac{f}{g}\right)(x) = \frac{f(x)}{g(x)}$$
+                        $$\text{โดเมน: } D_{f/g} = \{x \mid x \in D_f \cap D_g \text{ และ } g(x) \neq 0\}$$
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การดำเนินการของฟังก์ชัน</h4>
+                    <div class="example-box">
+                        <p>ให้ $f(x) = x^2 - 1$ และ $g(x) = x + 3$</p>
+                        <ul>
+                            <li>$(f+g)(x) = (x^2 - 1) + (x + 3) = x^2 + x + 2$</li>
+                            <li>$(f-g)(x) = (x^2 - 1) - (x + 3) = x^2 - x - 4$</li>
+                            <li>$(fg)(x) = (x^2 - 1)(x + 3) = x^3 + 3x^2 - x - 3$</li>
+                            <li>$\left(\frac{f}{g}\right)(x) = \frac{x^2 - 1}{x + 3}$ โดยที่ $x \neq -3$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ฟังก์ชันประกอบ -->
+            <section id="section-2" class="content-section">
+                <h2>3.3.2 ฟังก์ชันประกอบ (Composite Functions)</h2>
+
+                <p>ฟังก์ชันประกอบคือการนำฟังก์ชันสองฟังก์ชันหรือมากกว่ามาทำงานต่อเนื่องกัน โดยผลลัพธ์ของฟังก์ชันแรกจะกลายเป็นอินพุตของฟังก์ชันถัดไป</p>
+
+                <div class="subsection">
+                    <h3>ก. นิยามของฟังก์ชันประกอบ</h3>
+                    <p>กำหนดฟังก์ชัน $f$ และ $g$</p>
+                    
+                    <div class="definition-box">
+                        <h4>$(f \circ g)(x)$ (อ่านว่า "เอฟ โอ จี ของ x" หรือ "เอฟ คอมโพสิท จี ของ x")</h4>
+                        <p>หมายถึง $f(g(x))$</p>
+                        <p>ฟังก์ชัน $g$ ทำงานก่อน แล้วนำผลลัพธ์จาก $g(x)$ ไปเป็นอินพุตให้กับฟังก์ชัน $f$</p>
+                    </div>
+
+                    <div class="definition-box">
+                        <h4>$(g \circ f)(x)$ (อ่านว่า "จี โอ เอฟ ของ x" หรือ "จี คอมโพสิท เอฟ ของ x")</h4>
+                        <p>หมายถึง $g(f(x))$</p>
+                        <p>ฟังก์ชัน $f$ ทำงานก่อน แล้วนำผลลัพธ์จาก $f(x)$ ไปเป็นอินพุตให้กับฟังก์ชัน $g$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. โดเมนของฟังก์ชันประกอบ</h3>
+                    <div class="formula-box">
+                        $$D_{f \circ g} = \{x \mid x \in D_g \text{ และ } g(x) \in D_f\}$$
+                    </div>
+                    <p>เงื่อนไขคือ $x$ ต้องอยู่ในโดเมนของ $g$ และผลลัพธ์ของ $g(x)$ ต้องอยู่ในโดเมนของ $f$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง ฟังก์ชันประกอบ</h4>
+                    <div class="example-box">
+                        <p>ให้ $f(x) = x^2 + 1$ และ $g(x) = 2x - 3$</p>
+                        <ul>
+                            <li>$(f \circ g)(x) = f(g(x)) = f(2x - 3) = (2x - 3)^2 + 1 = 4x^2 - 12x + 9 + 1 = 4x^2 - 12x + 10$</li>
+                            <li>$(g \circ f)(x) = g(f(x)) = g(x^2 + 1) = 2(x^2 + 1) - 3 = 2x^2 + 2 - 3 = 2x^2 - 1$</li>
+                        </ul>
+                        <p><strong>สังเกต:</strong> $(f \circ g)(x) \neq (g \circ f)(x)$ โดยทั่วไป</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ฟังก์ชันผกผัน -->
+            <section id="section-3" class="content-section">
+                <h2>3.3.3 ฟังก์ชันผกผัน (Inverse Functions)</h2>
+
+                <p>ฟังก์ชันผกผันคือฟังก์ชันที่ "ย้อนกลับ" การทำงานของฟังก์ชันเดิม</p>
+
+                <div class="subsection">
+                    <h3>ก. ฟังก์ชันหนึ่งต่อหนึ่ง (One-to-One Function หรือ Injective Function)</h3>
+                    <div class="definition-box">
+                        <h4>นิยาม: ฟังก์ชันหนึ่งต่อหนึ่ง</h4>
+                        <p>ฟังก์ชัน $f$ จะเป็นฟังก์ชันหนึ่งต่อหนึ่ง ก็ต่อเมื่อสมาชิกแต่ละตัวในโดเมนจับคู่กับสมาชิกในเรนจ์ที่ไม่ซ้ำกัน</p>
+                        <p>กล่าวคือ ถ้า $f(x_1) = f(x_2)$ แล้ว $x_1 = x_2$ เสมอ</p>
+                    </div>
+
+                    <div class="definition-box">
+                        <h4>การทดสอบเส้นแนวนอน (Horizontal Line Test)</h4>
+                        <p>ใช้ตรวจสอบว่าฟังก์ชันเป็นหนึ่งต่อหนึ่งหรือไม่ โดยการลากเส้นแนวนอน (เส้นตรงขนานกับแกน X) ตัดกราฟ</p>
+                        <p>ถ้าเส้นแนวนอนตัดกราฟเพียงจุดเดียวสำหรับทุกเส้นแนวนอน แสดงว่าฟังก์ชันนั้นเป็นหนึ่งต่อหนึ่ง</p>
+                    </div>
+
+                    <p><strong>หมายเหตุ:</strong> ฟังก์ชันจะมีฟังก์ชันผกผันได้ก็ต่อเมื่อฟังก์ชันนั้นเป็น <strong>ฟังก์ชันหนึ่งต่อหนึ่ง</strong></p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. การหาฟังก์ชันผกผัน $(f^{-1}(x))$</h3>
+                    <div class="definition-box">
+                        <h4>ขั้นตอนการหาฟังก์ชันผกผัน</h4>
+                        <ol>
+                            <li>ให้ $y = f(x)$</li>
+                            <li>สลับตัวแปร $x$ กับ $y$ ในสมการ (ได้ $x = f(y)$)</li>
+                            <li>แก้สมการที่ได้ในขั้นตอนที่ 2 เพื่อหา $y$ ในรูปของ $x$</li>
+                            <li>แทน $y$ ด้วย $f^{-1}(x)$</li>
+                        </ol>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>ความสัมพันธ์ระหว่างโดเมนและเรนจ์ของฟังก์ชันกับฟังก์ชันผกผัน</h4>
+                        <ul>
+                            <li>โดเมนของ $f^{-1}$ คือ เรนจ์ของ $f$ ($D_{f^{-1}} = R_f$)</li>
+                            <li>เรนจ์ของ $f^{-1}$ คือ โดเมนของ $f$ ($R_{f^{-1}} = D_f$)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง การหาฟังก์ชันผกผัน</h4>
+                    <div class="example-box">
+                        <p>ให้ $f(x) = 3x - 5$</p>
+                        <p><strong>ขั้นตอน:</strong></p>
+                        <ol>
+                            <li>ให้ $y = 3x - 5$</li>
+                            <li>สลับตัวแปร: $x = 3y - 5$</li>
+                            <li>แก้สมการหา $y$:
+                                <br>$x + 5 = 3y$
+                                <br>$y = \frac{x + 5}{3}$
+                            </li>
+                            <li>ดังนั้น $f^{-1}(x) = \frac{x + 5}{3}$</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>3.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 1: การดำเนินการของฟังก์ชัน</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $f(x) = x^2 - 1$ และ $g(x) = x + 3$</p>
+                        <p>จงหา:</p>
+                        <ul>
+                            <li>ก. $(f+g)(x)$ และ $D_{f+g}$</li>
+                            <li>ข. $(f-g)(x)$ และ $D_{f-g}$</li>
+                            <li>ค. $(fg)(x)$ และ $D_{fg}$</li>
+                            <li>ง. $\left(\frac{f}{g}\right)(x)$ และ $D_{f/g}$</li>
+                        </ul>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>โดเมนของ $f(x)$ และ $g(x)$ เป็นจำนวนจริงทั้งหมด ($\mathbb{R}$)</li>
+                            <li>ใช้สูตรการดำเนินการแต่ละแบบ</li>
+                            <li>สำหรับการหาร ต้องระบุเงื่อนไขที่ตัวส่วนไม่เป็นศูนย์</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>โดเมนของ $f(x)$ คือ $\mathbb{R}$ ($D_f = \mathbb{R}$)</p>
+                        <p>โดเมนของ $g(x)$ คือ $\mathbb{R}$ ($D_g = \mathbb{R}$)</p>
+                        <p>ดังนั้น $D_f \cap D_g = \mathbb{R}$</p>
+                        
+                        <p><strong>ก.</strong> $(f+g)(x) = f(x) + g(x) = (x^2 - 1) + (x + 3) = x^2 + x + 2$</p>
+                        <p>$D_{f+g} = \mathbb{R}$</p>
+                        
+                        <p><strong>ข.</strong> $(f-g)(x) = f(x) - g(x) = (x^2 - 1) - (x + 3) = x^2 - x - 4$</p>
+                        <p>$D_{f-g} = \mathbb{R}$</p>
+                        
+                        <p><strong>ค.</strong> $(fg)(x) = f(x) \cdot g(x) = (x^2 - 1)(x + 3) = x^3 + 3x^2 - x - 3$</p>
+                        <p>$D_{fg} = \mathbb{R}$</p>
+                        
+                        <p><strong>ง.</strong> $\left(\frac{f}{g}\right)(x) = \frac{f(x)}{g(x)} = \frac{x^2 - 1}{x + 3}$</p>
+                        <p>เงื่อนไข $g(x) \neq 0$: $x + 3 \neq 0 \Rightarrow x \neq -3$</p>
+                        <p>$D_{f/g} = \{x \mid x \in \mathbb{R}, x \neq -3\}$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 2: ฟังก์ชันประกอบ</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $f(x) = \sqrt{x}$ และ $g(x) = x^2 - 4$ จงหา:</p>
+                        <ul>
+                            <li>ก. $(f \circ g)(x)$ และ $D_{f \circ g}$</li>
+                            <li>ข. $(g \circ f)(x)$ และ $D_{g \circ f}$</li>
+                        </ul>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>โดเมนของ $f(x)$: $D_f = [0, \infty)$</li>
+                            <li>โดเมนของ $g(x)$: $D_g = \mathbb{R}$</li>
+                            <li>ใช้สูตรฟังก์ชันประกอบ และพิจารณาเงื่อนไขโดเมน</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p><strong>ก.</strong> $(f \circ g)(x) = f(g(x)) = f(x^2 - 4) = \sqrt{x^2 - 4}$</p>
+                        <p>โดเมน $D_{f \circ g}$:</p>
+                        <ul>
+                            <li>$x$ ต้องอยู่ใน $D_g$ (ซึ่งคือ $\mathbb{R}$)</li>
+                            <li>$g(x)$ ต้องอยู่ใน $D_f$ (คือ $[0, \infty)$)</li>
+                        </ul>
+                        <p>ดังนั้น $x^2 - 4 \geq 0$</p>
+                        <p>$x^2 \geq 4$</p>
+                        <p>$|x| \geq 2 \Rightarrow x \leq -2$ หรือ $x \geq 2$</p>
+                        <p>$D_{f \circ g} = (-\infty, -2] \cup [2, \infty)$</p>
+                        
+                        <p><strong>ข.</strong> $(g \circ f)(x) = g(f(x)) = g(\sqrt{x}) = (\sqrt{x})^2 - 4 = x - 4$</p>
+                        <p>โดเมน $D_{g \circ f}$:</p>
+                        <ul>
+                            <li>$x$ ต้องอยู่ใน $D_f$ (คือ $[0, \infty)$)</li>
+                            <li>$f(x)$ ต้องอยู่ใน $D_g$ (ซึ่งคือ $\mathbb{R}$)</li>
+                        </ul>
+                        <p>เงื่อนไข $f(x) \in \mathbb{R}$ เป็นจริงเสมอเมื่อ $x \in D_f$</p>
+                        <p>ดังนั้น $D_{g \circ f} = [0, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 3: ฟังก์ชันผกผัน</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $f(x) = \frac{2x + 1}{x - 3}$ จงหา $f^{-1}(x)$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>สลับตัวแปร $x$ กับ $y$ แล้วแก้สมการหา $y$</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <ol>
+                            <li>ให้ $y = \frac{2x + 1}{x - 3}$</li>
+                            <li>สลับตัวแปร $x$ กับ $y$: $x = \frac{2y + 1}{y - 3}$</li>
+                            <li>แก้สมการหา $y$:
+                                <br>$x(y - 3) = 2y + 1$
+                                <br>$xy - 3x = 2y + 1$
+                                <br>$xy - 2y = 3x + 1$
+                                <br>$y(x - 2) = 3x + 1$
+                                <br>$y = \frac{3x + 1}{x - 2}$
+                            </li>
+                            <li>ดังนั้น $f^{-1}(x) = \frac{3x + 1}{x - 2}$</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>3.3.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = x - 5$ และ $g(x) = 2x + 1$ จงหา $(f \cdot g)(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรการคูณฟังก์ชัน: $(f \cdot g)(x) = f(x) \cdot g(x)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$(f \cdot g)(x) = f(x) \cdot g(x)$</p>
+                        <p>$= (x - 5)(2x + 1)$</p>
+                        <p>$= x(2x) + x(1) - 5(2x) - 5(1)$</p>
+                        <p>$= 2x^2 + x - 10x - 5$</p>
+                        <p>$= 2x^2 - 9x - 5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $2x^2 - 9x - 5$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = x^2 - 9$ และ $g(x) = \sqrt{x + 2}$ จงหาโดเมนของ $\left(\frac{f}{g}\right)(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาโดเมนของ $f(x)$ และ $g(x)$ แยกกัน</p>
+                        <p>โดเมนของการหารฟังก์ชันคือส่วนที่โดเมนของทั้งสองฟังก์ชันทับซ้อนกัน และตัวส่วนต้องไม่เป็นศูนย์</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>โดเมนของ $f(x) = x^2 - 9$ คือ $\mathbb{R}$ ($D_f = \mathbb{R}$)</p>
+                        <p>โดเมนของ $g(x) = \sqrt{x + 2}$ คือ $x + 2 \geq 0 \Rightarrow x \geq -2$ ($D_g = [-2, \infty)$)</p>
+                        <p>โดเมนของ $\left(\frac{f}{g}\right)(x)$ คือ $D_f \cap D_g$ โดยที่ $g(x) \neq 0$</p>
+                        <p>$D_f \cap D_g = \mathbb{R} \cap [-2, \infty) = [-2, \infty)$</p>
+                        <p>เงื่อนไข $g(x) \neq 0$:</p>
+                        <p>$\sqrt{x + 2} \neq 0$</p>
+                        <p>$x + 2 \neq 0$</p>
+                        <p>$x \neq -2$</p>
+                        <p>ดังนั้น โดเมนของ $\left(\frac{f}{g}\right)(x)$ คือ $\{x \mid x \geq -2 \text{ และ } x \neq -2\}$ ซึ่งคือ $x > -2$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-2, \infty)$ หรือ $\{x \mid x > -2\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = 3x + 2$ และ $g(x) = x^2 - 1$ จงหา $(g \circ f)(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรฟังก์ชันประกอบ: $(g \circ f)(x) = g(f(x))$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$(g \circ f)(x) = g(f(x))$</p>
+                        <p>$= g(3x + 2)$</p>
+                        <p>แทน $f(x)$ เข้าไปใน $g(x)$:</p>
+                        <p>$= (3x + 2)^2 - 1$</p>
+                        <p>$= ((3x)^2 + 2(3x)(2) + 2^2) - 1$</p>
+                        <p>$= (9x^2 + 12x + 4) - 1$</p>
+                        <p>$= 9x^2 + 12x + 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $9x^2 + 12x + 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = 5x - 3$ และ $g(x) = x + 4$ จงหาค่าของ $(f \circ g)(1)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาค่า $g(1)$ ก่อน แล้วนำผลลัพธ์ไปแทนใน $f(x)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>หา $g(1)$:</p>
+                        <p>$g(1) = 1 + 4 = 5$</p>
+                        <p>หา $f(g(1)) = f(5)$:</p>
+                        <p>$f(5) = 5(5) - 3 = 25 - 3 = 22$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $22$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = \frac{x}{2} + 7$ จงหา $f^{-1}(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ให้ $y = f(x)$</p>
+                        <p>สลับตัวแปร $x$ กับ $y$</p>
+                        <p>แก้สมการที่ได้เพื่อหา $y$ ในรูปของ $x$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $y = \frac{x}{2} + 7$</p>
+                        <p>สลับตัวแปร $x$ กับ $y$: $x = \frac{y}{2} + 7$</p>
+                        <p>แก้สมการหา $y$:</p>
+                        <p>$x - 7 = \frac{y}{2}$</p>
+                        <p>$2(x - 7) = y$</p>
+                        <p>$y = 2x - 14$</p>
+                        <p>ดังนั้น $f^{-1}(x) = 2x - 14$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $f^{-1}(x) = 2x - 14$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = \frac{3x + 2}{x - 4}$ จงหา $f^{-1}(x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ให้ $y = f(x)$</p>
+                        <p>สลับตัวแปร $x$ กับ $y$</p>
+                        <p>แก้สมการที่ได้เพื่อหา $y$ ในรูปของ $x$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $y = \frac{3x + 2}{x - 4}$</p>
+                        <p>สลับตัวแปร $x$ กับ $y$: $x = \frac{3y + 2}{y - 4}$</p>
+                        <p>แก้สมการหา $y$:</p>
+                        <p>$x(y - 4) = 3y + 2$</p>
+                        <p>$xy - 4x = 3y + 2$</p>
+                        <p>$xy - 3y = 4x + 2$</p>
+                        <p>ดึงตัวร่วม $y$:</p>
+                        <p>$y(x - 3) = 4x + 2$</p>
+                        <p>$y = \frac{4x + 2}{x - 3}$</p>
+                        <p>ดังนั้น $f^{-1}(x) = \frac{4x + 2}{x - 3}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $f^{-1}(x) = \frac{4x + 2}{x - 3}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $f(x) = x^2 + 5$ เมื่อ $x \geq 0$ จงหาค่าของ $f^{-1}(14)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ถ้า $f^{-1}(y) = x$ แล้ว $f(x) = y$</p>
+                        <p>ในที่นี้ เราต้องการหา $x$ ที่ทำให้ $f(x) = 14$ และ $x \geq 0$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $f^{-1}(14) = x$</p>
+                        <p>ตามนิยามของฟังก์ชันผกผัน จะได้ $f(x) = 14$</p>
+                        <p>แทน $f(x) = x^2 + 5$ เข้าไป:</p>
+                        <p>$x^2 + 5 = 14$</p>
+                        <p>$x^2 = 9$</p>
+                        <p>$x = \pm\sqrt{9}$</p>
+                        <p>$x = \pm 3$</p>
+                        <p>เนื่องจากโดเมนของ $f(x)$ คือ $x \geq 0$ ดังนั้นเรนจ์ของ $f^{-1}(x)$ จะต้อง $\geq 0$</p>
+                        <p>เราจึงเลือก $x = 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = \frac{1}{x + 3}$ และ $g(x) = \sqrt{x - 1}$ จงหา $(f \circ g)(x)$ และ $D_{f \circ g}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาโดเมนของ $f(x)$ และ $g(x)$ แยกกัน</p>
+                        <p>หา $(f \circ g)(x) = f(g(x))$</p>
+                        <p>กำหนดโดเมนของ $(f \circ g)(x)$ โดยที่ $x$ ต้องอยู่ในโดเมนของ $g$ และ $g(x)$ ต้องอยู่ในโดเมนของ $f$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>โดเมนของ $f(x) = \frac{1}{x + 3}$ คือ $D_f = \{x \mid x \neq -3\}$</p>
+                        <p>โดเมนของ $g(x) = \sqrt{x - 1}$ คือ $x - 1 \geq 0 \Rightarrow x \geq 1$ ($D_g = [1, \infty)$)</p>
+                        <p>หา $(f \circ g)(x)$:</p>
+                        <p>$(f \circ g)(x) = f(g(x)) = f(\sqrt{x - 1})$</p>
+                        <p>แทน $g(x)$ เข้าไปใน $f(x)$:</p>
+                        <p>$f(\sqrt{x - 1}) = \frac{1}{\sqrt{x - 1} + 3}$</p>
+                        <p>หาโดเมน $D_{f \circ g}$:</p>
+                        <ul>
+                            <li>$x$ ต้องอยู่ใน $D_g$: $x \geq 1$</li>
+                            <li>$g(x)$ ต้องอยู่ใน $D_f$: $\sqrt{x - 1} \neq -3$</li>
+                        </ul>
+                        <p>เนื่องจาก $\sqrt{x - 1} \geq 0$ เสมอ ดังนั้น $\sqrt{x - 1}$ จะไม่มีทางเท่ากับ $-3$</p>
+                        <p>เงื่อนไขนี้จึงเป็นจริงเสมอ</p>
+                        <p>ดังนั้น เงื่อนไขเดียวคือ $x \geq 1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(f \circ g)(x) = \frac{1}{\sqrt{x - 1} + 3}$, $D_{f \circ g} = [1, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $f(x) = x^3 - x + 1$ จงหาค่าของ $f^{-1}(1)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ถ้า $f^{-1}(y) = x$ แล้ว $f(x) = y$</p>
+                        <p>ในที่นี้ เราต้องการหา $x$ ที่ทำให้ $f(x) = 1$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $f^{-1}(1) = x$</p>
+                        <p>ตามนิยามของฟังก์ชันผกผัน จะได้ $f(x) = 1$</p>
+                        <p>แทน $f(x) = x^3 - x + 1$ เข้าไป:</p>
+                        <p>$x^3 - x + 1 = 1$</p>
+                        <p>$x^3 - x = 0$</p>
+                        <p>ดึงตัวร่วม $x$:</p>
+                        <p>$x(x^2 - 1) = 0$</p>
+                        <p>$x(x - 1)(x + 1) = 0$</p>
+                        <p>ดังนั้น $x = 0, x = 1, x = -1$</p>
+                        <p><strong>ข้อสังเกต:</strong> ฟังก์ชันจะมีฟังก์ชันผกผันได้ก็ต่อเมื่อฟังก์ชันนั้นเป็น ฟังก์ชันหนึ่งต่อหนึ่ง</p>
+                        <p>ถ้า $f(x) = x^3 - x + 1$ ฟังก์ชันนี้ ไม่เป็นฟังก์ชันหนึ่งต่อหนึ่ง (เช่น $f(0) = 1$, $f(1) = 1$, $f(-1) = 1$)</p>
+                        <p>ดังนั้น $f^{-1}(1)$ ไม่มีค่าเฉพาะ หรือ $f$ ไม่มีฟังก์ชันผกผันในโดเมนจำนวนจริงทั้งหมด</p>
+                        
+                        <p><strong>คำตอบ:</strong> ฟังก์ชัน $f(x)$ นี้ไม่เป็นฟังก์ชันหนึ่งต่อหนึ่ง ดังนั้น $f^{-1}(1)$ จึงไม่มีค่าเฉพาะ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $f(x) = x + 1$, $g(x) = 2x$, และ $h(x) = x - 3$ จงหาค่าของ $(h \circ g \circ f)(2)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ฟังก์ชันประกอบหลายชั้น ให้ทำงานจากข้างในสุดออกไปข้างนอก: $(h \circ g \circ f)(2) = h(g(f(2)))$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>หา $f(2)$:</p>
+                        <p>$f(2) = 2 + 1 = 3$</p>
+                        <p>หา $g(f(2)) = g(3)$:</p>
+                        <p>$g(3) = 2(3) = 6$</p>
+                        <p>หา $h(g(f(2))) = h(6)$:</p>
+                        <p>$h(6) = 6 - 3 = 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $3$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="ch3-2.html" class="nav-button prev">← บทก่อนหน้า: คุณสมบัติของความสัมพันธ์</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: เซตและเลขจำนวน →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
