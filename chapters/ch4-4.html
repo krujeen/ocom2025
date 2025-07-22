@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 4.4: สมการและอสมการพหุนามตัวแปรเดียว (ดีกรีไม่เกินสี่)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="chapter-styles.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+</head>
+<body>
+    <nav class="chapter-nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-home">← กลับหน้าหลัก</a>
+            <h1>บทที่ 4.4: สมการและอสมการพหุนามตัวแปรเดียว (ดีกรีไม่เกินสี่)</h1>
+        </div>
+    </nav>
+
+    <main class="chapter-content">
+        <div class="content-container">
+            
+            <!-- บทนำ -->
+            <section class="content-section">
+                <div class="intro-box">
+                    <p>ในบทเรียนนี้ เราจะขยายความเข้าใจจากการแก้สมการกำลังสองไปสู่ <strong>"สมการและอสมการพหุนามตัวแปรเดียว"</strong> ที่มีดีกรีสูงขึ้น (ไม่เกินสี่) หัวข้อนี้อาศัยความรู้เรื่องการแยกตัวประกอบพหุนามและทฤษฎีบทต่าง ๆ ที่เกี่ยวข้อง ซึ่งเป็นสิ่งจำเป็นสำหรับการแก้ปัญหาที่ซับซ้อนในคณิตศาสตร์และวิทยาการคำนวณครับ</p>
+                </div>
+            </section>
+
+            <!-- ส่วนที่ 1: สมการพหุนามตัวแปรเดียว -->
+            <section class="content-section">
+                <h2>1. สมการพหุนามตัวแปรเดียว (Polynomial Equations in One Variable)</h2>
+                
+                <div class="subsection">
+                    <h3>1.1 นิยาม</h3>
+                    <p><strong>สมการพหุนามตัวแปรเดียว</strong> คือ สมการที่อยู่ในรูป $P(x) = 0$ เมื่อ $P(x)$ เป็นพหุนามของตัวแปร $x$</p>
+                    
+                    <div class="formula-box">
+                        $$a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0 = 0$$
+                    </div>
+                    
+                    <p>โดยที่เราจะเน้นกรณีที่ $n$ (ดีกรี) มีค่าไม่เกิน 4</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.2 วิธีการแก้สมการพหุนาม</h3>
+                    
+                    <div class="method-card">
+                        <h4>การแยกตัวประกอบ (Factoring)</h4>
+                        <ul>
+                            <li><strong>การดึงตัวร่วม:</strong> ดึงพจน์ที่เหมือนกันออกไป</li>
+                            <li><strong>การใช้สูตรผลต่างกำลังสอง/กำลังสาม:</strong>
+                                <div class="formula-list">
+                                    $a^2 - b^2 = (a-b)(a+b)$<br>
+                                    $a^3 - b^3 = (a-b)(a^2 + ab + b^2)$<br>
+                                    $a^3 + b^3 = (a+b)(a^2 - ab + b^2)$
+                                </div>
+                            </li>
+                            <li><strong>การจัดหมู่:</strong> จัดกลุ่มพจน์เพื่อดึงตัวร่วม</li>
+                            <li><strong>การแยกตัวประกอบดีกรีสอง:</strong> เช่น $x^2 + bx + c = (x+p)(x+q)$</li>
+                        </ul>
+                    </div>
+
+                    <div class="method-card">
+                        <h4>ทฤษฎีบทตัวประกอบ (Factor Theorem)</h4>
+                        <p>ถ้า $P(c) = 0$ แล้ว $(x-c)$ เป็นตัวประกอบของ $P(x)$</p>
+                    </div>
+
+                    <div class="method-card">
+                        <h4>ทฤษฎีบทรากตรรกยะ (Rational Root Theorem)</h4>
+                        <p>ถ้า $P(x) = a_nx^n + \cdots + a_0 = 0$ มีรากตรรกยะเป็น $\frac{p}{q}$ (เมื่อ $p,q$ เป็นจำนวนเต็ม, $q \neq 0$, และ ห.ร.ม. ของ $p,q$ คือ 1) แล้ว $p$ ต้องหาร $a_0$ ลงตัว และ $q$ ต้องหาร $a_n$ ลงตัว</p>
+                        <p><strong>การใช้งาน:</strong> ใช้ทฤษฎีนี้ในการ "เดา" รากที่เป็นไปได้ เพื่อใช้ทฤษฎีบทตัวประกอบต่อไป</p>
+                    </div>
+
+                    <div class="method-card">
+                        <h4>การหารสังเคราะห์ (Synthetic Division)</h4>
+                        <p>เมื่อเราพบราก $c$ (จากทฤษฎีบทรากตรรกยะหรือการสังเกต) ซึ่งทำให้ $(x-c)$ เป็นตัวประกอบของ $P(x)$ เราสามารถใช้การหารสังเคราะห์เพื่อหาผลหาร $Q(x)$ โดยที่ $P(x) = (x-c)Q(x)$</p>
+                        <p>ถ้า $Q(x)$ เป็นพหุนามดีกรี 2 เราสามารถใช้สูตรกำลังสองหรือการแยกตัวประกอบต่อไปได้</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.3 จำนวนรากของสมการพหุนาม</h3>
+                    <div class="concept-box">
+                        <p>สมการพหุนามดีกรี $n$ จะมีรากไม่เกิน $n$ ราก (นับรวมรากซ้ำและรากเชิงซ้อน)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ส่วนที่ 2: อสมการพหุนามตัวแปรเดียว -->
+            <section class="content-section">
+                <h2>2. อสมการพหุนามตัวแปรเดียว (Polynomial Inequalities in One Variable)</h2>
+                
+                <div class="subsection">
+                    <h3>2.1 นิยาม</h3>
+                    <p><strong>อสมการพหุนามตัวแปรเดียว</strong> คือ อสมการที่อยู่ในรูป $P(x) < 0$, $P(x) > 0$, $P(x) \leq 0$, หรือ $P(x) \geq 0$</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>2.2 วิธีการแก้อสมการพหุนาม</h3>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 1: จัดรูปอสมการ</h4>
+                        <p>ทำให้อสมการข้างหนึ่งเป็นศูนย์ (เช่น $P(x) > 0$)</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 2: แยกตัวประกอบ</h4>
+                        <p>แยกตัวประกอบของพหุนาม $P(x)$ ให้อยู่ในรูปผลคูณของตัวประกอบเชิงเส้นหรือตัวประกอบกำลังสองที่ไม่สามารถแยกได้อีก</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 3: หาราก (Critical Points)</h4>
+                        <p>หาค่า $x$ ที่ทำให้แต่ละตัวประกอบเท่ากับศูนย์ (รากของสมการ $P(x) = 0$) ค่าเหล่านี้เรียกว่าจุดวิกฤต</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 4: เขียนเส้นจำนวน</h4>
+                        <p>ลงจุดวิกฤตบนเส้นจำนวน ทำให้เส้นจำนวนแบ่งออกเป็นช่วงๆ</p>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 5: ทดสอบค่าในแต่ละช่วง</h4>
+                        <p>เลือกค่า $x$ หนึ่งค่าในแต่ละช่วง แล้วแทนลงใน $P(x)$ เพื่อดูว่า $P(x)$ มีเครื่องหมายเป็นบวกหรือลบในช่วงนั้น</p>
+                        
+                        <div class="note-box">
+                            <strong>หรือใช้กฎของเครื่องหมาย:</strong>
+                            <ul>
+                                <li>เริ่มต้นที่ช่วงขวาสุดด้วยเครื่องหมายบวกหรือลบตามสัมประสิทธิ์นำของ $P(x)$</li>
+                                <li>สลับเครื่องหมายเมื่อผ่านรากที่มีเลขชี้กำลังคี่ (รากเดี่ยว)</li>
+                                <li>คงเครื่องหมายเดิมเมื่อผ่านรากที่มีเลขชี้กำลังคู่ (รากซ้ำ)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="step-box">
+                        <h4>ขั้นตอนที่ 6: ระบุช่วงคำตอบ</h4>
+                        <p>เลือกช่วงที่สอดคล้องกับเครื่องหมายอสมการที่ต้องการ:</p>
+                        <ul>
+                            <li>$P(x) > 0$: เลือกช่วงที่ $P(x)$ เป็นบวก (ไม่รวมจุดวิกฤต)</li>
+                            <li>$P(x) < 0$: เลือกช่วงที่ $P(x)$ เป็นลบ (ไม่รวมจุดวิกฤต)</li>
+                            <li>$P(x) \geq 0$: เลือกช่วงที่ $P(x)$ เป็นบวก และรวมจุดวิกฤต</li>
+                            <li>$P(x) \leq 0$: เลือกช่วงที่ $P(x)$ เป็นลบ และรวมจุดวิกฤต</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ส่วนที่ 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section class="content-section">
+                <h2>3. ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <div class="example-box">
+                    <h3>ตัวอย่างที่ 1: การแก้สมการพหุนามดีกรี 3 (ดึงตัวร่วม)</h3>
+                    <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $x^3 - 4x = 0$</p>
+                    
+                    <p><strong>แนวคิด:</strong></p>
+                    <ul>
+                        <li>ดึงตัวร่วม $x$ ออกมา</li>
+                        <li>แยกตัวประกอบที่เหลือ (ผลต่างกำลังสอง)</li>
+                        <li>หาค่า $x$ ที่ทำให้แต่ละตัวประกอบเป็นศูนย์</li>
+                    </ul>
+                    
+                    <p><strong>เฉลย:</strong></p>
+                    <div class="solution-steps">
+                        <p>$x^3 - 4x = 0$</p>
+                        <p>ดึงตัวร่วม $x$: $x(x^2 - 4) = 0$</p>
+                        <p>แยกตัวประกอบผลต่างกำลังสอง: $x(x-2)(x+2) = 0$</p>
+                        <p>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์:</p>
+                        <ul>
+                            <li>$x = 0$</li>
+                            <li>$x - 2 = 0 \Rightarrow x = 2$</li>
+                            <li>$x + 2 = 0 \Rightarrow x = -2$</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> $x = 0, 2, -2$</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>ตัวอย่างที่ 2: การแก้สมการพหุนามดีกรี 3 (ทฤษฎีบทตัวประกอบและการหารสังเคราะห์)</h3>
+                    <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $x^3 - 2x^2 - 5x + 6 = 0$</p>
+                    
+                    <p><strong>แนวคิด:</strong></p>
+                    <ul>
+                        <li>ใช้ทฤษฎีบทรากตรรกยะเพื่อเดาค่า $x$ ที่เป็นไปได้ (ตัวหารของ 6 คือ $\pm1, \pm2, \pm3, \pm6$)</li>
+                        <li>ลองแทนค่า $x$ ที่ง่ายที่สุด เช่น $x = 1, -1, 2, -2$ เพื่อหาตัวประกอบแรก</li>
+                        <li>เมื่อพบตัวประกอบ $(x-c)$ ให้ใช้การหารสังเคราะห์เพื่อลดดีกรีของพหุนาม</li>
+                        <li>แยกตัวประกอบของพหุนามดีกรี 2 ที่ได้</li>
+                    </ul>
+                    
+                    <p><strong>เฉลย:</strong></p>
+                    <div class="solution-steps">
+                        <p>ให้ $P(x) = x^3 - 2x^2 - 5x + 6$</p>
+                        <p>ลองแทน $x = 1$: $P(1) = (1)^3 - 2(1)^2 - 5(1) + 6 = 1 - 2 - 5 + 6 = 0$</p>
+                        <p>ดังนั้น $(x-1)$ เป็นตัวประกอบหนึ่ง</p>
+                        
+                        <p>ใช้การหารสังเคราะห์ด้วย 1:</p>
+                        <div class="synthetic-division">
+                            <table>
+                                <tr><td>1 |</td><td>1</td><td>-2</td><td>-5</td><td>6</td></tr>
+                                <tr><td></td><td></td><td>1</td><td>-1</td><td>-6</td></tr>
+                                <tr><td colspan="5">────────────────</td></tr>
+                                <tr><td></td><td>1</td><td>-1</td><td>-6</td><td>0</td></tr>
+                            </table>
+                        </div>
+                        
+                        <p>ผลหารคือ $x^2 - x - 6$</p>
+                        <p>ดังนั้น $P(x) = (x-1)(x^2 - x - 6) = 0$</p>
+                        <p>แยกตัวประกอบของ $x^2 - x - 6$: $(x-1)(x-3)(x+2) = 0$</p>
+                        
+                        <p>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์:</p>
+                        <ul>
+                            <li>$x - 1 = 0 \Rightarrow x = 1$</li>
+                            <li>$x - 3 = 0 \Rightarrow x = 3$</li>
+                            <li>$x + 2 = 0 \Rightarrow x = -2$</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> $x = 1, 3, -2$</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>ตัวอย่างที่ 3: การแก้อสมการพหุนามดีกรี 3</h3>
+                    <p><strong>คำถาม:</strong> จงแก้อสมการ $x^3 - x^2 - 6x < 0$</p>
+                    
+                    <p><strong>เฉลย:</strong></p>
+                    <div class="solution-steps">
+                        <p>$x^3 - x^2 - 6x < 0$</p>
+                        <p>ดึงตัวร่วม $x$: $x(x^2 - x - 6) < 0$</p>
+                        <p>แยกตัวประกอบของ $x^2 - x - 6$: $x(x-3)(x+2) < 0$</p>
+                        <p>หาราก (จุดวิกฤต):</p>
+                        <ul>
+                            <li>$x = 0$</li>
+                            <li>$x - 3 = 0 \Rightarrow x = 3$</li>
+                            <li>$x + 2 = 0 \Rightarrow x = -2$</li>
+                        </ul>
+                        <p>จุดวิกฤตคือ $-2, 0, 3$</p>
+                        
+                        <p>ทดสอบช่วง:</p>
+                        <ul>
+                            <li>ช่วง $x > 3$ (เช่น $x = 4$): $4(4-3)(4+2) = 4(1)(6) = 24 > 0$ (บวก)</li>
+                            <li>ช่วง $0 < x < 3$ (เช่น $x = 1$): $1(1-3)(1+2) = 1(-2)(3) = -6 < 0$ (ลบ)</li>
+                            <li>ช่วง $-2 < x < 0$ (เช่น $x = -1$): $(-1)(-1-3)(-1+2) = (-1)(-4)(1) = 4 > 0$ (บวก)</li>
+                            <li>ช่วง $x < -2$ (เช่น $x = -3$): $(-3)(-3-3)(-3+2) = (-3)(-6)(-1) = -18 < 0$ (ลบ)</li>
+                        </ul>
+                        
+                        <p>เราต้องการช่วงที่ $x(x-3)(x+2) < 0$ (น้อยกว่าศูนย์ หรือติดลบ)</p>
+                        <p><strong>คำตอบ:</strong> $(-\infty, -2) \cup (0, 3)$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ส่วนที่ 4: ตัวอย่างเพิ่มเติม -->
+            <section class="content-section">
+                <h2>4. ตัวอย่างเพิ่มเติม</h2>
+                
+                <div class="example-box">
+                    <h3>ตัวอย่างที่ 4: การแก้อสมการพหุนามดีกรี 4</h3>
+                    <p><strong>คำถาม:</strong> จงแก้อสมการ $(x^2 - 1)(x^2 - 4) \geq 0$</p>
+                    
+                    <p><strong>เฉลย:</strong></p>
+                    <div class="solution-steps">
+                        <p>$(x^2 - 1)(x^2 - 4) \geq 0$</p>
+                        <p>แยกตัวประกอบ: $(x-1)(x+1)(x-2)(x+2) \geq 0$</p>
+                        <p>หาราก (จุดวิกฤต): $x = -2, -1, 1, 2$</p>
+                        <p>ทดสอบช่วงและพบว่าช่วงที่ $P(x) \geq 0$ คือ:</p>
+                        <p><strong>คำตอบ:</strong> $(-\infty, -2] \cup [-1, 1] \cup [2, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>ตัวอย่างที่ 5: การแก้สมการพหุนามดีกรี 4 (การจัดรูป)</h3>
+                    <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $x^4 - 5x^2 + 4 = 0$</p>
+                    
+                    <p><strong>เฉลย:</strong></p>
+                    <div class="solution-steps">
+                        <p>ให้ $u = x^2$</p>
+                        <p>สมการจะกลายเป็น: $u^2 - 5u + 4 = 0$</p>
+                        <p>แยกตัวประกอบ: $(u-1)(u-4) = 0$</p>
+                        <p>ดังนั้น $u = 1$ หรือ $u = 4$</p>
+                        
+                        <p>แทนค่า $u$ กลับด้วย $x^2$:</p>
+                        <ul>
+                            <li>กรณีที่ 1: $x^2 = 1 \Rightarrow x = \pm 1$</li>
+                            <li>กรณีที่ 2: $x^2 = 4 \Rightarrow x = \pm 2$</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> $x = -2, -1, 1, 2$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- แบบฝึกหัด -->
+            <section class="practice-section">
+                <h2>แบบฝึกหัด</h2>
+                
+                <div class="problem-set">
+                    <div class="problem-card">
+                        <h3>ข้อ 1</h3>
+                        <p>จงหาคำตอบของสมการ $x^3 + 3x^2 - x - 3 = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>จัดกลุ่ม: $(x^3 + 3x^2) - (x + 3) = 0$</p>
+                            <p>$x^2(x + 3) - 1(x + 3) = 0$</p>
+                            <p>$(x + 3)(x^2 - 1) = 0$</p>
+                            <p>$(x + 3)(x - 1)(x + 1) = 0$</p>
+                            <p><strong>ตอบ:</strong> $x = -3, -1, 1$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 2</h3>
+                        <p>จงหาคำตอบของสมการ $x^4 - 2x^3 - 7x^2 + 8x + 12 = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = -1$:</p>
+                            <p>$P(-1) = 1 + 2 - 7 - 8 + 12 = 0$</p>
+                            <p>ใช้การหารสังเคราะห์และแยกตัวประกอบต่อ:</p>
+                            <p>$P(x) = (x + 1)(x - 3)(x - 2)(x + 2) = 0$</p>
+                            <p><strong>ตอบ:</strong> $x = -2, -1, 2, 3$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 3</h3>
+                        <p>จงแก้อสมการ $x^3 + 2x^2 - 3x \geq 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ดึงตัวร่วม: $x(x^2 + 2x - 3) \geq 0$</p>
+                            <p>แยกตัวประกอบ: $x(x + 3)(x - 1) \geq 0$</p>
+                            <p>จุดวิกฤต: $x = -3, 0, 1$</p>
+                            <p>ทดสอบช่วงและพบว่า:</p>
+                            <p><strong>ตอบ:</strong> $[-3, 0] \cup [1, \infty)$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 4</h3>
+                        <p>จงแก้อสมการ $(x^2 - 9)(x^2 - 16) < 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>แยกตัวประกอบ: $(x - 3)(x + 3)(x - 4)(x + 4) < 0$</p>
+                            <p>จุดวิกฤต: $x = -4, -3, 3, 4$</p>
+                            <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบคือ:</p>
+                            <p><strong>ตอบ:</strong> $(-4, -3) \cup (3, 4)$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 5</h3>
+                        <p>จงหาคำตอบของสมการ $x^4 - 10x^2 + 9 = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ให้ $u = x^2$</p>
+                            <p>$u^2 - 10u + 9 = 0$</p>
+                            <p>$(u - 1)(u - 9) = 0$</p>
+                            <p>$u = 1$ หรือ $u = 9$</p>
+                            <p>$x^2 = 1 \Rightarrow x = \pm 1$</p>
+                            <p>$x^2 = 9 \Rightarrow x = \pm 3$</p>
+                            <p><strong>ตอบ:</strong> $x = -3, -1, 1, 3$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 6</h3>
+                        <p>จงหาคำตอบของสมการ $2x^3 - 18x = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ดึงตัวร่วม $2x$: $2x(x^2 - 9) = 0$</p>
+                            <p>แยกตัวประกอบ: $2x(x - 3)(x + 3) = 0$</p>
+                            <p>$2x = 0 \Rightarrow x = 0$</p>
+                            <p>$x - 3 = 0 \Rightarrow x = 3$</p>
+                            <p>$x + 3 = 0 \Rightarrow x = -3$</p>
+                            <p><strong>ตอบ:</strong> $x = -3, 0, 3$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 7</h3>
+                        <p>จงแก้อสมการ $x^4 - 5x^2 + 4 \leq 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>แยกตัวประกอบ: $(x^2 - 1)(x^2 - 4) \leq 0$</p>
+                            <p>$(x - 1)(x + 1)(x - 2)(x + 2) \leq 0$</p>
+                            <p>จุดวิกฤต: $x = -2, -1, 1, 2$</p>
+                            <p>ทดสอบช่วงและพบว่าช่วงที่ติดลบหรือเท่ากับศูนย์คือ:</p>
+                            <p><strong>ตอบ:</strong> $[-2, -1] \cup [1, 2]$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 8</h3>
+                        <p>จงหาคำตอบของสมการ $x^4 + 3x^3 - 4x^2 = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ดึงตัวร่วม $x^2$: $x^2(x^2 + 3x - 4) = 0$</p>
+                            <p>แยกตัวประกอบ: $x^2(x + 4)(x - 1) = 0$</p>
+                            <p>$x^2 = 0 \Rightarrow x = 0$ (รากซ้ำ)</p>
+                            <p>$x + 4 = 0 \Rightarrow x = -4$</p>
+                            <p>$x - 1 = 0 \Rightarrow x = 1$</p>
+                            <p><strong>ตอบ:</strong> $x = -4, 0, 1$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 9</h3>
+                        <p>จงแก้อสมการ $x^2(x - 2)(x + 3) > 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>จุดวิกฤต: $x = -3, 0, 2$</p>
+                            <p>($x = 0$ เป็นรากซ้ำ จึงไม่สลับเครื่องหมาย)</p>
+                            <p>ทดสอบช่วง:</p>
+                            <ul>
+                                <li>$x > 2$: บวก</li>
+                                <li>$0 < x < 2$: ลบ</li>
+                                <li>$-3 < x < 0$: ลบ</li>
+                                <li>$x < -3$: บวก</li>
+                            </ul>
+                            <p><strong>ตอบ:</strong> $(-\infty, -3) \cup (2, \infty)$</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>ข้อ 10</h3>
+                        <p>จงหาคำตอบทั้งหมดของสมการ $x^4 + x^3 - 7x^2 - x + 6 = 0$</p>
+                        <div class="solution-box" style="display: none;">
+                            <h4>เฉลย:</h4>
+                            <p>ใช้ทฤษฎีบทรากตรรกยะ ลองแทน $x = 1$:</p>
+                            <p>$P(1) = 1 + 1 - 7 - 1 + 6 = 0$</p>
+                            <p>ใช้การหารสังเคราะห์ต่อเนื่อง:</p>
+                            <p>$P(x) = (x - 1)(x + 1)(x + 3)(x - 2) = 0$</p>
+                            <p><strong>ตอบ:</strong> $x = -3, -1, 1, 2$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toggle-solutions">
+                    <button onclick="toggleAllSolutions()">แสดง/ซ่อน เฉลยทั้งหมด</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="chapter-script.js"></script>
+    <script>
+        // Toggle individual solution
+        function toggleSolution(button) {
+            const solutionBox = button.nextElementSibling;
+            if (solutionBox.style.display === 'none') {
+                solutionBox.style.display = 'block';
+                button.textContent = 'ซ่อนเฉลย';
+            } else {
+                solutionBox.style.display = 'none';
+                button.textContent = 'แสดงเฉลย';
+            }
+        }
+
+        // Toggle all solutions
+        function toggleAllSolutions() {
+            const solutionBoxes = document.querySelectorAll('.solution-box');
+            const allVisible = Array.from(solutionBoxes).every(box => box.style.display !== 'none');
+            
+            solutionBoxes.forEach(box => {
+                box.style.display = allVisible ? 'none' : 'block';
+            });
+        }
+
+        // Add click event to problem cards
+        document.querySelectorAll('.problem-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const solutionBox = this.querySelector('.solution-box');
+                if (solutionBox.style.display === 'none' || solutionBox.style.display === '') {
+                    solutionBox.style.display = 'block';
+                } else {
+                    solutionBox.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
