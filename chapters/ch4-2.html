@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 4.2: สมการกำลังสองตัวแปรเดียว - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 4.2: สมการกำลังสองตัวแปรเดียว</span>
+            </nav>
+            <h1>บทที่ 4.2: สมการกำลังสองตัวแปรเดียว</h1>
+            <p class="chapter-intro">ศึกษาสมการกำลังสองตัวแปรเดียว ซึ่งเป็นสมการที่ปรากฏบ่อยครั้งในโจทย์คณิตศาสตร์และวิทยาการคำนวณ โดยเฉพาะในเรื่องที่เกี่ยวข้องกับการหาค่าสูงสุด-ต่ำสุด การเคลื่อนที่ หรือพื้นที่ต่างๆ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">4.2.1 ความหมายและรูปแบบของสมการกำลังสองตัวแปรเดียว</a></li>
+                    <li><a href="#section-2">4.2.2 วิธีการแก้สมการกำลังสอง</a></li>
+                    <li><a href="#section-3">4.2.3 ลักษณะของคำตอบของสมการกำลังสอง (Discriminant)</a></li>
+                    <li><a href="#section-4">4.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">4.2.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ความหมายและรูปแบบของสมการกำลังสองตัวแปรเดียว -->
+            <section id="section-1" class="content-section">
+                <h2>4.2.1 ความหมายและรูปแบบของสมการกำลังสองตัวแปรเดียว</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม: สมการกำลังสองตัวแปรเดียว (Quadratic Equation in One Variable)</h4>
+                    <p>สมการกำลังสองตัวแปรเดียว คือ สมการที่สามารถจัดรูปได้เป็น:</p>
+                    <div class="formula-box">
+                        $$ax^2 + bx + c = 0$$
+                    </div>
+                    <p>เมื่อ:</p>
+                    <ul>
+                        <li>$x$ คือ ตัวแปร</li>
+                        <li>$a, b, c$ คือ ค่าคงที่ใดๆ ที่เป็นจำนวนจริง</li>
+                        <li><strong>เงื่อนไขสำคัญคือ $a \neq 0$</strong> (ถ้า $a = 0$ สมการจะกลายเป็นสมการเชิงเส้น)</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างสมการกำลังสองตัวแปรเดียว</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>$x^2 + 5x + 6 = 0$</li>
+                            <li>$2y^2 - 7 = 0$</li>
+                            <li>$3z^2 - 4z = 0$</li>
+                            <li>$(x - 1)^2 = 4$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: วิธีการแก้สมการกำลังสอง -->
+            <section id="section-2" class="content-section">
+                <h2>4.2.2 วิธีการแก้สมการกำลังสอง (Methods for Solving Quadratic Equations)</h2>
+
+                <p>การแก้สมการกำลังสองคือการหาค่าของตัวแปร $x$ ที่ทำให้สมการเป็นจริง ซึ่งค่าเหล่านี้เรียกว่า <strong>รากของสมการ (roots)</strong> หรือ <strong>คำตอบของสมการ (solutions)</strong> มีหลายวิธีดังนี้:</p>
+
+                <div class="subsection">
+                    <h3>ก. การแยกตัวประกอบ (Factoring)</h3>
+                    <p>วิธีนี้ใช้ได้เมื่อพหุนาม $ax^2 + bx + c$ สามารถแยกตัวประกอบได้ง่าย</p>
+                    
+                    <div class="definition-box">
+                        <h4>ขั้นตอน:</h4>
+                        <ol>
+                            <li>จัดสมการให้อยู่ในรูป $ax^2 + bx + c = 0$</li>
+                            <li>แยกตัวประกอบของพหุนาม $ax^2 + bx + c$ ให้อยู่ในรูปผลคูณของพหุนามเชิงเส้นสองตัว เช่น $(px + q)(rx + s) = 0$</li>
+                            <li>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์ แล้วแก้สมการหาค่า $x$</li>
+                        </ol>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p><strong>โจทย์:</strong> จงแก้สมการ $x^2 - 5x + 6 = 0$</p>
+                            <p><strong>วิธีทำ:</strong></p>
+                            <ol>
+                                <li>แยกตัวประกอบ: $(x - 2)(x - 3) = 0$</li>
+                                <li>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์:
+                                    <ul>
+                                        <li>$x - 2 = 0 \Rightarrow x = 2$</li>
+                                        <li>$x - 3 = 0 \Rightarrow x = 3$</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            <p><strong>คำตอบ:</strong> $x = 2$ หรือ $x = 3$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. การใช้สูตร (Using the Quadratic Formula)</h3>
+                    <p>วิธีนี้ใช้ได้กับสมการกำลังสองทุกรูปแบบ และเป็นวิธีที่แนะนำเมื่อไม่สามารถแยกตัวประกอบได้ง่ายๆ</p>
+                    
+                    <div class="formula-box">
+                        <h4>สูตรกำลังสอง:</h4>
+                        $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+                    </div>
+
+                    <div class="definition-box">
+                        <h4>ขั้นตอน:</h4>
+                        <ol>
+                            <li>จัดสมการให้อยู่ในรูป $ax^2 + bx + c = 0$</li>
+                            <li>ระบุค่า $a, b, c$</li>
+                            <li>แทนค่า $a, b, c$ ลงในสูตรแล้วคำนวณหาค่า $x$</li>
+                        </ol>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p><strong>โจทย์:</strong> จงแก้สมการ $2x^2 + 3x - 2 = 0$</p>
+                            <p><strong>วิธีทำ:</strong></p>
+                            <ol>
+                                <li>สมการอยู่ในรูป $ax^2 + bx + c = 0$ แล้ว โดย $a = 2, b = 3, c = -2$</li>
+                                <li>แทนค่าในสูตร:
+                                    $$x = \frac{-3 \pm \sqrt{3^2 - 4(2)(-2)}}{2(2)}$$
+                                    $$x = \frac{-3 \pm \sqrt{9 - (-16)}}{4}$$
+                                    $$x = \frac{-3 \pm \sqrt{9 + 16}}{4}$$
+                                    $$x = \frac{-3 \pm \sqrt{25}}{4}$$
+                                    $$x = \frac{-3 \pm 5}{4}$$
+                                </li>
+                                <li>แยกคำตอบ:
+                                    <ul>
+                                        <li>$x_1 = \frac{-3 + 5}{4} = \frac{2}{4} = \frac{1}{2}$</li>
+                                        <li>$x_2 = \frac{-3 - 5}{4} = \frac{-8}{4} = -2$</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            <p><strong>คำตอบ:</strong> $x = \frac{1}{2}$ หรือ $x = -2$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ค. การทำให้เป็นกำลังสองสมบูรณ์ (Completing the Square)</h3>
+                    <p>วิธีนี้ใช้เป็นพื้นฐานในการพิสูจน์ที่มาของสูตรกำลังสอง และบางครั้งก็ใช้แก้สมการได้โดยตรง</p>
+                    <p><strong>แนวคิด:</strong> จัดรูปสมการให้อยู่ในรูป $(x + k)^2 = D$ หรือ $(x - k)^2 = D$</p>
+                </div>
+            </section>
+
+            <!-- Section 3: ลักษณะของคำตอบของสมการกำลังสอง -->
+            <section id="section-3" class="content-section">
+                <h2>4.2.3 ลักษณะของคำตอบของสมการกำลังสอง (Nature of Roots - Discriminant)</h2>
+
+                <p>ค่าที่อยู่ใต้เครื่องหมายกรณฑ์ในสูตรกำลังสองคือ $b^2 - 4ac$ ซึ่งเรียกว่า <strong>ดิสคริมิแนนต์ (Discriminant)</strong> เขียนแทนด้วย $\Delta$ หรือ $D$</p>
+
+                <div class="definition-box">
+                    <h4>ค่าของ $D$ เป็นตัวบอกลักษณะของคำตอบของสมการกำลังสอง:</h4>
+                    <div class="formula-box">
+                        $$D = b^2 - 4ac$$
+                    </div>
+                    
+                    <ul>
+                        <li><strong>ถ้า $D > 0$ $(b^2 - 4ac > 0)$:</strong> สมการมีคำตอบเป็น <em>จำนวนจริง 2 คำตอบที่แตกต่างกัน</em></li>
+                        <li><strong>ถ้า $D = 0$ $(b^2 - 4ac = 0)$:</strong> สมการมีคำตอบเป็น <em>จำนวนจริง 1 คำตอบ (หรือ 2 คำตอบที่เท่ากัน/ซ้ำกัน)</em></li>
+                        <li><strong>ถ้า $D < 0$ $(b^2 - 4ac < 0)$:</strong> สมการ <em>ไม่มีคำตอบเป็นจำนวนจริง</em> (คำตอบเป็นจำนวนเชิงซ้อน 2 คำตอบที่แตกต่างกัน)</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างการใช้ดิสคริมิแนนต์</h4>
+                    <div class="example-box">
+                        <p>พิจารณาสมการ $x^2 - 6x + 9 = 0$</p>
+                        <p>$a = 1, b = -6, c = 9$</p>
+                        <p>$D = (-6)^2 - 4(1)(9) = 36 - 36 = 0$</p>
+                        <p>เนื่องจาก $D = 0$ ดังนั้น สมการมีคำตอบเป็นจำนวนจริง 1 คำตอบ (รากซ้ำ)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>4.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 1: การแก้สมการโดยการแยกตัวประกอบ</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $x^2 + 7x + 10 = 0$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>แยกตัวประกอบของพหุนาม</li>
+                            <li>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$x^2 + 7x + 10 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 2)(x + 5) = 0$</p>
+                        <p>$x + 2 = 0 \Rightarrow x = -2$</p>
+                        <p>$x + 5 = 0 \Rightarrow x = -5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -2$ หรือ $x = -5$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 2: การแก้สมการโดยใช้สูตรกำลังสอง</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $3x^2 - 4x - 1 = 0$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ระบุค่า $a, b, c$</li>
+                            <li>แทนค่าในสูตร $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>จากสมการ $3x^2 - 4x - 1 = 0$, เราได้ $a = 3, b = -4, c = -1$</p>
+                        <p>แทนค่าในสูตร:</p>
+                        $$x = \frac{-(-4) \pm \sqrt{(-4)^2 - 4(3)(-1)}}{2(3)}$$
+                        $$x = \frac{4 \pm \sqrt{16 + 12}}{6}$$
+                        $$x = \frac{4 \pm \sqrt{28}}{6}$$
+                        $$x = \frac{4 \pm 2\sqrt{7}}{6}$$
+                        $$x = \frac{2(2 \pm \sqrt{7})}{6}$$
+                        $$x = \frac{2 \pm \sqrt{7}}{3}$$
+                        
+                        <p><strong>คำตอบ:</strong> $x = \frac{2 + \sqrt{7}}{3}$ หรือ $x = \frac{2 - \sqrt{7}}{3}$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 3: การจัดรูปสมการก่อนแก้</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาคำตอบของสมการ $x(x - 4) = 5$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>กระจายพหุนามทางซ้ายมือ</li>
+                            <li>จัดสมการให้อยู่ในรูป $ax^2 + bx + c = 0$</li>
+                            <li>แยกตัวประกอบหรือใช้สูตร</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$x(x - 4) = 5$</p>
+                        <p>$x^2 - 4x = 5$</p>
+                        <p>$x^2 - 4x - 5 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x - 5)(x + 1) = 0$</p>
+                        <p>$x - 5 = 0 \Rightarrow x = 5$</p>
+                        <p>$x + 1 = 0 \Rightarrow x = -1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 5$ หรือ $x = -1$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 4: การพิจารณาลักษณะคำตอบ (ดิสคริมิแนนต์)</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงพิจารณาว่าสมการ $x^2 - 6x + 9 = 0$ มีคำตอบเป็นจำนวนจริงกี่คำตอบ และเป็นอย่างไร?</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ระบุค่า $a, b, c$</li>
+                            <li>คำนวณค่าดิสคริมิแนนต์ $D = b^2 - 4ac$</li>
+                            <li>ตีความค่า $D$</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>จากสมการ $x^2 - 6x + 9 = 0$, เราได้ $a = 1, b = -6, c = 9$</p>
+                        <p>คำนวณดิสคริมิแนนต์:</p>
+                        <p>$D = b^2 - 4ac = (-6)^2 - 4(1)(9)$</p>
+                        <p>$D = 36 - 36$</p>
+                        <p>$D = 0$</p>
+                        <p>เนื่องจาก $D = 0$ สมการมีคำตอบเป็น <strong>จำนวนจริง 1 คำตอบ (หรือ 2 คำตอบที่เท่ากัน)</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> มีคำตอบเป็นจำนวนจริง 1 คำตอบ (ซึ่งเป็นคำตอบซ้ำ)</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 5: โจทย์ปัญหาประยุกต์</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> รูปสี่เหลี่ยมผืนผ้ามีพื้นที่ 48 ตารางหน่วย โดยมีด้านยาวยาวกว่าด้านกว้างอยู่ 2 หน่วย จงหาความยาวของด้านแต่ละด้านของรูปสี่เหลี่ยมผืนผ้า</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>กำหนดตัวแปรแทนความยาวด้านกว้าง (หรือด้านยาว)</li>
+                            <li>เขียนความสัมพันธ์ของด้านยาวกับด้านกว้าง</li>
+                            <li>ใช้สูตรพื้นที่สี่เหลี่ยมผืนผ้า (กว้าง × ยาว) เพื่อสร้างสมการกำลังสอง</li>
+                            <li>แก้สมการกำลังสอง</li>
+                            <li>เลือกคำตอบที่สมเหตุสมผล (ความยาวต้องเป็นบวก)</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>ให้ด้านกว้างของรูปสี่เหลี่ยมผืนผ้าเป็น $x$ หน่วย</p>
+                        <p>ดังนั้น ด้านยาวจะเป็น $x + 2$ หน่วย</p>
+                        <p>พื้นที่สี่เหลี่ยมผืนผ้า = กว้าง × ยาว</p>
+                        <p>$48 = x(x + 2)$</p>
+                        <p>$48 = x^2 + 2x$</p>
+                        <p>$x^2 + 2x - 48 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 8)(x - 6) = 0$</p>
+                        <p>$x + 8 = 0 \Rightarrow x = -8$</p>
+                        <p>$x - 6 = 0 \Rightarrow x = 6$</p>
+                        <p>เนื่องจากความยาวต้องเป็นค่าบวก เราจึงเลือก $x = 6$</p>
+                        
+                        <p>ด้านกว้าง = 6 หน่วย</p>
+                        <p>ด้านยาว = $x + 2 = 6 + 2 = 8$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> ด้านกว้าง 6 หน่วย, ด้านยาว 8 หน่วย</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>4.2.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x^2 + 8x + 15 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แยกตัวประกอบของพหุนาม</p>
+                        <p>กำหนดให้แต่ละตัวประกอบเท่ากับศูนย์</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$x^2 + 8x + 15 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 3)(x + 5) = 0$</p>
+                        <p>$x + 3 = 0 \Rightarrow x = -3$</p>
+                        <p>$x + 5 = 0 \Rightarrow x = -5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3$ หรือ $x = -5$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $2x^2 + 5x - 3 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ระบุค่า $a, b, c$</p>
+                        <p>แทนค่าในสูตร $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากสมการ $2x^2 + 5x - 3 = 0$, เราได้ $a = 2, b = 5, c = -3$</p>
+                        <p>แทนค่าในสูตร:</p>
+                        <p>$x = \frac{-5 \pm \sqrt{5^2 - 4(2)(-3)}}{2(2)}$</p>
+                        <p>$x = \frac{-5 \pm \sqrt{25 - (-24)}}{4}$</p>
+                        <p>$x = \frac{-5 \pm \sqrt{25 + 24}}{4}$</p>
+                        <p>$x = \frac{-5 \pm \sqrt{49}}{4}$</p>
+                        <p>$x = \frac{-5 \pm 7}{4}$</p>
+                        <p>แยกคำตอบ:</p>
+                        <ul>
+                            <li>$x_1 = \frac{-5 + 7}{4} = \frac{2}{4} = \frac{1}{2}$</li>
+                            <li>$x_2 = \frac{-5 - 7}{4} = \frac{-12}{4} = -3$</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> $x = \frac{1}{2}$ หรือ $x = -3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $x(x + 6) = 7$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กระจายพหุนามทางซ้ายมือ</p>
+                        <p>จัดสมการให้อยู่ในรูป $ax^2 + bx + c = 0$</p>
+                        <p>แยกตัวประกอบหรือใช้สูตร</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$x(x + 6) = 7$</p>
+                        <p>$x^2 + 6x = 7$</p>
+                        <p>$x^2 + 6x - 7 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 7)(x - 1) = 0$</p>
+                        <p>$x + 7 = 0 \Rightarrow x = -7$</p>
+                        <p>$x - 1 = 0 \Rightarrow x = 1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -7$ หรือ $x = 1$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $3x^2 - 27 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ย้ายพจน์คงที่ไปอีกข้าง</p>
+                        <p>หารด้วยสัมประสิทธิ์หน้า $x^2$</p>
+                        <p>ถอดรากที่สองทั้งสองข้าง (ระวังค่าบวกและลบ)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$3x^2 - 27 = 0$</p>
+                        <p>$3x^2 = 27$</p>
+                        <p>$x^2 = \frac{27}{3}$</p>
+                        <p>$x^2 = 9$</p>
+                        <p>ถอดรากที่สอง: $x = \pm\sqrt{9}$</p>
+                        <p>$x = \pm 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 3$ หรือ $x = -3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>จงพิจารณาว่าสมการ $x^2 + 2x + 5 = 0$ มีคำตอบเป็นจำนวนจริงกี่คำตอบ และเป็นอย่างไร?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ระบุค่า $a, b, c$</p>
+                        <p>คำนวณค่าดิสคริมิแนนต์ $D = b^2 - 4ac$</p>
+                        <p>ตีความค่า $D$:</p>
+                        <ul>
+                            <li>$D > 0$: 2 คำตอบจริงที่แตกต่างกัน</li>
+                            <li>$D = 0$: 1 คำตอบจริง (ซ้ำกัน)</li>
+                            <li>$D < 0$: ไม่มีคำตอบจริง (คำตอบเชิงซ้อน)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากสมการ $x^2 + 2x + 5 = 0$, เราได้ $a = 1, b = 2, c = 5$</p>
+                        <p>คำนวณดิสคริมิแนนต์:</p>
+                        <p>$D = b^2 - 4ac = (2)^2 - 4(1)(5)$</p>
+                        <p>$D = 4 - 20$</p>
+                        <p>$D = -16$</p>
+                        <p>เนื่องจาก $D = -16 < 0$ สมการ <strong>ไม่มีคำตอบเป็นจำนวนจริง</strong> (คำตอบเป็นจำนวนเชิงซ้อน 2 คำตอบ)</p>
+                        
+                        <p><strong>คำตอบ:</strong> ไม่มีคำตอบเป็นจำนวนจริง</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>รูปสี่เหลี่ยมจัตุรัสมีพื้นที่ 121 ตารางเซนติเมตร จงหาความยาวของด้านแต่ละด้านของรูปสี่เหลี่ยมจัตุรัสนี้</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กำหนดตัวแปรแทนความยาวด้าน</p>
+                        <p>ใช้สูตรพื้นที่สี่เหลี่ยมจัตุรัส (ด้าน × ด้าน) เพื่อสร้างสมการ</p>
+                        <p>แก้สมการกำลังสอง (โดยการถอดรากที่สอง)</p>
+                        <p>เลือกคำตอบที่สมเหตุสมผล (ความยาวต้องเป็นบวก)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ด้านของรูปสี่เหลี่ยมจัตุรัสเป็น $x$ เซนติเมตร</p>
+                        <p>พื้นที่สี่เหลี่ยมจัตุรัส = ด้าน × ด้าน</p>
+                        <p>$121 = x^2$</p>
+                        <p>ถอดรากที่สอง: $x = \pm\sqrt{121}$</p>
+                        <p>$x = \pm 11$</p>
+                        <p>เนื่องจากความยาวต้องเป็นค่าบวก เราจึงเลือก $x = 11$</p>
+                        
+                        <p><strong>คำตอบ:</strong> ความยาวด้านแต่ละด้านคือ 11 เซนติเมตร</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $(x + 2)^2 = 3x + 10$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กระจาย $(x + 2)^2$ (ใช้สูตร $(a + b)^2 = a^2 + 2ab + b^2$)</p>
+                        <p>ย้ายทุกพจน์ไปอยู่ข้างเดียวกันเพื่อจัดให้อยู่ในรูป $ax^2 + bx + c = 0$</p>
+                        <p>แยกตัวประกอบหรือใช้สูตร</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$(x + 2)^2 = 3x + 10$</p>
+                        <p>$x^2 + 4x + 4 = 3x + 10$</p>
+                        <p>ย้ายพจน์ทั้งหมดมาอยู่ข้างเดียวกัน:</p>
+                        <p>$x^2 + 4x - 3x + 4 - 10 = 0$</p>
+                        <p>$x^2 + x - 6 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 3)(x - 2) = 0$</p>
+                        <p>$x + 3 = 0 \Rightarrow x = -3$</p>
+                        <p>$x - 2 = 0 \Rightarrow x = 2$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -3$ หรือ $x = 2$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่า $k$ ที่ทำให้สมการ $x^2 - 4x + k = 0$ มีคำตอบเป็นจำนวนจริงเพียง 1 คำตอบ</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>เงื่อนไขที่สมการมีคำตอบเป็นจำนวนจริงเพียง 1 คำตอบคือ ดิสคริมิแนนต์ $D = b^2 - 4ac = 0$</p>
+                        <p>ระบุค่า $a, b, c$ แล้วแทนลงในสูตรดิสคริมิแนนต์</p>
+                        <p>แก้สมการหา $k$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากสมการ $x^2 - 4x + k = 0$, เราได้ $a = 1, b = -4, c = k$</p>
+                        <p>เพื่อให้มีคำตอบเป็นจำนวนจริงเพียง 1 คำตอบ (รากซ้ำ) ดิสคริมิแนนต์ต้องเป็นศูนย์:</p>
+                        <p>$D = b^2 - 4ac = 0$</p>
+                        <p>$(-4)^2 - 4(1)(k) = 0$</p>
+                        <p>$16 - 4k = 0$</p>
+                        <p>$16 = 4k$</p>
+                        <p>$k = \frac{16}{4}$</p>
+                        <p>$k = 4$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $k = 4$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>ผลคูณของจำนวนเต็มบวกสองจำนวนที่เรียงติดกันคือ 90 จงหาจำนวนทั้งสองนั้น</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กำหนดตัวแปรแทนจำนวนแรก</p>
+                        <p>เขียนนิพจน์แทนจำนวนที่สอง</p>
+                        <p>ตั้งสมการผลคูณ</p>
+                        <p>แก้สมการกำลังสอง</p>
+                        <p>เลือกคำตอบที่สมเหตุสมผล (จำนวนเต็มบวก)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้จำนวนเต็มบวกจำนวนแรกเป็น $x$</p>
+                        <p>ดังนั้น จำนวนเต็มบวกที่เรียงติดกันคือ $x + 1$</p>
+                        <p>ผลคูณของจำนวนทั้งสองคือ 90:</p>
+                        <p>$x(x + 1) = 90$</p>
+                        <p>$x^2 + x = 90$</p>
+                        <p>$x^2 + x - 90 = 0$</p>
+                        <p>แยกตัวประกอบ: $(x + 10)(x - 9) = 0$</p>
+                        <p>$x + 10 = 0 \Rightarrow x = -10$</p>
+                        <p>$x - 9 = 0 \Rightarrow x = 9$</p>
+                        <p>เนื่องจากเป็นจำนวนเต็มบวก เราเลือก $x = 9$</p>
+                        <p>จำนวนทั้งสองคือ 9 และ $x + 1 = 9 + 1 = 10$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 9 และ 10</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>จงหาคำตอบของสมการ $(x - 3)(x + 4) = 2x(x - 1)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>กระจายพหุนามทั้งสองข้างของสมการ</p>
+                        <p>ย้ายทุกพจน์ไปอยู่ข้างเดียวกันเพื่อจัดให้อยู่ในรูป $ax^2 + bx + c = 0$</p>
+                        <p>แก้สมการกำลังสอง (อาจต้องใช้สูตร)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$(x - 3)(x + 4) = 2x(x - 1)$</p>
+                        <p>กระจายพหุนาม:</p>
+                        <p>$x^2 + 4x - 3x - 12 = 2x^2 - 2x$</p>
+                        <p>$x^2 + x - 12 = 2x^2 - 2x$</p>
+                        <p>ย้ายทุกพจน์ไปอยู่ข้างเดียวกัน (นิยมย้ายไปฝั่งที่ทำให้สัมประสิทธิ์หน้า $x^2$ เป็นบวก):</p>
+                        <p>$0 = 2x^2 - x^2 - 2x - x + 12$</p>
+                        <p>$0 = x^2 - 3x + 12$</p>
+                        <p>จากสมการ $x^2 - 3x + 12 = 0$, เราได้ $a = 1, b = -3, c = 12$</p>
+                        <p>ตรวจสอบดิสคริมิแนนต์:</p>
+                        <p>$D = b^2 - 4ac = (-3)^2 - 4(1)(12)$</p>
+                        <p>$D = 9 - 48$</p>
+                        <p>$D = -39$</p>
+                        <p>เนื่องจาก $D = -39 < 0$ สมการ <strong>ไม่มีคำตอบเป็นจำนวนจริง</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> ไม่มีคำตอบเป็นจำนวนจริง (หรือมีคำตอบเป็นจำนวนเชิงซ้อน)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="ch4-1.html" class="nav-button prev">← บทก่อนหน้า: อสมการเชิงเส้นตัวแปรเดียว</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: อสมการกำลังสอง →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
