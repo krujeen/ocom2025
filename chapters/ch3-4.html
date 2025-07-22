@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 3.4: ฟังก์ชันเอกซ์โพเนนเชียลและฟังก์ชันลอการิทึม (รวมกราฟ) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 3.4: ฟังก์ชันเอกซ์โพเนนเชียลและฟังก์ชันลอการิทึม</span>
+            </nav>
+            <h1>บทที่ 3.4: ฟังก์ชันเอกซ์โพเนนเชียลและฟังก์ชันลอการิทึม</h1>
+            <p class="chapter-intro">ศึกษาฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม ซึ่งเป็นฟังก์ชันที่สำคัญในคณิตศาสตร์ มีการประยุกต์ใช้ในหลายสาขา เช่น การเติบโต การเงิน และวิทยาการคอมพิวเตอร์ โดยเฉพาะในการวิเคราะห์ความซับซ้อนของอัลกอริทึม</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">3.4.1 ฟังก์ชันเอกซ์โพเนนเชียล (Exponential Functions)</a></li>
+                    <li><a href="#section-2">3.4.2 ฟังก์ชันลอการิทึม (Logarithmic Functions)</a></li>
+                    <li><a href="#section-3">3.4.3 ความสัมพันธ์ระหว่างฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม</a></li>
+                    <li><a href="#section-4">3.4.4 สมบัติของลอการิทึม (Properties of Logarithms)</a></li>
+                    <li><a href="#section-5">3.4.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-6">3.4.6 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ฟังก์ชันเอกซ์โพเนนเชียล -->
+            <section id="section-1" class="content-section">
+                <h2>3.4.1 ฟังก์ชันเอกซ์โพเนนเชียล (Exponential Functions)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม: ฟังก์ชันเอกซ์โพเนนเชียล</h4>
+                    <p>ฟังก์ชันเอกซ์โพเนนเชียล คือ ฟังก์ชันที่อยู่ในรูป</p>
+                    <div class="formula-box">
+                        $$f(x) = a^x$$
+                    </div>
+                    <p>เมื่อ $a$ คือ ฐาน (base) โดยมีเงื่อนไขว่า $a > 0$ และ $a \neq 1$ และ $x$ คือตัวแปรที่เป็นเลขชี้กำลัง</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>คุณสมบัติสำคัญ</h3>
+                    <ul>
+                        <li><strong>โดเมน (Domain):</strong> จำนวนจริงใดๆ $(\mathbb{R})$</li>
+                        <li><strong>เรนจ์ (Range):</strong> จำนวนจริงบวกเท่านั้น $((0, \infty))$</li>
+                        <li><strong>จุดตัดแกน Y:</strong> ตัดแกน Y ที่ $(0, 1)$ เสมอ เพราะ $a^0 = 1$</li>
+                        <li><strong>เส้นกำกับแนวนอน (Horizontal Asymptote):</strong> แกน X (สมการ $y = 0$)</li>
+                        <li><strong>เป็นฟังก์ชันหนึ่งต่อหนึ่ง (One-to-One):</strong> ผ่านการทดสอบเส้นแนวนอน</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติการเพิ่ม/ลด</h3>
+                    <ul>
+                        <li><strong>ถ้า $a > 1$:</strong> ฟังก์ชันเป็น ฟังก์ชันเพิ่ม (กราฟจากซ้ายไปขวาจะชันขึ้น)</li>
+                        <li><strong>ถ้า $0 < a < 1$:</strong> ฟังก์ชันเป็น ฟังก์ชันลด (กราฟจากซ้ายไปขวาจะชันลง)</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>กราฟของฟังก์ชันเอกซ์โพเนนเชียล</h4>
+                    <div class="example-box">
+                        <h5>กรณี $a > 1$ (เช่น $y = 2^x$)</h5>
+                        <ul>
+                            <li>กราฟจะผ่านจุด $(0, 1)$ และ $(1, a)$</li>
+                            <li>เมื่อ $x$ เพิ่มขึ้น, $y$ เพิ่มขึ้นอย่างรวดเร็ว</li>
+                            <li>เมื่อ $x$ ลดลง, $y$ จะเข้าใกล้ 0 แต่ไม่เท่ากับ 0</li>
+                        </ul>
+                        
+                        <h5>กรณี $0 < a < 1$ (เช่น $y = (0.5)^x$)</h5>
+                        <ul>
+                            <li>กราฟจะผ่านจุด $(0, 1)$ และ $(1, a)$</li>
+                            <li>เมื่อ $x$ เพิ่มขึ้น, $y$ ลดลงอย่างรวดเร็ว</li>
+                            <li>เมื่อ $x$ ลดลง, $y$ จะเพิ่มขึ้นอย่างรวดเร็ว</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ฟังก์ชันลอการิทึม -->
+            <section id="section-2" class="content-section">
+                <h2>3.4.2 ฟังก์ชันลอการิทึม (Logarithmic Functions)</h2>
+
+                <div class="definition-box">
+                    <h4>นิยาม: ฟังก์ชันลอการิทึม</h4>
+                    <p>ฟังก์ชันลอการิทึม คือ ฟังก์ชันผกผันของฟังก์ชันเอกซ์โพเนนเชียล</p>
+                    <p>ถ้า $y = a^x$ แล้ว $x = \log_a y$</p>
+                    <p>ดังนั้น ฟังก์ชันลอการิทึมเขียนอยู่ในรูป</p>
+                    <div class="formula-box">
+                        $$f(x) = \log_a x$$
+                    </div>
+                    <p>เมื่อ $a$ คือ ฐาน (base) โดยมีเงื่อนไขว่า $a > 0$ และ $a \neq 1$ และ $x > 0$</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>คุณสมบัติสำคัญ</h3>
+                    <ul>
+                        <li><strong>โดเมน (Domain):</strong> จำนวนจริงบวกเท่านั้น $((0, \infty))$</li>
+                        <li><strong>เรนจ์ (Range):</strong> จำนวนจริงใดๆ $(\mathbb{R})$</li>
+                        <li><strong>จุดตัดแกน X:</strong> ตัดแกน X ที่ $(1, 0)$ เสมอ เพราะ $\log_a 1 = 0$</li>
+                        <li><strong>เส้นกำกับแนวดิ่ง (Vertical Asymptote):</strong> แกน Y (สมการ $x = 0$)</li>
+                        <li><strong>เป็นฟังก์ชันหนึ่งต่อหนึ่ง (One-to-One):</strong> เนื่องจากเป็นฟังก์ชันผกผันของฟังก์ชันหนึ่งต่อหนึ่ง</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติการเพิ่ม/ลด</h3>
+                    <ul>
+                        <li><strong>ถ้า $a > 1$:</strong> ฟังก์ชันเป็น ฟังก์ชันเพิ่ม (กราฟจากซ้ายไปขวาจะชันขึ้น)</li>
+                        <li><strong>ถ้า $0 < a < 1$:</strong> ฟังก์ชันเป็น ฟังก์ชันลด (กราฟจากซ้ายไปขวาจะชันลง)</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>กราฟของฟังก์ชันลอการิทึม</h4>
+                    <div class="example-box">
+                        <h5>กรณี $a > 1$ (เช่น $y = \log_2 x$)</h5>
+                        <ul>
+                            <li>กราฟจะผ่านจุด $(1, 0)$ และ $(a, 1)$</li>
+                            <li>เป็นภาพสะท้อนของ $y = a^x$ ผ่านเส้นตรง $y = x$</li>
+                            <li>เมื่อ $x$ เพิ่มขึ้น, $y$ เพิ่มขึ้น</li>
+                        </ul>
+                        
+                        <h5>กรณี $0 < a < 1$ (เช่น $y = \log_{0.5} x$)</h5>
+                        <ul>
+                            <li>กราฟจะผ่านจุด $(1, 0)$ และ $(a, 1)$</li>
+                            <li>เป็นภาพสะท้อนของ $y = a^x$ ผ่านเส้นตรง $y = x$</li>
+                            <li>เมื่อ $x$ เพิ่มขึ้น, $y$ ลดลง</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ความสัมพันธ์ระหว่างฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม -->
+            <section id="section-3" class="content-section">
+                <h2>3.4.3 ความสัมพันธ์ระหว่างฟังก์ชันเอกซ์โพเนนเชียลและลอการิทึม</h2>
+
+                <div class="definition-box">
+                    <h4>ความสัมพันธ์ผกผัน</h4>
+                    <p>ฟังก์ชัน $y = a^x$ และ $y = \log_a x$ เป็นฟังก์ชันผกผันกัน นั่นหมายความว่า:</p>
+                    <div class="formula-box">
+                        $$f(f^{-1}(x)) = x \text{ และ } f^{-1}(f(x)) = x$$
+                    </div>
+                    <p>กราฟของทั้งสองฟังก์ชันจะสมมาตรกันเมื่อเทียบกับเส้นตรง $y = x$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างความสัมพันธ์ผกผัน</h4>
+                    <div class="example-box">
+                        <p>ถ้า $f(x) = 2^x$ และ $g(x) = \log_2 x$ แล้ว:</p>
+                        <ul>
+                            <li>$f(g(8)) = f(\log_2 8) = f(3) = 2^3 = 8$</li>
+                            <li>$g(f(3)) = g(2^3) = g(8) = \log_2 8 = 3$</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: สมบัติของลอการิทึม -->
+            <section id="section-4" class="content-section">
+                <h2>3.4.4 สมบัติของลอการิทึม (Properties of Logarithms)</h2>
+
+                <p>ให้ $M, N$ เป็นจำนวนจริงบวก และ $a, b$ เป็นฐาน โดย $a, b > 0$ และ $a, b \neq 1$</p>
+
+                <div class="subsection">
+                    <h3>สมบัติพื้นฐาน</h3>
+                    <div class="formula-box">
+                        <ol>
+                            <li>$\log_a 1 = 0$</li>
+                            <li>$\log_a a = 1$</li>
+                            <li>$\log_a (MN) = \log_a M + \log_a N$ (ลอการิทึมของผลคูณคือผลบวกของลอการิทึม)</li>
+                            <li>$\log_a \left(\frac{M}{N}\right) = \log_a M - \log_a N$ (ลอการิทึมของผลหารคือผลลบของลอการิทึม)</li>
+                            <li>$\log_a M^k = k \log_a M$ (เลขชี้กำลังสามารถนำมาไว้ข้างหน้าได้)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติเพิ่มเติม</h3>
+                    <div class="formula-box">
+                        <ol start="6">
+                            <li>$\log_a M = \frac{\log_b M}{\log_b a}$ (การเปลี่ยนฐาน - Change of Base Formula)</li>
+                            <li>$\log M = \log_{10} M$ (ลอการิทึมสามัญ)</li>
+                            <li>$\ln M = \log_e M$ (ลอการิทึมธรรมชาติ, $e \approx 2.718$)</li>
+                            <li>$a^{\log_a M} = M$</li>
+                            <li>$\log_a b \cdot \log_b a = 1$ หรือ $\log_a b = \frac{1}{\log_b a}$</li>
+                            <li>$\log_{a^k} M = \frac{1}{k} \log_a M$</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างการใช้สมบัติลอการิทึม</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่าง 1:</strong> $\log_2 8 + \log_2 4$</p>
+                        <p>$= \log_2 (8 \times 4) = \log_2 32 = \log_2 2^5 = 5$</p>
+                        
+                        <p><strong>ตัวอย่าง 2:</strong> $\log_3 27 - \log_3 9$</p>
+                        <p>$= \log_3 \frac{27}{9} = \log_3 3 = 1$</p>
+                        
+                        <p><strong>ตัวอย่าง 3:</strong> $\log_5 25^3$</p>
+                        <p>$= 3 \log_5 25 = 3 \log_5 5^2 = 3 \times 2 = 6$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-5" class="content-section">
+                <h2>3.4.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 1: การแก้สมการเอกซ์โพเนนเชียล</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาค่า $x$ จากสมการ $4^x = \frac{1}{8}$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>แปลงฐานของทุกพจน์ให้เป็นฐานเดียวกัน (ในที่นี้คือฐาน 2)</li>
+                            <li>ใช้สมบัติเลขยกกำลัง $a^{-n} = \frac{1}{a^n}$</li>
+                            <li>เมื่อฐานเท่ากัน เลขชี้กำลังต้องเท่ากัน</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$4^x = \frac{1}{8}$</p>
+                        <p>$(2^2)^x = \frac{1}{2^3}$</p>
+                        <p>$2^{2x} = 2^{-3}$</p>
+                        <p>เนื่องจากฐานเท่ากัน:</p>
+                        <p>$2x = -3$</p>
+                        <p>$x = -\frac{3}{2}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = -\frac{3}{2}$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 2: การแก้สมการลอการิทึม</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาค่า $x$ จากสมการ $\log_2 (x + 1) = 3$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>แปลงสมการลอการิทึมให้อยู่ในรูปเอกซ์โพเนนเชียล: ถ้า $\log_a M = k$ แล้ว $M = a^k$</li>
+                            <li>แก้สมการที่ได้</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$\log_2 (x + 1) = 3$</p>
+                        <p>จากนิยามลอการิทึม:</p>
+                        <p>$x + 1 = 2^3$</p>
+                        <p>$x + 1 = 8$</p>
+                        <p>$x = 8 - 1$</p>
+                        <p>$x = 7$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 7$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 3: การใช้สมบัติของลอการิทึม</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาค่าของ $\log_3 27 + \log_5 125 - \log_2 8$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>แปลงตัวเลขหลัง log ให้อยู่ในรูปกำลังของฐาน</li>
+                            <li>ใช้สมบัติ $\log_a a^k = k$</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>$\log_3 27 = \log_3 3^3 = 3$</p>
+                        <p>$\log_5 125 = \log_5 5^3 = 3$</p>
+                        <p>$\log_2 8 = \log_2 2^3 = 3$</p>
+                        <p>ดังนั้น:</p>
+                        <p>$\log_3 27 + \log_5 125 - \log_2 8 = 3 + 3 - 3 = 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 3</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 4: การหาโดเมนของฟังก์ชันลอการิทึม</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาโดเมนของฟังก์ชัน $f(x) = \log_5 (x - 4)$</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>สำหรับฟังก์ชันลอการิทึม $\log_a M$, ค่า $M$ ต้องเป็นจำนวนจริงบวกเท่านั้น $(M > 0)$</li>
+                            <li>กำหนดเงื่อนไขและแก้อสมการ</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p>สำหรับ $f(x) = \log_5 (x - 4)$</p>
+                        <p>พจน์ที่อยู่หลัง log ต้องมากกว่า 0:</p>
+                        <p>$x - 4 > 0$</p>
+                        <p>$x > 4$</p>
+                        <p>ดังนั้น โดเมนของฟังก์ชันคือ $(4, \infty)$ หรือ $\{x | x > 4\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(4, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>โจทย์ข้อที่ 5: การประยุกต์ใช้สมบัติการเปลี่ยนฐาน</h4>
+                    <div class="example-box">
+                        <p><strong>คำถาม:</strong> จงหาค่าของ $\frac{\log 27}{\log 3}$ (โดย $\log$ คือ $\log_{10}$)</p>
+                        
+                        <p><strong>แนวคิด:</strong></p>
+                        <ul>
+                            <li>ใช้สมบัติการเปลี่ยนฐาน: $\frac{\log_b M}{\log_b a} = \log_a M$</li>
+                            <li>หรือแปลงตัวเลขเป็นกำลังของฐานที่เหมาะสม</li>
+                        </ul>
+                        
+                        <p><strong>เฉลย:</strong></p>
+                        <p><strong>วิธีที่ 1:</strong> ใช้สมบัติการเปลี่ยนฐาน</p>
+                        <p>$\frac{\log 27}{\log 3} = \log_3 27 = \log_3 3^3 = 3$</p>
+                        
+                        <p><strong>วิธีที่ 2:</strong> ใช้สมบัติเลขชี้กำลังของลอการิทึม</p>
+                        <p>$\frac{\log 27}{\log 3} = \frac{\log 3^3}{\log 3} = \frac{3 \log 3}{\log 3} = 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 3</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-6" class="content-section">
+                <h2>3.4.6 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่า $x$ จากสมการ $9^x = 27$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แปลงฐานของทุกพจน์ให้เป็นฐานเดียวกัน (ในที่นี้คือฐาน 3)</p>
+                        <p>เมื่อฐานเท่ากัน เลขชี้กำลังต้องเท่ากัน</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$9^x = 27$</p>
+                        <p>$(3^2)^x = 3^3$</p>
+                        <p>$3^{2x} = 3^3$</p>
+                        <p>เนื่องจากฐานเท่ากัน:</p>
+                        <p>$2x = 3$</p>
+                        <p>$x = \frac{3}{2}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = \frac{3}{2}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่า $x$ จากสมการ $\log_4 (x - 2) = 2$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แปลงสมการลอการิทึมให้อยู่ในรูปเอกซ์โพเนนเชียล: ถ้า $\log_a M = k$ แล้ว $M = a^k$</p>
+                        <p>แก้สมการที่ได้</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$\log_4 (x - 2) = 2$</p>
+                        <p>จากนิยามลอการิทึม:</p>
+                        <p>$x - 2 = 4^2$</p>
+                        <p>$x - 2 = 16$</p>
+                        <p>$x = 16 + 2$</p>
+                        <p>$x = 18$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 18$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าของ $\log_2 20 - \log_2 5 + \log_2 8$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติ $\log_a M - \log_a N = \log_a \left(\frac{M}{N}\right)$</p>
+                        <p>ใช้สมบัติ $\log_a M + \log_a N = \log_a (MN)$</p>
+                        <p>แปลงตัวเลขหลัง log ให้อยู่ในรูปกำลังของฐาน แล้วใช้ $\log_a a^k = k$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$\log_2 20 - \log_2 5 + \log_2 8$</p>
+                        <p>$= \log_2 \left(\frac{20}{5}\right) + \log_2 8$</p>
+                        <p>$= \log_2 4 + \log_2 8$</p>
+                        <p>$= \log_2 2^2 + \log_2 2^3$</p>
+                        <p>$= 2 + 3$</p>
+                        <p>$= 5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $5$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงหาโดเมนของฟังก์ชัน $f(x) = \log_7 (x^2 - 9)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สำหรับฟังก์ชันลอการิทึม $\log_a M$, ค่า $M$ ต้องเป็นจำนวนจริงบวกเท่านั้น $(M > 0)$</p>
+                        <p>แก้อสมการกำลังสอง $x^2 - 9 > 0$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>พจน์ที่อยู่หลัง log ต้องมากกว่า 0:</p>
+                        <p>$x^2 - 9 > 0$</p>
+                        <p>$(x - 3)(x + 3) > 0$</p>
+                        <p>หาช่วงคำตอบโดยใช้เส้นจำนวน: รากคือ $x = -3$ และ $x = 3$</p>
+                        <p>จากการทดสอบจุด:</p>
+                        <ul>
+                            <li>เมื่อ $x < -3$: $(x - 3)(x + 3) > 0$ ✓</li>
+                            <li>เมื่อ $-3 < x < 3$: $(x - 3)(x + 3) < 0$ ✗</li>
+                            <li>เมื่อ $x > 3$: $(x - 3)(x + 3) > 0$ ✓</li>
+                        </ul>
+                        <p>ดังนั้น โดเมนของฟังก์ชันคือ $(-\infty, -3) \cup (3, \infty)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-\infty, -3) \cup (3, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $\log_2 5 = A$ จงหาค่าของ $\log_8 25$ ในรูปของ $A$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติการเปลี่ยนฐาน: $\log_a M = \frac{\log_b M}{\log_b a}$</p>
+                        <p>แปลงฐาน 8 และตัวเลข 25 ให้เป็นกำลังของ 2 และ 5 ตามลำดับ</p>
+                        <p>ใช้สมบัติ $\log_a M^k = k \log_a M$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหา $\log_8 25$</p>
+                        <p>$\log_8 25 = \log_{2^3} 5^2$</p>
+                        <p>ใช้สมบัติ $\log_{a^k} M^p = \frac{p}{k} \log_a M$:</p>
+                        <p>$= \frac{2}{3} \log_2 5$</p>
+                        <p>โจทย์กำหนดให้ $\log_2 5 = A$</p>
+                        <p>$= \frac{2}{3} A$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\frac{2}{3} A$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่า $x$ จากสมการ $5^{2x} - 6 \cdot 5^x + 5 = 0$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สังเกตว่าสมการอยู่ในรูปสมการกำลังสองของ $5^x$</p>
+                        <p>ให้ $u = 5^x$ เพื่อเปลี่ยนสมการให้อยู่ในรูป $u^2 - 6u + 5 = 0$</p>
+                        <p>แยกตัวประกอบของสมการกำลังสองและแก้หาค่า $u$</p>
+                        <p>แทนค่า $u$ กลับด้วย $5^x$ แล้วแก้หาค่า $x$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $u = 5^x$</p>
+                        <p>สมการจะกลายเป็น:</p>
+                        <p>$u^2 - 6u + 5 = 0$</p>
+                        <p>แยกตัวประกอบ:</p>
+                        <p>$(u - 1)(u - 5) = 0$</p>
+                        <p>ดังนั้น $u = 1$ หรือ $u = 5$</p>
+                        <p>แทนค่า $u$ กลับด้วย $5^x$:</p>
+                        
+                        <p><strong>กรณีที่ 1:</strong> $5^x = 1$</p>
+                        <p>$5^x = 5^0$</p>
+                        <p>$x = 0$</p>
+                        
+                        <p><strong>กรณีที่ 2:</strong> $5^x = 5$</p>
+                        <p>$5^x = 5^1$</p>
+                        <p>$x = 1$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 0$ หรือ $x = 1$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่า $x$ จากสมการ $\log_3 x + \log_3 (x - 2) = 1$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติ $\log_a M + \log_a N = \log_a (MN)$ เพื่อรวมพจน์ลอการิทึม</p>
+                        <p>แปลงสมการลอการิทึมให้อยู่ในรูปเอกซ์โพเนนเชียล</p>
+                        <p>แก้สมการกำลังสองที่ได้</p>
+                        <p>ตรวจสอบคำตอบกับโดเมนของลอการิทึมเดิม $(x > 0$ และ $x - 2 > 0)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>โดเมนของ $\log_3 x$ คือ $x > 0$</p>
+                        <p>โดเมนของ $\log_3 (x - 2)$ คือ $x - 2 > 0 \Rightarrow x > 2$</p>
+                        <p>ดังนั้น โดเมนรวมคือ $x > 2$</p>
+                        
+                        <p>ใช้สมบัติลอการิทึมรวมพจน์:</p>
+                        <p>$\log_3 (x(x - 2)) = 1$</p>
+                        <p>$\log_3 (x^2 - 2x) = 1$</p>
+                        
+                        <p>แปลงเป็นรูปเอกซ์โพเนนเชียล:</p>
+                        <p>$x^2 - 2x = 3^1$</p>
+                        <p>$x^2 - 2x - 3 = 0$</p>
+                        
+                        <p>แยกตัวประกอบ:</p>
+                        <p>$(x - 3)(x + 1) = 0$</p>
+                        <p>ดังนั้น $x = 3$ หรือ $x = -1$</p>
+                        
+                        <p>ตรวจสอบคำตอบกับโดเมน $(x > 2)$:</p>
+                        <ul>
+                            <li>ถ้า $x = 3$: สอดคล้องกับ $x > 2$ ✓</li>
+                            <li>ถ้า $x = -1$: ไม่สอดคล้องกับ $x > 2$ ✗ (เป็นคำตอบนอกช่วงโดเมน)</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> $x = 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $3^x = 4$ และ $3^y = 5$ จงหาค่าของ $3^{2x + y - 1}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สมบัติเลขยกกำลัง $a^{m+n} = a^m \cdot a^n$ และ $a^{mn} = (a^m)^n$ เพื่อกระจาย $3^{2x + y - 1}$</p>
+                        <p>แทนค่าที่กำหนดให้</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$3^{2x + y - 1} = 3^{2x} \cdot 3^y \cdot 3^{-1}$</p>
+                        <p>$= (3^x)^2 \cdot 3^y \cdot \frac{1}{3^1}$</p>
+                        <p>แทนค่า $3^x = 4$ และ $3^y = 5$:</p>
+                        <p>$= (4)^2 \cdot 5 \cdot \frac{1}{3}$</p>
+                        <p>$= 16 \cdot 5 \cdot \frac{1}{3}$</p>
+                        <p>$= \frac{80}{3}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\frac{80}{3}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>กราฟของฟังก์ชัน $f(x) = a^x$ ผ่านจุด $(2, 9)$ จงหาค่าของ $a$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แทนพิกัดของจุดที่กราฟผ่านลงในสมการฟังก์ชัน</p>
+                        <p>แก้สมการเพื่อหาค่าฐาน $a$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากสมการ $f(x) = a^x$ และกราฟผ่านจุด $(2, 9)$</p>
+                        <p>แทน $x = 2$ และ $f(x) = 9$:</p>
+                        <p>$9 = a^2$</p>
+                        <p>$a = \pm\sqrt{9}$</p>
+                        <p>$a = \pm 3$</p>
+                        <p>เนื่องจากฐานของฟังก์ชันเอกซ์โพเนนเชียล $a$ ต้องมีค่า $a > 0$ และ $a \neq 1$</p>
+                        <p>ดังนั้น $a = 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $a = 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>กราฟของฟังก์ชัน $f(x) = \log_b x$ ผ่านจุด $(8, 3)$ จงหาจุดตัดแกน X ของกราฟนี้</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>แทนพิกัดของจุดที่กราฟผ่านลงในสมการฟังก์ชันเพื่อหาค่าฐาน $b$</p>
+                        <p>เมื่อได้สมการที่สมบูรณ์แล้ว หาจุดตัดแกน X โดยให้ $f(x) = 0$ แล้วแก้หาค่า $x$ (หรือจำว่าจุดตัดแกน X ของ $\log_b x$ คือ $(1, 0)$ เสมอ)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หาค่าฐาน $b$:</strong></p>
+                        <p>จากสมการ $f(x) = \log_b x$ และกราฟผ่านจุด $(8, 3)$</p>
+                        <p>แทน $x = 8$ และ $f(x) = 3$:</p>
+                        <p>$3 = \log_b 8$</p>
+                        <p>แปลงเป็นรูปเอกซ์โพเนนเชียล:</p>
+                        <p>$b^3 = 8$</p>
+                        <p>$b^3 = 2^3$</p>
+                        <p>$b = 2$</p>
+                        <p>ดังนั้น สมการฟังก์ชันคือ $f(x) = \log_2 x$</p>
+                        
+                        <p><strong>หาจุดตัดแกน X:</strong></p>
+                        <p>จุดตัดแกน X คือจุดที่ $f(x) = 0$:</p>
+                        <p>$0 = \log_2 x$</p>
+                        <p>แปลงเป็นรูปเอกซ์โพเนนเชียล:</p>
+                        <p>$x = 2^0$</p>
+                        <p>$x = 1$</p>
+                        <p>ดังนั้น จุดตัดแกน X คือ $(1, 0)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(1, 0)$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <a href="ch3-3.html" class="nav-button prev">← บทก่อนหน้า: ประเภทของฟังก์ชัน</a>
+                <a href="../index.html" class="nav-button home">กลับหน้าหลัก</a>
+                <a href="#" class="nav-button next" onclick="alert('บทถัดไปจะเพิ่มในภายหลัง')">บทถัดไป: เซตและระบบจำนวน →</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2568 เอกสารติว สอวน. คอมพิวเตอร์ ค่าย 1 | จัดทำเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
