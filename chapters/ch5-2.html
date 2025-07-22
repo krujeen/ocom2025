@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 5.2: เซตย่อยและเพาเวอร์เซต - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 5.2: เซตย่อยและเพาเวอร์เซต</span>
+            </nav>
+            <h1>บทที่ 5.2: เซตย่อยและเพาเวอร์เซต</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับ "เซตย่อย" และ "เพาเวอร์เซต" ซึ่งเป็นแนวคิดพื้นฐานแต่สำคัญมากในการจัดการเซตในคณิตศาสตร์เชิงแยกส่วนและวิทยาการคอมพิวเตอร์ การทำความเข้าใจหัวข้อนี้เป็นสิ่งจำเป็นสำหรับการวิเคราะห์การรวมกันที่เป็นไปได้ของข้อมูล ซึ่งมักปรากฏในข้อสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">5.2.1 เซตย่อย (Subsets)</a></li>
+                    <li><a href="#section-2">5.2.2 เพาเวอร์เซต (Power Sets)</a></li>
+                    <li><a href="#section-3">5.2.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">5.2.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: เซตย่อย -->
+            <section id="section-1" class="content-section">
+                <h2>5.2.1 เซตย่อย (Subsets)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p>เซต $A$ จะเป็น <strong>เซตย่อย (subset)</strong> ของเซต $B$ ก็ต่อเมื่อสมาชิกทุกตัวของเซต $A$ เป็นสมาชิกของเซต $B$ ด้วย</p>
+                    <div class="formula-box">
+                        <p><strong>สัญลักษณ์:</strong> $A \subseteq B$ (อ่านว่า "A เป็นเซตย่อยของ B" หรือ "A เป็นสับเซตของ B")</p>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h4>ข้อสังเกตสำคัญเกี่ยวกับเซตย่อย</h4>
+                    <ul>
+                        <li>เซตว่าง ($\emptyset$) เป็นเซตย่อยของทุก ๆ เซตเสมอ ($\emptyset \subseteq A$ สำหรับทุกเซต $A$)</li>
+                        <li>ทุก ๆ เซตเป็นเซตย่อยของตัวมันเองเสมอ ($A \subseteq A$ สำหรับทุกเซต $A$)</li>
+                        <li>ถ้า $A \subseteq B$ และ $B \subseteq A$ แล้ว $A = B$</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p>ให้ $A = \{1,2\}$ และ $B = \{1,2,3\}$</p>
+                        <p>$A \subseteq B$ เพราะสมาชิกทุกตัวใน $A$ (คือ 1 และ 2) อยู่ใน $B$</p>
+                        <br>
+                        <p>ให้ $C = \{2,4\}$ และ $D = \{1,2,3\}$</p>
+                        <p>$C \not\subseteq D$ เพราะสมาชิก 4 ใน $C$ ไม่อยู่ใน $D$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>เซตย่อยแท้ (Proper Subsets)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>เซต $A$ จะเป็น <strong>เซตย่อยแท้ (proper subset)</strong> ของเซต $B$ ก็ต่อเมื่อ $A \subseteq B$ และ $A \neq B$ (นั่นคือ $A$ เป็นเซตย่อยของ $B$ แต่ $A$ ไม่ใช่เซตเดียวกันกับ $B$ และ $B$ ต้องมีสมาชิกอย่างน้อยหนึ่งตัวที่ไม่อยู่ใน $A$)</p>
+                        <div class="formula-box">
+                            <p><strong>สัญลักษณ์:</strong> $A \subset B$ (อ่านว่า "A เป็นเซตย่อยแท้ของ B" หรือ "A เป็นสับเซตแท้ของ B")</p>
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $A = \{1,2\}$ และ $B = \{1,2,3\}$</p>
+                            <p>$A \subset B$ เพราะ $A \subseteq B$ และ $A \neq B$</p>
+                            <br>
+                            <p>ให้ $C = \{1,2\}$</p>
+                            <p>$C \not\subset C$ เพราะ $C = C$ (ไม่ได้เป็นเซตย่อยแท้ของตัวเอง)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: เพาเวอร์เซต -->
+            <section id="section-2" class="content-section">
+                <h2>5.2.2 เพาเวอร์เซต (Power Sets)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>เพาเวอร์เซตของเซต A</strong> คือเซตของเซตย่อยทั้งหมดที่เป็นไปได้ของเซต $A$</p>
+                    <div class="formula-box">
+                        <p><strong>สัญลักษณ์:</strong> $P(A)$ (อ่านว่า "เพาเวอร์เซตของ A")</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p>ให้ $A = \{1,2\}$</p>
+                        <p>เซตย่อยทั้งหมดของ $A$ คือ: $\emptyset, \{1\}, \{2\}, \{1,2\}$</p>
+                        <p>ดังนั้น $P(A) = \{\emptyset, \{1\}, \{2\}, \{1,2\}\}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>จำนวนสมาชิกของเพาเวอร์เซต</h3>
+                    
+                    <div class="definition-box">
+                        <h4>สูตร</h4>
+                        <p>ถ้าเซต $A$ มีสมาชิก $n$ ตัว (เขียนแทนด้วย $n(A) = n$)</p>
+                        <p>แล้วเพาเวอร์เซตของ $A$ จะมีสมาชิk 2^n ตัว (เขียนแทนด้วย $n(P(A)) = 2^n$)</p>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ถ้า $A = \{a,b,c\}$ ดังนั้น $n(A) = 3$</p>
+                            <p>$n(P(A)) = 2^3 = 8$ สมาชิก</p>
+                            <p>$P(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}\}$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>5.2.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: การหาเซตย่อยทั้งหมด</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้เซต $S = \{x,y\}$ จงหาเซตย่อยทั้งหมดของ $S$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ไล่หาเซตย่อยทั้งหมดตามจำนวนสมาชิก: เซตว่าง, เซตที่มีสมาชิก 1 ตัว, เซตที่มีสมาชิก 2 ตัว, ... จนถึงเซตนั้นเอง</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $S = \{x,y\}$ มีสมาชิก 2 ตัว ($n(S) = 2$) ดังนั้นจะมีเซตย่อยทั้งหมด $2^2 = 4$ เซต</p>
+                        <ul>
+                            <li>เซตว่าง: $\emptyset$</li>
+                            <li>เซตที่มีสมาชิก 1 ตัว: $\{x\}, \{y\}$</li>
+                            <li>เซตที่มีสมาชิก 2 ตัว: $\{x,y\}$</li>
+                        </ul>
+                        <p>ดังนั้น เซตย่อยทั้งหมดของ $S$ คือ $\emptyset, \{x\}, \{y\}, \{x,y\}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: การหาเพาเวอร์เซต</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้เซต $A = \{1,2,3\}$ จงหา $P(A)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาเซตย่อยทั้งหมดของ $A$ แล้วนำมาเขียนเป็นสมาชิกของเซตใหม่ (เพาเวอร์เซต)</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $A = \{1,2,3\}$ มีสมาชิก 3 ตัว ($n(A) = 3$) ดังนั้น $n(P(A)) = 2^3 = 8$ สมาชิก</p>
+                        <p>เซตย่อยทั้งหมดของ $A$ คือ:</p>
+                        <ul>
+                            <li>$\emptyset$</li>
+                            <li>$\{1\}, \{2\}, \{3\}$</li>
+                            <li>$\{1,2\}, \{1,3\}, \{2,3\}$</li>
+                            <li>$\{1,2,3\}$</li>
+                        </ul>
+                        <p>ดังนั้น $P(A) = \{\emptyset, \{1\}, \{2\}, \{3\}, \{1,2\}, \{1,3\}, \{2,3\}, \{1,2,3\}\}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: การหาจำนวนสมาชิกของเพาเวอร์เซต</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ถ้าเซต $M$ มีสมาชิก 5 ตัว จงหาจำนวนสมาชิกของ $P(M)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตร $n(P(A)) = 2^n$ เมื่อ $n(A) = n$</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $M$ มีสมาชิก 5 ตัว ดังนั้น $n(M) = 5$</p>
+                        <p>จำนวนสมาชิกของ $P(M)$ คือ $2^{n(M)} = 2^5 = 32$</p>
+                        <p><strong>คำตอบ:</strong> 32</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: การหาเซตย่อยแท้</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้เซต $B = \{a,b,c\}$ จงหาจำนวนเซตย่อยแท้ทั้งหมดของ $B$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาจำนวนเซตย่อยทั้งหมด</li>
+                            <li>ลบออกด้วย 1 เนื่องจากเซตย่อยแท้จะไม่รวมตัวมันเอง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $B = \{a,b,c\}$ มีสมาชิก 3 ตัว ($n(B) = 3$)</p>
+                        <p>จำนวนเซตย่อยทั้งหมดของ $B$ คือ $2^3 = 8$ เซต</p>
+                        <p>เซตย่อยแท้คือเซตย่อยทั้งหมดที่ <strong>ไม่ใช่</strong> ตัวมันเอง</p>
+                        <p>ดังนั้น จำนวนเซตย่อยแท้คือ $2^3 - 1 = 8 - 1 = 7$ เซต</p>
+                        <p>(เซตย่อยแท้คือ $\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}$)</p>
+                        <p><strong>คำตอบ:</strong> 7</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การประยุกต์เซตย่อยกับเงื่อนไข</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $A = \{1,2,3\}$ และ $B = \{1,2,3,4,5\}$ จงหาจำนวนเซต $X$ ทั้งหมดที่ $A \subseteq X \subseteq B$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เซต $X$ จะต้องมีสมาชิกของ $A$ ทั้งหมดอยู่แล้ว (คือ 1,2,3)</li>
+                            <li>สมาชิกที่เหลือของ $X$ จะต้องมาจากสมาชิกที่เหลือใน $B$ ที่ไม่อยู่ใน $A$ ($B - A = \{4,5\}$)</li>
+                            <li>จำนวนเซตย่อยของ $B - A$ จะเป็นตัวกำหนดว่าสามารถสร้าง $X$ ได้กี่แบบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากเงื่อนไข $A \subseteq X \subseteq B$ หมายความว่า:</p>
+                        <ul>
+                            <li>สมาชิกของ $X$ ต้องมี $\{1,2,3\}$ เป็นส่วนหนึ่งเสมอ</li>
+                            <li>สมาชิกที่เหลือของ $X$ (ถ้ามี) จะต้องมาจากเซต $B$ แต่ไม่อยู่ใน $A$</li>
+                        </ul>
+                        <p>$B - A = \{4,5\}$</p>
+                        <p>ดังนั้น เซต $X$ จะประกอบด้วย $\{1,2,3\}$ รวมกับเซตย่อยใดๆ ของ $\{4,5\}$</p>
+                        <p>เซตย่อยของ $\{4,5\}$ คือ: $\emptyset, \{4\}, \{5\}, \{4,5\}$</p>
+                        <p>ดังนั้นเซต $X$ ที่เป็นไปได้คือ:</p>
+                        <ul>
+                            <li>$\{1,2,3\} \cup \emptyset = \{1,2,3\}$</li>
+                            <li>$\{1,2,3\} \cup \{4\} = \{1,2,3,4\}$</li>
+                            <li>$\{1,2,3\} \cup \{5\} = \{1,2,3,5\}$</li>
+                            <li>$\{1,2,3\} \cup \{4,5\} = \{1,2,3,4,5\}$</li>
+                        </ul>
+                        <p>จำนวนเซต $X$ ทั้งหมดเท่ากับจำนวนเซตย่อยของ $\{4,5\}$ ซึ่งมีสมาชิก 2 ตัว</p>
+                        <p>ดังนั้น มีทั้งหมด $2^2 = 4$ เซต</p>
+                        <p><strong>คำตอบ:</strong> 4</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>5.2.4 ตัวอย่างข้อสอบฝึกทำ: เซตย่อยและเพาเวอร์เซต</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบชุดที่สองสำหรับนักเรียนได้ฝึกทำในหัวข้อ "เซตย่อยและเพาเวอร์เซต" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้เซต $T = \{a,b,c\}$ จงหาเซตย่อยทั้งหมดของ $T$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เซตย่อยทั้งหมดของเซตที่มีสมาชิก $n$ ตัว คือ $2^n$ เซต</li>
+                            <li>ไล่เขียนเซตย่อยตามจำนวนสมาชิก: เซตว่าง, เซตที่มีสมาชิก 1 ตัว, 2 ตัว, ... จนถึงเซตตัวเอง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $T = \{a,b,c\}$ มีสมาชิก 3 ตัว ($n(T) = 3$) ดังนั้นจะมีเซตย่อยทั้งหมด $2^3 = 8$ เซต</p>
+                        <ul>
+                            <li>เซตว่าง: $\emptyset$</li>
+                            <li>เซตที่มีสมาชิก 1 ตัว: $\{a\}, \{b\}, \{c\}$</li>
+                            <li>เซตที่มีสมาชิก 2 ตัว: $\{a,b\}, \{a,c\}, \{b,c\}$</li>
+                            <li>เซตที่มีสมาชิก 3 ตัว: $\{a,b,c\}$</li>
+                        </ul>
+                        <p>ดังนั้น เซตย่อยทั้งหมดของ $T$ คือ $\emptyset, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้เซต $B = \{\text{แดง}, \text{เขียว}\}$ จงหา $P(B)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หาเซตย่อยทั้งหมดของ $B$ แล้วนำมาเขียนเป็นสมาชิกของเซตใหม่ (เพาเวอร์เซต)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $B = \{\text{แดง}, \text{เขียว}\}$ มีสมาชิก 2 ตัว ($n(B) = 2$) ดังนั้น $n(P(B)) = 2^2 = 4$ สมาชิก</p>
+                        <p>เซตย่อยทั้งหมดของ $B$ คือ:</p>
+                        <ul>
+                            <li>$\emptyset$</li>
+                            <li>$\{\text{แดง}\}, \{\text{เขียว}\}$</li>
+                            <li>$\{\text{แดง}, \text{เขียว}\}$</li>
+                        </ul>
+                        <p>ดังนั้น $P(B) = \{\emptyset, \{\text{แดง}\}, \{\text{เขียว}\}, \{\text{แดง}, \text{เขียว}\}\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>ถ้าเซต $X$ มีสมาชิก 7 ตัว จงหาจำนวนสมาชิกของ $P(X)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตร $n(P(A)) = 2^n$ เมื่อ $n(A) = n$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $X$ มีสมาชิก 7 ตัว ดังนั้น $n(X) = 7$</p>
+                        <p>จำนวนสมาชิกของ $P(X)$ คือ $2^{n(X)} = 2^7 = 128$</p>
+                        <p><strong>คำตอบ:</strong> 128</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้เซต $C = \{1,2,3,4\}$ จงหาจำนวนเซตย่อยแท้ทั้งหมดของ $C$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาจำนวนเซตย่อยทั้งหมด ($2^n$)</li>
+                            <li>จำนวนเซตย่อยแท้คือ $2^n - 1$ (ลบเซตตัวเองออก)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $C = \{1,2,3,4\}$ มีสมาชิก 4 ตัว ($n(C) = 4$)</p>
+                        <p>จำนวนเซตย่อยทั้งหมดของ $C$ คือ $2^4 = 16$ เซต</p>
+                        <p>จำนวนเซตย่อยแท้คือ $2^4 - 1 = 16 - 1 = 15$ เซต</p>
+                        <p><strong>คำตอบ:</strong> 15</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{a,b\}$ และ $B = \{a,b,c,d\}$ จงหาจำนวนเซต $X$ ทั้งหมดที่ $A \subseteq X \subseteq B$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เซต $X$ จะต้องมีสมาชิกของ $A$ ทั้งหมดอยู่แล้ว (คือ a,b)</li>
+                            <li>สมาชิกที่เหลือของ $X$ จะต้องมาจากสมาชิกที่เหลือใน $B$ ที่ไม่อยู่ใน $A$ ($B - A = \{c,d\}$)</li>
+                            <li>จำนวนเซตย่อยของ $B - A$ จะเป็นตัวกำหนดว่าสามารถสร้าง $X$ ได้กี่แบบ</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากเงื่อนไข $A \subseteq X \subseteq B$ หมายความว่า:</p>
+                        <ul>
+                            <li>สมาชิกของ $X$ ต้องมี $\{a,b\}$ เป็นส่วนหนึ่งเสมอ</li>
+                            <li>สมาชิกที่เหลือของ $X$ (ถ้ามี) จะต้องมาจากเซต $B$ แต่ไม่อยู่ใน $A$</li>
+                        </ul>
+                        <p>$B - A = \{c,d\}$</p>
+                        <p>ดังนั้น เซต $X$ จะประกอบด้วย $\{a,b\}$ รวมกับเซตย่อยใดๆ ของ $\{c,d\}$</p>
+                        <p>เซตย่อยของ $\{c,d\}$ มีสมาชิก 2 ตัว ซึ่งคือ $\emptyset, \{c\}, \{d\}, \{c,d\}$</p>
+                        <p>ดังนั้น มีทั้งหมด $2^2 = 4$ เซต $X$ ที่เป็นไปได้</p>
+                        <p><strong>คำตอบ:</strong> 4</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>จงหาจำนวนสมาชิกของ $P(\emptyset)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เซตว่าง ($\emptyset$) คือเซตที่ไม่มีสมาชิก ($n(\emptyset) = 0$)</li>
+                            <li>ใช้สูตร $n(P(A)) = 2^n$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซตว่าง $\emptyset$ มีสมาชิก 0 ตัว ($n(\emptyset) = 0$)</p>
+                        <p>จำนวนสมาชิกของ $P(\emptyset)$ คือ $2^0 = 1$</p>
+                        <p>(ซึ่งสมาชิกของ $P(\emptyset)$ คือ $\{\emptyset\}$)</p>
+                        <p><strong>คำตอบ:</strong> 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $n(P(A)) = 64$ จงหาจำนวนสมาชิกของเซต $A$ ($n(A)$)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตร $n(P(A)) = 2^{n(A)}$ และแก้สมการหา $n(A)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>กำหนดให้ $n(P(A)) = 64$</p>
+                        <p>เรารู้ว่า $n(P(A)) = 2^{n(A)}$</p>
+                        <p>ดังนั้น $2^{n(A)} = 64$</p>
+                        <p>$2^{n(A)} = 2^6$</p>
+                        <p>ดังนั้น $n(A) = 6$</p>
+                        <p><strong>คำตอบ:</strong> 6</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{1, \{2\}, 3\}$ ข้อใดต่อไปนี้ <strong>ไม่เป็น</strong> เซตย่อยของ $A$?</p>
+                        <p>ก. $\emptyset$</p>
+                        <p>ข. $\{1\}$</p>
+                        <p>ค. $\{\{2\}\}$</p>
+                        <p>ง. $\{2\}$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>พิจารณาว่าสมาชิกของตัวเลือกนั้นๆ มีอยู่ในเซต $A$ หรือไม่</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $\emptyset$:</strong> เซตว่างเป็นเซตย่อยของทุกเซตเสมอ ดังนั้นเป็นเซตย่อยของ $A$</p>
+                        
+                        <p><strong>ข. $\{1\}$:</strong> สมาชิก 1 อยู่ใน $A$ ดังนั้น $\{1\}$ เป็นเซตย่อยของ $A$</p>
+                        
+                        <p><strong>ค. $\{\{2\}\}$:</strong> สมาชิก $\{2\}$ อยู่ใน $A$ ดังนั้น $\{\{2\}\}$ เป็นเซตย่อยของ $A$</p>
+                        
+                        <p><strong>ง. $\{2\}$:</strong> สมาชิก 2 ไม่อยู่ใน $A$ (สมาชิกของ $A$ คือ 1, $\{2\}$, 3) ดังนั้น $\{2\}$ ไม่เป็นเซตย่อยของ $A$</p>
+                        
+                        <p><strong>คำตอบ:</strong> ง.</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้เซต $S = \{a,b,c,d,e\}$ จงหาจำนวนเซตย่อยของ $S$ ที่มีสมาชิก 3 ตัว</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรการจัดหมู่ (Combinations): $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ เมื่อ $n$ คือจำนวนสมาชิกทั้งหมด และ $k$ คือจำนวนสมาชิกที่ต้องการเลือก</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เซต $S$ มีสมาชิกทั้งหมด $n = 5$ ตัว</p>
+                        <p>เราต้องการหาจำนวนเซตย่อยที่มีสมาชิก $k = 3$ ตัว</p>
+                        <p>ใช้สูตร $\binom{5}{3}$:</p>
+                        <p>$\binom{5}{3} = \frac{5!}{3!(5-3)!} = \frac{5!}{3!2!} = \frac{5 \times 4 \times 3 \times 2 \times 1}{(3 \times 2 \times 1)(2 \times 1)} = \frac{120}{12} = 10$</p>
+                        <p><strong>คำตอบ:</strong> 10 เซตย่อย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>ถ้าเซต $A$ มีสมาชิก $m$ ตัว และเซต $B$ มีสมาชิก $n$ ตัว โดยที่ $n(P(A)) = 8 \cdot n(P(B))$ จงหาความสัมพันธ์ระหว่าง $m$ และ $n$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แปลงจำนวนสมาชิกของเพาเวอร์เซตให้อยู่ในรูปเลขยกกำลังฐาน 2: $n(P(A)) = 2^m$, $n(P(B)) = 2^n$</li>
+                            <li>แทนค่าลงในสมการที่กำหนด แล้วแก้สมการหาความสัมพันธ์ของ $m$ และ $n$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>กำหนดให้ $n(A) = m$ และ $n(B) = n$</p>
+                        <p>ดังนั้น $n(P(A)) = 2^m$ และ $n(P(B)) = 2^n$</p>
+                        <p>จากสมการที่กำหนด:</p>
+                        <p>$n(P(A)) = 8 \cdot n(P(B))$</p>
+                        <p>$2^m = 2^3 \cdot 2^n$</p>
+                        <p>$2^m = 2^{3+n}$</p>
+                        <p>เนื่องจากฐานเท่ากัน เลขชี้กำลังจึงต้องเท่ากัน:</p>
+                        <p>$m = 3 + n$</p>
+                        <p>หรือ $m - n = 3$</p>
+                        <p><strong>คำตอบ:</strong> $m = n + 3$ หรือ $m - n = 3$</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
