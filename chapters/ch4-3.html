@@ -3,39 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บทที่ 4.3: ระบบสมการเชิงเส้นสองตัวแปร</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>บทที่ 4.3: ระบบสมการเชิงเส้นสองตัวแปร - เอกสารติว สอวน. คอมพิวเตอร์</title>
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="chapter-styles.css">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
     <script>
-        window.MathJax = {
+        MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
             }
         };
     </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    <nav class="chapter-nav">
-        <div class="nav-container">
-            <a href="../index.html" class="nav-home">← กลับหน้าหลัก</a>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 4.3: ระบบสมการเชิงเส้นสองตัวแปร</span>
+            </nav>
             <h1>บทที่ 4.3: ระบบสมการเชิงเส้นสองตัวแปร</h1>
+            <p class="chapter-intro">ศึกษาระบบสมการเชิงเส้นสองตัวแปร ซึ่งเป็นพื้นฐานสำคัญในการแก้ปัญหาที่มีตัวแปรหลายตัว การเขียนโปรแกรม และการประยุกต์ใช้ในปัญหาจริง เช่น การจัดสรรทรัพยากร การคำนวณต้นทุน</p>
         </div>
-    </nav>
+    </header>
 
-    <main class="chapter-content">
-        <div class="content-container">
+    <main class="container">
+        <div class="chapter-content">
             
-            <!-- ส่วนที่ 1: นิยามและรูปแบบของระบบสมการเชิงเส้นสองตัวแปร -->
-            <section class="content-section">
-                <h2>1. นิยามและรูปแบบของระบบสมการเชิงเส้นสองตัวแปร</h2>
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">4.3.1 นิยามและรูปแบบของระบบสมการเชิงเส้นสองตัวแปร</a></li>
+                    <li><a href="#section-2">4.3.2 วิธีแก้ระบบสมการด้วยวิธีแทนค่า</a></li>
+                    <li><a href="#section-3">4.3.3 วิธีแก้ระบบสมการด้วยวิธีการตัดตัวแปร</a></li>
+                    <li><a href="#section-4">4.3.4 การวิเคราะห์ประเภทของคำตอบ</a></li>
+                    <li><a href="#section-5">4.3.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: นิยามและรูปแบบของระบบสมการเชิงเส้นสองตัวแปร -->
+            <section id="section-1" class="content-section">
+                <h2>4.3.1 นิยามและรูปแบบของระบบสมการเชิงเส้นสองตัวแปร</h2>
                 
-                <div class="subsection">
-                    <h3>1.1 นิยาม</h3>
+                <div class="definition-box">
+                    <h4>นิยาม: ระบบสมการเชิงเส้นสองตัวแปร</h4>
                     <p><strong>ระบบสมการเชิงเส้นสองตัวแปร</strong> คือ ระบบสมการที่ประกอบด้วยสมการเชิงเส้นสองสมการ มีตัวแปรสองตัว โดยทั่วไปจะเขียนในรูป:</p>
                     
                     <div class="formula-box">
@@ -48,158 +71,99 @@
                     <p>โดยที่ $a_1, a_2, b_1, b_2, c_1, c_2$ เป็นจำนวนจริง และ $(a_1, b_1) \neq (0, 0)$, $(a_2, b_2) \neq (0, 0)$</p>
                 </div>
 
-                <div class="subsection">
-                    <h3>1.2 คำตอบของระบบสมการ</h3>
+                <div class="definition-box">
+                    <h4>คำตอบของระบบสมการ</h4>
                     <p><strong>คำตอบของระบบสมการเชิงเส้นสองตัวแปร</strong> คือ คู่อันดับ $(x, y)$ ที่สอดคล้องกับทั้งสองสมการพร้อมกัน</p>
                 </div>
 
-                <div class="subsection">
-                    <h3>1.3 ประเภทของคำตอบ</h3>
-                    <div class="concept-box">
-                        <h4>ระบบสมการเชิงเส้นสองตัวแปรจะมีคำตอบ 3 แบบ:</h4>
-                        <ol>
-                            <li><strong>มีคำตอบเดียว</strong> - เส้นตรงทั้งสองตัดกันที่จุดเดียว</li>
-                            <li><strong>ไม่มีคำตอบ</strong> - เส้นตรงทั้งสองขนานกัน</li>
-                            <li><strong>มีคำตอบอนันต์</strong> - เส้นตรงทั้งสองเป็นเส้นเดียวกัน</li>
-                        </ol>
-                    </div>
+                <div class="definition-box">
+                    <h4>ประเภทของคำตอบ</h4>
+                    <p>ระบบสมการเชิงเส้นสองตัวแปรจะมีคำตอบ 3 แบบ:</p>
+                    <ol>
+                        <li><strong>มีคำตอบเดียว</strong> - เส้นตรงทั้งสองตัดกันที่จุดเดียว</li>
+                        <li><strong>ไม่มีคำตอบ</strong> - เส้นตรงทั้งสองขนานกัน</li>
+                        <li><strong>มีคำตอบอนันต์</strong> - เส้นตรงทั้งสองเป็นเส้นเดียวกัน</li>
+                    </ol>
                 </div>
             </section>
 
-            <!-- ส่วนที่ 2: วิธีแก้ระบบสมการด้วยวิธีแทนค่า -->
-            <section class="content-section">
-                <h2>2. วิธีแก้ระบบสมการด้วยวิธีแทนค่า (Substitution Method)</h2>
+            <!-- Section 2: วิธีแก้ระบบสมการด้วยวิธีแทนค่า -->
+            <section id="section-2" class="content-section">
+                <h2>4.3.2 วิธีแก้ระบบสมการด้วยวิธีแทนค่า (Substitution Method)</h2>
                 
-                <div class="subsection">
-                    <h3>2.1 ขั้นตอนการแก้</h3>
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 1:</h4>
-                        <p>เลือกสมการหนึ่ง แล้วแก้หาตัวแปรหนึ่งในรูปของอีกตัวแปรหนึ่ง</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 2:</h4>
-                        <p>นำค่าที่ได้ไปแทนในอีกสมการหนึ่ง</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 3:</h4>
-                        <p>แก้สมการที่ได้เพื่อหาค่าของตัวแปรหนึ่ง</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 4:</h4>
-                        <p>นำค่าที่ได้ไปแทนเพื่อหาค่าของอีกตัวแปรหนึ่ง</p>
-                    </div>
+                <div class="definition-box">
+                    <h4>ขั้นตอนการแก้</h4>
+                    <ol>
+                        <li><strong>ขั้นตอนที่ 1:</strong> เลือกสมการหนึ่ง แล้วแก้หาตัวแปรหนึ่งในรูปของอีกตัวแปรหนึ่ง</li>
+                        <li><strong>ขั้นตอนที่ 2:</strong> นำค่าที่ได้ไปแทนในอีกสมการหนึ่ง</li>
+                        <li><strong>ขั้นตอนที่ 3:</strong> แก้สมการที่ได้เพื่อหาค่าของตัวแปรหนึ่ง</li>
+                        <li><strong>ขั้นตอนที่ 4:</strong> นำค่าที่ได้ไปแทนเพื่อหาค่าของอีกตัวแปรหนึ่ง</li>
+                    </ol>
                 </div>
 
-                <div class="subsection">
-                    <h3>2.2 ตัวอย่าง</h3>
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 1</h4>
                     <div class="example-box">
-                        <h4>ตัวอย่างที่ 1:</h4>
-                        <p>แก้ระบบสมการ: $\begin{cases} x + 2y = 7 \\ 3x - y = 4 \end{cases}$</p>
+                        <p><strong>โจทย์:</strong> แก้ระบบสมการ: $\begin{cases} x + 2y = 7 \\ 3x - y = 4 \end{cases}$</p>
                         
                         <p><strong>วิธีทำ:</strong></p>
-                        <p>จากสมการแรก: $x = 7 - 2y$ ... (1)</p>
-                        <p>แทน (1) ในสมการที่สอง: $3(7 - 2y) - y = 4$</p>
-                        <p>$21 - 6y - y = 4$</p>
-                        <p>$21 - 7y = 4$</p>
-                        <p>$-7y = -17$</p>
-                        <p>$y = \frac{17}{7}$</p>
-                        <p>แทน $y = \frac{17}{7}$ ใน (1): $x = 7 - 2 \cdot \frac{17}{7} = 7 - \frac{34}{7} = \frac{15}{7}$</p>
-                        <p><strong>ดังนั้น</strong> $(x, y) = \left(\frac{15}{7}, \frac{17}{7}\right)$</p>
+                        <div class="solution-steps">
+                            <p>จากสมการแรก: $x = 7 - 2y$ ... (1)</p>
+                            <p>แทน (1) ในสมการที่สอง: $3(7 - 2y) - y = 4$</p>
+                            <p>$21 - 6y - y = 4$</p>
+                            <p>$21 - 7y = 4$</p>
+                            <p>$-7y = -17$</p>
+                            <p>$y = \frac{17}{7}$</p>
+                            <p>แทน $y = \frac{17}{7}$ ใน (1): $x = 7 - 2 \cdot \frac{17}{7} = 7 - \frac{34}{7} = \frac{15}{7}$</p>
+                            <p><strong>ดังนั้น</strong> $(x, y) = \left(\frac{15}{7}, \frac{17}{7}\right)$</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ส่วนที่ 3: วิธีแก้ระบบสมการด้วยวิธีการตัดตัวแปร -->
-            <section class="content-section">
-                <h2>3. วิธีแก้ระบบสมการด้วยวิธีการตัดตัวแปร (Elimination Method)</h2>
+            <!-- Section 3: วิธีแก้ระบบสมการด้วยวิธีการตัดตัวแปร -->
+            <section id="section-3" class="content-section">
+                <h2>4.3.3 วิธีแก้ระบบสมการด้วยวิธีการตัดตัวแปร (Elimination Method)</h2>
                 
-                <div class="subsection">
-                    <h3>3.1 ขั้นตอนการแก้</h3>
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 1:</h4>
-                        <p>คูณสมการด้วยจำนวนที่เหมาะสมเพื่อให้สัมประสิทธิ์ของตัวแปรหนึ่งมีค่าเท่ากันหรือต่างกันเพียงเครื่องหมาย</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 2:</h4>
-                        <p>บวกหรือลบสมการเพื่อตัดตัวแปรหนึ่งออก</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 3:</h4>
-                        <p>แก้สมการที่ได้เพื่อหาค่าของตัวแปรหนึ่ง</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 4:</h4>
-                        <p>นำค่าที่ได้ไปแทนในสมการเดิมเพื่อหาค่าของอีกตัวแปรหนึ่ง</p>
-                    </div>
+                <div class="definition-box">
+                    <h4>ขั้นตอนการแก้</h4>
+                    <ol>
+                        <li><strong>ขั้นตอนที่ 1:</strong> คูณสมการด้วยจำนวนที่เหมาะสมเพื่อให้สัมประสิทธิ์ของตัวแปรหนึ่งมีค่าเท่ากันหรือต่างกันเพียงเครื่องหมาย</li>
+                        <li><strong>ขั้นตอนที่ 2:</strong> บวกหรือลบสมการเพื่อตัดตัวแปรหนึ่งออก</li>
+                        <li><strong>ขั้นตอนที่ 3:</strong> แก้สมการที่ได้เพื่อหาค่าของตัวแปรหนึ่ง</li>
+                        <li><strong>ขั้นตอนที่ 4:</strong> นำค่าที่ได้ไปแทนในสมการเดิมเพื่อหาค่าของอีกตัวแปรหนึ่ง</li>
+                    </ol>
                 </div>
 
-                <div class="subsection">
-                    <h3>3.2 ตัวอย่าง</h3>
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 2</h4>
                     <div class="example-box">
-                        <h4>ตัวอย่างที่ 2:</h4>
-                        <p>แก้ระบบสมการ: $\begin{cases} 2x + 3y = 12 \\ 4x - 2y = 4 \end{cases}$</p>
+                        <p><strong>โจทย์:</strong> แก้ระบบสมการ: $\begin{cases} 2x + 3y = 12 \\ 4x - 2y = 4 \end{cases}$</p>
                         
                         <p><strong>วิธีทำ:</strong></p>
-                        <p>คูณสมการแรกด้วย 2: $4x + 6y = 24$ ... (1)</p>
-                        <p>สมการที่สอง: $4x - 2y = 4$ ... (2)</p>
-                        <p>ลบ (2) จาก (1): $(4x + 6y) - (4x - 2y) = 24 - 4$</p>
-                        <p>$4x + 6y - 4x + 2y = 20$</p>
-                        <p>$8y = 20$</p>
-                        <p>$y = \frac{20}{8} = \frac{5}{2}$</p>
-                        <p>แทน $y = \frac{5}{2}$ ในสมการแรก: $2x + 3 \cdot \frac{5}{2} = 12$</p>
-                        <p>$2x + \frac{15}{2} = 12$</p>
-                        <p>$2x = 12 - \frac{15}{2} = \frac{9}{2}$</p>
-                        <p>$x = \frac{9}{4}$</p>
-                        <p><strong>ดังนั้น</strong> $(x, y) = \left(\frac{9}{4}, \frac{5}{2}\right)$</p>
+                        <div class="solution-steps">
+                            <p>คูณสมการแรกด้วย 2: $4x + 6y = 24$ ... (1)</p>
+                            <p>สมการที่สอง: $4x - 2y = 4$ ... (2)</p>
+                            <p>ลบ (2) จาก (1): $(4x + 6y) - (4x - 2y) = 24 - 4$</p>
+                            <p>$4x + 6y - 4x + 2y = 20$</p>
+                            <p>$8y = 20$</p>
+                            <p>$y = \frac{20}{8} = \frac{5}{2}$</p>
+                            <p>แทน $y = \frac{5}{2}$ ในสมการแรก: $2x + 3 \cdot \frac{5}{2} = 12$</p>
+                            <p>$2x + \frac{15}{2} = 12$</p>
+                            <p>$2x = 12 - \frac{15}{2} = \frac{9}{2}$</p>
+                            <p>$x = \frac{9}{4}$</p>
+                            <p><strong>ดังนั้น</strong> $(x, y) = \left(\frac{9}{4}, \frac{5}{2}\right)$</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ส่วนที่ 4: วิธีแก้ระบบสมการด้วยวิธีกราฟ -->
-            <section class="content-section">
-                <h2>4. วิธีแก้ระบบสมการด้วยวิธีกราฟ (Graphical Method)</h2>
+            <!-- Section 4: การวิเคราะห์ประเภทของคำตอบ -->
+            <section id="section-4" class="content-section">
+                <h2>4.3.4 การวิเคราะห์ประเภทของคำตอบ</h2>
                 
                 <div class="subsection">
-                    <h3>4.1 หลักการ</h3>
-                    <p>วิธีกราฟใช้หลักการว่า คำตอบของระบบสมการเชิงเส้นสองตัวแปรคือจุดตัดของเส้นตรงทั้งสอง</p>
-                </div>
-
-                <div class="subsection">
-                    <h3>4.2 ขั้นตอนการแก้</h3>
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 1:</h4>
-                        <p>เขียนสมการทั้งสองในรูป $y = mx + c$</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 2:</h4>
-                        <p>ลากกราฟของเส้นตรงทั้งสองบนระบบพิกัด</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 3:</h4>
-                        <p>หาจุดตัดของเส้นตรงทั้งสอง</p>
-                    </div>
-                    
-                    <div class="step-box">
-                        <h4>ขั้นตอนที่ 4:</h4>
-                        <p>พิกัดของจุดตัดคือคำตอบของระบบสมการ</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ส่วนที่ 5: การวิเคราะห์ประเภทของคำตอบ -->
-            <section class="content-section">
-                <h2>5. การวิเคราะห์ประเภทของคำตอบ</h2>
-                
-                <div class="subsection">
-                    <h3>5.1 การใช้ดีเทอร์มิแนนต์</h3>
+                    <h3>การใช้ดีเทอร์มิแนนต์</h3>
                     <p>สำหรับระบบสมการ $\begin{cases} a_1x + b_1y = c_1 \\ a_2x + b_2y = c_2 \end{cases}$</p>
                     
                     <div class="formula-box">
@@ -209,231 +173,281 @@
                     </div>
                 </div>
 
-                <div class="subsection">
-                    <h3>5.2 เงื่อนไขการมีคำตอบ</h3>
-                    <div class="concept-box">
-                        <h4>เงื่อนไขการมีคำตอบ:</h4>
-                        <ol>
-                            <li><strong>$D \neq 0$:</strong> มีคำตอบเดียว คือ $x = \frac{D_x}{D}$, $y = \frac{D_y}{D}$</li>
-                            <li><strong>$D = 0$ และ $D_x = D_y = 0$:</strong> มีคำตอบอนันต์</li>
-                            <li><strong>$D = 0$ และ $D_x \neq 0$ หรือ $D_y \neq 0$:</strong> ไม่มีคำตอบ</li>
-                        </ol>
-                    </div>
+                <div class="definition-box">
+                    <h4>เงื่อนไขการมีคำตอบ:</h4>
+                    <ol>
+                        <li><strong>$D \neq 0$:</strong> มีคำตอบเดียว คือ $x = \frac{D_x}{D}$, $y = \frac{D_y}{D}$</li>
+                        <li><strong>$D = 0$ และ $D_x = D_y = 0$:</strong> มีคำตอบอนันต์</li>
+                        <li><strong>$D = 0$ และ $D_x \neq 0$ หรือ $D_y \neq 0$:</strong> ไม่มีคำตอบ</li>
+                    </ol>
                 </div>
 
-                <div class="subsection">
-                    <h3>5.3 ตัวอย่าง</h3>
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ 3</h4>
                     <div class="example-box">
-                        <h4>ตัวอย่างที่ 3:</h4>
-                        <p>วิเคราะห์ประเภทของคำตอบ: $\begin{cases} 2x + 3y = 6 \\ 4x + 6y = 12 \end{cases}$</p>
+                        <p><strong>โจทย์:</strong> วิเคราะห์ประเภทของคำตอบ: $\begin{cases} 2x + 3y = 6 \\ 4x + 6y = 12 \end{cases}$</p>
                         
                         <p><strong>วิธีทำ:</strong></p>
-                        <p>$D = \begin{vmatrix} 2 & 3 \\ 4 & 6 \end{vmatrix} = 2 \cdot 6 - 4 \cdot 3 = 12 - 12 = 0$</p>
-                        <p>$D_x = \begin{vmatrix} 6 & 3 \\ 12 & 6 \end{vmatrix} = 6 \cdot 6 - 12 \cdot 3 = 36 - 36 = 0$</p>
-                        <p>$D_y = \begin{vmatrix} 2 & 6 \\ 4 & 12 \end{vmatrix} = 2 \cdot 12 - 4 \cdot 6 = 24 - 24 = 0$</p>
-                        <p><strong>ผลลัพธ์:</strong> $D = 0$ และ $D_x = D_y = 0$ ดังนั้น ระบบสมการมีคำตอบอนันต์</p>
+                        <div class="solution-steps">
+                            <p>$D = \begin{vmatrix} 2 & 3 \\ 4 & 6 \end{vmatrix} = 2 \cdot 6 - 4 \cdot 3 = 12 - 12 = 0$</p>
+                            <p>$D_x = \begin{vmatrix} 6 & 3 \\ 12 & 6 \end{vmatrix} = 6 \cdot 6 - 12 \cdot 3 = 36 - 36 = 0$</p>
+                            <p>$D_y = \begin{vmatrix} 2 & 6 \\ 4 & 12 \end{vmatrix} = 2 \cdot 12 - 4 \cdot 6 = 24 - 24 = 0$</p>
+                            <p><strong>ผลลัพธ์:</strong> $D = 0$ และ $D_x = D_y = 0$ ดังนั้น ระบบสมการมีคำตอบอนันต์</p>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- แบบฝึกหัด -->
-            <section class="practice-section">
-                <h2>แบบฝึกหัด</h2>
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>4.3.5 ตัวอย่างข้อสอบฝึกทำ</h2>
                 
-                <div class="problem-set">
-                    <div class="problem-card">
-                        <h3>ข้อ 1</h3>
-                        <p>แก้ระบบสมการด้วยวิธีแทนค่า: $\begin{cases} x + y = 5 \\ 2x - y = 1 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                <div class="practice-problems">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 1</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการด้วยวิธีแทนค่า: $\begin{cases} x + y = 5 \\ 2x - y = 1 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>จากสมการแรก: $y = 5 - x$</p>
-                            <p>แทนในสมการที่สอง: $2x - (5 - x) = 1$</p>
-                            <p>$2x - 5 + x = 1$</p>
-                            <p>$3x = 6$</p>
-                            <p>$x = 2$</p>
-                            <p>$y = 5 - 2 = 3$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = (2, 3)$</p>
+                            <div class="solution-steps">
+                                <p>จากสมการแรก: $y = 5 - x$</p>
+                                <p>แทนในสมการที่สอง: $2x - (5 - x) = 1$</p>
+                                <p>$2x - 5 + x = 1$</p>
+                                <p>$3x = 6$</p>
+                                <p>$x = 2$</p>
+                                <p>$y = 5 - 2 = 3$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = (2, 3)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 2</h3>
-                        <p>แก้ระบบสมการด้วยวิธีการตัดตัวแปร: $\begin{cases} 3x + 2y = 7 \\ x - 2y = 1 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 2</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการด้วยวิธีการตัดตัวแปร: $\begin{cases} 3x + 2y = 7 \\ x - 2y = 1 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>บวกสองสมการ: $(3x + 2y) + (x - 2y) = 7 + 1$</p>
-                            <p>$4x = 8$</p>
-                            <p>$x = 2$</p>
-                            <p>แทน $x = 2$ ในสมการที่สอง: $2 - 2y = 1$</p>
-                            <p>$-2y = -1$</p>
-                            <p>$y = \frac{1}{2}$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = \left(2, \frac{1}{2}\right)$</p>
+                            <div class="solution-steps">
+                                <p>บวกสองสมการ: $(3x + 2y) + (x - 2y) = 7 + 1$</p>
+                                <p>$4x = 8$</p>
+                                <p>$x = 2$</p>
+                                <p>แทน $x = 2$ ในสมการที่สอง: $2 - 2y = 1$</p>
+                                <p>$-2y = -1$</p>
+                                <p>$y = \frac{1}{2}$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = \left(2, \frac{1}{2}\right)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 3</h3>
-                        <p>วิเคราะห์ประเภทของคำตอบ: $\begin{cases} x + 2y = 3 \\ 2x + 4y = 8 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 3</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>วิเคราะห์ประเภทของคำตอบ: $\begin{cases} x + 2y = 3 \\ 2x + 4y = 8 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>$D = \begin{vmatrix} 1 & 2 \\ 2 & 4 \end{vmatrix} = 1 \cdot 4 - 2 \cdot 2 = 0$</p>
-                            <p>$D_x = \begin{vmatrix} 3 & 2 \\ 8 & 4 \end{vmatrix} = 3 \cdot 4 - 8 \cdot 2 = 12 - 16 = -4 \neq 0$</p>
-                            <p>เนื่องจาก $D = 0$ และ $D_x \neq 0$</p>
-                            <p><strong>ตอบ:</strong> ระบบสมการไม่มีคำตอบ</p>
+                            <div class="solution-steps">
+                                <p>$D = \begin{vmatrix} 1 & 2 \\ 2 & 4 \end{vmatrix} = 1 \cdot 4 - 2 \cdot 2 = 0$</p>
+                                <p>$D_x = \begin{vmatrix} 3 & 2 \\ 8 & 4 \end{vmatrix} = 3 \cdot 4 - 8 \cdot 2 = 12 - 16 = -4 \neq 0$</p>
+                                <p>เนื่องจาก $D = 0$ และ $D_x \neq 0$</p>
+                                <p><strong>ตอบ:</strong> ระบบสมการไม่มีคำตอบ</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 4</h3>
-                        <p>แก้ระบบสมการ: $\begin{cases} 2x + 3y = 8 \\ 4x - y = 6 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 4</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการ: $\begin{cases} 2x + 3y = 8 \\ 4x - y = 6 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>จากสมการที่สอง: $y = 4x - 6$</p>
-                            <p>แทนในสมการแรก: $2x + 3(4x - 6) = 8$</p>
-                            <p>$2x + 12x - 18 = 8$</p>
-                            <p>$14x = 26$</p>
-                            <p>$x = \frac{13}{7}$</p>
-                            <p>$y = 4 \cdot \frac{13}{7} - 6 = \frac{52}{7} - \frac{42}{7} = \frac{10}{7}$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{13}{7}, \frac{10}{7}\right)$</p>
+                            <div class="solution-steps">
+                                <p>จากสมการที่สอง: $y = 4x - 6$</p>
+                                <p>แทนในสมการแรก: $2x + 3(4x - 6) = 8$</p>
+                                <p>$2x + 12x - 18 = 8$</p>
+                                <p>$14x = 26$</p>
+                                <p>$x = \frac{13}{7}$</p>
+                                <p>$y = 4 \cdot \frac{13}{7} - 6 = \frac{52}{7} - \frac{42}{7} = \frac{10}{7}$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{13}{7}, \frac{10}{7}\right)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 5</h3>
-                        <p>แก้ระบบสมการ: $\begin{cases} 5x - 2y = 11 \\ 3x + 4y = 1 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 5</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการ: $\begin{cases} 5x - 2y = 11 \\ 3x + 4y = 1 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>คูณสมการแรกด้วย 2: $10x - 4y = 22$</p>
-                            <p>บวกกับสมการที่สอง: $(10x - 4y) + (3x + 4y) = 22 + 1$</p>
-                            <p>$13x = 23$</p>
-                            <p>$x = \frac{23}{13}$</p>
-                            <p>แทนในสมการที่สอง: $3 \cdot \frac{23}{13} + 4y = 1$</p>
-                            <p>$\frac{69}{13} + 4y = 1$</p>
-                            <p>$4y = 1 - \frac{69}{13} = -\frac{56}{13}$</p>
-                            <p>$y = -\frac{14}{13}$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{23}{13}, -\frac{14}{13}\right)$</p>
+                            <div class="solution-steps">
+                                <p>คูณสมการแรกด้วย 2: $10x - 4y = 22$</p>
+                                <p>บวกกับสมการที่สอง: $(10x - 4y) + (3x + 4y) = 22 + 1$</p>
+                                <p>$13x = 23$</p>
+                                <p>$x = \frac{23}{13}$</p>
+                                <p>แทนในสมการที่สอง: $3 \cdot \frac{23}{13} + 4y = 1$</p>
+                                <p>$\frac{69}{13} + 4y = 1$</p>
+                                <p>$4y = 1 - \frac{69}{13} = -\frac{56}{13}$</p>
+                                <p>$y = -\frac{14}{13}$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{23}{13}, -\frac{14}{13}\right)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 6</h3>
-                        <p>วิเคราะห์ประเภทของคำตอบ: $\begin{cases} 3x - 6y = 9 \\ x - 2y = 3 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 6</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>วิเคราะห์ประเภทของคำตอบ: $\begin{cases} 3x - 6y = 9 \\ x - 2y = 3 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>$D = \begin{vmatrix} 3 & -6 \\ 1 & -2 \end{vmatrix} = 3(-2) - 1(-6) = -6 + 6 = 0$</p>
-                            <p>$D_x = \begin{vmatrix} 9 & -6 \\ 3 & -2 \end{vmatrix} = 9(-2) - 3(-6) = -18 + 18 = 0$</p>
-                            <p>$D_y = \begin{vmatrix} 3 & 9 \\ 1 & 3 \end{vmatrix} = 3(3) - 1(9) = 9 - 9 = 0$</p>
-                            <p>เนื่องจาก $D = 0$ และ $D_x = D_y = 0$</p>
-                            <p><strong>ตอบ:</strong> ระบบสมการมีคำตอบอนันต์</p>
+                            <div class="solution-steps">
+                                <p>$D = \begin{vmatrix} 3 & -6 \\ 1 & -2 \end{vmatrix} = 3(-2) - 1(-6) = -6 + 6 = 0$</p>
+                                <p>$D_x = \begin{vmatrix} 9 & -6 \\ 3 & -2 \end{vmatrix} = 9(-2) - 3(-6) = -18 + 18 = 0$</p>
+                                <p>$D_y = \begin{vmatrix} 3 & 9 \\ 1 & 3 \end{vmatrix} = 3(3) - 1(9) = 9 - 9 = 0$</p>
+                                <p>เนื่องจาก $D = 0$ และ $D_x = D_y = 0$</p>
+                                <p><strong>ตอบ:</strong> ระบบสมการมีคำตอบอนันต์</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 7</h3>
-                        <p>แก้ระบบสมการ: $\begin{cases} 7x + 2y = 16 \\ x - 3y = -7 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 7</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการ: $\begin{cases} 7x + 2y = 16 \\ x - 3y = -7 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>จากสมการที่สอง: $x = 3y - 7$</p>
-                            <p>แทนในสมการแรก: $7(3y - 7) + 2y = 16$</p>
-                            <p>$21y - 49 + 2y = 16$</p>
-                            <p>$23y = 65$</p>
-                            <p>$y = \frac{65}{23}$</p>
-                            <p>$x = 3 \cdot \frac{65}{23} - 7 = \frac{195}{23} - \frac{161}{23} = \frac{34}{23}$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{34}{23}, \frac{65}{23}\right)$</p>
+                            <div class="solution-steps">
+                                <p>จากสมการที่สอง: $x = 3y - 7$</p>
+                                <p>แทนในสมการแรก: $7(3y - 7) + 2y = 16$</p>
+                                <p>$21y - 49 + 2y = 16$</p>
+                                <p>$23y = 65$</p>
+                                <p>$y = \frac{65}{23}$</p>
+                                <p>$x = 3 \cdot \frac{65}{23} - 7 = \frac{195}{23} - \frac{161}{23} = \frac{34}{23}$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{34}{23}, \frac{65}{23}\right)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 8</h3>
-                        <p>แก้ระบบสมการ: $\begin{cases} 4x + 5y = 22 \\ 3x - 2y = 0 \end{cases}$</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 8</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>แก้ระบบสมการ: $\begin{cases} 4x + 5y = 22 \\ 3x - 2y = 0 \end{cases}$</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>จากสมการที่สอง: $3x = 2y$ หรือ $x = \frac{2y}{3}$</p>
-                            <p>แทนในสมการแรก: $4 \cdot \frac{2y}{3} + 5y = 22$</p>
-                            <p>$\frac{8y}{3} + 5y = 22$</p>
-                            <p>$\frac{8y + 15y}{3} = 22$</p>
-                            <p>$\frac{23y}{3} = 22$</p>
-                            <p>$y = \frac{66}{23}$</p>
-                            <p>$x = \frac{2 \cdot 66}{3 \cdot 23} = \frac{132}{69} = \frac{44}{23}$</p>
-                            <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{44}{23}, \frac{66}{23}\right)$</p>
+                            <div class="solution-steps">
+                                <p>จากสมการที่สอง: $3x = 2y$ หรือ $x = \frac{2y}{3}$</p>
+                                <p>แทนในสมการแรก: $4 \cdot \frac{2y}{3} + 5y = 22$</p>
+                                <p>$\frac{8y}{3} + 5y = 22$</p>
+                                <p>$\frac{8y + 15y}{3} = 22$</p>
+                                <p>$\frac{23y}{3} = 22$</p>
+                                <p>$y = \frac{66}{23}$</p>
+                                <p>$x = \frac{2 \cdot 66}{3 \cdot 23} = \frac{132}{69} = \frac{44}{23}$</p>
+                                <p><strong>ตอบ:</strong> $(x, y) = \left(\frac{44}{23}, \frac{66}{23}\right)$</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 9</h3>
-                        <p>ผลรวมของจำนวนสองจำนวนเท่ากับ 15 และผลต่างเท่ากับ 3 จงหาจำนวนทั้งสอง</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 9</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>ผลรวมของจำนวนสองจำนวนเท่ากับ 15 และผลต่างเท่ากับ 3 จงหาจำนวนทั้งสอง</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>กำหนดให้จำนวนสองจำนวนเป็น $x$ และ $y$</p>
-                            <p>จากโจทย์ได้: $\begin{cases} x + y = 15 \\ x - y = 3 \end{cases}$</p>
-                            <p>บวกสองสมการ: $2x = 18$</p>
-                            <p>$x = 9$</p>
-                            <p>แทนในสมการแรก: $9 + y = 15$</p>
-                            <p>$y = 6$</p>
-                            <p><strong>ตอบ:</strong> จำนวนทั้งสองคือ 9 และ 6</p>
+                            <div class="solution-steps">
+                                <p>กำหนดให้จำนวนสองจำนวนเป็น $x$ และ $y$</p>
+                                <p>จากโจทย์ได้: $\begin{cases} x + y = 15 \\ x - y = 3 \end{cases}$</p>
+                                <p>บวกสองสมการ: $2x = 18$</p>
+                                <p>$x = 9$</p>
+                                <p>แทนในสมการแรก: $9 + y = 15$</p>
+                                <p>$y = 6$</p>
+                                <p><strong>ตอบ:</strong> จำนวนทั้งสองคือ 9 และ 6</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="problem-card">
-                        <h3>ข้อ 10</h3>
-                        <p>ราคาปากกา 3 ด้าม และดินสอ 2 แท่ง รวมเป็น 35 บาท ราคาปากกา 2 ด้าม และดินสอ 5 แท่ง รวมเป็น 40 บาท จงหาราคาปากกา 1 ด้าม และดินสอ 1 แท่ง</p>
-                        <div class="solution-box" style="display: none;">
+                    <div class="problem-container">
+                        <div class="problem-header">
+                            <span class="problem-number">ข้อ 10</span>
+                            <button class="toggle-solution">แสดงเฉลย</button>
+                        </div>
+                        <div class="problem-content">
+                            <p>ราคาปากกา 3 ด้าม และดินสอ 2 แท่ง รวมเป็น 35 บาท ราคาปากกา 2 ด้าม และดินสอ 5 แท่ง รวมเป็น 40 บาท จงหาราคาปากกา 1 ด้าม และดินสอ 1 แท่ง</p>
+                        </div>
+                        <div class="solution-content" style="display: none;">
                             <h4>เฉลย:</h4>
-                            <p>กำหนดให้ราคาปากกา 1 ด้าม = $x$ บาท, ราคาดินสอ 1 แท่ง = $y$ บาท</p>
-                            <p>จากโจทย์ได้: $\begin{cases} 3x + 2y = 35 \\ 2x + 5y = 40 \end{cases}$</p>
-                            <p>คูณสมการแรกด้วย 5 และสมการที่สองด้วย 2:</p>
-                            <p>$\begin{cases} 15x + 10y = 175 \\ 4x + 10y = 80 \end{cases}$</p>
-                            <p>ลบสมการที่สองจากสมการแรก: $11x = 95$</p>
-                            <p>$x = \frac{95}{11}$</p>
-                            <p>แทนในสมการแรก: $3 \cdot \frac{95}{11} + 2y = 35$</p>
-                            <p>$\frac{285}{11} + 2y = 35$</p>
-                            <p>$2y = 35 - \frac{285}{11} = \frac{385 - 285}{11} = \frac{100}{11}$</p>
-                            <p>$y = \frac{50}{11}$</p>
-                            <p><strong>ตอบ:</strong> ปากกา 1 ด้าม ราคา $\frac{95}{11}$ บาท, ดินสอ 1 แท่ง ราคา $\frac{50}{11}$ บาท</p>
+                            <div class="solution-steps">
+                                <p>กำหนดให้ราคาปากกา 1 ด้าม = $x$ บาท, ราคาดินสอ 1 แท่ง = $y$ บาท</p>
+                                <p>จากโจทย์ได้: $\begin{cases} 3x + 2y = 35 \\ 2x + 5y = 40 \end{cases}$</p>
+                                <p>คูณสมการแรกด้วย 5 และสมการที่สองด้วย 2:</p>
+                                <p>$\begin{cases} 15x + 10y = 175 \\ 4x + 10y = 80 \end{cases}$</p>
+                                <p>ลบสมการที่สองจากสมการแรก: $11x = 95$</p>
+                                <p>$x = \frac{95}{11}$</p>
+                                <p>แทนในสมการแรก: $3 \cdot \frac{95}{11} + 2y = 35$</p>
+                                <p>$\frac{285}{11} + 2y = 35$</p>
+                                <p>$2y = 35 - \frac{285}{11} = \frac{385 - 285}{11} = \frac{100}{11}$</p>
+                                <p>$y = \frac{50}{11}$</p>
+                                <p><strong>ตอบ:</strong> ปากกา 1 ด้าม ราคา $\frac{95}{11}$ บาท, ดินสอ 1 แท่ง ราคา $\frac{50}{11}$ บาท</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="toggle-solutions">
-                    <button onclick="toggleAllSolutions()">แสดง/ซ่อน เฉลยทั้งหมด</button>
                 </div>
             </section>
         </div>
     </main>
 
-    <script src="chapter-script.js"></script>
+    <script src="../chapter-script.js"></script>
     <script>
-        // Toggle individual solution
-        function toggleSolution(button) {
-            const solutionBox = button.nextElementSibling;
-            if (solutionBox.style.display === 'none') {
-                solutionBox.style.display = 'block';
-                button.textContent = 'ซ่อนเฉลย';
-            } else {
-                solutionBox.style.display = 'none';
-                button.textContent = 'แสดงเฉลย';
-            }
-        }
-
-        // Toggle all solutions
-        function toggleAllSolutions() {
-            const solutionBoxes = document.querySelectorAll('.solution-box');
-            const allVisible = Array.from(solutionBoxes).every(box => box.style.display !== 'none');
+        // Toggle solution visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButtons = document.querySelectorAll('.toggle-solution');
             
-            solutionBoxes.forEach(box => {
-                box.style.display = allVisible ? 'none' : 'block';
-            });
-        }
-
-        // Add click event to problem cards
-        document.querySelectorAll('.problem-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const solutionBox = this.querySelector('.solution-box');
-                if (solutionBox.style.display === 'none' || solutionBox.style.display === '') {
-                    solutionBox.style.display = 'block';
-                } else {
-                    solutionBox.style.display = 'none';
-                }
+            toggleButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const problemContainer = this.closest('.problem-container');
+                    const solutionContent = problemContainer.querySelector('.solution-content');
+                    
+                    if (solutionContent.style.display === 'none') {
+                        solutionContent.style.display = 'block';
+                        this.textContent = 'ซ่อนเฉลย';
+                    } else {
+                        solutionContent.style.display = 'none';
+                        this.textContent = 'แสดงเฉลย';
+                    }
+                });
             });
         });
     </script>
