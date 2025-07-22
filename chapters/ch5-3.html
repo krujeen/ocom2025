@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 5.3: ผลคูณคาร์ทีเซียน (Cartesian Products) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 5.3: ผลคูณคาร์ทีเซียน (Cartesian Products)</span>
+            </nav>
+            <h1>บทที่ 5.3: ผลคูณคาร์ทีเซียน (Cartesian Products)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับ "ผลคูณคาร์ทีเซียน" ซึ่งเป็นแนวคิดพื้นฐานในการสร้างเซตของคู่อันดับ และเป็นรากฐานสำคัญในการนิยามความสัมพันธ์ กราฟ และโครงสร้างข้อมูลในคณิตศาสตร์เชิงแยกส่วนและวิทยาการคอมพิวเตอร์ หัวข้อนี้มักปรากฏในการสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">5.3.1 ความหมายและสัญลักษณ์ของผลคูณคาร์ทีเซียน</a></li>
+                    <li><a href="#section-2">5.3.2 คุณสมบัติของผลคูณคาร์ทีเซียน</a></li>
+                    <li><a href="#section-3">5.3.3 ผลคูณคาร์ทีเซียนของสามเซตหรือมากกว่า</a></li>
+                    <li><a href="#section-4">5.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">5.3.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ความหมายและสัญลักษณ์ -->
+            <section id="section-1" class="content-section">
+                <h2>5.3.1 ความหมายและสัญลักษณ์ของผลคูณคาร์ทีเซียน</h2>
+                
+                <div class="subsection">
+                    <h3>คู่อันดับ (Ordered Pair)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>คู่อันดับ $(a,b)$</strong> คือ การจับคู่สมาชิก $a$ และ $b$ โดยมีลำดับที่แน่นอน นั่นคือ $(a,b)$ จะเท่ากับ $(c,d)$ ก็ต่อเมื่อ $a=c$ และ $b=d$ เท่านั้น</p>
+                        <p class="note">(โดยทั่วไป $(a,b) \neq (b,a)$ เว้นแต่ $a=b$)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ผลคูณคาร์ทีเซียน (Cartesian Product)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>ผลคูณคาร์ทีเซียนของเซต $A$ และเซต $B$ คือเซตของคู่อันดับ $(a,b)$ ทั้งหมดที่เป็นไปได้ โดยที่สมาชิกตัวแรก $a$ มาจากเซต $A$ และสมาชิกตัวที่สอง $b$ มาจากเซต $B$</p>
+                        
+                        <div class="formula-box">
+                            <p><strong>สัญลักษณ์:</strong> $A \times B$ (อ่านว่า "A ครอส B")</p>
+                            $$A \times B = \{(a,b) \mid a \in A \text{ และ } b \in B\}$$
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $A = \{1,2\}$ และ $B = \{x,y\}$</p>
+                            <p>$A \times B = \{(1,x), (1,y), (2,x), (2,y)\}$</p>
+                            <br>
+                            <p>ให้ $C = \{a\}$ และ $D = \{3,4\}$</p>
+                            <p>$C \times D = \{(a,3), (a,4)\}$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: คุณสมบัติของผลคูณคาร์ทีเซียน -->
+            <section id="section-2" class="content-section">
+                <h2>5.3.2 คุณสมบัติของผลคูณคาร์ทีเซียน</h2>
+                
+                <p>ให้ $A, B, C$ เป็นเซตใดๆ</p>
+
+                <div class="subsection">
+                    <h3>1. จำนวนสมาชิก</h3>
+                    
+                    <div class="definition-box">
+                        <p>ถ้าเซต $A$ มีสมาชิก $m$ ตัว ($n(A) = m$) และเซต $B$ มีสมาชิก $n$ ตัว ($n(B) = n$)</p>
+                        <p>แล้ว ผลคูณคาร์ทีเซียน $A \times B$ จะมีสมาชิก $m \times n$ ตัว</p>
+                        <div class="formula-box">
+                            $$n(A \times B) = n(A) \cdot n(B)$$
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ถ้า $A = \{1,2,3\}$ และ $B = \{a,b\}$, $n(A) = 3$, $n(B) = 2$</p>
+                            <p>$n(A \times B) = 3 \times 2 = 6$</p>
+                            <p>$A \times B = \{(1,a), (1,b), (2,a), (2,b), (3,a), (3,b)\}$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. การไม่สลับที่ (Non-Commutativity)</h3>
+                    
+                    <div class="definition-box">
+                        <p>โดยทั่วไป $A \times B \neq B \times A$ เว้นแต่ $A = B$ หรือ $A = \emptyset$ หรือ $B = \emptyset$</p>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>$A = \{1,2\}$, $B = \{x,y\}$</p>
+                            <p>$A \times B = \{(1,x), (1,y), (2,x), (2,y)\}$</p>
+                            <p>$B \times A = \{(x,1), (y,1), (x,2), (y,2)\}$ (ซึ่งไม่เท่ากัน)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>3. ผลคูณคาร์ทีเซียนกับเซตว่าง</h3>
+                    
+                    <div class="definition-box">
+                        <p>ถ้าเซตใดเซตหนึ่งเป็นเซตว่าง ผลคูณคาร์ทีเซียนจะเป็นเซตว่างเสมอ</p>
+                        <div class="formula-box">
+                            <p>$A \times \emptyset = \emptyset$</p>
+                            <p>$\emptyset \times B = \emptyset$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>4. สมบัติการแจกแจง (Distributive Properties)</h3>
+                    
+                    <div class="definition-box">
+                        <div class="formula-box">
+                            <p>$A \times (B \cup C) = (A \times B) \cup (A \times C)$</p>
+                            <p>$A \times (B \cap C) = (A \times B) \cap (A \times C)$</p>
+                            <p>$A \times (B - C) = (A \times B) - (A \times C)$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ผลคูณคาร์ทีเซียนของสามเซตหรือมากกว่า -->
+            <section id="section-3" class="content-section">
+                <h2>5.3.3 ผลคูณคาร์ทีเซียนของสามเซตหรือมากกว่า</h2>
+                
+                <div class="definition-box">
+                    <p>เราสามารถขยายแนวคิดผลคูณคาร์ทีเซียนไปยังสามเซตหรือมากกว่าได้ โดยผลลัพธ์จะเป็นเซตของสามสิ่งอันดับ (ordered triples) หรือ n-สิ่งอันดับ</p>
+                    
+                    <div class="formula-box">
+                        <p>$A \times B \times C = \{(a,b,c) \mid a \in A, b \in B, c \in C\}$</p>
+                        <p>$n(A \times B \times C) = n(A) \cdot n(B) \cdot n(C)$</p>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p>ให้ $A = \{H, T\}$ (หัว, ก้อย)</p>
+                        <p>$A \times A = \{(H,H), (H,T), (T,H), (T,T)\}$ (ผลการโยนเหรียญ 2 ครั้ง)</p>
+                        <p>$A \times A \times A = \{(H,H,H), (H,H,T), \ldots, (T,T,T)\}$ (ผลการโยนเหรียญ 3 ครั้ง)</p>
+                        <p>$n(A \times A \times A) = 2 \times 2 \times 2 = 8$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>5.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: การหาผลคูณคาร์ทีเซียนพื้นฐาน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $A = \{a,b\}$ และ $B = \{1,2,3\}$ จงหา $A \times B$ และ $B \times A$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างคู่อันดับทั้งหมด $(x,y)$ โดย $x \in$ เซตแรก, $y \in$ เซตสอง</li>
+                            <li>สังเกตความแตกต่างระหว่าง $A \times B$ และ $B \times A$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>$A \times B$:</strong></p>
+                        <p>$A \times B = \{(a,1), (a,2), (a,3), (b,1), (b,2), (b,3)\}$</p>
+                        
+                        <p><strong>$B \times A$:</strong></p>
+                        <p>$B \times A = \{(1,a), (1,b), (2,a), (2,b), (3,a), (3,b)\}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: การหาจำนวนสมาชิกของผลคูณคาร์ทีเซียน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ถ้า $n(X) = 5$ และ $n(Y) = 7$ จงหา $n(X \times Y)$ และ $n(Y \times X)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตร $n(A \times B) = n(A) \cdot n(B)$</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$n(X \times Y) = n(X) \cdot n(Y) = 5 \cdot 7 = 35$</p>
+                        <p>$n(Y \times X) = n(Y) \cdot n(X) = 7 \cdot 5 = 35$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: การประยุกต์ใช้ผลคูณคาร์ทีเซียน (การโยนลูกเต๋า)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ถ้าโยนลูกเต๋าที่เที่ยงตรง (มี 6 หน้า) สองลูกพร้อมกัน จงหาจำนวนผลลัพธ์ทั้งหมดที่เป็นไปได้ในรูปของคู่อันดับ</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กำหนดเซตของผลลัพธ์ที่เป็นไปได้ของการโยนลูกเต๋าหนึ่งลูก</li>
+                            <li>ใช้ผลคูณคาร์ทีเซียนของเซตนั้นกับตัวเอง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $S$ เป็นเซตของผลลัพธ์ที่เป็นไปได้จากการโยนลูกเต๋าหนึ่งลูก: $S = \{1,2,3,4,5,6\}$</p>
+                        <p>จำนวนสมาชิกของ $S$ คือ $n(S) = 6$</p>
+                        <p>การโยนลูกเต๋าสองลูกพร้อมกันสามารถแทนด้วย $S \times S$</p>
+                        <p>จำนวนผลลัพธ์ทั้งหมดที่เป็นไปได้คือ $n(S \times S) = n(S) \cdot n(S) = 6 \cdot 6 = 36$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 36 ผลลัพธ์</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: ผลคูณคาร์ทีเซียนกับเซตว่างและตัวเอง</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $A = \{1,2\}$ จงหา $A \times \emptyset$ และ $A \times A$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เซตใดๆ คูณกับเซตว่างจะได้เซตว่าง</li>
+                            <li>หาผลคูณคาร์ทีเซียนของเซตกับตัวเอง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>$A \times \emptyset$:</strong></p>
+                        <p>$A \times \emptyset = \emptyset$ (เพราะ $n(A \times \emptyset) = n(A) \cdot n(\emptyset) = 2 \cdot 0 = 0$)</p>
+                        
+                        <p><strong>$A \times A$:</strong></p>
+                        <p>$A \times A = \{(1,1), (1,2), (2,1), (2,2)\}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การประยุกต์ใช้สมบัติการแจกแจงของผลคูณคาร์ทีเซียน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $A = \{a\}$, $B = \{1,2\}$, $C = \{2,3\}$ จงหา $A \times (B \cup C)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หา $B \cup C$ ก่อน</li>
+                            <li>จากนั้นจึงหาผลคูณคาร์ทีเซียนของ $A$ กับผลลัพธ์ที่ได้</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $B \cup C$:</strong></p>
+                        <p>$B \cup C = \{1,2,3\}$</p>
+                        
+                        <p><strong>หา $A \times (B \cup C)$:</strong></p>
+                        <p>$A \times (B \cup C) = \{a\} \times \{1,2,3\}$</p>
+                        <p>$= \{(a,1), (a,2), (a,3)\}$</p>
+                        
+                        <p><strong>ตรวจสอบด้วยสมบัติการแจกแจง:</strong> $A \times (B \cup C) = (A \times B) \cup (A \times C)$</p>
+                        <p>$A \times B = \{(a,1), (a,2)\}$</p>
+                        <p>$A \times C = \{(a,2), (a,3)\}$</p>
+                        <p>$(A \times B) \cup (A \times C) = \{(a,1), (a,2), (a,3)\}$ (ซึ่งตรงกัน)</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\{(a,1), (a,2), (a,3)\}$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>5.3.5 ตัวอย่างข้อสอบฝึกทำ: ผลคูณคาร์ทีเซียน (Cartesian Products)</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ผลคูณคาร์ทีเซียน" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{\text{แดง}, \text{เขียว}\}$ และ $B = \{S, M, L\}$ จงหา $A \times B$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สร้างคู่อันดับทั้งหมด $(x,y)$ โดยสมาชิกตัวแรก $x$ มาจากเซตแรก ($A$) และสมาชิกตัวที่สอง $y$ มาจากเซตที่สอง ($B$)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$A \times B = \{(\text{แดง}, S), (\text{แดง}, M), (\text{แดง}, L), (\text{เขียว}, S), (\text{เขียว}, M), (\text{เขียว}, L)\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $X = \{a,b,c\}$ และ $Y = \{1,2\}$ จงหา $Y \times X$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สร้างคู่อันดับทั้งหมด $(x,y)$ โดยสมาชิกตัวแรก $x$ มาจากเซตแรก ($Y$) และสมาชิกตัวที่สอง $y$ มาจากเซตที่สอง ($X$)</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$Y \times X = \{(1,a), (1,b), (1,c), (2,a), (2,b), (2,c)\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $n(S) = 8$ และ $n(T) = 6$ จงหา $n(S \times T)$ และ $n(T \times S)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตร $n(A \times B) = n(A) \cdot n(B)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$n(S \times T) = n(S) \cdot n(T) = 8 \cdot 6 = 48$</p>
+                        <p>$n(T \times S) = n(T) \cdot n(S) = 6 \cdot 8 = 48$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $P = \{H, T\}$ จงหา $P \times P \times P$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ผลลัพธ์จะเป็นเซตของสามสิ่งอันดับ $(x,y,z)$</li>
+                            <li>จำนวนสมาชิกคือ $n(P) \cdot n(P) \cdot n(P)$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$P \times P \times P = \{(H,H,H), (H,H,T), (H,T,H), (H,T,T), (T,H,H), (T,H,T), (T,T,H), (T,T,T)\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $n(A) = 10$ จงหา $n(A \times \emptyset)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ผลคูณคาร์ทีเซียนกับเซตว่างจะได้เซตว่างเสมอ และเซตว่างมีจำนวนสมาชิกเป็น 0</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$A \times \emptyset = \emptyset$</p>
+                        <p>ดังนั้น $n(A \times \emptyset) = 0$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>ถ้าต้องการสร้างรหัสผ่าน 2 หลัก โดยหลักแรกเป็นพยัญชนะไทย (ก-ฮ) และหลักที่สองเป็นตัวเลขโดด (0-9) จะมีรหัสผ่านที่เป็นไปได้ทั้งหมดกี่แบบ? (พยัญชนะไทยมี 44 ตัว)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กำหนดเซตของพยัญชนะไทย ($P$) และเซตของตัวเลขโดด ($N$)</li>
+                            <li>จำนวนรหัสผ่านคือ $n(P \times N)$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $P$ เป็นเซตของพยัญชนะไทย, $n(P) = 44$</p>
+                        <p>ให้ $N$ เป็นเซตของตัวเลขโดด, $N = \{0,1,2,3,4,5,6,7,8,9\}$, $n(N) = 10$</p>
+                        <p>จำนวนรหัสผ่านที่เป็นไปได้ทั้งหมดคือ $n(P \times N) = n(P) \cdot n(N) = 44 \cdot 10 = 440$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 440 แบบ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{1\}$, $B = \{a,b\}$, $C = \{b,c\}$ จงหา $A \times (B \cup C)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หา $B \cup C$ ก่อน</li>
+                            <li>จากนั้นจึงหาผลคูณคาร์ทีเซียนของ $A$ กับผลลัพธ์ที่ได้</li>
+                            <li>(สามารถตรวจสอบด้วยสมบัติการแจกแจง: $A \times (B \cup C) = (A \times B) \cup (A \times C)$)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $B \cup C$:</strong></p>
+                        <p>$B \cup C = \{a,b,c\}$</p>
+                        
+                        <p><strong>หา $A \times (B \cup C)$:</strong></p>
+                        <p>$A \times (B \cup C) = \{1\} \times \{a,b,c\}$</p>
+                        <p>$= \{(1,a), (1,b), (1,c)\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\{(1,a), (1,b), (1,c)\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $X = \{m,n\}$, $Y = \{1,2,3\}$, $Z = \{2,3,4\}$ จงหา $X \times (Y \cap Z)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หา $Y \cap Z$ ก่อน</li>
+                            <li>จากนั้นจึงหาผลคูณคาร์ทีเซียนของ $X$ กับผลลัพธ์ที่ได้</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $Y \cap Z$:</strong></p>
+                        <p>$Y \cap Z = \{2,3\}$</p>
+                        
+                        <p><strong>หา $X \times (Y \cap Z)$:</strong></p>
+                        <p>$X \times (Y \cap Z) = \{m,n\} \times \{2,3\}$</p>
+                        <p>$= \{(m,2), (m,3), (n,2), (n,3)\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\{(m,2), (m,3), (n,2), (n,3)\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $A = \{x \in \mathbb{Z} \mid -1 \leq x \leq 2\}$ และ $B = \{y \in \mathbb{N} \mid y < 3\}$ จงหา $n(A \times B)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุสมาชิกของเซต $A$ และ $B$</li>
+                            <li>นับจำนวนสมาชิกของแต่ละเซต</li>
+                            <li>ใช้สูตร $n(A \times B) = n(A) \cdot n(B)$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>เซต $A$:</strong> จำนวนเต็มตั้งแต่ $-1$ ถึง $2$</p>
+                        <p>$A = \{-1, 0, 1, 2\}$</p>
+                        <p>$n(A) = 4$</p>
+                        
+                        <p><strong>เซต $B$:</strong> จำนวนนับที่น้อยกว่า $3$ (จำนวนนับคือจำนวนเต็มบวก เริ่มจาก $1$)</p>
+                        <p>$B = \{1, 2\}$</p>
+                        <p>$n(B) = 2$</p>
+                        
+                        <p>$n(A \times B) = n(A) \cdot n(B) = 4 \cdot 2 = 8$</p>
+                        
+                        <p><strong>คำตอบ:</strong> 8</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>ข้อใดต่อไปนี้ เป็นจริงเสมอ?</p>
+                        <p>ก. $A \times B = B \times A$</p>
+                        <p>ข. $A \times (B - C) = (A \times B) - (A \times C)$</p>
+                        <p>ค. $A \times (B \cap C) = (A \times B) \cap C$</p>
+                        <p>ง. $A \times \emptyset = A$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ทบทวนคุณสมบัติของผลคูณคาร์ทีเซียน</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $A \times B = B \times A$:</strong> ไม่จริงเสมอไป (เป็นจริงเมื่อ $A = B$ หรือเซตใดเซตหนึ่งเป็นเซตว่าง)</p>
+                        
+                        <p><strong>ข. $A \times (B - C) = (A \times B) - (A \times C)$:</strong> จริง (สมบัติการแจกแจงของผลคูณคาร์ทีเซียนกับการลบเซต)</p>
+                        
+                        <p><strong>ค. $A \times (B \cap C) = (A \times B) \cap C$:</strong> ไม่จริงเสมอไป (สมบัติที่ถูกต้องคือ $A \times (B \cap C) = (A \times B) \cap (A \times C)$)</p>
+                        
+                        <p><strong>ง. $A \times \emptyset = A$:</strong> ไม่จริงเสมอไป (เป็นจริงก็ต่อเมื่อ $A = \emptyset$ เท่านั้น แต่โดยทั่วไป $A \times \emptyset = \emptyset$)</p>
+                        
+                        <p><strong>คำตอบ:</strong> ข.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
