@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 5.1: การดำเนินการของเซต (ยูเนียน, อินเตอร์เซกชัน, คอมพลีเมนต์) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 5.1: การดำเนินการของเซต (ยูเนียน, อินเตอร์เซกชัน, คอมพลีเมนต์)</span>
+            </nav>
+            <h1>บทที่ 5.1: การดำเนินการของเซต (ยูเนียน, อินเตอร์เซกชัน, คอมพลีเมนต์)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับการดำเนินการพื้นฐานของเซต ซึ่งเป็นแนวคิดสำคัญในคณิตศาสตร์เชิงแยกส่วน (Discrete Mathematics) และวิทยาการคอมพิวเตอร์ การทำความเข้าใจเรื่องเซตเป็นพื้นฐานสำหรับการจัดการข้อมูล การออกแบบฐานข้อมูล และการวิเคราะห์ปัญหาเชิงตรรกะ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">5.1.1 เซต (Set) และเอกภพสัมพัทธ์ (Universal Set)</a></li>
+                    <li><a href="#section-2">5.1.2 แผนภาพเวนน์-ออยเลอร์ (Venn-Euler Diagram)</a></li>
+                    <li><a href="#section-3">5.1.3 การดำเนินการของเซต (Set Operations)</a></li>
+                    <li><a href="#section-4">5.1.4 สมบัติของการดำเนินการของเซต</a></li>
+                    <li><a href="#section-5">5.1.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: เซต (Set) และเอกภพสัมพัทธ์ (Universal Set) -->
+            <section id="section-1" class="content-section">
+                <h2>5.1.1 เซต (Set) และเอกภพสัมพัทธ์ (Universal Set)</h2>
+                
+                <div class="definition-box">
+                    <h4>เซต (Set)</h4>
+                    <p><strong>เซต</strong> คือ กลุ่มของสิ่งของที่ถูกกำหนดไว้อย่างชัดเจนว่าสิ่งใดอยู่ในกลุ่ม และสิ่งใดไม่อยู่ในกลุ่ม สิ่งของที่อยู่ในเซตเรียกว่า <strong>สมาชิก (Elements)</strong> ของเซต</p>
+                    <p><strong>สัญลักษณ์:</strong> ใช้ปีกกา { } ในการเขียนสมาชิก เช่น $A = \{1,2,3\}$</p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>เอกภพสัมพัทธ์ (Universal Set)</h4>
+                    <p><strong>เอกภพสัมพัทธ์</strong> คือ เซตที่ประกอบด้วยสมาชิกทั้งหมดที่เราสนใจในแต่ละการพิจารณา กำหนดโดยสัญลักษณ์ $U$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p>ถ้าเรากำลังพูดถึงตัวเลข 1,2,3,4,5 และเซต $A = \{1,2\}$, $B = \{2,3\}$</p>
+                        <p>เอกภพสัมพัทธ์ $U$ อาจเป็น $\{1,2,3,4,5\}$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: แผนภาพเวนน์-ออยเลอร์ -->
+            <section id="section-2" class="content-section">
+                <h2>5.1.2 แผนภาพเวนน์-ออยเลอร์ (Venn-Euler Diagram)</h2>
+                
+                <div class="definition-box">
+                    <p><strong>แผนภาพเวนน์-ออยเลอร์</strong> เป็นเครื่องมือที่ใช้แสดงความสัมพันธ์และการดำเนินการระหว่างเซตต่างๆ โดยนิยมใช้รูปสี่เหลี่ยมผืนผ้าแทนเอกภพสัมพัทธ์ และใช้วงกลมหรือวงรีแทนเซตย่อยต่างๆ ภายในเอกภพสัมพัทธ์</p>
+                </div>
+            </section>
+
+            <!-- Section 3: การดำเนินการของเซต -->
+            <section id="section-3" class="content-section">
+                <h2>5.1.3 การดำเนินการของเซต (Set Operations)</h2>
+
+                <div class="subsection">
+                    <h3>ก. ยูเนียน (Union: ∪)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>ยูเนียนของเซต $A$ และเซต $B$ คือเซตของสมาชิกทั้งหมดที่อยู่ในเซต $A$ หรืออยู่ในเซต $B$ หรืออยู่ในทั้งสองเซต</p>
+                        <div class="formula-box">
+                            $$A \cup B = \{x \mid x \in A \text{ หรือ } x \in B\}$$
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $A = \{1,2,3\}$ และ $B = \{3,4,5\}$</p>
+                            <p>$A \cup B = \{1,2,3,4,5\}$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. อินเตอร์เซกชัน (Intersection: ∩)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>อินเตอร์เซกชันของเซต $A$ และเซต $B$ คือเซตของสมาชิกทั้งหมดที่อยู่ในทั้งเซต $A$ และในเซต $B$</p>
+                        <div class="formula-box">
+                            $$A \cap B = \{x \mid x \in A \text{ และ } x \in B\}$$
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $A = \{1,2,3\}$ และ $B = \{3,4,5\}$</p>
+                            <p>$A \cap B = \{3\}$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ค. คอมพลีเมนต์ (Complement: $A'$ หรือ $A^c$)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>คอมพลีเมนต์ของเซต $A$ คือเซตของสมาชิกทั้งหมดที่อยู่ในเอกภพสัมพัทธ์ $U$ แต่ไม่อยู่ในเซต $A$</p>
+                        <div class="formula-box">
+                            $$A' = \{x \mid x \in U \text{ และ } x \notin A\}$$
+                        </div>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $U = \{1,2,3,4,5\}$ และ $A = \{1,2,3\}$</p>
+                            <p>$A' = \{4,5\}$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ง. ผลต่างเซต (Difference: $A - B$)</h3>
+                    
+                    <div class="definition-box">
+                        <h4>นิยาม</h4>
+                        <p>ผลต่างของเซต $A$ และเซต $B$ คือเซตของสมาชิกทั้งหมดที่อยู่ในเซต $A$ แต่ไม่อยู่ในเซต $B$</p>
+                        <div class="formula-box">
+                            $$A - B = \{x \mid x \in A \text{ และ } x \notin B\}$$
+                        </div>
+                        <p><strong>ความสัมพันธ์:</strong> $A - B = A \cap B'$</p>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้ $A = \{1,2,3\}$ และ $B = \{3,4,5\}$</p>
+                            <p>$A - B = \{1,2\}$</p>
+                            <p>$B - A = \{4,5\}$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: สมบัติของการดำเนินการของเซต -->
+            <section id="section-4" class="content-section">
+                <h2>5.1.4 สมบัติของการดำเนินการของเซต (Properties of Set Operations)</h2>
+                
+                <p>การดำเนินการของเซตมีสมบัติที่คล้ายคลึงกับการดำเนินการทางพีชคณิตของจำนวนจริง สมบัติเหล่านี้มีประโยชน์ในการลดรูปนิพจน์ของเซตและพิสูจน์ความเท่ากันของเซต</p>
+
+                <div class="subsection">
+                    <h3>สมบัติการสลับที่ (Commutative Laws)</h3>
+                    <div class="formula-box">
+                        <p>$A \cup B = B \cup A$</p>
+                        <p>$A \cap B = B \cap A$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติการเปลี่ยนกลุ่ม (Associative Laws)</h3>
+                    <div class="formula-box">
+                        <p>$(A \cup B) \cup C = A \cup (B \cup C)$</p>
+                        <p>$(A \cap B) \cap C = A \cap (B \cap C)$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติการแจกแจง (Distributive Laws)</h3>
+                    <div class="formula-box">
+                        <p>$A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$</p>
+                        <p>$A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>กฎของเดอมอร์แกน (De Morgan's Laws)</h3>
+                    <div class="formula-box">
+                        <p>$(A \cup B)' = A' \cap B'$</p>
+                        <p>$(A \cap B)' = A' \cup B'$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติเอกลักษณ์ (Identity Laws)</h3>
+                    <div class="formula-box">
+                        <p>$A \cup \emptyset = A$</p>
+                        <p>$A \cap U = A$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมบัติการเป็นส่วนเติมเต็ม (Complement Laws)</h3>
+                    <div class="formula-box">
+                        <p>$A \cup A' = U$</p>
+                        <p>$A \cap A' = \emptyset$</p>
+                        <p>$(A')' = A$</p>
+                        <p>$\emptyset' = U$</p>
+                        <p>$U' = \emptyset$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>5.1.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $U = \{1,2,3,4,5,6,7,8,9\}$</p>
+                        <p>$A = \{1,2,3,4\}$</p>
+                        <p>$B = \{3,4,5,6\}$</p>
+                        <p>จงหา: ก. $A \cup B$ ข. $A \cap B$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ยูเนียน (∪): รวบรวมสมาชิกทั้งหมดที่อยู่ในเซตใดเซตหนึ่งหรือทั้งสองเซต โดยไม่ซ้ำกัน</p>
+                        <p>อินเตอร์เซกชัน (∩): หาสมาชิกที่ปรากฏอยู่ในทั้งสองเซต</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $A \cup B$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $A$ หรือ $B$ คือ $\{1,2,3,4,5,6\}$</p>
+                        
+                        <p><strong>ข. $A \cap B$:</strong></p>
+                        <p>สมาชิกที่อยู่ในทั้ง $A$ และ $B$ คือ $\{3,4\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. $\{1,2,3,4,5,6\}$ ข. $\{3,4\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $U = \{a,b,c,d,e,f,g\}$</p>
+                        <p>$P = \{a,c,e\}$</p>
+                        <p>$Q = \{b,c,f\}$</p>
+                        <p>จงหา: ก. $P'$ ข. $P - Q$ ค. $Q - P$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>คอมพลีเมนต์ ('): หาสมาชิกที่อยู่ในเอกภพสัมพัทธ์ $U$ แต่ไม่อยู่ในเซตนั้น</p>
+                        <p>ผลต่างเซต (-): หาสมาชิกที่อยู่ในเซตแรกแต่ไม่อยู่ในเซตที่สอง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $P'$:</strong></p>
+                        <p>สมาชิกใน $U$ ที่ไม่อยู่ใน $P$ คือ $\{b,d,f,g\}$</p>
+                        
+                        <p><strong>ข. $P - Q$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $P$ แต่ไม่อยู่ใน $Q$ คือ $\{a,e\}$</p>
+                        
+                        <p><strong>ค. $Q - P$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $Q$ แต่ไม่อยู่ใน $P$ คือ $\{b,f\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. $\{b,d,f,g\}$ ข. $\{a,e\}$ ค. $\{b,f\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $U = \{x \mid x \text{ เป็นจำนวนเต็มตั้งแต่ } 1 \text{ ถึง } 10\}$</p>
+                        <p>$A = \{x \mid x \text{ เป็นจำนวนคู่}\}$</p>
+                        <p>$B = \{x \mid x \text{ เป็นจำนวนที่หารด้วย } 3 \text{ ลงตัว}\}$</p>
+                        <p>จงหา $(A \cup B)'$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>เขียนสมาชิกของ $U, A, B$</p>
+                        <p>หา $A \cup B$ ก่อน แล้วจึงหาคอมพลีเมนต์</p>
+                        <p>หรือใช้กฎของเดอมอร์แกน: $(A \cup B)' = A' \cap B'$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$U = \{1,2,3,4,5,6,7,8,9,10\}$</p>
+                        <p>$A = \{2,4,6,8,10\}$</p>
+                        <p>$B = \{3,6,9\}$</p>
+                        
+                        <p><strong>วิธีที่ 1: หา $A \cup B$ ก่อน</strong></p>
+                        <p>$A \cup B = \{2,3,4,6,8,9,10\}$</p>
+                        <p>$(A \cup B)' = \{1,5,7\}$</p>
+                        
+                        <p><strong>วิธีที่ 2: ใช้กฎของเดอมอร์แกน</strong></p>
+                        <p>$A' = \{1,3,5,7,9\}$</p>
+                        <p>$B' = \{1,2,4,5,7,8,10\}$</p>
+                        <p>$(A \cup B)' = A' \cap B' = \{1,5,7\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\{1,5,7\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $U = \{1,2,3,4,5,6,7,8\}$</p>
+                        <p>$A = \{2,4,6,8\}$</p>
+                        <p>$B = \{1,2,3,4\}$</p>
+                        <p>$C = \{4,5,6,7\}$</p>
+                        <p>จงหา $(A \cap C) \cup (B - C)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ดำเนินการในวงเล็บแรกก่อน: $A \cap C$</p>
+                        <p>ดำเนินการในวงเล็บที่สองก่อน: $B - C$</p>
+                        <p>นำผลลัพธ์จากทั้งสองวงเล็บมายูเนียนกัน</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $A \cap C$:</strong></p>
+                        <p>สมาชิกที่อยู่ในทั้ง $A$ และ $C$ คือ $\{4,6\}$</p>
+                        
+                        <p><strong>หา $B - C$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $B$ แต่ไม่อยู่ใน $C$ คือ $\{1,2,3\}$ (4 อยู่ใน $C$ จึงไม่เอา)</p>
+                        
+                        <p><strong>หา $(A \cap C) \cup (B - C)$:</strong></p>
+                        <p>ยูเนียนของ $\{4,6\}$ และ $\{1,2,3\}$ คือ $\{1,2,3,4,6\}$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\{1,2,3,4,6\}$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>จงเขียนนิพจน์ $(X' \cup Y)'$ ให้อยู่ในรูปที่ไม่มีเครื่องหมายคอมพลีเมนต์ภายนอกวงเล็บ</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้กฎของเดอมอร์แกน: $(A \cup B)' = A' \cap B'$</p>
+                        <p>ใช้สมบัติของคอมพลีเมนต์ซ้อน: $(A')' = A$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จากนิพจน์ $(X' \cup Y)'$</p>
+                        <p>ใช้กฎของเดอมอร์แกน: $(X')' \cap Y'$</p>
+                        <p>ใช้สมบัติของคอมพลีเมนต์ซ้อน: $X \cap Y'$</p>
+                        <p>(ซึ่งสามารถเขียนเป็น $X - Y$ ได้ด้วย)</p>
+                        
+                        <p><strong>คำตอบ:</strong> $X \cap Y'$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{a,b,c,d\}$ และ $B = \{a,c,e\}$ จงหาจำนวนสมาชิกของ $(A - B) \cup (B - A)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หา $A - B$</p>
+                        <p>หา $B - A$</p>
+                        <p>นำผลลัพธ์มายูเนียนกัน</p>
+                        <p>นับจำนวนสมาชิกในเซตสุดท้าย</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หา $A - B$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $A$ แต่ไม่อยู่ใน $B$ คือ $\{b,d\}$</p>
+                        
+                        <p><strong>หา $B - A$:</strong></p>
+                        <p>สมาชิกที่อยู่ใน $B$ แต่ไม่อยู่ใน $A$ คือ $\{e\}$</p>
+                        
+                        <p><strong>หา $(A - B) \cup (B - A)$:</strong></p>
+                        <p>$\{b,d\} \cup \{e\} = \{b,d,e\}$</p>
+                        
+                        <p><strong>นับจำนวนสมาชิก:</strong></p>
+                        <p>มีสมาชิก 3 ตัว</p>
+                        
+                        <p><strong>คำตอบ:</strong> 3</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>ในการสำรวจนักเรียน 100 คน พบว่ามีนักเรียนที่ชอบฟุตบอล 60 คน ชอบบาสเกตบอล 45 คน และชอบทั้งฟุตบอลและบาสเกตบอล 20 คน จงหาจำนวนนักเรียนที่ไม่ชอบกีฬาชนิดใดเลย</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้สูตรจำนวนสมาชิก: $n(A \cup B) = n(A) + n(B) - n(A \cap B)$</p>
+                        <p>จำนวนนักเรียนที่ไม่ชอบกีฬาชนิดใดเลย = จำนวนนักเรียนทั้งหมด - จำนวนนักเรียนที่ชอบกีฬาอย่างน้อยหนึ่งชนิด</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $F$ เป็นเซตของนักเรียนที่ชอบฟุตบอล, $B$ เป็นเซตของนักเรียนที่ชอบบาสเกตบอล</p>
+                        <p>$n(F) = 60$</p>
+                        <p>$n(B) = 45$</p>
+                        <p>$n(F \cap B) = 20$</p>
+                        <p>จำนวนนักเรียนทั้งหมด $(U) = 100$</p>
+                        
+                        <p><strong>หาจำนวนนักเรียนที่ชอบกีฬาอย่างน้อยหนึ่งชนิด:</strong></p>
+                        <p>$n(F \cup B) = n(F) + n(B) - n(F \cap B)$</p>
+                        <p>$n(F \cup B) = 60 + 45 - 20 = 85$ คน</p>
+                        
+                        <p><strong>หาจำนวนนักเรียนที่ไม่ชอบกีฬาชนิดใดเลย:</strong></p>
+                        <p>$n(U) - n(F \cup B) = 100 - 85 = 15$ คน</p>
+                        
+                        <p><strong>คำตอบ:</strong> 15 คน</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>ถ้า $U = \mathbb{R}$ (เซตของจำนวนจริง)</p>
+                        <p>$A = \{x \mid x \geq 5\}$</p>
+                        <p>$B = \{x \mid x < 10\}$</p>
+                        <p>จงหา $(A \cap B)'$ ในรูปสัญกรณ์ช่วง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>หา $A \cap B$ ในรูปสัญกรณ์ช่วง</p>
+                        <p>หาคอมพลีเมนต์ของช่วงนั้น</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$A = [5, \infty)$</p>
+                        <p>$B = (-\infty, 10)$</p>
+                        
+                        <p><strong>หา $A \cap B$:</strong></p>
+                        <p>ส่วนที่ $A$ และ $B$ ทับซ้อนกันคือ $[5, 10)$</p>
+                        
+                        <p><strong>หา $(A \cap B)'$:</strong></p>
+                        <p>คอมพลีเมนต์ของ $[5, 10)$ คือส่วนที่อยู่นอกช่วงนี้</p>
+                        <p>นั่นคือ $(-\infty, 5) \cup [10, \infty)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $(-\infty, 5) \cup [10, \infty)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ $A = \{x \mid x \text{ เป็นจำนวนเต็ม}, 1 \leq x \leq 10\}$</p>
+                        <p>$B = \{x \mid x \text{ เป็นจำนวนเฉพาะ}, x \leq 10\}$</p>
+                        <p>$C = \{x \mid x \text{ เป็นจำนวนคู่}, x \leq 10\}$</p>
+                        <p>จงหาจำนวนสมาชิกของ $(A - B) \cup C'$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>เขียนสมาชิกของแต่ละเซต</p>
+                        <p>หา $A - B$</p>
+                        <p>หา $C'$ (ในที่นี้ $U$ คือ $A$)</p>
+                        <p>นำผลลัพธ์มายูเนียนกัน</p>
+                        <p>นับจำนวนสมาชิก</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$A = \{1,2,3,4,5,6,7,8,9,10\}$</p>
+                        <p>$B = \{2,3,5,7\}$ (จำนวนเฉพาะที่ ≤ 10)</p>
+                        <p>$C = \{2,4,6,8,10\}$</p>
+                        
+                        <p><strong>หา $A - B$:</strong></p>
+                        <p>สมาชิกใน $A$ ที่ไม่อยู่ใน $B$ คือ $\{1,4,6,8,9,10\}$</p>
+                        
+                        <p><strong>หา $C'$: (ในที่นี้ $U$ คือ $A$)</strong></p>
+                        <p>สมาชิกใน $A$ ที่ไม่อยู่ใน $C$ คือ $\{1,3,5,7,9\}$</p>
+                        
+                        <p><strong>หา $(A - B) \cup C'$:</strong></p>
+                        <p>$\{1,4,6,8,9,10\} \cup \{1,3,5,7,9\} = \{1,3,4,5,6,7,8,9,10\}$</p>
+                        
+                        <p><strong>นับจำนวนสมาชิก:</strong></p>
+                        <p>มีสมาชิก 9 ตัว</p>
+                        
+                        <p><strong>คำตอบ:</strong> 9</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>ข้อใดต่อไปนี้ ไม่เป็นจริงเสมอไป?</p>
+                        <p>ก. $A \cup A' = U$</p>
+                        <p>ข. $A \cap \emptyset = \emptyset$</p>
+                        <p>ค. $(A \cap B)' = A' \cup B'$</p>
+                        <p>ง. $A - B = B - A$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ทบทวนสมบัติพื้นฐานของการดำเนินการของเซต</p>
+                        <p>ลองใช้ตัวอย่างเซตเฉพาะเจาะจงเพื่อตรวจสอบ</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $A \cup A' = U$:</strong> จริง (กฎการเป็นส่วนเติมเต็ม)</p>
+                        
+                        <p><strong>ข. $A \cap \emptyset = \emptyset$:</strong> จริง (สมบัติเอกลักษณ์)</p>
+                        
+                        <p><strong>ค. $(A \cap B)' = A' \cup B'$:</strong> จริง (กฎของเดอมอร์แกน)</p>
+                        
+                        <p><strong>ง. $A - B = B - A$:</strong> ไม่จริงเสมอไป</p>
+                        <p>ตัวอย่าง: ถ้า $A = \{1,2\}$, $B = \{2,3\}$ แล้ว</p>
+                        <p>$A - B = \{1\}$ แต่ $B - A = \{3\}$ ซึ่งไม่เท่ากัน</p>
+                        <p>จะเป็นจริงก็ต่อเมื่อ $A = B$ เท่านั้น</p>
+                        
+                        <p><strong>คำตอบ:</strong> ง.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
