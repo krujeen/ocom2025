@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 6.1: ประพจน์และตัวเชื่อม (นิเสธ, และ, หรือ, ถ้า...แล้ว..., ก็ต่อเมื่อ) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 6.1: ประพจน์และตัวเชื่อม (นิเสธ, และ, หรือ, ถ้า...แล้ว..., ก็ต่อเมื่อ)</span>
+            </nav>
+            <h1>บทที่ 6.1: ประพจน์และตัวเชื่อม (นิเสธ, และ, หรือ, ถ้า...แล้ว..., ก็ต่อเมื่อ)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับ "ประพจน์" และ "ตัวเชื่อมทางตรรกศาสตร์" ซึ่งเป็นพื้นฐานสำคัญของวิชาตรรกศาสตร์และคณิตศาสตร์เชิงแยกส่วน มีบทบาทอย่างมากในการออกแบบวงจรดิจิทัล การเขียนโปรแกรม (เงื่อนไขและลูป) และการวิเคราะห์ปัญหาเชิงตรรกะในวิทยาการคอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">6.1.1 ประพจน์ (Proposition)</a></li>
+                    <li><a href="#section-2">6.1.2 ตัวเชื่อมทางตรรกศาสตร์ (Logical Connectives)</a></li>
+                    <li><a href="#section-3">6.1.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">6.1.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ประพจน์ -->
+            <section id="section-1" class="content-section">
+                <h2>6.1.1 ประพจน์ (Proposition)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>ประพจน์</strong> คือ ประโยคหรือข้อความบอกเล่าหรือปฏิเสธ ที่สามารถระบุค่าความจริงได้ว่าเป็น <strong>จริง (True: T)</strong> หรือ <strong>เท็จ (False: F)</strong> อย่างใดอย่างหนึ่งเท่านั้น และจะระบุทั้งสองอย่างพร้อมกันไม่ได้</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ลักษณะสำคัญของประพจน์</h3>
+                    <ul>
+                        <li>ต้องเป็นประโยคที่สมบูรณ์ สามารถตัดสินได้ว่าจริงหรือเท็จ</li>
+                        <li>ไม่ใช่ประโยคคำถาม, คำสั่ง, วิงวอน, หรืออุทาน</li>
+                        <li>ไม่ใช่ประโยคเปิด (ประโยคที่มีตัวแปรและไม่สามารถระบุค่าความจริงได้จนกว่าจะมีการแทนค่าตัวแปร)</li>
+                    </ul>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างของประพจน์</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>ประเทศไทยตั้งอยู่ในทวีปเอเชีย (T)</li>
+                            <li>2+2=5 (F)</li>
+                            <li>ดวงอาทิตย์ขึ้นทางทิศตะวันตก (F)</li>
+                            <li>จำนวนเฉพาะที่เป็นเลขคู่มีเพียงเลข 2 (T)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างที่ไม่ใช่ประพจน์</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>กรุณาเปิดประตู (คำสั่ง)</li>
+                            <li>เขาเป็นคนดี (ประโยคเปิด ไม่รู้ว่า "เขา" คือใคร)</li>
+                            <li>x+5=10 (ประโยคเปิด ไม่รู้ค่า x)</li>
+                            <li>สวยจังเลย! (อุทาน)</li>
+                            <li>วันนี้ฝนจะตกหรือไม่ (คำถาม)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ตัวเชื่อมทางตรรกศาสตร์ -->
+            <section id="section-2" class="content-section">
+                <h2>6.1.2 ตัวเชื่อมทางตรรกศาสตร์ (Logical Connectives)</h2>
+                
+                <div class="explanation-box">
+                    <p>เราสามารถนำประพจน์มาเชื่อมกันด้วยตัวเชื่อมทางตรรกศาสตร์ เพื่อสร้างประพจน์ใหม่ที่มีความหมายและค่าความจริงแตกต่างกันไป</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ก. นิเสธ (Negation)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> การปฏิเสธประพจน์เดิม หรือการตรงข้ามกับค่าความจริงของประพจน์เดิม</p>
+                        <p><strong>สัญลักษณ์:</strong> $\sim$ (อ่านว่า "นิเสธ", "ไม่", "ไม่ใช่")</p>
+                    </div>
+
+                    <div class="truth-table">
+                        <h4>ตารางค่าความจริง</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>∼P</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>T</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>P: ฝนตก</p>
+                            <p>∼P: ฝนไม่ตก หรือ ไม่ใช่ว่าฝนตก</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. การเชื่อมด้วย "และ" (Conjunction)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> ประพจน์ที่เชื่อมด้วย "และ" จะเป็นจริงเมื่อประพจน์ย่อยทุกตัวเป็นจริงเท่านั้น กรณีอื่นจะเป็นเท็จ</p>
+                        <p><strong>สัญลักษณ์:</strong> $\land$ (อ่านว่า "และ")</p>
+                    </div>
+
+                    <div class="truth-table">
+                        <h4>ตารางค่าความจริง</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>Q</th>
+                                    <th>P∧Q</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>T</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>T</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>P: ฉันกินข้าว</p>
+                            <p>Q: ฉันดื่มน้ำ</p>
+                            <p>P∧Q: ฉันกินข้าว และ ฉันดื่มน้ำ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ค. การเชื่อมด้วย "หรือ" (Disjunction)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> ประพจน์ที่เชื่อมด้วย "หรือ" จะเป็นเท็จเมื่อประพจน์ย่อยทุกตัวเป็นเท็จเท่านั้น กรณีอื่นจะเป็นจริง</p>
+                        <p><strong>สัญลักษณ์:</strong> $\lor$ (อ่านว่า "หรือ")</p>
+                    </div>
+
+                    <div class="truth-table">
+                        <h4>ตารางค่าความจริง</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>Q</th>
+                                    <th>P∨Q</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>T</td>
+                                    <td>F</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>P: เธอสวย</p>
+                            <p>Q: เธอฉลาด</p>
+                            <p>P∨Q: เธอสวย หรือ เธอฉลาด</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ง. การเชื่อมด้วย "ถ้า...แล้ว..." (Conditional)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> ประพจน์ที่เชื่อมด้วย "ถ้า...แล้ว..." จะเป็นเท็จเพียงกรณีเดียวคือ เมื่อเหตุเป็นจริง แต่ ผลเป็นเท็จ กรณีอื่นจะเป็นจริงทั้งหมด</p>
+                        <p><strong>สัญลักษณ์:</strong> $\rightarrow$ (อ่านว่า "ถ้า...แล้ว...")</p>
+                        <ul>
+                            <li>P คือ เหตุ (antecedent)</li>
+                            <li>Q คือ ผล (consequent)</li>
+                        </ul>
+                    </div>
+
+                    <div class="truth-table">
+                        <h4>ตารางค่าความจริง</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>Q</th>
+                                    <th>P→Q</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>T</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>F</td>
+                                    <td>T</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>P: ฝนตก</p>
+                            <p>Q: ถนนเปียก</p>
+                            <p>P→Q: ถ้า ฝนตก แล้ว ถนนเปียก</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>จ. การเชื่อมด้วย "...ก็ต่อเมื่อ..." (Biconditional)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> ประพจน์ที่เชื่อมด้วย "...ก็ต่อเมื่อ..." จะเป็นจริงเมื่อประพจน์ย่อยทั้งสองมีค่าความจริงเหมือนกัน (จริงทั้งคู่ หรือ เท็จทั้งคู่) กรณีอื่นจะเป็นเท็จ</p>
+                        <p><strong>สัญลักษณ์:</strong> $\leftrightarrow$ (อ่านว่า "ก็ต่อเมื่อ")</p>
+                    </div>
+
+                    <div class="truth-table">
+                        <h4>ตารางค่าความจริง</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>P</th>
+                                    <th>Q</th>
+                                    <th>P↔Q</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T</td>
+                                    <td>T</td>
+                                    <td>T</td>
+                                </tr>
+                                <tr>
+                                    <td>T</td>
+                                    <td>F</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>T</td>
+                                    <td>F</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>F</td>
+                                    <td>T</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>P: ฉันสอบผ่าน</p>
+                            <p>Q: ฉันอ่านหนังสือ</p>
+                            <p>P↔Q: ฉันสอบผ่าน ก็ต่อเมื่อ ฉันอ่านหนังสือ</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>6.1.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: การกำหนดค่าความจริงของประพจน์ผสม</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ประพจน์ P มีค่าความจริงเป็นจริง (T), ประพจน์ Q มีค่าความจริงเป็นเท็จ (F), และประพจน์ R มีค่าความจริงเป็นจริง (T) จงหาค่าความจริงของประพจน์ผสม (∼P∨Q)→R</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าความจริงของประพจน์ย่อยลงไป</li>
+                            <li>ดำเนินการตามลำดับของตัวเชื่อม (นิเสธก่อน, แล้ว "หรือ", สุดท้าย "ถ้า...แล้ว...")</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>แทนค่า:</strong> (∼T∨F)→T</p>
+                        <p><strong>ทำนิเสธ:</strong> (F∨F)→T</p>
+                        <p><strong>ทำ "หรือ":</strong> F→T</p>
+                        <p><strong>ทำ "ถ้า...แล้ว...":</strong> T (เพราะเหตุเป็นเท็จ)</p>
+                        
+                        <p><strong>คำตอบ:</strong> จริง (T)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: การสร้างตารางค่าความจริง</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงสร้างตารางค่าความจริงของประพจน์ (P∧∼Q)∨R</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุจำนวนประพจน์ย่อย (ในที่นี้คือ P,Q,R) จะมี $2^3 = 8$ กรณี</li>
+                            <li>สร้างคอลัมน์สำหรับประพจน์ย่อยและตัวเชื่อมทีละขั้นตามลำดับการดำเนินการ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <div class="truth-table-large">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>P</th>
+                                        <th>Q</th>
+                                        <th>R</th>
+                                        <th>∼Q</th>
+                                        <th>P∧∼Q</th>
+                                        <th>(P∧∼Q)∨R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: การพิจารณาค่าความจริงเมื่อประพจน์ซับซ้อน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ประพจน์ (P→Q)∧∼R มีค่าความจริงเป็นจริง (T) จงหาค่าความจริงของ P,Q,R</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "และ" (∧) จะเป็นจริงได้ก็ต่อเมื่อประพจน์ย่อยทั้งสองตัวเป็นจริงเท่านั้น</li>
+                            <li>แยกพิจารณาแต่ละส่วนเพื่อหาค่าความจริงของ P,Q,R</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(P→Q)∧∼R มีค่าความจริงเป็น T</p>
+                        <p>แสดงว่า:</p>
+                        <ol>
+                            <li>(P→Q) ต้องมีค่าความจริงเป็น T</li>
+                            <li>∼R ต้องมีค่าความจริงเป็น T ⟹ R มีค่าความจริงเป็น F</li>
+                        </ol>
+                        
+                        <p><strong>จาก (1) (P→Q) เป็น T:</strong></p>
+                        <p>จากตารางค่าความจริงของ "ถ้า...แล้ว..." ที่เป็น T จะมี 3 กรณี (TT, FT, FF)</p>
+                        <p>แต่เรารู้ว่า R เป็น F</p>
+                        <p>ดังนั้น P และ Q จะเป็นไปได้หลายแบบ:</p>
+                        <ul>
+                            <li>ถ้า P เป็น T, Q เป็น T</li>
+                            <li>ถ้า P เป็น F, Q เป็น T</li>
+                            <li>ถ้า P เป็น F, Q เป็น F</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> R มีค่าความจริงเป็นเท็จ (F), ส่วน P และ Q สามารถเป็นไปได้หลายกรณีที่ทำให้ P→Q เป็นจริง</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: การหาค่าความจริงที่ทำให้ประพจน์ผสมเป็นเท็จ</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาค่าความจริงของ P และ Q ที่ทำให้ประพจน์ (P↔Q)∨∼Q มีค่าความจริงเป็นเท็จ (F)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "หรือ" (∨) จะเป็นเท็จได้ก็ต่อเมื่อประพจน์ย่อยทั้งสองตัวเป็นเท็จเท่านั้น</li>
+                            <li>แยกพิจารณาแต่ละส่วนเพื่อหาค่าความจริงของ P,Q</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(P↔Q)∨∼Q มีค่าความจริงเป็น F</p>
+                        <p>แสดงว่า:</p>
+                        <ol>
+                            <li>(P↔Q) ต้องมีค่าความจริงเป็น F</li>
+                            <li>∼Q ต้องมีค่าความจริงเป็น F ⟹ Q มีค่าความจริงเป็น T</li>
+                        </ol>
+                        
+                        <p><strong>จาก (1) (P↔Q) เป็น F และเรารู้ว่า Q เป็น T:</strong></p>
+                        <p>จากตารางค่าความจริงของ "...ก็ต่อเมื่อ..." ที่เป็น F เมื่อ Q เป็น T มีเพียงกรณีเดียวคือ:</p>
+                        <p>P เป็น F, Q เป็น T</p>
+                        
+                        <p><strong>คำตอบ:</strong> P มีค่าความจริงเป็นเท็จ (F), Q มีค่าความจริงเป็นจริง (T)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การประยุกต์ใช้ในบริบท (เหตุและผล)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ประพจน์ "ถ้าฝนตกหนัก แล้วถนนเปียก" มีค่าความจริงเป็นเท็จ จงหาค่าความจริงของ "ฝนตกหนัก" และ "ถนนเปียก"</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์อยู่ในรูป P→Q</li>
+                            <li>ประพจน์ P→Q จะเป็นเท็จได้เพียงกรณีเดียวเท่านั้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ P: ฝนตกหนัก</p>
+                        <p>ให้ Q: ถนนเปียก</p>
+                        <p>ประพจน์คือ P→Q มีค่าความจริงเป็น F</p>
+                        
+                        <p>จากตารางค่าความจริงของ "ถ้า...แล้ว..." ประพจน์ P→Q จะเป็นเท็จเพียงกรณีเดียวคือ P เป็นจริง และ Q เป็นเท็จ</p>
+                        
+                        <p>ดังนั้น:</p>
+                        <ul>
+                            <li>"ฝนตกหนัก" มีค่าความจริงเป็นจริง (T)</li>
+                            <li>"ถนนเปียก" มีค่าความจริงเป็นเท็จ (F)</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> "ฝนตกหนัก" เป็นจริง, "ถนนเปียก" เป็นเท็จ</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>6.1.4 ตัวอย่างข้อสอบฝึกทำ: ประพจน์และตัวเชื่อม</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ประพจน์และตัวเชื่อม" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ประพจน์ P มีค่าความจริงเป็นจริง (T), ประพจน์ Q มีค่าความจริงเป็นเท็จ (F), และประพจน์ R มีค่าความจริงเป็นจริง (T) จงหาค่าความจริงของประพจน์ผสม (∼P∨Q)→R</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าความจริงของประพจน์ย่อยลงไป</li>
+                            <li>ดำเนินการตามลำดับของตัวเชื่อม (นิเสธก่อน, แล้ว "หรือ", สุดท้าย "ถ้า...แล้ว...")</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>แทนค่า:</strong> (∼T∨F)→T</p>
+                        <p><strong>ทำนิเสธ:</strong> (F∨F)→T</p>
+                        <p><strong>ทำ "หรือ":</strong> F→T</p>
+                        <p><strong>ทำ "ถ้า...แล้ว...":</strong> T (เพราะเหตุเป็นเท็จ)</p>
+                        
+                        <p><strong>คำตอบ:</strong> จริง (T)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>จงสร้างตารางค่าความจริงของประพจน์ (P∧∼Q)∨R</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุจำนวนประพจน์ย่อย (ในที่นี้คือ P,Q,R) จะมี $2^3 = 8$ กรณี</li>
+                            <li>สร้างคอลัมน์สำหรับประพจน์ย่อยและตัวเชื่อมทีละขั้นตามลำดับการดำเนินการ</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <div class="truth-table-large">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>P</th>
+                                        <th>Q</th>
+                                        <th>R</th>
+                                        <th>∼Q</th>
+                                        <th>P∧∼Q</th>
+                                        <th>(P∧∼Q)∨R</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ประพจน์ (P→Q)∧∼R มีค่าความจริงเป็นจริง (T) จงหาค่าความจริงของ P,Q,R</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "และ" (∧) จะเป็นจริงได้ก็ต่อเมื่อประพจน์ย่อยทั้งสองตัวเป็นจริงเท่านั้น</li>
+                            <li>แยกพิจารณาแต่ละส่วนเพื่อหาค่าความจริงของ P,Q,R</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(P→Q)∧∼R มีค่าความจริงเป็น T</p>
+                        <p>แสดงว่า:</p>
+                        <ol>
+                            <li>(P→Q) ต้องมีค่าความจริงเป็น T</li>
+                            <li>∼R ต้องมีค่าความจริงเป็น T ⟹ R มีค่าความจริงเป็น F</li>
+                        </ol>
+                        
+                        <p><strong>จาก (1) (P→Q) เป็น T:</strong></p>
+                        <p>จากตารางค่าความจริงของ "ถ้า...แล้ว..." ที่เป็น T จะมี 3 กรณี (TT, FT, FF) เมื่อ R เป็น F:</p>
+                        <ul>
+                            <li>ถ้า P เป็น T, Q เป็น T</li>
+                            <li>ถ้า P เป็น F, Q เป็น T</li>
+                            <li>ถ้า P เป็น F, Q เป็น F</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> R มีค่าความจริงเป็นเท็จ (F), ส่วน P และ Q สามารถเป็นไปได้หลายกรณีที่ทำให้ P→Q เป็นจริง (เช่น P=T,Q=T หรือ P=F,Q=T หรือ P=F,Q=F)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าความจริงของ P และ Q ที่ทำให้ประพจน์ (P↔Q)∨∼Q มีค่าความจริงเป็นเท็จ (F)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "หรือ" (∨) จะเป็นเท็จได้ก็ต่อเมื่อประพจน์ย่อยทั้งสองตัวเป็นเท็จเท่านั้น</li>
+                            <li>แยกพิจารณาแต่ละส่วนเพื่อหาค่าความจริงของ P,Q</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(P↔Q)∨∼Q มีค่าความจริงเป็น F</p>
+                        <p>แสดงว่า:</p>
+                        <ol>
+                            <li>(P↔Q) ต้องมีค่าความจริงเป็น F</li>
+                            <li>∼Q ต้องมีค่าความจริงเป็น F ⟹ Q มีค่าความจริงเป็น T</li>
+                        </ol>
+                        
+                        <p><strong>จาก (1) (P↔Q) เป็น F และเรารู้ว่า Q เป็น T:</strong></p>
+                        <p>จากตารางค่าความจริงของ "...ก็ต่อเมื่อ..." ที่เป็น F เมื่อ Q เป็น T มีเพียงกรณีเดียวคือ:</p>
+                        <p>P เป็น F, Q เป็น T</p>
+                        
+                        <p><strong>คำตอบ:</strong> P มีค่าความจริงเป็นเท็จ (F), Q มีค่าความจริงเป็นจริง (T)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ประพจน์ "ถ้าฝนตกหนัก แล้วถนนเปียก" มีค่าความจริงเป็นเท็จ จงหาค่าความจริงของ "ฝนตกหนัก" และ "ถนนเปียก"</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์อยู่ในรูป P→Q</li>
+                            <li>ประพจน์ P→Q จะเป็นเท็จได้เพียงกรณีเดียวเท่านั้น</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ P: ฝนตกหนัก</p>
+                        <p>ให้ Q: ถนนเปียก</p>
+                        <p>ประพจน์คือ P→Q มีค่าความจริงเป็น F</p>
+                        
+                        <p>จากตารางค่าความจริงของ "ถ้า...แล้ว..." ประพจน์ P→Q จะเป็นเท็จเพียงกรณีเดียวคือ P เป็นจริง และ Q เป็นเท็จ</p>
+                        
+                        <p>ดังนั้น:</p>
+                        <ul>
+                            <li>"ฝนตกหนัก" มีค่าความจริงเป็นจริง (T)</li>
+                            <li>"ถนนเปียก" มีค่าความจริงเป็นเท็จ (F)</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> "ฝนตกหนัก" เป็นจริง, "ถนนเปียก" เป็นเท็จ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>กำหนดให้ P เป็น T, Q เป็น T, R เป็น F จงหาค่าความจริงของ [(P∨∼Q)∧R]↔(Q→P)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าความจริง</li>
+                            <li>ดำเนินการภายในวงเล็บเล็กก่อน, แล้ววงเล็บใหญ่, สุดท้ายตัวเชื่อมหลัก</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>[(T∨∼T)∧F]↔(T→T)</p>
+                        <p>[(T∨F)∧F]↔(T)</p>
+                        <p>[T∧F]↔T</p>
+                        <p>F↔T</p>
+                        <p>F</p>
+                        
+                        <p><strong>คำตอบ:</strong> เท็จ (F)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>ถ้าประพจน์ (∼P↔Q)∨R มีค่าความจริงเป็นเท็จ (F) จงหาค่าความจริงของ P,Q,R</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "หรือ" (∨) จะเป็นเท็จได้ก็ต่อเมื่อประพจน์ย่อยทั้งสองตัวเป็นเท็จเท่านั้น</li>
+                            <li>แยกพิจารณาแต่ละส่วน</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(∼P↔Q)∨R เป็น F</p>
+                        <p>แสดงว่า:</p>
+                        <ol>
+                            <li>(∼P↔Q) ต้องเป็น F</li>
+                            <li>R ต้องเป็น F</li>
+                        </ol>
+                        
+                        <p><strong>จาก (1) (∼P↔Q) เป็น F และจากตารางค่าความจริงของ ↔ ที่เป็น F มี 2 กรณี:</strong></p>
+                        <ul>
+                            <li>ถ้า ∼P เป็น T และ Q เป็น F (จะได้ P เป็น F)</li>
+                            <li>ถ้า ∼P เป็น F และ Q เป็น T (จะได้ P เป็น T)</li>
+                        </ul>
+                        
+                        <p>ดังนั้น ค่าความจริงของ P,Q,R สามารถเป็นได้ 2 ชุด:</p>
+                        <ul>
+                            <li>ชุดที่ 1: P เป็น F, Q เป็น F, R เป็น F</li>
+                            <li>ชุดที่ 2: P เป็น T, Q เป็น T, R เป็น F</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> (P เป็น F, Q เป็น F, R เป็น F) หรือ (P เป็น T, Q เป็น T, R เป็น F)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>จงสร้างตารางค่าความจริงของประพจน์ P↔(Q∧R)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>มี 3 ประพจน์ย่อย (P,Q,R) ดังนั้นมี 8 กรณี</li>
+                            <li>ดำเนินการภายในวงเล็บก่อน (∧), แล้วค่อยทำตัวเชื่อมหลัก (↔)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <div class="truth-table-large">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>P</th>
+                                        <th>Q</th>
+                                        <th>R</th>
+                                        <th>Q∧R</th>
+                                        <th>P↔(Q∧R)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>F</td>
+                                        <td>T</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>จงหาค่าความจริงของ P และ Q ที่ทำให้ประพจน์ (P∨Q)→∼P มีค่าความจริงเป็นจริง (T)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประพจน์ที่เชื่อมด้วย "ถ้า...แล้ว..." จะเป็นจริงได้ 3 กรณี (TT, FT, FF)</li>
+                            <li>ลองไล่แต่ละกรณี หรือพิจารณาส่วนที่ทำให้เป็นเท็จ (เหตุ T, ผล F) แล้วหักล้างออก</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>(P∨Q)→∼P เป็น T</p>
+                        <p>ประพจน์นี้จะเป็นเท็จได้เพียงกรณีเดียวคือ เหตุเป็น T และ ผลเป็น F</p>
+                        
+                        <p><strong>ผล (∼P) เป็น F ⟹ P ต้องเป็น T</strong></p>
+                        <p><strong>เหตุ (P∨Q) เป็น T (เมื่อ P เป็น T) ⟹</strong> ไม่ว่า Q จะเป็น T หรือ F ก็ตาม P∨Q จะเป็น T เสมอ</p>
+                        
+                        <p>ดังนั้น มี 2 กรณีที่ทำให้ประพจน์เป็นจริง:</p>
+                        <ul>
+                            <li>P เป็น T, Q เป็น T</li>
+                            <li>P เป็น T, Q เป็น F</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> (P เป็น T, Q เป็น T) หรือ (P เป็น T, Q เป็น F)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>จากสถานการณ์ต่อไปนี้ ข้อใดมีโอกาสเกิดขึ้นได้?</p>
+                        <p>"ถ้า นาย A ชนะการแข่งขัน ก็ต่อเมื่อ นาย B ชนะ" และ "ถ้า นาย B แพ้การแข่งขัน แล้ว นาย C ชนะ"</p>
+                        <p>ก. นาย A ชนะ, นาย B ชนะ, นาย C ชนะ</p>
+                        <p>ข. นาย A แพ้, นาย B ชนะ, นาย C แพ้</p>
+                        <p>ค. นาย A ชนะ, นาย B แพ้, นาย C ชนะ</p>
+                        <p>ง. นาย A แพ้, นาย B แพ้, นาย C แพ้</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กำหนดประพจน์ย่อย: $A_w$: นาย A ชนะ, $B_w$: นาย B ชนะ, $C_w$: นาย C ชนะ</li>
+                            <li>เขียนประพจน์ผสมจากสถานการณ์ที่กำหนด: $A_w ↔ B_w$ และ $∼B_w → C_w$</li>
+                            <li>ตรวจสอบแต่ละตัวเลือกว่าสอดคล้องกับประพจน์ผสมทั้งสองหรือไม่</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $A_w$: นาย A ชนะ (ถ้าแพ้คือ $∼A_w$)</p>
+                        <p>ให้ $B_w$: นาย B ชนะ (ถ้าแพ้คือ $∼B_w$)</p>
+                        <p>ให้ $C_w$: นาย C ชนะ (ถ้าแพ้คือ $∼C_w$)</p>
+                        
+                        <p><strong>ประพจน์ที่กำหนด:</strong></p>
+                        <ol>
+                            <li>$A_w ↔ B_w$</li>
+                            <li>$∼B_w → C_w$</li>
+                        </ol>
+                        
+                        <p><strong>ตรวจสอบแต่ละตัวเลือก:</strong></p>
+                        
+                        <p><strong>ก. นาย A ชนะ (T), นาย B ชนะ (T), นาย C ชนะ (T)</strong></p>
+                        <ul>
+                            <li>$A_w ↔ B_w$: T ↔ T เป็น T (สอดคล้อง)</li>
+                            <li>$∼B_w → C_w$: ∼T → T เป็น F → T เป็น T (สอดคล้อง)</li>
+                        </ul>
+                        <p>⟹ โอกาสเกิดขึ้นได้</p>
+                        
+                        <p><strong>ข. นาย A แพ้ (F), นาย B ชนะ (T), นาย C แพ้ (F)</strong></p>
+                        <ul>
+                            <li>$A_w ↔ B_w$: F ↔ T เป็น F (ไม่สอดคล้อง)</li>
+                        </ul>
+                        <p>⟹ ไม่สามารถเกิดขึ้นได้</p>
+                        
+                        <p><strong>ค. นาย A ชนะ (T), นาย B แพ้ (F), นาย C ชนะ (T)</strong></p>
+                        <ul>
+                            <li>$A_w ↔ B_w$: T ↔ F เป็น F (ไม่สอดคล้อง)</li>
+                        </ul>
+                        <p>⟹ ไม่สามารถเกิดขึ้นได้</p>
+                        
+                        <p><strong>ง. นาย A แพ้ (F), นาย B แพ้ (F), นาย C แพ้ (F)</strong></p>
+                        <ul>
+                            <li>$A_w ↔ B_w$: F ↔ F เป็น T (สอดคล้อง)</li>
+                            <li>$∼B_w → C_w$: ∼F → F เป็น T → F เป็น F (ไม่สอดคล้อง)</li>
+                        </ul>
+                        <p>⟹ ไม่สามารถเกิดขึ้นได้</p>
+                        
+                        <p><strong>คำตอบ:</strong> ก.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
