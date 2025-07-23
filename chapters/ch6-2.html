@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 6.2: ประโยคที่มีตัวบ่งปริมาณ (Quantified Statements) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 6.2: ประโยคที่มีตัวบ่งปริมาณ (Quantified Statements)</span>
+            </nav>
+            <h1>บทที่ 6.2: ประโยคที่มีตัวบ่งปริมาณ (Quantified Statements)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับ "ประโยคที่มีตัวบ่งปริมาณ" ซึ่งเป็นส่วนสำคัญของตรรกศาสตร์และคณิตศาสตร์เชิงแยกส่วน ประโยคเหล่านี้ช่วยให้เราสามารถระบุปริมาณของสมาชิกที่สอดคล้องกับคุณสมบัติบางอย่างในเอกภพสัมพัทธ์ได้อย่างแม่นยำ ซึ่งมีประโยชน์ในการสร้างเงื่อนไขที่ซับซ้อนในวิทยาการคอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">6.2.1 ประโยคเปิด (Open Sentence)</a></li>
+                    <li><a href="#section-2">6.2.2 ตัวบ่งปริมาณ (Quantifiers)</a></li>
+                    <li><a href="#section-3">6.2.3 นิเสธของประโยคที่มีตัวบ่งปริมาณ</a></li>
+                    <li><a href="#section-4">6.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">6.2.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ประโยคเปิด -->
+            <section id="section-1" class="content-section">
+                <h2>6.2.1 ประโยคเปิด (Open Sentence)</h2>
+                
+                <div class="explanation-box">
+                    <p>ก่อนที่จะเข้าใจประโยคที่มีตัวบ่งปริมาณ เราต้องเข้าใจ "ประโยคเปิด" ก่อน</p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>ประโยคเปิด</strong> คือ ประโยคบอกเล่าหรือปฏิเสธที่มีตัวแปร และไม่สามารถระบุค่าความจริงได้ว่าเป็นจริงหรือเท็จ จนกว่าจะมีการแทนค่าตัวแปรด้วยสมาชิกในเอกภพสัมพัทธ์</p>
+                    <p><strong>สัญลักษณ์:</strong> $P(x)$ (อ่านว่า "พีของเอ็กซ์") หมายถึง ประโยคเปิดที่มีตัวแปร $x$</p>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li>$P(x)$: $x$ เป็นจำนวนเฉพาะ (เป็นประโยคเปิด เพราะไม่รู้ว่า $x$ คืออะไร)</li>
+                            <li>$Q(y)$: $y+2=7$ (เป็นประโยคเปิด)</li>
+                            <li>$R(a,b)$: $a < b$ (เป็นประโยคเปิดที่มีหลายตัวแปร)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h4>เอกภพสัมพัทธ์ (Universal Set for a Variable)</h4>
+                    <p>คือ เซตที่กำหนดขอบเขตของค่าที่ตัวแปรในประโยคเปิดสามารถเป็นได้ ซึ่งเป็นสิ่งจำเป็นในการพิจารณาค่าความจริงของประโยคที่มีตัวบ่งปริมาณ</p>
+                </div>
+            </section>
+
+            <!-- Section 2: ตัวบ่งปริมาณ -->
+            <section id="section-2" class="content-section">
+                <h2>6.2.2 ตัวบ่งปริมาณ (Quantifiers)</h2>
+                
+                <div class="explanation-box">
+                    <p>ตัวบ่งปริมาณใช้เพื่อเปลี่ยนประโยคเปิดให้กลายเป็นประพจน์ที่สามารถระบุค่าความจริงได้ โดยการระบุ "ปริมาณ" ของสมาชิกในเอกภพสัมพัทธ์ที่ทำให้ประโยคเปิดเป็นจริง</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ก. ตัวบ่งปริมาณสำหรับทุกค่า (Universal Quantifier)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> "สำหรับทุกค่า" "สำหรับแต่ละค่า" "ทั้งหมด"</p>
+                        <p><strong>สัญลักษณ์:</strong> $\forall$ (อ่านว่า "สำหรับทุก")</p>
+                        <p><strong>รูปแบบ:</strong> $\forall x P(x)$ (อ่านว่า "สำหรับทุก $x$, $P(x)$ เป็นจริง")</p>
+                    </div>
+
+                    <div class="definition-box">
+                        <h4>ค่าความจริงของ $\forall x P(x)$</h4>
+                        <ul>
+                            <li><strong>จะเป็น จริง</strong> ก็ต่อเมื่อ สมาชิกทุกตัวในเอกภพสัมพัทธ์ เมื่อนำไปแทนใน $P(x)$ แล้วทำให้ $P(x)$ เป็นจริงทั้งหมด</li>
+                            <li><strong>จะเป็น เท็จ</strong> ก็ต่อเมื่อ มีสมาชิกอย่างน้อยหนึ่งตัวในเอกภพสัมพัทธ์ เมื่อนำไปแทนใน $P(x)$ แล้วทำให้ $P(x)$ เป็นเท็จ</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้เอกภพสัมพัทธ์ $U = \{1,2,3\}$</p>
+                            
+                            <p><strong>$P(x)$: $x > 0$</strong></p>
+                            <p>$\forall x P(x)$: สำหรับทุก $x \in \{1,2,3\}$, $x > 0$</p>
+                            <p>$1 > 0$ (จริง), $2 > 0$ (จริง), $3 > 0$ (จริง) ⟹ $\forall x P(x)$ เป็น <strong>จริง</strong></p>
+                            
+                            <p><strong>$Q(x)$: $x$ เป็นจำนวนคู่</strong></p>
+                            <p>$\forall x Q(x)$: สำหรับทุก $x \in \{1,2,3\}$, $x$ เป็นจำนวนคู่</p>
+                            <p>$1$ เป็นจำนวนคู่ (เท็จ) ⟹ $\forall x Q(x)$ เป็น <strong>เท็จ</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. ตัวบ่งปริมาณสำหรับบางค่า (Existential Quantifier)</h3>
+                    
+                    <div class="definition-box">
+                        <p><strong>ความหมาย:</strong> "สำหรับบางค่า" "มีอย่างน้อยหนึ่งค่า" "มีอยู่" "บางตัว"</p>
+                        <p><strong>สัญลักษณ์:</strong> $\exists$ (อ่านว่า "มีอยู่")</p>
+                        <p><strong>รูปแบบ:</strong> $\exists x P(x)$ (อ่านว่า "มี $x$ บางตัวที่ทำให้ $P(x)$ เป็นจริง")</p>
+                    </div>
+
+                    <div class="definition-box">
+                        <h4>ค่าความจริงของ $\exists x P(x)$</h4>
+                        <ul>
+                            <li><strong>จะเป็น จริง</strong> ก็ต่อเมื่อ มีสมาชิกอย่างน้อยหนึ่งตัวในเอกภพสัมพัทธ์ เมื่อนำไปแทนใน $P(x)$ แล้วทำให้ $P(x)$ เป็นจริง</li>
+                            <li><strong>จะเป็น เท็จ</strong> ก็ต่อเมื่อ สมาชิกทุกตัวในเอกภพสัมพัทธ์ เมื่อนำไปแทนใน $P(x)$ แล้วทำให้ $P(x)$ เป็นเท็จทั้งหมด</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p>ให้เอกภพสัมพัทธ์ $U = \{1,2,3\}$</p>
+                            
+                            <p><strong>$P(x)$: $x$ เป็นจำนวนคู่</strong></p>
+                            <p>$\exists x P(x)$: มี $x \in \{1,2,3\}$ บางตัวที่ $x$ เป็นจำนวนคู่</p>
+                            <p>$2$ เป็นจำนวนคู่ (จริง) ⟹ $\exists x P(x)$ เป็น <strong>จริง</strong></p>
+                            
+                            <p><strong>$Q(x)$: $x > 5$</strong></p>
+                            <p>$\exists x Q(x)$: มี $x \in \{1,2,3\}$ บางตัวที่ $x > 5$</p>
+                            <p>$1 > 5$ (เท็จ), $2 > 5$ (เท็จ), $3 > 5$ (เท็จ) ⟹ $\exists x Q(x)$ เป็น <strong>เท็จ</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: นิเสธของประโยคที่มีตัวบ่งปริมาณ -->
+            <section id="section-3" class="content-section">
+                <h2>6.2.3 นิเสธของประโยคที่มีตัวบ่งปริมาณ (Negation of Quantified Statements)</h2>
+                
+                <div class="explanation-box">
+                    <p>การหานิเสธของประโยคที่มีตัวบ่งปริมาณมีความสำคัญอย่างมาก โดยมีกฎดังนี้:</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>1. นิเสธของ $\forall x P(x)$ คือ $\exists x \sim P(x)$</h3>
+                    
+                    <div class="explanation-box">
+                        <p>(ไม่ใช่ว่าสำหรับทุก $x$, $P(x)$ เป็นจริง) สมมูลกับ (มี $x$ บางตัวที่ $P(x)$ ไม่เป็นจริง)</p>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p><strong>ประพจน์:</strong> "นักเรียนทุกคนตั้งใจเรียน" ($\forall x$ ($x$ ตั้งใจเรียน))</p>
+                            <p><strong>นิเสธ:</strong> "มีนักเรียนบางคนไม่ตั้งใจเรียน" ($\exists x$ ($x$ ไม่ตั้งใจเรียน))</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>2. นิเสธของ $\exists x P(x)$ คือ $\forall x \sim P(x)$</h3>
+                    
+                    <div class="explanation-box">
+                        <p>(ไม่ใช่ว่ามี $x$ บางตัวที่ $P(x)$ เป็นจริง) สมมูลกับ (สำหรับทุก $x$, $P(x)$ ไม่เป็นจริง)</p>
+                    </div>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง</h4>
+                        <div class="example-box">
+                            <p><strong>ประพจน์:</strong> "มีสัตว์บางชนิดบินได้" ($\exists x$ ($x$ บินได้))</p>
+                            <p><strong>นิเสธ:</strong> "สัตว์ทุกชนิดบินไม่ได้" ($\forall x$ ($x$ บินไม่ได้))</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule-box">
+                    <h3>สรุปการหานิเสธของตัวบ่งปริมาณ</h3>
+                    <ol>
+                        <li>เปลี่ยน $\forall$ เป็น $\exists$ และเปลี่ยน $\exists$ เป็น $\forall$</li>
+                        <li>ใส่นิเสธให้กับประโยคเปิด ($\sim P(x)$)</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>6.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: การกำหนดค่าความจริงของประโยคที่มีตัวบ่งปริมาณ</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดเอกภพสัมพัทธ์ $U = \{1,2,3,4,5\}$ จงพิจารณาค่าความจริงของประพจน์ต่อไปนี้:</p>
+                        <p>ก. $\forall x (x^2 \geq x)$</p>
+                        <p>ข. $\exists x (x \text{ เป็นจำนวนเฉพาะ})$</p>
+                        <p>ค. $\forall x (x+1 < x)$</p>
+                        <p>ง. $\exists x (x+2 = 4)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สำหรับ $\forall$: ตรวจสอบว่าทุกสมาชิกใน U ทำให้ประโยคเปิดเป็นจริงหรือไม่</li>
+                            <li>สำหรับ $\exists$: ตรวจสอบว่ามีสมาชิกอย่างน้อยหนึ่งตัวใน U ทำให้ประโยคเปิดเป็นจริงหรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $\forall x (x^2 \geq x)$:</strong></p>
+                        <ul>
+                            <li>สำหรับ $x=1$, $1^2 \geq 1$ (จริง)</li>
+                            <li>สำหรับ $x=2$, $2^2 \geq 2$ (จริง)</li>
+                            <li>สำหรับ $x=3$, $3^2 \geq 3$ (จริง)</li>
+                            <li>สำหรับ $x=4$, $4^2 \geq 4$ (จริง)</li>
+                            <li>สำหรับ $x=5$, $5^2 \geq 5$ (จริง)</li>
+                        </ul>
+                        <p>ทุกตัวทำให้เป็นจริง ⟹ <strong>จริง</strong></p>
+                        
+                        <p><strong>ข. $\exists x (x \text{ เป็นจำนวนเฉพาะ})$:</strong></p>
+                        <ul>
+                            <li>มี $x=2$ ที่เป็นจำนวนเฉพาะ (จริง)</li>
+                            <li>มี $x=3$ ที่เป็นจำนวนเฉพาะ (จริง)</li>
+                            <li>มี $x=5$ ที่เป็นจำนวนเฉพาะ (จริง)</li>
+                        </ul>
+                        <p>มีอย่างน้อยหนึ่งตัวทำให้เป็นจริง ⟹ <strong>จริง</strong></p>
+                        
+                        <p><strong>ค. $\forall x (x+1 < x)$:</strong></p>
+                        <p>$x+1 < x$ ⟹ $1 < 0$ ซึ่งเป็นเท็จเสมอ ไม่ว่า $x$ จะเป็นอะไร</p>
+                        <p>ทุกตัวทำให้เป็นเท็จ ⟹ <strong>เท็จ</strong></p>
+                        
+                        <p><strong>ง. $\exists x (x+2 = 4)$:</strong></p>
+                        <p>ถ้า $x+2 = 4$ ⟹ $x = 2$</p>
+                        <p>$x=2$ เป็นสมาชิกใน $U$</p>
+                        <p>มีอย่างน้อยหนึ่งตัวทำให้เป็นจริง ⟹ <strong>จริง</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. จริง, ข. จริง, ค. เท็จ, ง. จริง</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: การหานิเสธของประโยคที่มีตัวบ่งปริมาณ</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหานิเสธของประพจน์ต่อไปนี้:</p>
+                        <p>ก. $\forall x (x \text{ เป็นจำนวนคู่})$</p>
+                        <p>ข. $\exists x (x > 10 \text{ และ } x \text{ เป็นจำนวนเฉพาะ})$</p>
+                        <p>ค. นักเรียนบางคนไม่ใส่ชุดนักเรียน</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้กฎการหานิเสธ: เปลี่ยน $\forall \leftrightarrow \exists$, และใส่นิเสธกับประโยคเปิด</p>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $\forall x (x \text{ เป็นจำนวนคู่})$:</strong></p>
+                        <p>นิเสธ: $\exists x \sim (x \text{ เป็นจำนวนคู่})$</p>
+                        <p>หรือ: $\exists x (x \text{ ไม่เป็นจำนวนคู่})$ หรือ "มี $x$ บางตัวที่ไม่เป็นจำนวนคู่"</p>
+                        
+                        <p><strong>ข. $\exists x (x > 10 \text{ และ } x \text{ เป็นจำนวนเฉพาะ})$:</strong></p>
+                        <p>นิเสธ: $\forall x \sim (x > 10 \text{ และ } x \text{ เป็นจำนวนเฉพาะ})$</p>
+                        <p>หรือ: $\forall x (\sim(x > 10) \text{ หรือ } \sim(x \text{ เป็นจำนวนเฉพาะ}))$ (ใช้กฎของเดอมอร์แกน)</p>
+                        <p>หรือ: $\forall x (x \leq 10 \text{ หรือ } x \text{ ไม่เป็นจำนวนเฉพาะ})$</p>
+                        
+                        <p><strong>ค. นักเรียนบางคนไม่ใส่ชุดนักเรียน: ($\exists x (\sim x \text{ ใส่ชุดนักเรียน})$)</strong></p>
+                        <p>นิเสธ: $\forall x \sim (\sim x \text{ ใส่ชุดนักเรียน})$</p>
+                        <p>หรือ: $\forall x (x \text{ ใส่ชุดนักเรียน})$ หรือ "นักเรียนทุกคนใส่ชุดนักเรียน"</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: การพิจารณาค่าความจริงของนิเสธ</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดเอกภพสัมพัทธ์ $U = \{-2,-1,0,1,2\}$ จงพิจารณาค่าความจริงของประพจน์ $\sim \exists x (x^2 < 0)$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาค่าความจริงของประพจน์ $\exists x (x^2 < 0)$ ก่อน</li>
+                            <li>จากนั้นจึงหาค่าความจริงของนิเสธ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>พิจารณา $\exists x (x^2 < 0)$:</strong></p>
+                        <ul>
+                            <li>$x = -2$ ⟹ $(-2)^2 = 4 \not < 0$ (เท็จ)</li>
+                            <li>$x = -1$ ⟹ $(-1)^2 = 1 \not < 0$ (เท็จ)</li>
+                            <li>$x = 0$ ⟹ $(0)^2 = 0 \not < 0$ (เท็จ)</li>
+                            <li>$x = 1$ ⟹ $(1)^2 = 1 \not < 0$ (เท็จ)</li>
+                            <li>$x = 2$ ⟹ $(2)^2 = 4 \not < 0$ (เท็จ)</li>
+                        </ul>
+                        <p>ไม่มีสมาชิกตัวใดใน $U$ ที่ทำให้ $x^2 < 0$ เป็นจริง</p>
+                        <p>ดังนั้น $\exists x (x^2 < 0)$ มีค่าความจริงเป็น <strong>เท็จ (F)</strong></p>
+                        
+                        <p><strong>จากนั้นหานิเสธ:</strong></p>
+                        <p>$\sim \exists x (x^2 < 0)$ มีค่าความจริงเป็น $\sim F$ ซึ่งคือ <strong>จริง (T)</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> จริง (T)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: การหานิเสธของประพจน์ที่มีตัวเชื่อม</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหานิเสธของประพจน์ "ถ้าฉันอ่านหนังสือ แล้วฉันจะสอบผ่านทุกวิชา"</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แปลงประพจน์เป็นรูปสัญลักษณ์: $P \rightarrow \forall x Q(x)$</li>
+                            <li>หานิเสธของประพจน์ผสมนี้ (จำไว้ว่า $\sim(A \rightarrow B) \equiv A \land \sim B$)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ $P$: ฉันอ่านหนังสือ</p>
+                        <p>ให้ $Q(x)$: $x$ จะสอบผ่าน</p>
+                        <p>ประพจน์คือ $P \rightarrow \forall x Q(x)$</p>
+                        
+                        <p>นิเสธของ $A \rightarrow B$ คือ $A \land \sim B$</p>
+                        <p>ดังนั้น นิเสธของ $P \rightarrow \forall x Q(x)$ คือ $P \land \sim(\forall x Q(x))$</p>
+                        
+                        <p>จากนั้นหานิเสธของ $\forall x Q(x)$ ซึ่งคือ $\exists x \sim Q(x)$</p>
+                        <p>ดังนั้น นิเสธของประพจน์ทั้งหมดคือ $P \land \exists x \sim Q(x)$</p>
+                        
+                        <p>แปลกลับเป็นภาษาไทย: "ฉันอ่านหนังสือ และ มีบางวิชาที่สอบไม่ผ่าน"</p>
+                        
+                        <p><strong>คำตอบ:</strong> "ฉันอ่านหนังสือและมีบางวิชาที่สอบไม่ผ่าน"</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การพิจารณาค่าความจริงบนเอกภพสัมพัทธ์ที่ซับซ้อน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดเอกภพสัมพัทธ์ $U = \{\text{จำนวนเต็มบวกทั้งหมด}\}$ จงพิจารณาค่าความจริงของประพจน์ต่อไปนี้:</p>
+                        <p>ก. $\forall x (\exists y (y > x))$</p>
+                        <p>ข. $\exists x (\forall y (y \geq x))$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ก. $\forall x (\exists y (y > x))$: สำหรับแต่ละ $x$ (ไม่ว่า $x$ จะเป็นอะไร) มี $y$ (บางตัว) ที่ $y > x$ หรือไม่?</li>
+                            <li>ข. $\exists x (\forall y (y \geq x))$: มี $x$ (บางตัว) ที่ทำให้สำหรับทุก $y$, $y \geq x$ หรือไม่? (แปลว่า $x$ เป็นค่าที่น้อยที่สุด)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $\forall x (\exists y (y > x))$:</strong></p>
+                        <p>ลองพิจารณา: ไม่ว่า $x$ จะเป็นจำนวนเต็มบวกอะไรก็ตาม เราสามารถหาจำนวนเต็มบวก $y$ ที่มากกว่า $x$ ได้เสมอ (เช่น $y = x+1$)</p>
+                        <p>ดังนั้น ประพจน์นี้เป็น <strong>จริง</strong></p>
+                        
+                        <p><strong>ข. $\exists x (\forall y (y \geq x))$:</strong></p>
+                        <p>ประพจน์นี้หมายถึง "มีจำนวนเต็มบวก $x$ ตัวหนึ่ง ซึ่งเป็นจำนวนที่น้อยที่สุดในเซตของจำนวนเต็มบวก"</p>
+                        <p>จำนวนเต็มบวกที่น้อยที่สุดคือ $1$</p>
+                        <p>ดังนั้น ถ้าเราเลือก $x=1$ ทุกๆ จำนวนเต็มบวก $y$ จะต้อง $\geq 1$ ซึ่งเป็นจริง</p>
+                        <p>ดังนั้น ประพจน์นี้เป็น <strong>จริง</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. จริง, ข. จริง</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>6.2.5 ตัวอย่างข้อสอบฝึกทำ: ประโยคที่มีตัวบ่งปริมาณ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ประโยคที่มีตัวบ่งปริมาณ" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 1</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \{1,3,5\}$ จงพิจารณาค่าความจริงของประพจน์ $\forall x (x \text{ เป็นจำนวนคี่})$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สำหรับตัวบ่งปริมาณ $\forall$ (สำหรับทุก): ประพจน์จะเป็นจริงก็ต่อเมื่อสมาชิก <strong>ทุกตัว</strong> ในเอกภพสัมพัทธ์ทำให้ประโยคเปิดเป็นจริง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>สำหรับ $x=1$, "1 เป็นจำนวนคี่" (จริง)</li>
+                            <li>สำหรับ $x=3$, "3 เป็นจำนวนคี่" (จริง)</li>
+                            <li>สำหรับ $x=5$, "5 เป็นจำนวนคี่" (จริง)</li>
+                        </ul>
+                        <p>เนื่องจากสมาชิกทุกตัวใน $U$ ทำให้ประโยคเปิดเป็นจริง ดังนั้นประพจน์ $\forall x (x \text{ เป็นจำนวนคี่})$ มีค่าความจริงเป็น <strong>จริง (T)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 2</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \{2,4,6\}$ จงพิจารณาค่าความจริงของประพจน์ $\exists x (x+3 > 8)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>สำหรับตัวบ่งปริมาณ $\exists$ (มีอยู่): ประพจน์จะเป็นจริงก็ต่อเมื่อมีสมาชิก <strong>อย่างน้อยหนึ่งตัว</strong> ในเอกภพสัมพัทธ์ที่ทำให้ประโยคเปิดเป็นจริง</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>สำหรับ $x=2$, $2+3=5 \not > 8$ (เท็จ)</li>
+                            <li>สำหรับ $x=4$, $4+3=7 \not > 8$ (เท็จ)</li>
+                            <li>สำหรับ $x=6$, $6+3=9 > 8$ (จริง)</li>
+                        </ul>
+                        <p>เนื่องจากมี $x=6$ ที่ทำให้ประโยคเปิดเป็นจริง ดังนั้นประพจน์ $\exists x (x+3 > 8)$ มีค่าความจริงเป็น <strong>จริง (T)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 3</h3>
+                    <div class="problem-box">
+                        <p>จงหานิเสธของประพจน์ $\forall x (x \text{ เป็นจำนวนเต็มบวก})$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้กฎการหานิเสธ: นิเสธของ $\forall x P(x)$ คือ $\exists x \sim P(x)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>นิเสธของ $\forall x (x \text{ เป็นจำนวนเต็มบวก})$ คือ $\exists x \sim (x \text{ เป็นจำนวนเต็มบวก})$</p>
+                        <p>สามารถเขียนได้ว่า: $\exists x (x \text{ ไม่เป็นจำนวนเต็มบวก})$</p>
+                        <p>หรือในภาษาไทย: "มี $x$ บางตัวที่ไม่ใช่จำนวนเต็มบวก"</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 4</h3>
+                    <div class="problem-box">
+                        <p>จงหานิเสธของประพจน์ $\exists x (x \leq 5 \text{ หรือ } x \geq 10)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้กฎการหานิเสธ: นิเสธของ $\exists x P(x)$ คือ $\forall x \sim P(x)$</li>
+                            <li>ใช้กฎของเดอมอร์แกนสำหรับนิเสธของ "หรือ": $\sim(A \lor B) \equiv \sim A \land \sim B$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>นิเสธของ $\exists x (x \leq 5 \text{ หรือ } x \geq 10)$ คือ $\forall x \sim (x \leq 5 \text{ หรือ } x \geq 10)$</p>
+                        <p>ใช้กฎของเดอมอร์แกน: $\forall x (\sim(x \leq 5) \text{ และ } \sim(x \geq 10))$</p>
+                        <p>ซึ่งคือ: $\forall x (x > 5 \text{ และ } x < 10)$</p>
+                        <p>หรือในภาษาไทย: "สำหรับทุก $x$, $x$ มากกว่า 5 และ $x$ น้อยกว่า 10" (หมายถึง $5 < x < 10$)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 5</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \{1,2,3\}$</p>
+                        <p>$P(x)$: $x$ เป็นจำนวนคู่</p>
+                        <p>$Q(x)$: $x+1 > 2$</p>
+                        <p>จงพิจารณาค่าความจริงของประพจน์ $\forall x (P(x) \rightarrow Q(x))$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>$\forall x (P(x) \rightarrow Q(x))$ จะเป็นจริงก็ต่อเมื่อ $P(x) \rightarrow Q(x)$ เป็นจริงสำหรับสมาชิกทุกตัวใน $U$</li>
+                            <li>$A \rightarrow B$ จะเป็นเท็จก็ต่อเมื่อ $A$ เป็นจริงและ $B$ เป็นเท็จ</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>สำหรับ $x=1$:</strong> $P(1)$ (1 เป็นจำนวนคู่) คือ F. $Q(1)$ (1+1 > 2 คือ 2 > 2) คือ F.</p>
+                        <p>$P(1) \rightarrow Q(1)$ คือ F → F ซึ่งคือ T.</p>
+                        
+                        <p><strong>สำหรับ $x=2$:</strong> $P(2)$ (2 เป็นจำนวนคู่) คือ T. $Q(2)$ (2+1 > 2 คือ 3 > 2) คือ T.</p>
+                        <p>$P(2) \rightarrow Q(2)$ คือ T → T ซึ่งคือ T.</p>
+                        
+                        <p><strong>สำหรับ $x=3$:</strong> $P(3)$ (3 เป็นจำนวนคู่) คือ F. $Q(3)$ (3+1 > 2 คือ 4 > 2) คือ T.</p>
+                        <p>$P(3) \rightarrow Q(3)$ คือ F → T ซึ่งคือ T.</p>
+                        
+                        <p>เนื่องจาก $P(x) \rightarrow Q(x)$ เป็นจริงสำหรับทุกสมาชิกใน $U$ ดังนั้น $\forall x (P(x) \rightarrow Q(x))$ มีค่าความจริงเป็น <strong>จริง (T)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 6</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \{0,1,2,3\}$</p>
+                        <p>$P(x)$: $x^2 = x$</p>
+                        <p>$Q(x)$: $x$ เป็นจำนวนเฉพาะ</p>
+                        <p>จงพิจารณาค่าความจริงของประพจน์ $\exists x (P(x) \land Q(x))$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>$\exists x (P(x) \land Q(x))$ จะเป็นจริงก็ต่อเมื่อมีสมาชิก <strong>อย่างน้อยหนึ่งตัว</strong> ใน U ที่ทำให้ $P(x) \land Q(x)$ เป็นจริง</li>
+                            <li>$A \land B$ จะเป็นจริงก็ต่อเมื่อ $A$ เป็นจริงและ $B$ เป็นจริง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>สำหรับ $x=0$:</strong> $P(0)$ ($0^2 = 0$) คือ T. $Q(0)$ (0 เป็นจำนวนเฉพาะ) คือ F.</p>
+                        <p>$P(0) \land Q(0)$ คือ T ∧ F ซึ่งคือ F.</p>
+                        
+                        <p><strong>สำหรับ $x=1$:</strong> $P(1)$ ($1^2 = 1$) คือ T. $Q(1)$ (1 เป็นจำนวนเฉพาะ) คือ F.</p>
+                        <p>$P(1) \land Q(1)$ คือ T ∧ F ซึ่งคือ F.</p>
+                        
+                        <p><strong>สำหรับ $x=2$:</strong> $P(2)$ ($2^2 = 2$) คือ F. $Q(2)$ (2 เป็นจำนวนเฉพาะ) คือ T.</p>
+                        <p>$P(2) \land Q(2)$ คือ F ∧ T ซึ่งคือ F.</p>
+                        
+                        <p><strong>สำหรับ $x=3$:</strong> $P(3)$ ($3^2 = 3$) คือ F. $Q(3)$ (3 เป็นจำนวนเฉพาะ) คือ T.</p>
+                        <p>$P(3) \land Q(3)$ คือ F ∧ T ซึ่งคือ F.</p>
+                        
+                        <p>เนื่องจากไม่มีสมาชิกตัวใดใน $U$ ที่ทำให้ $P(x) \land Q(x)$ เป็นจริง ดังนั้น $\exists x (P(x) \land Q(x))$ มีค่าความจริงเป็น <strong>เท็จ (F)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 7</h3>
+                    <div class="problem-box">
+                        <p>จงหานิเสธของประพจน์ $\forall x \exists y (x+y = 0)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <p>ใช้กฎการหานิเสธจากนอกเข้าใน: $\sim(\forall x \exists y P(x,y)) \equiv \exists x \forall y \sim P(x,y)$</p>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>นิเสธของ $\forall x \exists y (x+y = 0)$ คือ $\exists x \sim(\exists y (x+y = 0))$</p>
+                        <p>ซึ่งคือ: $\exists x \forall y \sim(x+y = 0)$</p>
+                        <p>หรือ: $\exists x \forall y (x+y \neq 0)$</p>
+                        <p>ในภาษาไทย: "มี $x$ บางตัวที่สำหรับทุก $y$, $x+y$ ไม่เท่ากับ 0"</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 8</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \mathbb{Z}$ (เซตของจำนวนเต็ม) จงพิจารณาค่าความจริงของประพจน์ $\exists x \forall y (x \cdot y = y)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>$\exists x \forall y (P(x,y))$ จะเป็นจริงถ้ามี $x$ อย่างน้อยหนึ่งตัวที่เมื่อเลือกแล้วทำให้ $\forall y (P(x,y))$ เป็นจริง</li>
+                            <li>$\forall y (P(x,y))$ จะเป็นจริงถ้า $P(x,y)$ เป็นจริงสำหรับทุก $y$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เราต้องการหาว่ามีจำนวนเต็ม $x$ ตัวใดหรือไม่ที่เมื่อคูณกับจำนวนเต็ง $y$ ใดๆ แล้วได้ผลลัพธ์เป็น $y$ เสมอ</p>
+                        <p>ถ้า $x \cdot y = y$</p>
+                        <p>$x \cdot y - y = 0$</p>
+                        <p>$y(x - 1) = 0$</p>
+                        
+                        <p>สมการนี้จะต้องเป็นจริงสำหรับ <strong>ทุก</strong> จำนวนเต็ง $y$</p>
+                        <p>ซึ่งหมายความว่า $x - 1$ ต้องเป็น 0 (เพราะถ้า $y \neq 0$ แล้ว $x - 1$ ต้องเป็น 0)</p>
+                        <p>ดังนั้น $x - 1 = 0$ ⟹ $x = 1$</p>
+                        
+                        <p>ถ้าเราเลือก $x = 1$ แล้ว $1 \cdot y = y$ ซึ่งเป็นจริงสำหรับทุกจำนวนเต็ง $y$</p>
+                        <p>เนื่องจากมี $x = 1$ อยู่ในเอกภพสัมพัทธ์ $\mathbb{Z}$ ที่ทำให้ประพจน์ $\forall y (x \cdot y = y)$ เป็นจริง</p>
+                        
+                        <p>ดังนั้น $\exists x \forall y (x \cdot y = y)$ มีค่าความจริงเป็น <strong>จริง (T)</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 9</h3>
+                    <div class="problem-box">
+                        <p>จงเขียนประโยค "นักเรียนทุกคนในห้องนี้มีคอมพิวเตอร์อย่างน้อยหนึ่งเครื่อง" ให้อยู่ในรูปสัญลักษณ์ โดยกำหนด $U$ คือ เซตของนักเรียนในห้องนี้, $C(x)$: $x$ มีคอมพิวเตอร์</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>"นักเรียนทุกคน" หมายถึง $\forall x$</li>
+                            <li>"มีคอมพิวเตอร์อย่างน้อยหนึ่งเครื่อง" หมายถึง $C(x)$ เป็นจริง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>"นักเรียนทุกคน": $\forall x$</p>
+                        <p>"มีคอมพิวเตอร์อย่างน้อยหนึ่งเครื่อง": $C(x)$</p>
+                        <p>รวมกัน: $\forall x C(x)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\forall x C(x)$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>ข้อที่ 10</h3>
+                    <div class="problem-box">
+                        <p>กำหนดเอกภพสัมพัทธ์ $U = \mathbb{Z}$ (เซตของจำนวนเต็ง) จงพิจารณาค่าความจริงของประพจน์ต่อไปนี้:</p>
+                        <p>ก. $\exists x \forall y (x+y = 0)$</p>
+                        <p>ข. $\forall x \exists y (x+y = 0)$</p>
+                        <p>ค. $\forall x (x^2 \geq x)$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ก. $\exists x \forall y (x+y = 0)$: มี $x$ ที่เมื่อบวกกับ $y$ ใดๆ แล้วได้ 0 เสมอ?</li>
+                            <li>ข. $\forall x \exists y (x+y = 0)$: สำหรับทุก $x$ มี $y$ ที่เมื่อบวกกันแล้วได้ 0?</li>
+                            <li>ค. $\forall x (x^2 \geq x)$: $x^2 \geq x$ สำหรับทุกจำนวนเต็ง $x$ หรือไม่?</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ก. $\exists x \forall y (x+y = 0)$:</strong></p>
+                        <p>ถ้ามี $x$ ตัวหนึ่งที่ทำให้ $x+y = 0$ สำหรับทุก $y$ นั่นหมายถีง $x = -y$ สำหรับทุก $y$</p>
+                        <p>ซึ่งเป็นไปไม่ได้ เพราะ $x$ ต้องเป็นค่าคงที่ แต่ $-y$ เปลี่ยนไปตาม $y$</p>
+                        <p>ดังนั้น ไม่มี $x$ ดังกล่าว</p>
+                        <p>⟹ <strong>เท็จ (F)</strong></p>
+                        
+                        <p><strong>ข. $\forall x \exists y (x+y = 0)$:</strong></p>
+                        <p>สำหรับทุก $x$ เราสามารถหา $y$ ที่ทำให้ $x+y = 0$ ได้เสมอ (คือ $y = -x$)</p>
+                        <p>และถ้า $x$ เป็นจำนวนเต็ง, $y = -x$ ก็จะเป็นจำนวนเต็งด้วย</p>
+                        <p>⟹ <strong>จริง (T)</strong></p>
+                        
+                        <p><strong>ค. $\forall x (x^2 \geq x)$:</strong></p>
+                        <ul>
+                            <li>ถ้า $x = 1$, $1^2 \geq 1$ (จริง)</li>
+                            <li>ถ้า $x = 0$, $0^2 \geq 0$ (จริง)</li>
+                            <li>ถ้า $x = -1$, $(-1)^2 = 1 \geq -1$ (จริง)</li>
+                            <li>สำหรับจำนวนเต็งลบอื่นๆ เช่น $x = -2$, $(-2)^2 = 4 \geq -2$ (จริง)</li>
+                        </ul>
+                        <p>ดังนั้น $x^2 \geq x$ เป็นจริงสำหรับทุกจำนวนเต็ง</p>
+                        <p>⟹ <strong>จริง (T)</strong></p>
+                        
+                        <p><strong>คำตอบ:</strong> ก. เท็จ, ข. จริง, ค. จริง</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
