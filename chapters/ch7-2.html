@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 7.2: ความเท่ากันทุกประการและรูปสามเหลี่ยมคล้าย (รวมทฤษฎีบทพีทาโกรัสและบทกลับ) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 7.2: ความเท่ากันทุกประการและรูปสามเหลี่ยมคล้าย (รวมทฤษฎีบทพีทาโกรัสและบทกลับ)</span>
+            </nav>
+            <h1>บทที่ 7.2: ความเท่ากันทุกประการและรูปสามเหลี่ยมคล้าย (รวมทฤษฎีบทพีทาโกรัสและบทกลับ)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับคุณสมบัติของรูปสามเหลี่ยมที่สำคัญอย่าง "ความเท่ากันทุกประการ" และ "ความคล้าย" รวมถึง "ทฤษฎีบทพีทาโกรัส" และบทกลับ ซึ่งเป็นแนวคิดพื้นฐานในเรขาคณิตที่ใช้ในการวิเคราะห์รูปทรงและระยะทางในวิทยาการคอมพิวเตอร์ และมักปรากฏในข้อสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">7.2.1 ความเท่ากันทุกประการของรูปสามเหลี่ยม (Congruence of Triangles)</a></li>
+                    <li><a href="#section-2">7.2.2 รูปสามเหลี่ยมคล้าย (Similarity of Triangles)</a></li>
+                    <li><a href="#section-3">7.2.3 ทฤษฎีบทพีทาโกรัส (Pythagorean Theorem) และบทกลับ</a></li>
+                    <li><a href="#section-4">7.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">7.2.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: ความเท่ากันทุกประการของรูปสามเหลี่ยม -->
+            <section id="section-1" class="content-section">
+                <h2>7.2.1 ความเท่ากันทุกประการของรูปสามเหลี่ยม (Congruence of Triangles)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p>รูปสามเหลี่ยมสองรูปจะ <strong>เท่ากันทุกประการ</strong> ก็ต่อเมื่อสามารถเคลื่อนย้ายรูปหนึ่งไปทับอีกรูปหนึ่งได้สนิทพอดี โดยที่ด้านที่สมนัยกันมีความยาวเท่ากัน และมุมที่สมนัยกันมีขนาดเท่ากัน</p>
+                    <p><strong>สัญลักษณ์:</strong> $\triangle ABC \cong \triangle DEF$ (อ่านว่า "สามเหลี่ยม ABC เท่ากันทุกประการกับ สามเหลี่ยม DEF")</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>เงื่อนไขความเท่ากันทุกประการ (ที่ต้องใช้ในการพิสูจน์)</h3>
+                    
+                    <div class="condition-container">
+                        <div class="condition-item">
+                            <h4>ด้าน-มุม-ด้าน (ด.ม.ด. หรือ SAS: Side-Angle-Side)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปเท่ากันทุกประการ ถ้ามีด้านยาวเท่ากันสองคู่ และมุมในระหว่างด้านคู่นั้นมีขนาดเท่ากัน</p>
+                            <div class="example-box">
+                                <p>ถ้า AB = DE, $\angle B = \angle E$, BC = EF แล้ว $\triangle ABC \cong \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>มุม-ด้าน-มุม (ม.ด.ม. หรือ ASA: Angle-Side-Angle)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปเท่ากันทุกประการ ถ้ามีมุมขนาดเท่ากันสองคู่ และด้านที่อยู่ระหว่างมุมคู่นั้นยาวเท่ากัน</p>
+                            <div class="example-box">
+                                <p>ถ้า $\angle A = \angle D$, AB = DE, $\angle B = \angle E$ แล้ว $\triangle ABC \cong \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>ด้าน-ด้าน-ด้าน (ด.ด.ด. หรือ SSS: Side-Side-Side)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปเท่ากันทุกประการ ถ้ามีด้านยาวเท่ากันสามคู่</p>
+                            <div class="example-box">
+                                <p>ถ้า AB = DE, BC = EF, CA = FD แล้ว $\triangle ABC \cong \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>มุม-มุม-ด้าน (ม.ม.ด. หรือ AAS: Angle-Angle-Side)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปเท่ากันทุกประการ ถ้ามีมุมขนาดเท่ากันสองคู่ และด้านที่อยู่ตรงข้ามมุมใดมุมหนึ่งในคู่นั้นยาวเท่ากัน (ด้านไม่ได้อยู่ระหว่างมุม)</p>
+                            <div class="example-box">
+                                <p>ถ้า $\angle A = \angle D$, $\angle B = \angle E$, CA = FD แล้ว $\triangle ABC \cong \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>ฉาก-ด้าน-ด้าน (ฉ.ด.ด. หรือ HL: Hypotenuse-Leg) สำหรับสามเหลี่ยมมุมฉาก</h4>
+                            <p>รูปสามเหลี่ยมมุมฉากสองรูปเท่ากันทุกประการ ถ้ามีด้านตรงข้ามมุมฉากยาวเท่ากัน และมีด้านประกอบมุมฉากอีกหนึ่งด้านยาวเท่ากัน</p>
+                            <div class="example-box">
+                                <p>ในสามเหลี่ยมมุมฉากที่มุมฉากที่ C และ F: ถ้า AB = DE และ AC = DF แล้ว $\triangle ABC \cong \triangle DEF$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: รูปสามเหลี่ยมคล้าย -->
+            <section id="section-2" class="content-section">
+                <h2>7.2.2 รูปสามเหลี่ยมคล้าย (Similarity of Triangles)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p>รูปสามเหลี่ยมสองรูปจะ <strong>คล้ายกัน</strong> ก็ต่อเมื่อมีรูปร่างเหมือนกัน (อาจมีขนาดต่างกัน) โดยที่มุมที่สมนัยกันมีขนาดเท่ากัน และอัตราส่วนของความยาวด้านที่สมนัยกันเท่ากัน</p>
+                    <p><strong>สัญลักษณ์:</strong> $\triangle ABC \sim \triangle DEF$ (อ่านว่า "สามเหลี่ยม ABC คล้ายกับ สามเหลี่ยม DEF")</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>เงื่อนไขความคล้ายกัน (ที่ต้องใช้ในการพิสูจน์)</h3>
+                    
+                    <div class="condition-container">
+                        <div class="condition-item">
+                            <h4>มุม-มุม-มุม (ม.ม.ม. หรือ AAA/AA: Angle-Angle-Angle/Angle-Angle)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปคล้ายกัน ถ้ามีมุมขนาดเท่ากันสามคู่ (หรือสองคู่ เพราะมุมที่สามจะเท่ากันโดยอัตโนมัติ)</p>
+                            <div class="example-box">
+                                <p>ถ้า $\angle A = \angle D$, $\angle B = \angle E$, $\angle C = \angle F$ แล้ว $\triangle ABC \sim \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>ด้าน-ด้าน-ด้าน (ด.ด.ด. หรือ SSS ratio)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปคล้ายกัน ถ้าอัตราส่วนของความยาวด้านที่สมนัยกันทุกคู่เท่ากัน</p>
+                            <div class="example-box">
+                                <p>ถ้า $\frac{AB}{DE} = \frac{BC}{EF} = \frac{CA}{FD}$ แล้ว $\triangle ABC \sim \triangle DEF$</p>
+                            </div>
+                        </div>
+
+                        <div class="condition-item">
+                            <h4>ด้าน-มุม-ด้าน (ด.ม.ด. หรือ SAS ratio)</h4>
+                            <p>รูปสามเหลี่ยมสองรูปคล้ายกัน ถ้ามีมุมขนาดเท่ากันหนึ่งคู่ และอัตราส่วนของความยาวด้านที่ประกอบมุมนั้นเท่ากัน</p>
+                            <div class="example-box">
+                                <p>ถ้า $\angle B = \angle E$ และ $\frac{AB}{DE} = \frac{BC}{EF}$ แล้ว $\triangle ABC \sim \triangle DEF$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>คุณสมบัติของรูปสามเหลี่ยมคล้าย</h3>
+                    
+                    <div class="properties-container">
+                        <div class="property-item">
+                            <h4>อัตราส่วนด้าน</h4>
+                            <p>อัตราส่วนของความยาวด้านที่สมนัยกันเท่ากันทุกคู่</p>
+                        </div>
+
+                        <div class="property-item">
+                            <h4>อัตราส่วนเส้นรอบรูป</h4>
+                            <p>อัตราส่วนของเส้นรอบรูปเท่ากับอัตราส่วนของความยาวด้าน</p>
+                        </div>
+
+                        <div class="property-item">
+                            <h4>อัตราส่วนพื้นที่</h4>
+                            <p>อัตราส่วนของพื้นที่เท่ากับกำลังสองของอัตราส่วนของความยาวด้าน</p>
+                            <p>ถ้า $\triangle ABC \sim \triangle DEF$ และอัตราส่วนด้านเป็น $k$, แล้ว $\frac{\text{Area}(\triangle DEF)}{\text{Area}(\triangle ABC)} = k^2$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ทฤษฎีบทพีทาโกรัสและบทกลับ -->
+            <section id="section-3" class="content-section">
+                <h2>7.2.3 ทฤษฎีบทพีทาโกรัส (Pythagorean Theorem) และบทกลับ</h2>
+                
+                <div class="warning-box">
+                    <p><strong>หมายเหตุ:</strong> ทฤษฎีบทพีทาโกรัสใช้กับ <strong>สามเหลี่ยมมุมฉาก</strong> เท่านั้น</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ทฤษฎีบทพีทาโกรัส</h3>
+                    
+                    <div class="theorem-box">
+                        <h4>ทฤษฎีบท</h4>
+                        <p>ในรูปสามเหลี่ยมมุมฉากใดๆ กำลังสองของความยาวด้านตรงข้ามมุมฉาก (ด้านยาวที่สุด) จะเท่ากับผลบวกของกำลังสองของความยาวด้านประกอบมุมฉากสองด้าน</p>
+                        
+                        <div class="formula-box">
+                            <p><strong>สูตร:</strong> $c^2 = a^2 + b^2$</p>
+                            <p>เมื่อ $c$ คือความยาวด้านตรงข้ามมุมฉาก, $a$ และ $b$ คือความยาวด้านประกอบมุมฉาก</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>บทกลับของทฤษฎีบทพีทาโกรัส (Converse of Pythagorean Theorem)</h3>
+                    
+                    <div class="theorem-box">
+                        <h4>บทกลับ</h4>
+                        <p>ถ้ารูปสามเหลี่ยมรูปหนึ่งมีด้านทั้งสามยาว $a, b, c$ หน่วย และความสัมพันธ์ $c^2 = a^2 + b^2$ เป็นจริง แสดงว่าสามเหลี่ยมรูปนั้นเป็น <strong>สามเหลี่ยมมุมฉาก</strong> โดยที่มุมฉากจะอยู่ตรงข้ามกับด้านที่ยาว $c$ หน่วย</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>7.2.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: การใช้ทฤษฎีบทพีทาโกรัส</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมมุมฉากรูปหนึ่งมีด้านประกอบมุมฉากยาว 6 หน่วย และ 8 หน่วย จงหาความยาวของด้านตรงข้ามมุมฉาก</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุว่าด้านใดคือ $a, b$ และด้านใดคือ $c$</li>
+                            <li>ใช้สูตร $c^2 = a^2 + b^2$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ด้านประกอบมุมฉากคือ $a = 6$ และ $b = 8$</p>
+                        <p>ให้ด้านตรงข้ามมุมฉากคือ $c$</p>
+                        <p>จากทฤษฎีบทพีทาโกรัส:</p>
+                        <p>$c^2 = a^2 + b^2$</p>
+                        <p>$c^2 = 6^2 + 8^2$</p>
+                        <p>$c^2 = 36 + 64$</p>
+                        <p>$c^2 = 100$</p>
+                        <p>$c = \sqrt{100}$</p>
+                        <p>$c = 10$ (ความยาวเป็นบวก)</p>
+                        
+                        <p><strong>คำตอบ:</strong> 10 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: การใช้บทกลับของทฤษฎีบทพีทาโกรัส</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมรูปหนึ่งมีด้านยาว 5, 12, และ 13 หน่วย จงพิจารณาว่าเป็นสามเหลี่ยมมุมฉากหรือไม่?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุด้านที่ยาวที่สุด (ซึ่งจะเป็น $c$)</li>
+                            <li>ตรวจสอบว่า $c^2 = a^2 + b^2$ เป็นจริงหรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ด้านที่ยาวที่สุดคือ 13 ดังนั้น $c = 13$</p>
+                        <p>ด้านประกอบคือ $a = 5$ และ $b = 12$</p>
+                        <p>ตรวจสอบว่า $c^2 = a^2 + b^2$</p>
+                        <p>$13^2 = 5^2 + 12^2$</p>
+                        <p>$169 = 25 + 144$</p>
+                        <p>$169 = 169$</p>
+                        <p>เนื่องจากความสัมพันธ์เป็นจริง ดังนั้น สามเหลี่ยมรูปนี้ เป็นสามเหลี่ยมมุมฉาก</p>
+                        
+                        <p><strong>คำตอบ:</strong> เป็นสามเหลี่ยมมุมฉาก</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: ความเท่ากันทุกประการ (กรณี ด.ม.ด.)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle ABC$ และ $\triangle DEF$</p>
+                        <p>โดยที่ AB = DE = 5 ซม.</p>
+                        <p>$\angle B = \angle E = 60°$</p>
+                        <p>BC = EF = 7 ซม.</p>
+                        <p>จงพิจารณาว่า $\triangle ABC \cong \triangle DEF$ หรือไม่? ถ้าเท่ากันโดยเงื่อนไขใด?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบว่าเงื่อนไข (ด.ม.ด., ม.ด.ม., ด.ด.ด. ฯลฯ) ใดที่สอดคล้อง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>ด้าน AB = DE (ด)</li>
+                            <li>มุม $\angle B = \angle E$ (ม)</li>
+                            <li>ด้าน BC = EF (ด)</li>
+                        </ul>
+                        <p>โดยที่มุม B และ E เป็นมุมที่อยู่ระหว่างด้านที่เท่ากัน</p>
+                        <p>ดังนั้น $\triangle ABC \cong \triangle DEF$ โดยเงื่อนไข ด้าน-มุม-ด้าน (ด.ม.ด.)</p>
+                        
+                        <p><strong>คำตอบ:</strong> เท่ากันทุกประการ โดยเงื่อนไข ด้าน-มุม-ด้าน (ด.ม.ด.)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: รูปสามเหลี่ยมคล้าย (กรณี ม.ม.)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle PQR$ มี $\angle P = 40°$, $\angle Q = 80°$ และ $\triangle XYZ$ มี $\angle X = 40°$, $\angle Z = 60°$ จงพิจารณาว่า $\triangle PQR \sim \triangle XYZ$ หรือไม่?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หามุมที่เหลือของสามเหลี่ยมแต่ละรูป</li>
+                            <li>ตรวจสอบว่ามีมุมที่เท่ากันสองคู่หรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>สำหรับ $\triangle PQR$:</strong></p>
+                        <p>$\angle R = 180° - \angle P - \angle Q = 180° - 40° - 80° = 60°$</p>
+
+                        <p><strong>สำหรับ $\triangle XYZ$:</strong></p>
+                        <p>$\angle Y = 180° - \angle X - \angle Z = 180° - 40° - 60° = 80°$</p>
+
+                        <p><strong>เปรียบเทียบมุม:</strong></p>
+                        <ul>
+                            <li>$\angle P = \angle X = 40°$</li>
+                            <li>$\angle Q = \angle Y = 80°$</li>
+                            <li>$\angle R = \angle Z = 60°$</li>
+                        </ul>
+                        <p>เนื่องจากมุมที่สมนัยกันทุกคู่มีขนาดเท่ากัน (หรือมีมุมเท่ากันอย่างน้อย 2 คู่)</p>
+                        <p>ดังนั้น $\triangle PQR \sim \triangle XYZ$ โดยเงื่อนไข มุม-มุม-มุม (ม.ม.ม.)</p>
+                        
+                        <p><strong>คำตอบ:</strong> คล้ายกัน โดยเงื่อนไข มุม-มุม-มุม (ม.ม.ม.)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การประยุกต์ใช้สามเหลี่ยมคล้ายกับอัตราส่วนด้าน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมมุมฉาก $\triangle ABC$ มีมุม C เป็นมุมฉาก และ $\triangle DEF$ เป็นรูปสามเหลี่ยมมุมฉากที่มีมุม F เป็นมุมฉาก</p>
+                        <p>ถ้า $\angle A = \angle D = 30°$, BC = 4 หน่วย และ EF = 8 หน่วย จงหาความยาวของ AC และ DF</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>พิจารณาความคล้ายของสามเหลี่ยม</li>
+                            <li>ใช้คุณสมบัติของอัตราส่วนด้านที่สมนัยกัน</li>
+                            <li>ใช้ความรู้ตรีโกณมิติพื้นฐาน หรืออัตราส่วนด้านของสามเหลี่ยมมุมฉากพิเศษ (30-60-90)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เนื่องจาก $\triangle ABC$ และ $\triangle DEF$ เป็นสามเหลี่ยมมุมฉาก และมีมุมเท่ากัน 1 มุม ($\angle A = \angle D = 30°$)</p>
+                        <p>ดังนั้น $\triangle ABC \sim \triangle DEF$ (โดย ม.ม. เพราะมุมที่สามก็จะต้องเท่ากัน: $180 - 90 - 30 = 60°$)</p>
+
+                        <p><strong>หาความยาว AC:</strong></p>
+                        <p>ใน $\triangle ABC$ (มุมฉากที่ C): ด้านตรงข้ามมุม A คือ BC = 4</p>
+                        <p>$\tan A = \frac{\text{ข้าม}}{\text{ชิด}} = \frac{BC}{AC}$</p>
+                        <p>$\tan 30° = \frac{4}{AC}$</p>
+                        <p>$\frac{1}{\sqrt{3}} = \frac{4}{AC}$</p>
+                        <p>$AC = 4\sqrt{3}$ หน่วย</p>
+
+                        <p><strong>หาความยาว DF:</strong></p>
+                        <p>เรารู้ว่า $\triangle ABC \sim \triangle DEF$</p>
+                        <p>อัตราส่วนด้านที่สมนัยกัน: $\frac{BC}{EF} = \frac{AC}{DF} = \frac{AB}{DE}$</p>
+                        <p>จากข้อมูลที่ให้: $\frac{BC}{EF} = \frac{4}{8} = \frac{1}{2}$</p>
+                        <p>ดังนั้น อัตราส่วนความคล้ายคือ $\frac{1}{2}$</p>
+                        <p>$\frac{AC}{DF} = \frac{1}{2}$</p>
+                        <p>$\frac{4\sqrt{3}}{DF} = \frac{1}{2}$</p>
+                        <p>$DF = 2 \cdot 4\sqrt{3} = 8\sqrt{3}$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> $AC = 4\sqrt{3}$ หน่วย, $DF = 8\sqrt{3}$ หน่วย</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>7.2.5 ตัวอย่างข้อสอบฝึกทำ: ความเท่ากันทุกประการและรูปสามเหลี่ยมคล้าย</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ความเท่ากันทุกประการและรูปสามเหลี่ยมคล้าย" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การใช้ทฤษฎีบทพีทาโกรัส (หาด้านตรงข้ามมุมฉาก)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมมุมฉากรูปหนึ่งมีด้านประกอบมุมฉากยาว 9 หน่วย และ 12 หน่วย จงหาความยาวของด้านตรงข้ามมุมฉาก</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรทฤษฎีบทพีทาโกรัส: $c^2 = a^2 + b^2$ เมื่อ $c$ คือด้านตรงข้ามมุมฉาก, $a, b$ คือด้านประกอบมุมฉาก</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ด้านประกอบมุมฉากคือ $a = 9$ และ $b = 12$</p>
+                        <p>ให้ด้านตรงข้ามมุมฉากคือ $c$</p>
+                        <p>จากทฤษฎีบทพีทาโกรัส:</p>
+                        <p>$c^2 = a^2 + b^2$</p>
+                        <p>$c^2 = 9^2 + 12^2$</p>
+                        <p>$c^2 = 81 + 144$</p>
+                        <p>$c^2 = 225$</p>
+                        <p>$c = \sqrt{225}$</p>
+                        <p>$c = 15$ หน่วย (ความยาวต้องเป็นบวก)</p>
+                        
+                        <p><strong>คำตอบ:</strong> 15 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การใช้ทฤษฎีบทพีทาโกรัส (หาด้านประกอบมุมฉาก)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมมุมฉากรูปหนึ่งมีด้านตรงข้ามมุมฉากยาว 17 หน่วย และมีด้านประกอบมุมฉากด้านหนึ่งยาว 8 หน่วย จงหาความยาวของด้านประกอบมุมฉากอีกด้านหนึ่ง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรทฤษฎีบทพีทาโกรัส: $c^2 = a^2 + b^2$</li>
+                            <li>จัดรูปสมการเพื่อหาด้านที่ต้องการ</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ด้านตรงข้ามมุมฉากคือ $c = 17$</p>
+                        <p>ให้ด้านประกอบมุมฉากด้านหนึ่งคือ $a = 8$</p>
+                        <p>ให้ด้านประกอบมุมฉากอีกด้านคือ $b$</p>
+                        <p>จากทฤษฎีบทพีทาโกรัส:</p>
+                        <p>$c^2 = a^2 + b^2$</p>
+                        <p>$17^2 = 8^2 + b^2$</p>
+                        <p>$289 = 64 + b^2$</p>
+                        <p>$b^2 = 289 - 64$</p>
+                        <p>$b^2 = 225$</p>
+                        <p>$b = \sqrt{225}$</p>
+                        <p>$b = 15$ หน่วย (ความยาวต้องเป็นบวก)</p>
+                        
+                        <p><strong>คำตอบ:</strong> 15 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การใช้บทกลับของทฤษฎีบทพีทาโกรัส</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมรูปหนึ่งมีด้านยาว 6, 8, และ 10 หน่วย จงพิจารณาว่าเป็นสามเหลี่ยมมุมฉากหรือไม่?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุด้านที่ยาวที่สุด (ซึ่งจะเป็น $c$)</li>
+                            <li>ตรวจสอบว่า $c^2 = a^2 + b^2$ เป็นจริงหรือไม่</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ด้านที่ยาวที่สุดคือ 10 ดังนั้น $c = 10$</p>
+                        <p>ด้านประกอบคือ $a = 6$ และ $b = 8$</p>
+                        <p>ตรวจสอบว่า $c^2 = a^2 + b^2$:</p>
+                        <p>$10^2 = 6^2 + 8^2$</p>
+                        <p>$100 = 36 + 64$</p>
+                        <p>$100 = 100$</p>
+                        <p>เนื่องจากความสัมพันธ์เป็นจริง ดังนั้น สามเหลี่ยมรูปนี้ เป็นสามเหลี่ยมมุมฉาก</p>
+                        
+                        <p><strong>คำตอบ:</strong> เป็นสามเหลี่ยมมุมฉาก</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: ความเท่ากันทุกประการ (ระบุเงื่อนไข)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle ABC$ และ $\triangle XYZ$ โดยที่ AB = XY, BC = YZ, และ CA = ZX จงพิจารณาว่า $\triangle ABC \cong \triangle XYZ$ หรือไม่? ถ้าเท่ากันโดยเงื่อนไขใด?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบว่าเงื่อนไข (ด.ม.ด., ม.ด.ม., ด.ด.ด. ฯลฯ) ใดที่สอดคล้องกับข้อมูลด้านที่เท่ากัน 3 คู่</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>ด้าน AB = XY (ด)</li>
+                            <li>ด้าน BC = YZ (ด)</li>
+                            <li>ด้าน CA = ZX (ด)</li>
+                        </ul>
+                        <p>เนื่องจากมีด้านยาวเท่ากันสามคู่</p>
+                        <p>ดังนั้น $\triangle ABC \cong \triangle XYZ$ โดยเงื่อนไข ด้าน-ด้าน-ด้าน (ด.ด.ด.)</p>
+                        
+                        <p><strong>คำตอบ:</strong> เท่ากันทุกประการ โดยเงื่อนไข ด้าน-ด้าน-ด้าน (ด.ด.ด.)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: ความเท่ากันทุกประการ (หามุมที่เท่ากัน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle DEF \cong \triangle GHI$ โดยเงื่อนไข ม.ด.ม. และ $\angle D = 40°$, EF = 6 ซม., $\angle F = 70°$ จงหามุม $\angle H$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เมื่อสามเหลี่ยมเท่ากันทุกประการ ด้านและมุมที่สมนัยกันจะเท่ากัน</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เนื่องจาก $\triangle DEF \cong \triangle GHI$ โดยเงื่อนไข ม.ด.ม.</p>
+                        <p>มุม $\angle D$ สมนัยกับ $\angle G$ ดังนั้น $\angle G = 40°$</p>
+                        <p>มุม $\angle F$ สมนัยกับ $\angle I$ ดังนั้น $\angle I = 70°$</p>
+                        <p>มุม $\angle E$ สมนัยกับ $\angle H$</p>
+                        <p>ใน $\triangle DEF$, $\angle E = 180° - 40° - 70° = 70°$</p>
+                        <p>ดังนั้น $\angle H = 70°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\angle H = 70°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: รูปสามเหลี่ยมคล้าย (กรณี มุม-มุม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle ABC$ มี $\angle A = 50°$, $\angle B = 70°$ และ $\triangle PQR$ มี $\angle P = 50°$, $\angle R = 60°$ จงพิจารณาว่า $\triangle ABC \sim \triangle PQR$ หรือไม่?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หามุมที่เหลือของสามเหลี่ยมแต่ละรูป</li>
+                            <li>ตรวจสอบว่ามีมุมที่เท่ากันสองคู่หรือไม่</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>สำหรับ $\triangle ABC$:</strong></p>
+                        <p>$\angle C = 180° - \angle A - \angle B = 180° - 50° - 70° = 60°$</p>
+
+                        <p><strong>สำหรับ $\triangle PQR$:</strong></p>
+                        <p>$\angle Q = 180° - \angle P - \angle R = 180° - 50° - 60° = 70°$</p>
+
+                        <p><strong>เปรียบเทียบมุม:</strong></p>
+                        <ul>
+                            <li>$\angle A = \angle P = 50°$</li>
+                            <li>$\angle B = \angle Q = 70°$</li>
+                            <li>$\angle C = \angle R = 60°$</li>
+                        </ul>
+                        <p>เนื่องจากมุมที่สมนัยกันทุกคู่มีขนาดเท่ากัน (หรือมีมุมเท่ากันอย่างน้อย 2 คู่)</p>
+                        <p>ดังนั้น $\triangle ABC \sim \triangle PQR$ โดยเงื่อนไข มุม-มุม (ม.ม.)</p>
+                        
+                        <p><strong>คำตอบ:</strong> คล้ายกัน โดยเงื่อนไข มุม-มุม (ม.ม.)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: รูปสามเหลี่ยมคล้าย (อัตราส่วนด้าน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ $\triangle XYZ$ มีด้านยาว 6, 8, 10 หน่วย และ $\triangle RST$ มีด้านยาว 9, 12, 15 หน่วย จงพิจารณาว่า $\triangle XYZ \sim \triangle RST$ หรือไม่?</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบอัตราส่วนของด้านที่สมนัยกัน (ด้านที่สั้นที่สุดกับสั้นที่สุด, กลางกับกลาง, ยาวที่สุดกับยาวที่สุด) ว่าเท่ากันหรือไม่</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เรียงด้านของแต่ละสามเหลี่ยมจากน้อยไปมาก:</p>
+                        <ul>
+                            <li>$\triangle XYZ$: 6, 8, 10</li>
+                            <li>$\triangle RST$: 9, 12, 15</li>
+                        </ul>
+                        <p>หาอัตราส่วนของด้านที่สมนัยกัน:</p>
+                        <ul>
+                            <li>$\frac{6}{9} = \frac{2}{3}$</li>
+                            <li>$\frac{8}{12} = \frac{2}{3}$</li>
+                            <li>$\frac{10}{15} = \frac{2}{3}$</li>
+                        </ul>
+                        <p>เนื่องจากอัตราส่วนของความยาวด้านที่สมนัยกันทุกคู่เท่ากัน</p>
+                        <p>ดังนั้น $\triangle XYZ \sim \triangle RST$ โดยเงื่อนไข ด้าน-ด้าน-ด้าน (ด.ด.ด.)</p>
+                        
+                        <p><strong>คำตอบ:</strong> คล้ายกัน โดยเงื่อนไข ด้าน-ด้าน-ด้าน (ด.ด.ด.)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การประยุกต์ใช้สามเหลี่ยมคล้าย (หาความยาวด้าน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยม $\triangle ABC$ มี DE ขนานกับ BC โดยที่ D อยู่บน AB และ E อยู่บน AC</p>
+                        <p>ถ้า AD = 3 ซม., DB = 2 ซม., AE = 4 ซม. จงหาความยาวของ EC และ BC ถ้า DE = 5 ซม.</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เมื่อมีเส้นขนานในสามเหลี่ยม แสดงว่าสามเหลี่ยมเล็ก ($\triangle ADE$) คล้ายกับสามเหลี่ยมใหญ่ ($\triangle ABC$) โดยเงื่อนไข ม.ม.</li>
+                            <li>หาอัตราส่วนของด้านที่สมนัยกัน</li>
+                            <li>ใช้ความสัมพันธ์ของอัตราส่วนเพื่อหาด้านที่ต้องการ</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เนื่องจาก DE∥BC, จะได้ $\triangle ADE \sim \triangle ABC$ (ม.ม. เพราะ $\angle D = \angle B$, $\angle E = \angle C$)</p>
+                        <p>AB = AD + DB = 3 + 2 = 5 ซม.</p>
+
+                        <p><strong>หา EC:</strong></p>
+                        <p>จากความคล้าย, อัตราส่วนของด้านที่สมนัยกันคือ $\frac{AD}{AB} = \frac{AE}{AC} = \frac{DE}{BC}$</p>
+                        <p>เราทราบ $\frac{AD}{AB} = \frac{3}{5}$</p>
+                        <p>ดังนั้น $\frac{AE}{AC} = \frac{3}{5}$</p>
+                        <p>$\frac{4}{AC} = \frac{3}{5}$</p>
+                        <p>$3 \cdot AC = 4 \cdot 5 \Rightarrow AC = \frac{20}{3}$ ซม.</p>
+                        <p>EC = AC - AE = $\frac{20}{3} - 4 = \frac{20}{3} - \frac{12}{3} = \frac{8}{3}$ ซม.</p>
+
+                        <p><strong>หา BC:</strong></p>
+                        <p>จากอัตราส่วนเดิม: $\frac{DE}{BC} = \frac{AD}{AB}$</p>
+                        <p>$\frac{5}{BC} = \frac{3}{5}$</p>
+                        <p>$3 \cdot BC = 5 \cdot 5 \Rightarrow BC = \frac{25}{3}$ ซม.</p>
+                        
+                        <p><strong>คำตอบ:</strong> EC = $\frac{8}{3}$ ซม., BC = $\frac{25}{3}$ ซม.</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: อัตราส่วนพื้นที่ของสามเหลี่ยมคล้าย</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> $\triangle PQR \sim \triangle STU$ และอัตราส่วนของความยาวด้าน PQ:ST = 3:2</p>
+                        <p>ถ้าพื้นที่ของ $\triangle PQR$ เท่ากับ 27 ตารางหน่วย จงหาพื้นที่ของ $\triangle STU$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>อัตราส่วนของพื้นที่ของสามเหลี่ยมคล้ายเท่ากับกำลังสองของอัตราส่วนของความยาวด้านที่สมนัยกัน</li>
+                            <li>$\frac{\text{Area}(\triangle STU)}{\text{Area}(\triangle PQR)} = \left(\frac{ST}{PQ}\right)^2$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>อัตราส่วนความยาวด้าน: $\frac{ST}{PQ} = \frac{2}{3}$</p>
+                        <p>อัตราส่วนพื้นที่: $\frac{\text{Area}(\triangle STU)}{\text{Area}(\triangle PQR)} = \left(\frac{2}{3}\right)^2 = \frac{4}{9}$</p>
+                        <p>เรารู้พื้นที่ของ $\triangle PQR = 27$</p>
+                        <p>$\frac{\text{Area}(\triangle STU)}{27} = \frac{4}{9}$</p>
+                        <p>$9 \cdot \text{Area}(\triangle STU) = 27 \cdot 4$</p>
+                        <p>$\text{Area}(\triangle STU) = \frac{27 \cdot 4}{9}$</p>
+                        <p>$\text{Area}(\triangle STU) = 3 \cdot 4 = 12$ ตารางหน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 12 ตารางหน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: โจทย์ประยุกต์ (พีทาโกรัสและพื้นที่)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสามเหลี่ยมมุมฉากมีพื้นที่ 30 ตารางหน่วย มีด้านประกอบมุมฉากด้านหนึ่งยาว 5 หน่วย จงหาความยาวรอบรูปของสามเหลี่ยมนี้</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรพื้นที่เพื่อหาความยาวของด้านประกอบมุมฉากอีกด้านหนึ่ง</li>
+                            <li>ใช้ทฤษฎีบทพีทาโกรัสเพื่อหาความยาวด้านตรงข้ามมุมฉาก</li>
+                            <li>นำความยาวทั้งสามด้านมารวมกันเพื่อหาความยาวรอบรูป</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ด้านประกอบมุมฉากด้านหนึ่งเป็น $a = 5$ หน่วย</p>
+                        <p>ให้ด้านประกอบมุมฉากอีกด้านหนึ่งเป็น $b$ หน่วย</p>
+                        <p>พื้นที่สามเหลี่ยมมุมฉาก = $\frac{1}{2} \times a \times b$</p>
+                        <p>$30 = \frac{1}{2} \times 5 \times b$</p>
+                        <p>$60 = 5b$</p>
+                        <p>$b = 12$ หน่วย</p>
+
+                        <p>ตอนนี้เราทราบด้านประกอบมุมฉากคือ 5 และ 12 หน่วย</p>
+                        <p>หาด้านตรงข้ามมุมฉาก $c$ โดยใช้ทฤษฎีบทพีทาโกรัส:</p>
+                        <p>$c^2 = a^2 + b^2$</p>
+                        <p>$c^2 = 5^2 + 12^2$</p>
+                        <p>$c^2 = 25 + 144$</p>
+                        <p>$c^2 = 169$</p>
+                        <p>$c = \sqrt{169} = 13$ หน่วย</p>
+
+                        <p>ความยาวรอบรูปของสามเหลี่ยม = $a + b + c$</p>
+                        <p>= $5 + 12 + 13$</p>
+                        <p>= $30$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 30 หน่วย</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
