@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 7.3: วงกลม (คอร์ด, เส้นสัมผัส, ทฤษฎีบทเกี่ยวกับวงกลม) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 7.3: วงกลม (คอร์ด, เส้นสัมผัส, ทฤษฎีบทเกี่ยวกับวงกลม)</span>
+            </nav>
+            <h1>บทที่ 7.3: วงกลม (คอร์ด, เส้นสัมผัส, ทฤษฎีบทเกี่ยวกับวงกลม)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับคุณสมบัติและทฤษฎีบทสำคัญของ "วงกลม" ซึ่งเป็นรูปทรงเรขาคณิตพื้นฐานที่มีบทบาทอย่างมากในคณิตศาสตร์ วิทยาศาสตร์ และวิทยาการคอมพิวเตอร์ (เช่น กราฟิกคอมพิวเตอร์, การคำนวณระยะทาง) การทำความเข้าใจส่วนประกอบและทฤษฎีบทเกี่ยวกับวงกลมจะช่วยในการแก้ปัญหาเชิงเรขาคณิตที่ซับซ้อนขึ้น และมักปรากฏในข้อสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">7.3.1 วงกลมและส่วนประกอบ (Circle and its Components)</a></li>
+                    <li><a href="#section-2">7.3.2 คอร์ด (Chord)</a></li>
+                    <li><a href="#section-3">7.3.3 เส้นสัมผัสวงกลม (Tangent to a Circle)</a></li>
+                    <li><a href="#section-4">7.3.4 มุมในวงกลม (Angles in a Circle)</a></li>
+                    <li><a href="#section-5">7.3.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-6">7.3.6 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: วงกลมและส่วนประกอบ -->
+            <section id="section-1" class="content-section">
+                <h2>7.3.1 วงกลมและส่วนประกอบ (Circle and its Components)</h2>
+                
+                <div class="definition-box">
+                    <h4>คำนิยาม</h4>
+                    <p><strong>วงกลม (Circle):</strong> คือ เซตของจุดทั้งหมดบนระนาบที่มีระยะห่างจากจุดคงที่จุดหนึ่ง (จุดศูนย์กลาง) เท่ากัน</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ส่วนประกอบของวงกลม</h3>
+                    
+                    <div class="components-container">
+                        <div class="component-item">
+                            <h4>จุดศูนย์กลาง (Center)</h4>
+                            <p>จุดคงที่ที่อยู่กึ่งกลางของวงกลม (นิยมใช้ O)</p>
+                        </div>
+
+                        <div class="component-item">
+                            <h4>รัศมี (Radius)</h4>
+                            <p>ระยะห่างจากจุดศูนย์กลางไปยังจุดใดๆ บนเส้นรอบวง (นิยมใช้ r)</p>
+                        </div>
+
+                        <div class="component-item">
+                            <h4>เส้นผ่านศูนย์กลาง (Diameter)</h4>
+                            <p>เส้นตรงที่ลากผ่านจุดศูนย์กลางและมีปลายทั้งสองอยู่บนเส้นรอบวง</p>
+                            <p>ความยาวของเส้นผ่านศูนย์กลางเป็นสองเท่าของรัศมี $(d = 2r)$</p>
+                        </div>
+
+                        <div class="component-item">
+                            <h4>เส้นรอบวง (Circumference)</h4>
+                            <p>ความยาวรอบวงกลม</p>
+                            <p>สูตร: $C = 2\pi r$ หรือ $C = \pi d$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: คอร์ด -->
+            <section id="section-2" class="content-section">
+                <h2>7.3.2 คอร์ด (Chord)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>คอร์ด (Chord):</strong> คือ ส่วนของเส้นตรงที่เชื่อมจุดสองจุดใดๆ บนเส้นรอบวงของวงกลม</p>
+                    <p><strong>หมายเหตุ:</strong> เส้นผ่านศูนย์กลางถือเป็นคอร์ดที่ยาวที่สุดของวงกลม</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ทฤษฎีบทเกี่ยวกับคอร์ด</h3>
+                    
+                    <div class="theorem-container">
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 1: เส้นตั้งฉากจากจุดศูนย์กลาง</h4>
+                            <p>เส้นตรงที่ลากจากจุดศูนย์กลางมาตั้งฉากกับคอร์ด จะแบ่งครึ่งคอร์ดนั้นและแบ่งครึ่งมุมที่จุดศูนย์กลางที่รองรับคอร์ดนั้น</p>
+                            <div class="note-box">
+                                <p>การใช้งาน: ใช้ในการหาระยะห่างจากจุดศูนย์กลางไปยังคอร์ด หรือหารัศมีเมื่อทราบความยาวคอร์ดและระยะห่าง</p>
+                            </div>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 2: คอร์ดที่มีความยาวเท่ากัน</h4>
+                            <p>ถ้าคอร์ดสองคอร์ดยาวเท่ากัน แล้วคอร์ดทั้งสองจะอยู่ห่างจากจุดศูนย์กลางเท่ากัน และมุมที่จุดศูนย์กลางรองรับคอร์ดนั้นจะเท่ากัน</p>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 3: คอร์ดที่อยู่ห่างจากจุดศูนย์กลางเท่ากัน</h4>
+                            <p>ถ้าคอร์ดสองคอร์ดอยู่ห่างจากจุดศูนย์กลางเท่ากัน แล้วคอร์ดทั้งสองจะยาวเท่ากัน (บทกลับของทฤษฎีบท 2)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: เส้นสัมผัสวงกลม -->
+            <section id="section-3" class="content-section">
+                <h2>7.3.3 เส้นสัมผัสวงกลม (Tangent to a Circle)</h2>
+                
+                <div class="definition-box">
+                    <h4>นิยาม</h4>
+                    <p><strong>เส้นสัมผัส (Tangent Line):</strong> คือ เส้นตรงที่แตะวงกลมเพียงจุดเดียวเท่านั้น</p>
+                    <p><strong>จุดสัมผัส (Point of Tangency):</strong> จุดที่เส้นสัมผัสแตะวงกลม</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ทฤษฎีบทเกี่ยวกับเส้นสัมผัส</h3>
+                    
+                    <div class="theorem-container">
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 1: รัศมีตั้งฉากกับเส้นสัมผัส</h4>
+                            <p>รัศมีที่ลากไปยังจุดสัมผัสจะตั้งฉากกับเส้นสัมผัสที่จุดนั้น</p>
+                            <div class="formula-box">
+                                <p>ถ้า AB เป็นเส้นสัมผัสวงกลมที่จุด T และ O เป็นจุดศูนย์กลาง แล้ว $OT \perp AB$</p>
+                            </div>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 2: เส้นสัมผัสจากจุดภายนอกเท่ากัน</h4>
+                            <p>ส่วนของเส้นสัมผัสที่ลากจากจุดภายนอกวงกลมมายังวงกลมหนึ่งจะยาวเท่ากัน และมุมที่เส้นสัมผัสทั้งสองทำกับเส้นที่ลากจากจุดภายนอกไปยังจุดศูนย์กลางจะเท่ากัน</p>
+                            <div class="formula-box">
+                                <p>ถ้า PA และ PB เป็นเส้นสัมผัสจากจุด P ไปยังวงกลม แล้ว $PA = PB$</p>
+                            </div>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 3: มุมระหว่างคอร์ดและเส้นสัมผัส</h4>
+                            <p>มุมที่เกิดจากคอร์ดและเส้นสัมผัสที่จุดสัมผัส จะมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ดนั้น</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: มุมในวงกลม -->
+            <section id="section-4" class="content-section">
+                <h2>7.3.4 มุมในวงกลม (Angles in a Circle)</h2>
+                
+                <div class="subsection">
+                    <h3>ทฤษฎีบทเกี่ยวกับมุมในวงกลม</h3>
+                    
+                    <div class="theorem-container">
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 1: มุมที่จุดศูนย์กลางและมุมในส่วนโค้ง</h4>
+                            <p>มุมที่จุดศูนย์กลาง (Central Angle) ที่รองรับส่วนโค้งเดียวกัน จะมีขนาดเป็นสองเท่าของมุมในส่วนโค้งของวงกลม (Inscribed Angle) ที่รองรับส่วนโค้งเดียวกัน</p>
+                            <div class="formula-box">
+                                <p>$\text{มุมที่จุดศูนย์กลาง} = 2 \times \text{มุมในส่วนโค้ง}$</p>
+                            </div>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 2: มุมในครึ่งวงกลม</h4>
+                            <p>มุมในครึ่งวงกลมเป็นมุมฉาก $(90°)$ เสมอ</p>
+                            <div class="note-box">
+                                <p>หมายเหตุ: มุมในครึ่งวงกลม คือ มุมที่รองรับเส้นผ่านศูนย์กลาง</p>
+                            </div>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 3: มุมในส่วนโค้งเดียวกัน</h4>
+                            <p>มุมในส่วนโค้งเดียวกัน (มุมที่เส้นรอบวงรองรับส่วนโค้งเดียวกัน) จะมีขนาดเท่ากัน</p>
+                        </div>
+
+                        <div class="theorem-item">
+                            <h4>ทฤษฎีบท 4: รูปสี่เหลี่ยมแนบในวงกลม</h4>
+                            <p>ผลบวกของมุมตรงข้ามของรูปสี่เหลี่ยมที่แนบในวงกลม (Cyclic Quadrilateral) จะเท่ากับ $180°$</p>
+                            <div class="formula-box">
+                                <p>ในรูปสี่เหลี่ยม ABCD ที่แนบในวงกลม: $\angle A + \angle C = 180°$ และ $\angle B + \angle D = 180°$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-5" class="content-section">
+                <h2>7.3.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: คอร์ดและระยะห่างจากจุดศูนย์กลาง</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> วงกลมวงหนึ่งมีรัศมี 10 หน่วย คอร์ด AB ยาว 16 หน่วย จงหาระยะห่างจากจุดศูนย์กลางไปยังคอร์ด AB</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ลากเส้นจากจุดศูนย์กลางไปตั้งฉากกับคอร์ด จะแบ่งครึ่งคอร์ดและสร้างสามเหลี่ยมมุมฉาก</li>
+                            <li>ใช้ทฤษฎีบทพีทาโกรัส</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ O เป็นจุดศูนย์กลางวงกลม และ M เป็นจุดกึ่งกลางของคอร์ด AB</p>
+                        <p>รัศมี $OA = 10$ หน่วย</p>
+                        <p>คอร์ด $AB = 16$ หน่วย ดังนั้น $AM = \frac{1}{2}AB = 8$ หน่วย (เพราะเส้นตั้งฉากจากจุดศูนย์กลางแบ่งครึ่งคอร์ด)</p>
+                        <p>$\triangle OMA$ เป็นสามเหลี่ยมมุมฉากที่ M</p>
+                        <p>ใช้ทฤษฎีบทพีทาโกรัส: $OA^2 = OM^2 + AM^2$</p>
+                        <p>$10^2 = OM^2 + 8^2$</p>
+                        <p>$100 = OM^2 + 64$</p>
+                        <p>$OM^2 = 100 - 64 = 36$</p>
+                        <p>$OM = \sqrt{36} = 6$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 6 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: เส้นสัมผัสจากจุดภายนอก</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จากจุด P ภายนอกวงกลม ลากเส้นสัมผัส PA และ PB มายังวงกลม ถ้า PA = 12 ซม. จงหาความยาวของ PB</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่าส่วนของเส้นสัมผัสที่ลากจากจุดภายนอกวงกลมมายังวงกลมหนึ่งจะยาวเท่ากัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบทเกี่ยวกับเส้นสัมผัสที่ลากจากจุดภายนอกวงกลมไปยังวงกลมหนึ่ง ส่วนของเส้นสัมผัสเหล่านั้นจะยาวเท่ากัน</p>
+                        <p>ดังนั้น $PA = PB$</p>
+                        <p>โจทย์กำหนด $PA = 12$ ซม.</p>
+                        <p>$\therefore PB = 12$ ซม.</p>
+                        
+                        <p><strong>คำตอบ:</strong> 12 ซม.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: มุมที่จุดศูนย์กลางและมุมในส่วนโค้ง</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ในวงกลมที่มีจุดศูนย์กลาง O มุมที่จุดศูนย์กลาง $\angle AOB = 110°$ จงหามุมในส่วนโค้งที่รองรับส่วนโค้ง AB (เช่น $\angle ACB$)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ามุมที่จุดศูนย์กลางมีขนาดเป็นสองเท่าของมุมในส่วนโค้งที่รองรับส่วนโค้งเดียวกัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบทเกี่ยวกับมุมในวงกลม:</p>
+                        <p>$\angle AOB = 2 \cdot \angle ACB$</p>
+                        <p>$110° = 2 \cdot \angle ACB$</p>
+                        <p>$\angle ACB = \frac{110°}{2} = 55°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $55°$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: มุมในครึ่งวงกลม</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> เส้นผ่านศูนย์กลาง AB ของวงกลมรองรับมุม $\angle ACB$ โดยที่ C เป็นจุดบนเส้นรอบวง จงหามุม $\angle ACB$</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ามุมในครึ่งวงกลมเป็นมุมฉาก</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เนื่องจาก $\angle ACB$ เป็นมุมในครึ่งวงกลม (รองรับเส้นผ่านศูนย์กลาง AB)</p>
+                        <p>ตามทฤษฎีบท มุมในครึ่งวงกลมเป็นมุมฉาก</p>
+                        <p>ดังนั้น $\angle ACB = 90°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $90°$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: มุมที่เกิดจากคอร์ดและเส้นสัมผัส</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> เส้นสัมผัส PT สัมผัสวงกลมที่จุด T คอร์ด TA ทำมุมกับเส้นสัมผัสเป็น $\angle PTA = 50°$ จงหามุม $\angle TDA$ โดยที่ D เป็นจุดบนเส้นรอบวงที่อยู่คนละข้างกับ P</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ามุมที่เกิดจากคอร์ดและเส้นสัมผัสที่จุดสัมผัส จะมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ดนั้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบท มุมที่เกิดจากคอร์ด TA และเส้นสัมผัส PT ที่จุด T ($\angle PTA$) จะมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ด TA นั่นคือ $\angle TDA$</p>
+                        <p>ดังนั้น $\angle TDA = \angle PTA = 50°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $50°$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-6" class="content-section">
+                <h2>7.3.6 ตัวอย่างข้อสอบฝึกทำ: วงกลม (คอร์ด, เส้นสัมผัส, ทฤษฎีบทเกี่ยวกับวงกลม)</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "วงกลม" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: คอร์ดและระยะห่างจากจุดศูนย์กลาง (หารัศมี)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> วงกลมวงหนึ่งมีคอร์ด PQ ยาว 24 หน่วย และคอร์ด PQ นี้อยู่ห่างจากจุดศูนย์กลาง O เป็นระยะ 5 หน่วย จงหารัศมีของวงกลมนี้</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ลากเส้นจากจุดศูนย์กลางไปตั้งฉากกับคอร์ด จะแบ่งครึ่งคอร์ดและสร้างสามเหลี่ยมมุมฉาก</li>
+                            <li>ใช้ทฤษฎีบทพีทาโกรัส</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ O เป็นจุดศูนย์กลางวงกลม และ M เป็นจุดกึ่งกลางของคอร์ด PQ</p>
+                        <p>ระยะห่างจากจุดศูนย์กลางไปยังคอร์ด $OM = 5$ หน่วย</p>
+                        <p>คอร์ด $PQ = 24$ หน่วย ดังนั้น $PM = \frac{1}{2}PQ = 12$ หน่วย (เพราะเส้นตั้งฉากจากจุดศูนย์กลางแบ่งครึ่งคอร์ด)</p>
+                        <p>$\triangle OMP$ เป็นสามเหลี่ยมมุมฉากที่ M</p>
+                        <p>ใช้ทฤษฎีบทพีทาโกรัส: $OP^2 = OM^2 + PM^2$</p>
+                        <p>(รัศมีวงกลมคือ OP)</p>
+                        <p>$OP^2 = 5^2 + 12^2$</p>
+                        <p>$OP^2 = 25 + 144$</p>
+                        <p>$OP^2 = 169$</p>
+                        <p>$OP = \sqrt{169} = 13$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 13 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: เส้นสัมผัสจากจุดภายนอก (หาระยะห่าง)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> วงกลมมีจุดศูนย์กลาง O และรัศมี 6 ซม. ลากเส้นสัมผัส PA จากจุด P ภายนอกวงกลมไปยังจุด A บนวงกลม ถ้าความยาว PA = 8 ซม. จงหาระยะห่าง PO (จากจุด P ถึงจุดศูนย์กลาง O)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>รัศมีที่ลากไปยังจุดสัมผัสจะตั้งฉากกับเส้นสัมผัสที่จุดนั้น ($\angle OAP = 90°$)</li>
+                            <li>สร้างสามเหลี่ยมมุมฉาก $\triangle OAP$ และใช้ทฤษฎีบทพีทาโกรัส</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>รัศมี $OA = 6$ ซม.</li>
+                            <li>ความยาวเส้นสัมผัส $PA = 8$ ซม.</li>
+                            <li>รัศมี OA ตั้งฉากกับเส้นสัมผัส PA ที่จุด A ดังนั้น $\triangle OAP$ เป็นสามเหลี่ยมมุมฉากที่มีมุมฉากที่ A</li>
+                        </ul>
+                        <p>ใช้ทฤษฎีบทพีทาโกรัส: $PO^2 = OA^2 + PA^2$</p>
+                        <p>$PO^2 = 6^2 + 8^2$</p>
+                        <p>$PO^2 = 36 + 64$</p>
+                        <p>$PO^2 = 100$</p>
+                        <p>$PO = \sqrt{100} = 10$ ซม.</p>
+                        
+                        <p><strong>คำตอบ:</strong> 10 ซม.</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: มุมที่จุดศูนย์กลางและมุมในส่วนโค้ง</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ในวงกลมที่มีจุดศูนย์กลาง O มุมในส่วนโค้ง $\angle ACB = 70°$ จงหามุมที่จุดศูนย์กลาง $\angle AOB$ ที่รองรับส่วนโค้ง AB เดียวกัน</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ามุมที่จุดศูนย์กลางมีขนาดเป็นสองเท่าของมุมในส่วนโค้งที่รองรับส่วนโค้งเดียวกัน</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบทเกี่ยวกับมุมในวงกลม:</p>
+                        <p>$\angle AOB = 2 \cdot \angle ACB$</p>
+                        <p>$\angle AOB = 2 \cdot 70°$</p>
+                        <p>$\angle AOB = 140°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $140°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: มุมในครึ่งวงกลม</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> วงกลมวงหนึ่งมีจุด C อยู่บนเส้นรอบวง และเส้นตรง AB เป็นเส้นผ่านศูนย์กลาง ถ้า $\angle CAB = 35°$ จงหาขนาดของ $\angle ABC$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>มุมในครึ่งวงกลมเป็นมุมฉาก $(90°)$</li>
+                            <li>ผลรวมของมุมภายในสามเหลี่ยมคือ $180°$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li>เนื่องจาก AB เป็นเส้นผ่านศูนย์กลางและ C อยู่บนเส้นรอบวง ดังนั้น $\angle ACB$ เป็นมุมในครึ่งวงกลม</li>
+                            <li>ตามทฤษฎีบท มุมในครึ่งวงกลมเป็นมุมฉาก: $\angle ACB = 90°$</li>
+                        </ul>
+                        <p>ใน $\triangle ABC$ ผลรวมของมุมภายในคือ $180°$:</p>
+                        <p>$\angle CAB + \angle ABC + \angle ACB = 180°$</p>
+                        <p>$35° + \angle ABC + 90° = 180°$</p>
+                        <p>$125° + \angle ABC = 180°$</p>
+                        <p>$\angle ABC = 180° - 125° = 55°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $55°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: มุมในส่วนโค้งเดียวกัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จุด A, B, C, D อยู่บนเส้นรอบวงของวงกลมตามลำดับ ถ้า $\angle ADB = 40°$ จงหาขนาดของ $\angle ACB$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>มุมในส่วนโค้งเดียวกันจะมีขนาดเท่ากัน</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>$\angle ADB$ และ $\angle ACB$ เป็นมุมในส่วนโค้งของวงกลมที่รองรับส่วนโค้ง AB เดียวกัน</p>
+                        <p>ตามทฤษฎีบท มุมในส่วนโค้งเดียวกันจะมีขนาดเท่ากัน</p>
+                        <p>ดังนั้น $\angle ACB = \angle ADB = 40°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $40°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: สี่เหลี่ยมแนบในวงกลม (Cyclic Quadrilateral)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสี่เหลี่ยม ABCD แนบในวงกลม ถ้า $\angle A = 85°$ และ $\angle B = 100°$ จงหาขนาดของ $\angle C$ และ $\angle D$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ผลบวกของมุมตรงข้ามของรูปสี่เหลี่ยมที่แนบในวงกลมจะเท่ากับ $180°$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ในรูปสี่เหลี่ยม ABCD แนบในวงกลม:</p>
+                        <p><strong>มุม A ตรงข้ามกับมุม C:</strong> $\angle A + \angle C = 180°$</p>
+                        <p>$85° + \angle C = 180°$</p>
+                        <p>$\angle C = 180° - 85° = 95°$</p>
+
+                        <p><strong>มุม B ตรงข้ามกับมุม D:</strong> $\angle B + \angle D = 180°$</p>
+                        <p>$100° + \angle D = 180°$</p>
+                        <p>$\angle D = 180° - 100° = 80°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $\angle C = 95°$, $\angle D = 80°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: คอร์ดสองเส้นตัดกันภายในวงกลม</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> คอร์ด AB และ CD ตัดกันที่จุด E ภายในวงกลม ถ้า AE = 6, EB = 4, และ CE = 3 จงหาความยาวของ ED</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่าถ้าคอร์ดสองเส้นตัดกันภายในวงกลม ผลคูณของส่วนของคอร์ดแต่ละเส้นจะเท่ากัน</li>
+                            <li>$AE \cdot EB = CE \cdot ED$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบทคอร์ดตัดกันภายในวงกลม:</p>
+                        <p>$AE \cdot EB = CE \cdot ED$</p>
+                        <p>$6 \cdot 4 = 3 \cdot ED$</p>
+                        <p>$24 = 3 \cdot ED$</p>
+                        <p>$ED = \frac{24}{3} = 8$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 8 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: เส้นสัมผัสและเส้นตัดผ่านวงกลม</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จากจุด P ภายนอกวงกลม ลากเส้นสัมผัส PT และเส้นตัด PAB ที่ผ่านจุด A และ B บนวงกลม ถ้า PT = 10 และ PA = 5 จงหาความยาวของ AB</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ากำลังสองของความยาวเส้นสัมผัสจากจุดภายนอกวงกลม จะเท่ากับผลคูณของความยาวส่วนของเส้นตัดที่อยู่ภายนอกวงกลมกับความยาวของเส้นตัดทั้งหมด</li>
+                            <li>$PT^2 = PA \cdot PB$</li>
+                            <li>$PB = PA + AB$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบทเส้นสัมผัสและเส้นตัด:</p>
+                        <p>$PT^2 = PA \cdot PB$</p>
+                        <p>$10^2 = 5 \cdot PB$</p>
+                        <p>$100 = 5 \cdot PB$</p>
+                        <p>$PB = \frac{100}{5} = 20$</p>
+
+                        <p>เรารู้ว่า $PB = PA + AB$</p>
+                        <p>$20 = 5 + AB$</p>
+                        <p>$AB = 20 - 5 = 15$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 15 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: มุมที่เกิดจากคอร์ดและเส้นสัมผัส</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> เส้นสัมผัส AB สัมผัสวงกลมที่จุด B คอร์ด BC ทำมุมกับเส้นสัมผัสเป็น $\angle ABC = 65°$ จงหาขนาดของ $\angle BDC$ เมื่อ D เป็นจุดบนเส้นรอบวง</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ทฤษฎีบทที่ว่ามุมที่เกิดจากคอร์ดและเส้นสัมผัสที่จุดสัมผัส จะมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ดนั้น</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ตามทฤษฎีบท มุมที่เกิดจากคอร์ด BC และเส้นสัมผัส AB ที่จุด B ($\angle ABC$) จะมีขนาดเท่ากับมุมในส่วนโค้งของวงกลมที่อยู่ตรงข้ามกับคอร์ด BC นั่นคือ $\angle BDC$</p>
+                        <p>ดังนั้น $\angle BDC = \angle ABC = 65°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $65°$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การรวมหลายทฤษฎีบท (มุม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> ในวงกลมที่มีจุดศูนย์กลาง O จุด A, B, C อยู่บนเส้นรอบวง ถ้า $\angle OAB = 30°$ จงหาขนาดของ $\angle ACB$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>$\triangle OAB$ เป็นสามเหลี่ยมหน้าจั่ว (เนื่องจาก $OA = OB =$ รัศมี)</li>
+                            <li>หามุมที่จุดศูนย์กลาง $\angle AOB$</li>
+                            <li>ใช้ความสัมพันธ์ระหว่างมุมที่จุดศูนย์กลางกับมุมในส่วนโค้ง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>พิจารณา $\triangle OAB$:</strong></p>
+                        <ul>
+                            <li>$OA = OB$ (รัศมี) ดังนั้น $\triangle OAB$ เป็นสามเหลี่ยมหน้าจั่ว</li>
+                            <li>มุมที่ฐานของสามเหลี่ยมหน้าจั่วเท่ากัน: $\angle OBA = \angle OAB = 30°$</li>
+                        </ul>
+                        <p>ผลรวมของมุมในสามเหลี่ยมคือ $180°$:</p>
+                        <p>$\angle AOB = 180° - \angle OAB - \angle OBA = 180° - 30° - 30° = 120°$</p>
+
+                        <p><strong>หา $\angle ACB$:</strong></p>
+                        <ul>
+                            <li>$\angle AOB$ เป็นมุมที่จุดศูนย์กลางที่รองรับส่วนโค้ง AB</li>
+                            <li>$\angle ACB$ เป็นมุมในส่วนโค้งที่รองรับส่วนโค้ง AB เดียวกัน</li>
+                        </ul>
+                        <p>ตามทฤษฎีบท: $\angle AOB = 2 \cdot \angle ACB$</p>
+                        <p>$120° = 2 \cdot \angle ACB$</p>
+                        <p>$\angle ACB = \frac{120°}{2} = 60°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $60°$</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
