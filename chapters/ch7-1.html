@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 7.1: เรขาคณิตวิเคราะห์ (จุด, เส้นตรง, มุม, รูปสามเหลี่ยม, สี่เหลี่ยมผืนผ้า, สี่เหลี่ยมจัตุรัส) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#mathematics">คณิตศาสตร์</a> > 
+                <span>บทที่ 7.1: เรขาคณิตวิเคราะห์ (จุด, เส้นตรง, มุม, รูปสามเหลี่ยม, สี่เหลี่ยมผืนผ้า, สี่เหลี่ยมจัตุรัส)</span>
+            </nav>
+            <h1>บทที่ 7.1: เรขาคณิตวิเคราะห์ (จุด, เส้นตรง, มุม, รูปสามเหลี่ยม, สี่เหลี่ยมผืนผ้า, สี่เหลี่ยมจัตุรัส)</h1>
+            <p class="chapter-intro">ทำความเข้าใจเกี่ยวกับ "เรขาคณิตวิเคราะห์" ซึ่งเป็นการนำความรู้ทางพีชคณิตและเรขาคณิตมารวมกัน โดยใช้ระบบพิกัดในการอธิบายตำแหน่งและคุณสมบัติของจุด เส้นตรง และรูปทรงต่างๆ หัวข้อนี้เป็นพื้นฐานสำคัญในการแก้ปัญหาเชิงเรขาคณิตด้วยวิธีการคำนวณในวิทยาการคอมพิวเตอร์ และมักปรากฏในข้อสอบ สอวน. คอมพิวเตอร์</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">7.1.1 จุดและพิกัด (Points and Coordinates)</a></li>
+                    <li><a href="#section-2">7.1.2 เส้นตรง (Straight Lines)</a></li>
+                    <li><a href="#section-3">7.1.3 มุม (Angles)</a></li>
+                    <li><a href="#section-4">7.1.4 รูปสามเหลี่ยม (Triangles)</a></li>
+                    <li><a href="#section-5">7.1.5 รูปสี่เหลี่ยมผืนผ้าและสี่เหลี่ยมจัตุรัส (Rectangles and Squares)</a></li>
+                    <li><a href="#section-6">7.1.6 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-7">7.1.7 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: จุดและพิกัด -->
+            <section id="section-1" class="content-section">
+                <h2>7.1.1 จุดและพิกัด (Points and Coordinates)</h2>
+                
+                <div class="definition-box">
+                    <h4>ระบบพิกัดฉาก (Cartesian Coordinate System)</h4>
+                    <p>เป็นการกำหนดตำแหน่งของจุดบนระนาบด้วยคู่อันดับ $(x,y)$ โดย $x$ คือพิกัดบนแกน X (แกนนอน) และ $y$ คือพิกัดบนแกน Y (แกนตั้ง)</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>ระยะห่างระหว่างสองจุด (Distance Between Two Points)</h3>
+                    
+                    <div class="formula-box">
+                        <p>ถ้าระยะห่างระหว่างจุด $P_1(x_1,y_1)$ และ $P_2(x_2,y_2)$ คือ $d$</p>
+                        <p><strong>สูตร:</strong> $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>จุดกึ่งกลางระหว่างสองจุด (Midpoint)</h3>
+                    
+                    <div class="formula-box">
+                        <p>จุดกึ่งกลางระหว่างจุด $P_1(x_1,y_1)$ และ $P_2(x_2,y_2)$ คือ $M$</p>
+                        <p><strong>สูตร:</strong> $M = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: เส้นตรง -->
+            <section id="section-2" class="content-section">
+                <h2>7.1.2 เส้นตรง (Straight Lines)</h2>
+                
+                <div class="subsection">
+                    <h3>ความชันของเส้นตรง (Slope)</h3>
+                    
+                    <div class="formula-box">
+                        <p>ความชันของเส้นตรงที่ผ่านจุด $P_1(x_1,y_1)$ และ $P_2(x_2,y_2)$ คือ $m$</p>
+                        <p><strong>สูตร:</strong> $m = \frac{y_2-y_1}{x_2-x_1}$ (เมื่อ $x_1 \neq x_2$)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>สมการเส้นตรง (Equation of a Straight Line)</h3>
+                    
+                    <div class="formula-container">
+                        <div class="formula-item">
+                            <h4>รูปมาตรฐาน (Slope-Intercept Form)</h4>
+                            <p>$y = mx + c$</p>
+                            <p>เมื่อ $m$ คือความชัน และ $c$ คือจุดตัดแกน Y</p>
+                        </div>
+
+                        <div class="formula-item">
+                            <h4>รูปจุด-ความชัน (Point-Slope Form)</h4>
+                            <p>$y - y_1 = m(x - x_1)$</p>
+                            <p>เมื่อเส้นตรงผ่านจุด $(x_1,y_1)$ และมีความชัน $m$</p>
+                        </div>
+
+                        <div class="formula-item">
+                            <h4>รูปทั่วไป (General Form)</h4>
+                            <p>$Ax + By + C = 0$</p>
+                            <p>เมื่อ $A,B,C$ เป็นค่าคงที่ใดๆ และ $A,B$ ไม่เป็นศูนย์พร้อมกัน</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>เส้นขนาน (Parallel Lines)</h3>
+                    <div class="definition-box">
+                        <p>เส้นตรงสองเส้นจะ<strong>ขนาน</strong>กันก็ต่อเมื่อมีความชันเท่ากัน ($m_1 = m_2$) (ยกเว้นเส้นตรงแนวดิ่ง)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>เส้นตั้งฉาก (Perpendicular Lines)</h3>
+                    <div class="definition-box">
+                        <p>เส้นตรงสองเส้นที่ไม่เป็นแนวดิ่งจะ<strong>ตั้งฉาก</strong>กันก็ต่อเมื่อผลคูณของความชันเท่ากับ $-1$ ($m_1 \cdot m_2 = -1$)</p>
+                        <p>(ถ้าเส้นหนึ่งเป็นแนวดิ่ง อีกเส้นจะเป็นแนวราบ และตั้งฉากกัน)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: มุม -->
+            <section id="section-3" class="content-section">
+                <h2>7.1.3 มุม (Angles)</h2>
+                
+                <div class="subsection">
+                    <h3>คุณสมบัติของมุม</h3>
+                    
+                    <div class="properties-container">
+                        <div class="property-item">
+                            <h4>มุมบนระนาบ</h4>
+                            <p>เกิดจากการตัดกันของสองเส้นตรงหรือสองส่วนของเส้นตรง</p>
+                        </div>
+
+                        <div class="property-item">
+                            <h4>มุมภายในรูปสามเหลี่ยม</h4>
+                            <p>ผลรวมของมุมภายในสามเหลี่ยมเท่ากับ $180°$</p>
+                        </div>
+
+                        <div class="property-item">
+                            <h4>มุมตรงข้าม</h4>
+                            <p>มุมที่อยู่ตรงข้ามกันเมื่อเส้นตรงสองเส้นตัดกันจะมีขนาดเท่ากัน</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: รูปสามเหลี่ยม -->
+            <section id="section-4" class="content-section">
+                <h2>7.1.4 รูปสามเหลี่ยม (Triangles)</h2>
+                
+                <div class="subsection">
+                    <h3>ประเภทของรูปสามเหลี่ยม</h3>
+                    
+                    <div class="types-container">
+                        <div class="type-item">
+                            <h4>สามเหลี่ยมด้านเท่า (Equilateral Triangle)</h4>
+                            <p>ทุกด้านยาวเท่ากัน ทุกมุมเท่ากับ $60°$</p>
+                        </div>
+
+                        <div class="type-item">
+                            <h4>สามเหลี่ยมหน้าจั่ว (Isosceles Triangle)</h4>
+                            <p>มีสองด้านยาวเท่ากัน และมุมที่ฐานเท่ากัน</p>
+                        </div>
+
+                        <div class="type-item">
+                            <h4>สามเหลี่ยมมุมฉาก (Right Triangle)</h4>
+                            <p>มีหนึ่งมุมเท่ากับ $90°$ (ใช้ทฤษฎีบทพีทาโกรัส: $a^2 + b^2 = c^2$)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>พื้นที่ของรูปสามเหลี่ยม</h3>
+                    
+                    <div class="formula-container">
+                        <div class="formula-item">
+                            <h4>สูตรทั่วไป</h4>
+                            <p>$\text{Area} = \frac{1}{2} \times \text{ฐาน} \times \text{สูง}$</p>
+                        </div>
+
+                        <div class="formula-item">
+                            <h4>สูตรพิกัด</h4>
+                            <p>ถ้าทราบพิกัดจุดยอด $(x_1,y_1), (x_2,y_2), (x_3,y_3)$:</p>
+                            <p>$\text{Area} = \frac{1}{2}|(x_1y_2 + x_2y_3 + x_3y_1) - (y_1x_2 + y_2x_3 + y_3x_1)|$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: รูปสี่เหลี่ยมผืนผ้าและสี่เหลี่ยมจัตุรัส -->
+            <section id="section-5" class="content-section">
+                <h2>7.1.5 รูปสี่เหลี่ยมผืนผ้าและสี่เหลี่ยมจัตุรัส (Rectangles and Squares)</h2>
+                
+                <div class="subsection">
+                    <h3>ก. รูปสี่เหลี่ยมผืนผ้า (Rectangle)</h3>
+                    
+                    <div class="properties-box">
+                        <h4>คุณสมบัติ</h4>
+                        <ul>
+                            <li>มี 4 ด้าน ตรงข้ามกันขนานกันและยาวเท่ากัน</li>
+                            <li>มี 4 มุมฉาก ($90°$)</li>
+                            <li>เส้นทแยงมุมยาวเท่ากันและแบ่งครึ่งซึ่งกันและกัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-container">
+                        <div class="formula-item">
+                            <h4>พื้นที่ (Area)</h4>
+                            <p>$\text{Area} = \text{ความกว้าง} \times \text{ความยาว}$</p>
+                        </div>
+
+                        <div class="formula-item">
+                            <h4>ความยาวรอบรูป (Perimeter)</h4>
+                            <p>$\text{Perimeter} = 2 \times (\text{ความกว้าง} + \text{ความยาว})$</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ข. รูปสี่เหลี่ยมจัตุรัส (Square)</h3>
+                    
+                    <div class="properties-box">
+                        <h4>คุณสมบัติ</h4>
+                        <p>(เป็นกรณีพิเศษของสี่เหลี่ยมผืนผ้าและสี่เหลี่ยมขนมเปียกปูน)</p>
+                        <ul>
+                            <li>มี 4 ด้านยาวเท่ากันทุกด้าน</li>
+                            <li>มี 4 มุมฉาก ($90°$)</li>
+                            <li>เส้นทแยงมุมยาวเท่ากัน แบ่งครึ่งซึ่งกันและกัน และตั้งฉากกันที่จุดตัด</li>
+                        </ul>
+                    </div>
+
+                    <div class="formula-container">
+                        <div class="formula-item">
+                            <h4>พื้นที่ (Area)</h4>
+                            <p>$\text{Area} = \text{ด้าน} \times \text{ด้าน} = \text{ด้าน}^2$</p>
+                        </div>
+
+                        <div class="formula-item">
+                            <h4>ความยาวรอบรูป (Perimeter)</h4>
+                            <p>$\text{Perimeter} = 4 \times \text{ด้าน}$</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-6" class="content-section">
+                <h2>7.1.6 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 1: ระยะห่างและจุดกึ่งกลาง</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาระยะห่างและจุดกึ่งกลางระหว่างจุด A(2,-1) และ B(5,3)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรระยะห่าง: $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</li>
+                            <li>ใช้สูตรจุดกึ่งกลาง: $M = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ระยะห่าง (d):</strong></p>
+                        <p>$d = \sqrt{(5-2)^2 + (3-(-1))^2}$</p>
+                        <p>$d = \sqrt{(3)^2 + (4)^2}$</p>
+                        <p>$d = \sqrt{9+16}$</p>
+                        <p>$d = \sqrt{25}$</p>
+                        <p>$d = 5$ หน่วย</p>
+
+                        <p><strong>จุดกึ่งกลาง (M):</strong></p>
+                        <p>$M = \left(\frac{2+5}{2}, \frac{-1+3}{2}\right)$</p>
+                        <p>$M = \left(\frac{7}{2}, \frac{2}{2}\right)$</p>
+                        <p>$M = (3.5, 1)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> ระยะห่าง 5 หน่วย, จุดกึ่งกลาง (3.5,1)</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 2: สมการเส้นตรงและความชัน</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด (1,2) และมีความชัน m = -3</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้รูปจุด-ความชัน: $y - y_1 = m(x - x_1)$</li>
+                            <li>จัดรูปเป็นรูปมาตรฐาน $y = mx + c$ หรือรูปทั่วไป $Ax + By + C = 0$</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ใช้สมการรูปจุด-ความชัน $y - y_1 = m(x - x_1)$</p>
+                        <p>แทนค่า $(x_1, y_1) = (1,2)$ และ $m = -3$:</p>
+                        <p>$y - 2 = -3(x - 1)$</p>
+                        <p>$y - 2 = -3x + 3$</p>
+                        <p>$y = -3x + 5$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = -3x + 5$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 3: เส้นขนานและเส้นตั้งฉาก</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด (4,-2) และ ขนาน กับเส้นตรง y = 2x + 1</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เส้นขนานมีความชันเท่ากัน</li>
+                            <li>ใช้ความชันของเส้นที่กำหนด และจุดที่เส้นใหม่ผ่าน เพื่อสร้างสมการเส้นตรง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เส้นตรงที่กำหนด $y = 2x + 1$ มีความชัน $m_1 = 2$</p>
+                        <p>เนื่องจากเส้นตรงที่ต้องการ ขนาน กับเส้นนี้ ความชันของเส้นตรงที่ต้องการคือ $m_2 = m_1 = 2$</p>
+                        <p>เส้นตรงที่ต้องการผ่านจุด (4,-2) และมีความชัน m = 2</p>
+                        <p>ใช้รูปจุด-ความชัน $y - y_1 = m(x - x_1)$:</p>
+                        <p>$y - (-2) = 2(x - 4)$</p>
+                        <p>$y + 2 = 2x - 8$</p>
+                        <p>$y = 2x - 10$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = 2x - 10$</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: พื้นที่สามเหลี่ยมจากพิกัด</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาพื้นที่ของรูปสามเหลี่ยมที่มีจุดยอดอยู่ที่ A(1,1), B(4,1), และ C(1,5)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วาดรูปคร่าวๆ เพื่อดูว่าเป็นสามเหลี่ยมมุมฉากหรือไม่</li>
+                            <li>ถ้าเป็นมุมฉาก ใช้สูตร $\frac{1}{2} \times \text{ฐาน} \times \text{สูง}$</li>
+                            <li>ถ้าไม่เป็นมุมฉาก ใช้สูตรพื้นที่จากพิกัด</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จุด A(1,1) และ B(4,1) มีค่า y เท่ากัน แสดงว่าเป็นเส้นแนวนอน</p>
+                        <p>จุด A(1,1) และ C(1,5) มีค่า x เท่ากัน แสดงว่าเป็นเส้นแนวดิ่ง</p>
+                        <p>ดังนั้น สามเหลี่ยมนี้เป็นสามเหลี่ยมมุมฉาก ที่มุม A</p>
+
+                        <p><strong>ความยาวฐาน (AB):</strong> $4 - 1 = 3$ หน่วย</p>
+                        <p><strong>ความสูง (AC):</strong> $5 - 1 = 4$ หน่วย</p>
+                        <p>พื้นที่สามเหลี่ยม $= \frac{1}{2} \times \text{ฐาน} \times \text{สูง}$</p>
+                        <p>$= \frac{1}{2} \times 3 \times 4$</p>
+                        <p>$= \frac{1}{2} \times 12 = 6$ ตารางหน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 6 ตารางหน่วย</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: คุณสมบัติสี่เหลี่ยมผืนผ้า</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสี่เหลี่ยมผืนผ้ามีจุดยอดอยู่ที่ A(1,1), B(5,1), C(5,4), และ D(1,4) จงหาพื้นที่และความยาวรอบรูป</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาความยาวด้านกว้างและความยาวด้านยาวจากพิกัด</li>
+                            <li>ใช้สูตรพื้นที่และเส้นรอบรูป</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ความยาวด้านกว้าง:</strong> ระยะห่างระหว่าง (1,1) กับ (5,1) คือ $5-1 = 4$ หน่วย</p>
+                        <p><strong>ความยาวด้านยาว:</strong> ระยะห่างระหว่าง (5,1) กับ (5,4) คือ $4-1 = 3$ หน่วย</p>
+                        <p><strong>พื้นที่:</strong> ความกว้าง × ความยาว $= 4 \times 3 = 12$ ตารางหน่วย</p>
+                        <p><strong>ความยาวรอบรูป:</strong> $2 \times (\text{ความกว้าง} + \text{ความยาว}) = 2 \times (4+3) = 2 \times 7 = 14$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> พื้นที่ 12 ตารางหน่วย, ความยาวรอบรูป 14 หน่วย</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-7" class="content-section">
+                <h2>7.1.7 ตัวอย่างข้อสอบฝึกทำ: เรขาคณิตวิเคราะห์</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "เรขาคณิตวิเคราะห์" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: ระยะห่างระหว่างสองจุด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาระยะห่างระหว่างจุด P(1,-3) และ Q(4,1)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรระยะห่าง: $d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ P$(x_1, y_1) = (1,-3)$ และ Q$(x_2, y_2) = (4,1)$</p>
+                        <p>$d = \sqrt{(4-1)^2 + (1-(-3))^2}$</p>
+                        <p>$d = \sqrt{(3)^2 + (1+3)^2}$</p>
+                        <p>$d = \sqrt{9 + (4)^2}$</p>
+                        <p>$d = \sqrt{9 + 16}$</p>
+                        <p>$d = \sqrt{25}$</p>
+                        <p>$d = 5$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 5 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: จุดกึ่งกลางระหว่างสองจุด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาพิกัดของจุดกึ่งกลางระหว่างจุด A(-2,5) และ B(6,-1)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้สูตรจุดกึ่งกลาง: $M = \left(\frac{x_1+x_2}{2}, \frac{y_1+y_2}{2}\right)$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ให้ A$(x_1, y_1) = (-2,5)$ และ B$(x_2, y_2) = (6,-1)$</p>
+                        <p>$M = \left(\frac{-2+6}{2}, \frac{5+(-1)}{2}\right)$</p>
+                        <p>$M = \left(\frac{4}{2}, \frac{4}{2}\right)$</p>
+                        <p>$M = (2, 2)$</p>
+                        
+                        <p><strong>คำตอบ:</strong> (2,2)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: สมการเส้นตรงและความชัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด (-2,4) และมีความชัน m = 3</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้รูปจุด-ความชัน: $y - y_1 = m(x - x_1)$</li>
+                            <li>จัดรูปเป็นรูปมาตรฐาน $y = mx + c$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ใช้สมการรูปจุด-ความชัน $y - y_1 = m(x - x_1)$</p>
+                        <p>แทนค่า $(x_1, y_1) = (-2,4)$ และ $m = 3$:</p>
+                        <p>$y - 4 = 3(x - (-2))$</p>
+                        <p>$y - 4 = 3(x + 2)$</p>
+                        <p>$y - 4 = 3x + 6$</p>
+                        <p>$y = 3x + 10$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = 3x + 10$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: สมการเส้นตรงจากสองจุด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด A(1,5) และ B(3,9)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาความชัน (m) จากสองจุด</li>
+                            <li>ใช้รูปจุด-ความชัน $(y - y_1 = m(x - x_1))$ โดยเลือกจุดใดจุดหนึ่ง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>หาความชัน (m):</strong></p>
+                        <p>$m = \frac{y_2-y_1}{x_2-x_1} = \frac{9-5}{3-1} = \frac{4}{2} = 2$</p>
+
+                        <p>ใช้รูปจุด-ความชันกับจุด A(1,5) และ m = 2:</p>
+                        <p>$y - 5 = 2(x - 1)$</p>
+                        <p>$y - 5 = 2x - 2$</p>
+                        <p>$y = 2x + 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = 2x + 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: เส้นขนาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด (2,-5) และ ขนาน กับเส้นตรง $y = -4x + 7$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เส้นขนานมีความชันเท่ากัน</li>
+                            <li>ใช้ความชันของเส้นที่กำหนด และจุดที่เส้นใหม่ผ่าน เพื่อสร้างสมการเส้นตรง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เส้นตรงที่กำหนด $y = -4x + 7$ มีความชัน $m_1 = -4$</p>
+                        <p>เนื่องจากเส้นตรงที่ต้องการ ขนาน กับเส้นนี้ ความชันของเส้นตรงที่ต้องการคือ $m_2 = m_1 = -4$</p>
+                        <p>เส้นตรงที่ต้องการผ่านจุด (2,-5) และมีความชัน m = -4</p>
+                        <p>ใช้รูปจุด-ความชัน $y - y_1 = m(x - x_1)$:</p>
+                        <p>$y - (-5) = -4(x - 2)$</p>
+                        <p>$y + 5 = -4x + 8$</p>
+                        <p>$y = -4x + 3$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = -4x + 3$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: เส้นตั้งฉาก</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาสมการเส้นตรงที่ผ่านจุด (3,1) และ ตั้งฉาก กับเส้นตรง $y = \frac{1}{2}x - 2$</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เส้นตั้งฉากมีผลคูณความชันเท่ากับ $-1$ $(m_1 \cdot m_2 = -1)$</li>
+                            <li>หาความชันของเส้นใหม่ แล้วใช้จุดที่เส้นใหม่ผ่านเพื่อสร้างสมการเส้นตรง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เส้นตรงที่กำหนด $y = \frac{1}{2}x - 2$ มีความชัน $m_1 = \frac{1}{2}$</p>
+                        <p>เนื่องจากเส้นตรงที่ต้องการ ตั้งฉาก กับเส้นนี้ ผลคูณความชันต้องเป็น $-1$:</p>
+                        <p>$m_1 \cdot m_2 = -1$</p>
+                        <p>$\left(\frac{1}{2}\right) \cdot m_2 = -1$</p>
+                        <p>$m_2 = -2$</p>
+                        <p>เส้นตรงที่ต้องการผ่านจุด (3,1) และมีความชัน m = -2</p>
+                        <p>ใช้รูปจุด-ความชัน $y - y_1 = m(x - x_1)$:</p>
+                        <p>$y - 1 = -2(x - 3)$</p>
+                        <p>$y - 1 = -2x + 6$</p>
+                        <p>$y = -2x + 7$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $y = -2x + 7$</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: พื้นที่สามเหลี่ยมมุมฉากจากพิกัด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาพื้นที่ของรูปสามเหลี่ยมที่มีจุดยอดอยู่ที่ A(0,0), B(6,0), และ C(0,8)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สังเกตว่าแกน X และแกน Y ตั้งฉากกัน ทำให้สามเหลี่ยมเป็นมุมฉาก</li>
+                            <li>ใช้สูตรพื้นที่สามเหลี่ยมมุมฉาก: $\frac{1}{2} \times \text{ฐาน} \times \text{สูง}$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>จุด A(0,0) อยู่ที่จุดกำเนิด</p>
+                        <p>จุด B(6,0) อยู่บนแกน X (ห่างจาก A 6 หน่วย)</p>
+                        <p>จุด C(0,8) อยู่บนแกน Y (ห่างจาก A 8 หน่วย)</p>
+                        <p>ดังนั้น สามเหลี่ยมนี้เป็นสามเหลี่ยมมุมฉากที่มุม A(0,0)</p>
+
+                        <p><strong>ความยาวฐาน (ตามแกน X):</strong> $6 - 0 = 6$ หน่วย</p>
+                        <p><strong>ความสูง (ตามแกน Y):</strong> $8 - 0 = 8$ หน่วย</p>
+                        <p>พื้นที่สามเหลี่ยม $= \frac{1}{2} \times \text{ฐาน} \times \text{สูง}$</p>
+                        <p>$= \frac{1}{2} \times 6 \times 8$</p>
+                        <p>$= \frac{1}{2} \times 48 = 24$ ตารางหน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> 24 ตารางหน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: พื้นที่สี่เหลี่ยมผืนผ้าจากพิกัด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> รูปสี่เหลี่ยมผืนผ้ามีจุดยอดอยู่ที่ A(-1,-1), B(3,-1), C(3,2), และ D(-1,2) จงหาพื้นที่และความยาวรอบรูป</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาความยาวด้านกว้างและความยาวด้านยาวจากพิกัด</li>
+                            <li>ใช้สูตรพื้นที่ (กว้าง × ยาว) และความยาวรอบรูป (2×(กว้าง+ยาว))</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ความยาวด้านกว้าง:</strong> ระยะห่างระหว่าง A(-1,-1) กับ B(3,-1) คือ $|3-(-1)| = |3+1| = 4$ หน่วย</p>
+                        <p><strong>ความยาวด้านยาว:</strong> ระยะห่างระหว่าง B(3,-1) กับ C(3,2) คือ $|2-(-1)| = |2+1| = 3$ หน่วย</p>
+                        <p><strong>พื้นที่:</strong> ความกว้าง × ความยาว $= 4 \times 3 = 12$ ตารางหน่วย</p>
+                        <p><strong>ความยาวรอบรูป:</strong> $2 \times (\text{ความกว้าง} + \text{ความยาว}) = 2 \times (4+3) = 2 \times 7 = 14$ หน่วย</p>
+                        
+                        <p><strong>คำตอบ:</strong> พื้นที่ 12 ตารางหน่วย, ความยาวรอบรูป 14 หน่วย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การหาจุดยอดของสี่เหลี่ยมจัตุรัส</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> สี่เหลี่ยมจัตุรัส ABCD มีจุด A อยู่ที่ (0,0) และจุด B อยู่ที่ (4,0) จงหาพิกัดที่เป็นไปได้ของจุด C และ D</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เนื่องจาก A และ B อยู่บนแกน X และห่างกัน 4 หน่วย แสดงว่าด้านของสี่เหลี่ยมจัตุรัสยาว 4 หน่วย</li>
+                            <li>จุด C และ D จะต้องห่างจาก B และ A ตามลำดับ 4 หน่วย และเป็นมุมฉาก</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ความยาวด้านของสี่เหลี่ยมจัตุรัสคือ 4 หน่วย (จากระยะ AB)</p>
+                        <p>มีสองกรณีที่เป็นไปได้สำหรับจุด C และ D:</p>
+
+                        <p><strong>กรณีที่ 1: จุด C และ D อยู่เหนือแกน X</strong></p>
+                        <ul>
+                            <li>D จะอยู่ที่ (0,4) (ขึ้นไป 4 หน่วยจาก A)</li>
+                            <li>C จะอยู่ที่ (4,4) (ขึ้นไป 4 หน่วยจาก B)</li>
+                            <li>ดังนั้น จุด C(4,4) และ D(0,4)</li>
+                        </ul>
+
+                        <p><strong>กรณีที่ 2: จุด C และ D อยู่ใต้แกน X</strong></p>
+                        <ul>
+                            <li>D จะอยู่ที่ (0,-4) (ลงไป 4 หน่วยจาก A)</li>
+                            <li>C จะอยู่ที่ (4,-4) (ลงไป 4 หน่วยจาก B)</li>
+                            <li>ดังนั้น จุด C(4,-4) และ D(0,-4)</li>
+                        </ul>
+                        
+                        <p><strong>คำตอบ:</strong> C(4,4), D(0,4) หรือ C(4,-4), D(0,-4)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การประยุกต์ใช้ความชันกับมุม</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> เส้นตรง $L_1$ มีสมการ $y = x + 3$ และเส้นตรง $L_2$ มีสมการ $y = -x + 1$ จงหามุมที่เส้นตรงทั้งสองตัดกัน (เป็นมุมแหลม)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หาความชันของแต่ละเส้นตรง $(m_1, m_2)$</li>
+                            <li>ถ้า $m_1 \cdot m_2 = -1$ แสดงว่าเส้นตั้งฉากกัน มุมที่ตัดกันคือ $90°$</li>
+                            <li>ถ้าไม่ใช่ ใช้สูตร $\tan\theta = \left|\frac{m_1-m_2}{1+m_1m_2}\right|$ เพื่อหามุม $\theta$</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>ความชันของ $L_1$ คือ $m_1 = 1$</strong></p>
+                        <p><strong>ความชันของ $L_2$ คือ $m_2 = -1$</strong></p>
+                        <p>ตรวจสอบผลคูณของความชัน: $m_1 \cdot m_2 = (1)(-1) = -1$</p>
+                        <p>เนื่องจากผลคูณความชันเท่ากับ $-1$ แสดงว่าเส้นตรงทั้งสอง ตั้งฉากกัน</p>
+                        <p>ดังนั้น มุมที่เส้นตรงทั้งสองตัดกันคือ $90°$</p>
+                        
+                        <p><strong>คำตอบ:</strong> $90°$</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
