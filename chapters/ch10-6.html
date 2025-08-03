@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 10.6: แนวคิดกราฟพื้นฐาน - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 10.6: แนวคิดกราฟพื้นฐาน</span>
+            </nav>
+            <h1>บทที่ 10.6: แนวคิดกราฟพื้นฐาน (การเดินทางบนกราฟ, การเชื่อมโยง)</h1>
+            <p class="chapter-intro">การทำความเข้าใจแนวคิดกราฟพื้นฐานและการประยุกต์ใช้ในการแก้ปัญหาต่างๆ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">10.6.1 กราฟคืออะไร?</a></li>
+                    <li><a href="#section-2">10.6.2 ประเภทของกราฟ</a></li>
+                    <li><a href="#section-3">10.6.3 การเดินทางบนกราฟ</a></li>
+                    <li><a href="#section-4">10.6.4 การเชื่อมโยง</a></li>
+                    <li><a href="#section-5">10.6.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-6">10.6.6 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาทำความเข้าใจเกี่ยวกับ แนวคิดกราฟพื้นฐาน (Basic Graph Concepts) ซึ่งเป็นโครงสร้างข้อมูลที่สำคัญอย่างยิ่งในวิทยาการคอมพิวเตอร์และคณิตศาสตร์เชิงแยกส่วน กราฟใช้ในการจำลองความสัมพันธ์ระหว่างวัตถุต่างๆ เช่น เครือข่ายสังคม, ถนนในเมือง, วงจรไฟฟ้า หรือการเชื่อมต่อของคอมพิวเตอร์ การเข้าใจกราฟช่วยให้เราสามารถแก้ปัญหาเกี่ยวกับการเดินทาง, การเชื่อมโยง, และการจัดสรรทรัพยากรได้อย่างมีประสิทธิภาพ ซึ่งมักพบในข้อสอบ สอวน. คอมพิวเตอร์</p>
+            </section>
+
+            <!-- Section 1: กราฟคืออะไร? -->
+            <section id="section-1" class="content-section">
+                <h2>10.6.1 กราฟคืออะไร? (What is a Graph?)</h2>
+                
+                <p>กราฟ (Graph) คือ โครงสร้างทางคณิตศาสตร์ที่ประกอบด้วย:</p>
+
+                <div class="definition-box">
+                    <h4>1. จุดยอด (Vertices / Nodes):</h4>
+                    <p>สิ่งที่ถูกจำลอง เช่น เมือง, คน, คอมพิวเตอร์ (นิยมใช้สัญลักษณ์ V)</p>
+
+                    <h4>2. เส้นเชื่อม (Edges / Links):</h4>
+                    <p>ความสัมพันธ์หรือการเชื่อมต่อระหว่างจุดยอด เช่น ถนน, มิตรภาพ, สายเคเบิล (นิยมใช้สัญลักษณ์ E)</p>
+
+                    <p><strong>กราฟหนึ่งๆ มักจะเขียนแทนด้วย G=(V,E)</strong></p>
+                </div>
+
+                <div class="example-box">
+                    <h4>ตัวอย่าง:</h4>
+                    <pre>
+    A ---- B
+    |      |
+    |      |
+    C ---- D
+                    </pre>
+                    <p>จุดยอด V = {A, B, C, D}</p>
+                    <p>เส้นเชื่อม E = {{A,B}, {A,C}, {B,D}, {C,D}}</p>
+                </div>
+            </section>
+
+            <!-- Section 2: ประเภทของกราฟ -->
+            <section id="section-2" class="content-section">
+                <h2>10.6.2 ประเภทของกราฟ (Types of Graphs)</h2>
+                
+                <p>กราฟสามารถแบ่งออกได้หลายประเภทตามลักษณะของเส้นเชื่อม:</p>
+
+                <div class="definition-box">
+                    <h4>ก. กราฟไม่มีทิศทาง (Undirected Graph)</h4>
+                    <ul>
+                        <li>เส้นเชื่อมไม่มีทิศทาง หมายความว่าการเชื่อมต่อระหว่างจุดยอด u และ v เป็นแบบสองทาง</li>
+                        <li>ถ้าไปจาก u ไป v ได้ ก็ไปจาก v ไป u ได้</li>
+                        <li>เส้นเชื่อมแทนด้วยคู่ของจุดยอด {u,v}</li>
+                    </ul>
+                    <pre>
+    A ---- B
+    |      |
+    C ---- D
+                    </pre>
+
+                    <h4>ข. กราฟมีทิศทาง (Directed Graph / Digraph)</h4>
+                    <ul>
+                        <li>เส้นเชื่อมมีทิศทาง หมายความว่าการเชื่อมต่อจากจุดยอด u ไป v อาจไม่เหมือนกับการเชื่อมต่อจาก v ไป u</li>
+                        <li>เส้นเชื่อมแทนด้วยคู่อันดับ (u,v) โดยที่ลูกศรแสดงทิศทาง</li>
+                    </ul>
+                    <pre>
+    A ----> B
+    ^       |
+    |       v
+    C <---- D
+                    </pre>
+
+                    <h4>ค. กราฟถ่วงน้ำหนัก (Weighted Graph)</h4>
+                    <ul>
+                        <li>เส้นเชื่อมมี "น้ำหนัก" หรือ "ค่าใช้จ่าย" กำกับอยู่ ซึ่งอาจแทนระยะทาง, เวลา, หรือต้นทุน</li>
+                        <li>สามารถเป็นได้ทั้งกราฟมีทิศทางและไม่มีทิศทาง</li>
+                    </ul>
+                    <pre>
+    A --5-- B
+    |3      |2
+    C --4-- D
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Section 3: การเดินทางบนกราฟ -->
+            <section id="section-3" class="content-section">
+                <h2>10.6.3 การเดินทางบนกราฟ (Graph Traversal)</h2>
+                
+                <p>การเดินทางบนกราฟคือการสำรวจเส้นทางจากจุดยอดหนึ่งไปยังอีกจุดยอดหนึ่ง</p>
+
+                <div class="definition-box">
+                    <h4>ก. ทางเดิน (Path)</h4>
+                    <ul>
+                        <li><strong>ทางเดิน (Path):</strong> คือ ลำดับของจุดยอดที่เชื่อมต่อกันด้วยเส้นเชื่อม</li>
+                        <li><strong>ความยาวของทางเดิน:</strong> คือ จำนวนเส้นเชื่อมในทางเดินนั้น</li>
+                        <li><strong>ทางเดินอย่างง่าย (Simple Path):</strong> ทางเดินที่ไม่มีจุดยอดซ้ำกัน</li>
+                    </ul>
+                    
+                    <p><strong>ตัวอย่าง:</strong> ในกราฟ A-B-C-D</p>
+                    <ul>
+                        <li>A → B → C เป็นทางเดิน</li>
+                        <li>ความยาว 2</li>
+                    </ul>
+
+                    <h4>ข. วงจร (Cycle)</h4>
+                    <ul>
+                        <li><strong>วงจร (Cycle):</strong> คือ ทางเดินที่เริ่มต้นและสิ้นสุดที่จุดยอดเดียวกัน และไม่มีเส้นเชื่อมหรือจุดยอดซ้ำกัน</li>
+                    </ul>
+                    
+                    <p><strong>ตัวอย่าง:</strong> ในกราฟ A-B-C-A</p>
+                    <ul>
+                        <li>A → B → C → A เป็นวงจร</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 4: การเชื่อมโยง -->
+            <section id="section-4" class="content-section">
+                <h2>10.6.4 การเชื่อมโยง (Connectivity)</h2>
+                
+                <p>การเชื่อมโยงบอกว่าจุดยอดต่างๆ ในกราฟสามารถเข้าถึงกันได้หรือไม่</p>
+
+                <div class="definition-box">
+                    <h4>ก. กราฟเชื่อมโยง (Connected Graph)</h4>
+                    <p>ในกราฟไม่มีทิศทาง ถ้าทุกๆ คู่ของจุดยอดสามารถเดินทางถึงกันได้ (มีทางเดินระหว่างกัน) กราฟนั้นจะเรียกว่ากราฟเชื่อมโยง</p>
+
+                    <h4>ข. กราฟไม่เชื่อมโยง (Disconnected Graph)</h4>
+                    <p>กราฟที่ไม่เชื่อมโยงกันทั้งหมด นั่นคือมีอย่างน้อยหนึ่งคู่ของจุดยอดที่ไม่สามารถเดินทางถึงกันได้</p>
+
+                    <h4>ค. ส่วนประกอบที่เชื่อมโยง (Connected Components)</h4>
+                    <p>ส่วนประกอบที่เชื่อมโยงคือส่วนย่อยๆ ของกราฟไม่เชื่อมโยง ที่ภายในส่วนนั้นๆ ทุกจุดเชื่อมโยงถึงกัน</p>
+
+                    <h4>ง. เส้นทางที่สั้นที่สุด (Shortest Path)</h4>
+                    <p>คือทางเดินระหว่างสองจุดยอดที่มีความยาวน้อยที่สุด (สำหรับกราฟถ่วงน้ำหนัก คือผลรวมน้ำหนักน้อยที่สุด)</p>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-5" class="content-section">
+                <h2>10.6.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การระบุส่วนประกอบและประเภทกราฟ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ---- B
+    |      |
+    |      |
+    C ---- D
+                        </pre>
+                        <p>จงระบุ:</p>
+                        <ul>
+                            <li>ก. จุดยอดทั้งหมด</li>
+                            <li>ข. เส้นเชื่อมทั้งหมด</li>
+                            <li>ค. กราฟนี้เป็นกราฟมีทิศทางหรือไม่มีทิศทาง?</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('approach-1')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>จุดยอดคือวงกลมหรือจุดต่างๆ</li>
+                            <li>เส้นเชื่อมคือเส้นที่เชื่อมระหว่างจุดยอด</li>
+                            <li>ดูว่าเส้นเชื่อมมีลูกศรหรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-1')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ก. จุดยอดทั้งหมด: {A,B,C,D}</p>
+                        <p>ข. เส้นเชื่อมทั้งหมด: {{A,B},{A,C},{B,D},{C,D}} (ใช้ปีกกาคู่แสดงเส้นเชื่อมไม่มีทิศทาง)</p>
+                        <p>ค. กราฟนี้เป็น <strong>กราฟไม่มีทิศทาง</strong> (เพราะไม่มีลูกศรบนเส้นเชื่อม)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การหาทางเดินและวงจร</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ----> B
+    ^       |
+    |       v
+    C <---- D
+                        </pre>
+                        <p>จงระบุ:</p>
+                        <ul>
+                            <li>ก. ทางเดินจาก A ไป D</li>
+                            <li>ข. วงจรทั้งหมดในกราฟนี้</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('approach-2')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ทางเดินต้องตามทิศทางของลูกศร</li>
+                            <li>วงจรคือทางเดินที่กลับมาจุดเดิม</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-2')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ก. ทางเดินจาก A ไป D:</p>
+                        <ul>
+                            <li>A → B → D</li>
+                        </ul>
+                        <p>ข. วงจรทั้งหมด:</p>
+                        <ul>
+                            <li>A → B → D → C → A</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การตรวจสอบการเชื่อมโยง</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ---- B ---- C
+    
+    D ---- E ---- F
+                        </pre>
+                        <p>กราฟนี้เป็นกราฟเชื่อมโยงหรือไม่? ถ้าไม่เชื่อมโยง มีส่วนประกอบที่เชื่อมโยงกี่ส่วน?</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-3')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กราฟเชื่อมโยงคือทุกจุดสามารถไปถึงกันได้</li>
+                            <li>ส่วนประกอบที่เชื่อมโยงคือกลุ่มของจุดที่เชื่อมถึงกันภายในกลุ่มนั้น</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-3')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>กราฟนี้ <strong>ไม่เป็นกราฟเชื่อมโยง</strong></p>
+                        <p>มีส่วนประกอบที่เชื่อมโยง <strong>2 ส่วน</strong> ได้แก่:</p>
+                        <ul>
+                            <li>ส่วนที่ 1: {A,B,C}</li>
+                            <li>ส่วนที่ 2: {D,E,F}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การหาเส้นทางที่สั้นที่สุด (กราฟถ่วงน้ำหนัก)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จากแผนที่เมือง A, B, C, D ดังรูป (ตัวเลขบนเส้นคือระยะทาง) จงหาเส้นทางที่สั้นที่สุดจากเมือง A ไปเมือง D</p>
+                        <pre>
+     A ---5--- B
+     |         |
+     2         3
+     |         |
+     C ---6--- D
+                        </pre>
+                    </div>
+
+                    <button onclick="toggleSection('approach-4')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่เส้นทางที่เป็นไปได้ทั้งหมดจาก A ไป D และคำนวณระยะทางรวม</li>
+                            <li>เลือกเส้นทางที่มีระยะทางน้อยที่สุด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-4')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>เส้นทางที่เป็นไปได้จาก A ไป D:</p>
+                        <ol>
+                            <li><strong>A → B → D:</strong> ระยะทาง: 5+3=8</li>
+                            <li><strong>A → C → D:</strong> ระยะทาง: 2+6=8</li>
+                        </ol>
+                        <p>ในกรณีนี้มีเส้นทางที่สั้นที่สุด 2 เส้นทางที่มีระยะทางเท่ากันคือ 8</p>
+                        <p><strong>คำตอบ:</strong> A → B → D (ระยะทาง 8) หรือ A → C → D (ระยะทาง 8)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การวิเคราะห์คุณสมบัติกราฟ (ดีกรี)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟไม่มีทิศทางที่มีจุดยอด 5 จุด (A, B, C, D, E) และเส้นเชื่อมดังนี้: {{A,B},{A,C},{B,C},{C,D},{D,E}}</p>
+                        <p>จงหาดีกรี (degree) ของแต่ละจุดยอด (จำนวนเส้นเชื่อมที่ต่อกับจุดนั้น)</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-5')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>นับจำนวนเส้นเชื่อมที่ต่อกับแต่ละจุดยอด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-5')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li><strong>Degree(A):</strong> 2 (เชื่อมกับ B, C)</li>
+                            <li><strong>Degree(B):</strong> 2 (เชื่อมกับ A, C)</li>
+                            <li><strong>Degree(C):</strong> 3 (เชื่อมกับ A, B, D)</li>
+                            <li><strong>Degree(D):</strong> 2 (เชื่อมกับ C, E)</li>
+                            <li><strong>Degree(E):</strong> 1 (เชื่อมกับ D)</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Degree(A)=2, Degree(B)=2, Degree(C)=3, Degree(D)=2, Degree(E)=1</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-6" class="content-section">
+                <h2>10.6.6 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การระบุส่วนประกอบและประเภทกราฟ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ----> B
+    ^       |
+    |       v
+    D <---- C
+                        </pre>
+                        <p>จงระบุ:</p>
+                        <ul>
+                            <li>ก. จุดยอดทั้งหมด</li>
+                            <li>ข. เส้นเชื่อมทั้งหมด</li>
+                            <li>ค. กราฟนี้เป็นกราฟมีทิศทางหรือไม่มีทิศทาง?</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('approach-6')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-6" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>จุดยอดคือวงกลมหรือจุดต่างๆ</li>
+                            <li>เส้นเชื่อมคือเส้นที่มีลูกศร</li>
+                            <li>ดูว่าเส้นเชื่อมมีลูกศรหรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-6')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-6" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ก. จุดยอดทั้งหมด: {A,B,C,D}</p>
+                        <p>ข. เส้นเชื่อมทั้งหมด: {(A,B),(B,C),(C,D),(D,A)} (ใช้คู่อันดับแสดงเส้นเชื่อมมีทิศทาง)</p>
+                        <p>ค. กราฟนี้เป็น <strong>กราฟมีทิศทาง</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การหาทางเดินและวงจร</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ----> B
+    ^       |
+    |       v
+    D <---- C ----> E
+                        </pre>
+                        <p>จงระบุ:</p>
+                        <ul>
+                            <li>ก. ทางเดินอย่างง่ายจาก B ไป E</li>
+                            <li>ข. วงจรทั้งหมดในกราฟนี้</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('approach-7')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-7" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ทางเดินอย่างง่ายคือไม่มีจุดยอดซ้ำ</li>
+                            <li>วงจรคือทางเดินที่กลับมาจุดเดิม</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-7')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-7" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ก. ทางเดินอย่างง่ายจาก B ไป E: B → C → E</p>
+                        <p>ข. วงจรทั้งหมด: A → B → C → D → A</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การตรวจสอบการเชื่อมโยง</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟดังรูป:</p>
+                        <pre>
+    A ---- B ---- C
+    
+    D ---- E
+                        </pre>
+                        <p>กราฟนี้เป็นกราฟเชื่อมโยงหรือไม่? ถ้าไม่เชื่อมโยง มีส่วนประกอบที่เชื่อมโยงกี่ส่วน?</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-8')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-8" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กราฟเชื่อมโยงคือทุกจุดสามารถไปถึงกันได้</li>
+                            <li>ส่วนประกอบที่เชื่อมโยงคือกลุ่มของจุดที่เชื่อมถึงกันภายในกลุ่มนั้น</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-8')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-8" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>กราฟนี้ <strong>ไม่เป็นกราฟเชื่อมโยง</strong></p>
+                        <p>มีส่วนประกอบที่เชื่อมโยง <strong>2 ส่วน</strong> ได้แก่:</p>
+                        <ul>
+                            <li>ส่วนที่ 1: {A,B,C}</li>
+                            <li>ส่วนที่ 2: {D,E}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การหาเส้นทางที่สั้นที่สุด (กราฟถ่วงน้ำหนัก)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จากแผนที่เมือง A, B, C, D ดังรูป (ตัวเลขบนเส้นคือระยะทาง) จงหาเส้นทางที่สั้นที่สุดจากเมือง A ไปเมือง D</p>
+                        <pre>
+     A ---2--- B
+     |         |
+     4         3
+     |         |
+     C ---1--- D
+                        </pre>
+                    </div>
+
+                    <button onclick="toggleSection('approach-9')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-9" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่เส้นทางที่เป็นไปได้ทั้งหมดจาก A ไป D และคำนวณระยะทางรวม</li>
+                            <li>เลือกเส้นทางที่มีระยะทางน้อยที่สุด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-9')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-9" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>เส้นทางที่เป็นไปได้จาก A ไป D:</p>
+                        <ol>
+                            <li><strong>A → B → D:</strong> ระยะทาง: 2+3=5</li>
+                            <li><strong>A → C → D:</strong> ระยะทาง: 4+1=5</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> A → B → D (ระยะทาง 5) หรือ A → C → D (ระยะทาง 5)</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การวิเคราะห์คุณสมบัติกราฟ (ดีกรี)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดกราฟไม่มีทิศทางที่มีจุดยอด 4 จุด (P, Q, R, S) และเส้นเชื่อมดังนี้: {{P,Q},{P,R},{Q,R},{Q,S}}</p>
+                        <p>จงหาดีกรี (degree) ของแต่ละจุดยอด</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-10')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-10" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>นับจำนวนเส้นเชื่อมที่ต่อกับแต่ละจุดยอด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-10')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-10" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li><strong>Degree(P):</strong> 2 (เชื่อมกับ Q, R)</li>
+                            <li><strong>Degree(Q):</strong> 3 (เชื่อมกับ P, R, S)</li>
+                            <li><strong>Degree(R):</strong> 2 (เชื่อมกับ P, Q)</li>
+                            <li><strong>Degree(S):</strong> 1 (เชื่อมกับ Q)</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Degree(P)=2, Degree(Q)=3, Degree(R)=2, Degree(S)=1</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
