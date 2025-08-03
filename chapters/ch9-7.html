@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.7: ลำดับการทำงานวนซ้ำด้วยลูป while - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.7: ลำดับการทำงานวนซ้ำด้วยลูป while</span>
+            </nav>
+            <h1>บทที่ 9.7: ลำดับการทำงานวนซ้ำด้วยลูป while</h1>
+            <p class="chapter-intro">การเรียนรู้โครงสร้างควบคุมแบบวนซ้ำและการใช้งานลูป while</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.7.1 การทำงานแบบวนซ้ำ (Repetitive Execution)</a></li>
+                    <li><a href="#section-2">9.7.2 ลูป while (while Loop)</a></li>
+                    <li><a href="#section-3">9.7.3 ตัวอย่างการทำงานของลูป while</a></li>
+                    <li><a href="#section-4">9.7.4 ข้อควรระวัง: ลูปไม่รู้จบ (Infinite Loop)</a></li>
+                    <li><a href="#section-5">9.7.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-6">9.7.6 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ ลำดับการทำงานแบบวนซ้ำ (Repetitive Execution) โดยใช้คำสั่ง while loop ในภาษา Python ซึ่งเป็นโครงสร้างควบคุมที่ช่วยให้โปรแกรมสามารถทำชุดคำสั่งเดิมซ้ำๆ ได้ตราบเท่าที่เงื่อนไขที่กำหนดเป็นจริง การวนซ้ำเป็นสิ่งจำเป็นสำหรับการประมวลผลข้อมูลจำนวนมาก การทำซ้ำงานเดิมๆ และการสร้างโปรแกรมที่มีประสิทธิภาพ</p>
+            </section>
+
+            <!-- Section 1: การทำงานแบบวนซ้ำ -->
+            <section id="section-1" class="content-section">
+                <h2>9.7.1 การทำงานแบบวนซ้ำ (Repetitive Execution / Iteration)</h2>
+                
+                <p>การทำงานแบบวนซ้ำ คือ การที่โปรแกรมจะประมวลผลคำสั่งชุดเดิมซ้ำๆ หลายครั้ง โดยปกติแล้วการวนซ้ำจะเกิดขึ้นภายใต้เงื่อนไขบางอย่าง หรือทำซ้ำตามจำนวนครั้งที่กำหนด</p>
+
+                <div class="definition-box">
+                    <h4>แนวคิดหลัก</h4>
+                    <p><strong>"ตราบใดที่เงื่อนไขนี้เป็นจริง, ให้ทำสิ่งนั้นซ้ำไปเรื่อยๆ"</strong></p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>ประโยชน์</h4>
+                    <ul>
+                        <li>ลดความจำเป็นในการเขียนโค้ดซ้ำๆ</li>
+                        <li>จัดการกับข้อมูลจำนวนมากได้อย่างมีประสิทธิภาพ</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 2: ลูป while -->
+            <section id="section-2" class="content-section">
+                <h2>9.7.2 ลูป while (while Loop)</h2>
+                
+                <p>ลูป while เป็นโครงสร้างการวนซ้ำที่โปรแกรมจะตรวจสอบเงื่อนไขก่อนที่จะทำชุดคำสั่งในแต่ละรอบ หากเงื่อนไขเป็นจริง โปรแกรมจะทำชุดคำสั่งในบล็อกของลูป จากนั้นจะกลับไปตรวจสอบเงื่อนไขอีกครั้ง ทำซ้ำเช่นนี้ไปเรื่อยๆ จนกว่าเงื่อนไขจะเป็นเท็จ โปรแกรมจึงจะออกจากลูปและทำคำสั่งถัดไป</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>while condition:
+    # คำสั่งที่จะทำซ้ำตราบเท่าที่ condition เป็น True
+    # (ต้องมี indent หรือการเยื้อง)
+    # ควรมีคำสั่งที่ทำให้ condition เป็น False ในที่สุด</code></pre>
+                </div>
+
+                <h3>องค์ประกอบสำคัญของลูป while:</h3>
+                <div class="definition-box">
+                    <ol>
+                        <li><strong>การกำหนดค่าเริ่มต้น (Initialization):</strong> ตัวแปรที่ใช้ในเงื่อนไขของลูปมักจะต้องมีการกำหนดค่าเริ่มต้นก่อนเข้าลูป</li>
+                        <li><strong>เงื่อนไข (Condition):</strong> นิพจน์เปรียบเทียบที่ให้ผลลัพธ์เป็น True หรือ False ลูปจะทำงานตราบใดที่เงื่อนไขเป็น True</li>
+                        <li><strong>การอัปเดต (Update):</strong> ภายในบล็อกของลูป ต้องมีคำสั่งที่เปลี่ยนแปลงค่าของตัวแปรที่ใช้ในเงื่อนไข เพื่อให้เงื่อนไขสามารถเป็น False ได้ในที่สุด มิฉะนั้นจะเกิด ลูปไม่รู้จบ (Infinite Loop)</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างการทำงานของลูป while -->
+            <section id="section-3" class="content-section">
+                <h2>9.7.3 ตัวอย่างการทำงานของลูป while</h2>
+                
+                <h3>ตัวอย่างที่ 1: นับเลขขึ้น</h3>
+                <div class="example-container">
+                    <h4>โค้ด</h4>
+                    <div class="example-box">
+                        <pre><code>count = 1
+while count <= 5:
+    print(count)
+    count = count + 1 # หรือ count += 1
+print("จบการนับ")</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>คำอธิบาย</h4>
+                    <div class="example-box">
+                        <ol>
+                            <li>count = 1 (กำหนดค่าเริ่มต้น)</li>
+                            <li><strong>รอบที่ 1:</strong> count <= 5 (1 <= 5) เป็น True
+                                <ul>
+                                    <li>print(count) → แสดงผล 1</li>
+                                    <li>count = 2 (อัปเดตค่า)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 2:</strong> count <= 5 (2 <= 5) เป็น True
+                                <ul>
+                                    <li>print(count) → แสดงผล 2</li>
+                                    <li>count = 3</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 3:</strong> count <= 5 (3 <= 5) เป็น True
+                                <ul>
+                                    <li>print(count) → แสดงผล 3</li>
+                                    <li>count = 4</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 4:</strong> count <= 5 (4 <= 5) เป็น True
+                                <ul>
+                                    <li>print(count) → แสดงผล 4</li>
+                                    <li>count = 5</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 5:</strong> count <= 5 (5 <= 5) เป็น True
+                                <ul>
+                                    <li>print(count) → แสดงผล 5</li>
+                                    <li>count = 6</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 6:</strong> count <= 5 (6 <= 5) เป็น False
+                                <ul>
+                                    <li>ออกจากลูป</li>
+                                </ul>
+                            </li>
+                            <li>print("จบการนับ") → แสดงผล "จบการนับ"</li>
+                        </ol>
+                        
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        <pre>1
+2
+3
+4
+5
+จบการนับ</pre>
+                    </div>
+                </div>
+
+                <h3>ตัวอย่างที่ 2: การหาผลรวม</h3>
+                <div class="example-container">
+                    <h4>โค้ด</h4>
+                    <div class="example-box">
+                        <pre><code>total = 0
+num = 1
+while num <= 5:
+    total = total + num
+    num = num + 1
+print("ผลรวมคือ:", total)</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-container">
+                    <h4>คำอธิบาย</h4>
+                    <div class="example-box">
+                        <ol>
+                            <li>total = 0, num = 1 (กำหนดค่าเริ่มต้น)</li>
+                            <li><strong>รอบที่ 1:</strong> num <= 5 (1 <= 5) เป็น True
+                                <ul>
+                                    <li>total = 0 + 1 = 1</li>
+                                    <li>num = 2</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 2:</strong> num <= 5 (2 <= 5) เป็น True
+                                <ul>
+                                    <li>total = 1 + 2 = 3</li>
+                                    <li>num = 3</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 3:</strong> num <= 5 (3 <= 5) เป็น True
+                                <ul>
+                                    <li>total = 3 + 3 = 6</li>
+                                    <li>num = 4</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 4:</strong> num <= 5 (4 <= 5) เป็น True
+                                <ul>
+                                    <li>total = 6 + 4 = 10</li>
+                                    <li>num = 5</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 5:</strong> num <= 5 (5 <= 5) เป็น True
+                                <ul>
+                                    <li>total = 10 + 5 = 15</li>
+                                    <li>num = 6</li>
+                                </ul>
+                            </li>
+                            <li><strong>รอบที่ 6:</strong> num <= 5 (6 <= 5) เป็น False
+                                <ul>
+                                    <li>ออกจากลูป</li>
+                                </ul>
+                            </li>
+                            <li>print("ผลรวมคือ:", total) → แสดงผล "ผลรวมคือ: 15"</li>
+                        </ol>
+                        
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        <pre>ผลรวมคือ: 15</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ข้อควรระวัง -->
+            <section id="section-4" class="content-section">
+                <h2>9.7.4 ข้อควรระวัง: ลูปไม่รู้จบ (Infinite Loop)</h2>
+                
+                <p>ลูปไม่รู้จบเกิดขึ้นเมื่อเงื่อนไขของลูป while เป็น True เสมอ และไม่มีทางเปลี่ยนเป็น False ได้ ทำให้โปรแกรมทำงานซ้ำไปเรื่อยๆ ไม่มีที่สิ้นสุด</p>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างลูปไม่รู้จบ</h4>
+                    <div class="example-box">
+                        <pre><code># ตัวอย่างลูปไม่รู้จบ
+x = 10
+while x > 0:
+    print("Looping...")
+    # ไม่มีคำสั่งที่ทำให้ x มีค่าน้อยลงหรือเงื่อนไขเป็น False</code></pre>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h4>วิธีแก้ไข</h4>
+                    <p>ตรวจสอบให้แน่ใจว่ามีคำสั่งอัปเดตค่าตัวแปรที่เกี่ยวข้องกับเงื่อนไขในแต่ละรอบของลูป และคำสั่งนั้นทำให้เงื่อนไขเป็นเท็จได้ในที่สุด</p>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-5" class="content-section">
+                <h2>9.7.5 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการทำงานของลูป while และการติดตามการทำงานของโปรแกรม เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การติดตามลูป while (นับถอยหลัง)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>count = 5
+while count >= 1:
+    print(count)
+    count = count - 1
+print("เริ่ม!")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า count ในแต่ละรอบ</li>
+                            <li>สังเกตเงื่อนไขการหยุดลูป</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>count</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>count = 5</td><td>5</td><td></td></tr>
+                                <tr><td>2</td><td>while count >= 1:</td><td></td><td></td></tr>
+                                <tr><td>รอบ 1</td><td>print(count)</td><td>5</td><td>5</td></tr>
+                                <tr><td></td><td>count = count - 1</td><td>4</td><td></td></tr>
+                                <tr><td>รอบ 2</td><td>print(count)</td><td>4</td><td>4</td></tr>
+                                <tr><td></td><td>count = count - 1</td><td>3</td><td></td></tr>
+                                <tr><td>รอบ 3</td><td>print(count)</td><td>3</td><td>3</td></tr>
+                                <tr><td></td><td>count = count - 1</td><td>2</td><td></td></tr>
+                                <tr><td>รอบ 4</td><td>print(count)</td><td>2</td><td>2</td></tr>
+                                <tr><td></td><td>count = count - 1</td><td>1</td><td></td></tr>
+                                <tr><td>รอบ 5</td><td>print(count)</td><td>1</td><td>1</td></tr>
+                                <tr><td></td><td>count = count - 1</td><td>0</td><td></td></tr>
+                                <tr><td>2</td><td>while count >= 1: (0 >= 1 เป็น False)</td><td></td><td></td></tr>
+                                <tr><td>5</td><td>print("เริ่ม!")</td><td>0</td><td>เริ่ม!</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong><br>
+                        5<br>4<br>3<br>2<br>1<br>เริ่ม!</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การหาผลรวมในลูป while</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>total = 0
+i = 1
+while i <= 4:
+    total = total + (i * 2)
+    i = i + 1
+print("ผลรวม:", total)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า total และ i ในแต่ละรอบ</li>
+                            <li>คำนวณนิพจน์ (i * 2) ในแต่ละรอบก่อนบวกเข้า total</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>total</th>
+                                    <th>i</th>
+                                    <th>i * 2</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>total = 0</td><td>0</td><td>-</td><td></td><td></td></tr>
+                                <tr><td>2</td><td>i = 1</td><td>0</td><td>1</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>while i <= 4:</td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td>รอบ 1</td><td>total = total + (i * 2)</td><td>0 + (1*2) = 2</td><td>1</td><td>2</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>2</td><td>2</td><td></td><td></td></tr>
+                                <tr><td>รอบ 2</td><td>total = total + (i * 2)</td><td>2 + (2*2) = 6</td><td>2</td><td>4</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>6</td><td>3</td><td></td><td></td></tr>
+                                <tr><td>รอบ 3</td><td>total = total + (i * 2)</td><td>6 + (3*2) = 12</td><td>3</td><td>6</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>12</td><td>4</td><td></td><td></td></tr>
+                                <tr><td>รอบ 4</td><td>total = total + (i * 2)</td><td>12 + (4*2) = 20</td><td>4</td><td>8</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>20</td><td>5</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>while i <= 4: (5 <= 4 เป็น False)</td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td>6</td><td>print("ผลรวม:", total)</td><td>20</td><td>5</td><td></td><td>ผลรวม: 20</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> ผลรวม: 20</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การนับรอบลูป</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>x = 1
+count_loop = 0
+while x < 10:
+    x = x * 2
+    count_loop = count_loop + 1
+print(count_loop)</code></pre>
+                        <p>จงหาจำนวนรอบที่ลูปทำงาน และค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า x และ count_loop ในแต่ละรอบ</li>
+                            <li>นับจำนวนครั้งที่บล็อกของลูปถูกทำ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>count_loop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 1</td><td>1</td><td>-</td></tr>
+                                <tr><td>2</td><td>count_loop = 0</td><td>1</td><td>0</td></tr>
+                                <tr><td>3</td><td>while x < 10:</td><td></td><td></td></tr>
+                                <tr><td>รอบ 1</td><td>x = x * 2</td><td>2</td><td>0</td></tr>
+                                <tr><td></td><td>count_loop = count_loop + 1</td><td>2</td><td>1</td></tr>
+                                <tr><td>รอบ 2</td><td>x = x * 2</td><td>4</td><td>1</td></tr>
+                                <tr><td></td><td>count_loop = count_loop + 1</td><td>4</td><td>2</td></tr>
+                                <tr><td>รอบ 3</td><td>x = x * 2</td><td>8</td><td>2</td></tr>
+                                <tr><td></td><td>count_loop = count_loop + 1</td><td>8</td><td>3</td></tr>
+                                <tr><td>รอบ 4</td><td>x = x * 2</td><td>16</td><td>3</td></tr>
+                                <tr><td></td><td>count_loop = count_loop + 1</td><td>16</td><td>4</td></tr>
+                                <tr><td>3</td><td>while x < 10: (16 < 10 เป็น False)</td><td></td><td></td></tr>
+                                <tr><td>6</td><td>print(count_loop)</td><td>16</td><td>4</td></tr>
+                            </tbody>
+                        </table>
+                        <p>จำนวนรอบที่ลูปทำงานคือ 4 รอบ<br>
+                        ค่าที่แสดงผลคือ 4</p>
+                        <p><strong>คำตอบ:</strong> จำนวนรอบ 4, ผลลัพธ์ 4</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การเขียนลูป while (นับเลขคู่)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงเขียนรหัส Python โดยใช้ลูป while เพื่อแสดงผลตัวเลขคู่ตั้งแต่ 2 ถึง 10 (รวม 10 ด้วย)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กำหนดค่าเริ่มต้น</li>
+                            <li>กำหนดเงื่อนไขการวนซ้ำ</li>
+                            <li>กำหนดการอัปเดตค่าที่เหมาะสมเพื่อให้เป็นเลขคู่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <pre><code>num = 2
+while num <= 10:
+    print(num)
+    num = num + 2</code></pre>
+                        <p><strong>คำตอบ:</strong> ดูรหัส Python ข้างต้น</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การระบุลูปไม่รู้จบ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>i = 1
+while i <= 5:
+    print("Hello")
+    # i = i + 0</code></pre>
+                        <p>รหัสนี้จะทำงานอย่างไร? (ลูปไม่รู้จบหรือไม่) ถ้าไม่รู้จบเพราะอะไร?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบว่าตัวแปรที่ใช้ในเงื่อนไขมีการเปลี่ยนแปลงที่ทำให้เงื่อนไขเป็นเท็จได้หรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>รหัสนี้จะทำงานเป็น <strong>ลูปไม่รู้จบ (Infinite Loop)</strong></p>
+                        <p><strong>เหตุผล:</strong> ตัวแปร i ถูกกำหนดค่าเริ่มต้นเป็น 1 และเงื่อนไขคือ i <= 5 ซึ่งเป็นจริงเสมอ เพราะไม่มีคำสั่งใดๆ ในบล็อกของลูปที่จะเปลี่ยนแปลงค่าของ i ทำให้ i มีค่าเป็น 1 ตลอดไป เงื่อนไข 1 <= 5 จึงเป็นจริงตลอดเวลา ทำให้ลูปทำงานซ้ำๆ ไม่มีที่สิ้นสุด</p>
+                        <p><strong>คำตอบ:</strong> ลูปไม่รู้จบ, เพราะตัวแปร i ไม่มีการเปลี่ยนแปลงค่าภายในลูป ทำให้เงื่อนไข i <= 5 เป็นจริงตลอดไป</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-6" class="content-section">
+                <h2>9.7.6 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ลำดับการทำงานวนซ้ำด้วยลูป while" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การติดตามลูป while (นับขึ้น)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>x = 0
+while x < 3:
+    x = x + 1
+    print(x)
+print("เสร็จสิ้น")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า x ในแต่ละรอบ</li>
+                            <li>สังเกตเงื่อนไขการหยุดลูป</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>เงื่อนไข</th>
+                                    <th>x ก่อนอัปเดต</th>
+                                    <th>x หลังอัปเดต</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เริ่มต้น</td><td>-</td><td>0</td><td>-</td><td></td></tr>
+                                <tr><td>1</td><td>0 < 3 (True)</td><td>0</td><td>1</td><td>1</td></tr>
+                                <tr><td>2</td><td>1 < 3 (True)</td><td>1</td><td>2</td><td>2</td></tr>
+                                <tr><td>3</td><td>2 < 3 (True)</td><td>2</td><td>3</td><td>3</td></tr>
+                                <tr><td>4</td><td>3 < 3 (False)</td><td>3</td><td>-</td><td>เสร็จสิ้น</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong><br>1<br>2<br>3<br>เสร็จสิ้น</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การหาผลรวมในลูป while (ซับซ้อนขึ้น)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>total = 0
+counter = 10
+while counter >= 5:
+    total = total + counter
+    counter = counter - 2
+print(total)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า total และ counter ในแต่ละรอบ</li>
+                            <li>สังเกตการอัปเดตค่า counter ที่ลดลงทีละ 2</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>เงื่อนไข</th>
+                                    <th>total ก่อน</th>
+                                    <th>counter</th>
+                                    <th>total หลัง</th>
+                                    <th>counter หลัง</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เริ่มต้น</td><td>-</td><td>0</td><td>10</td><td>-</td><td>-</td></tr>
+                                <tr><td>1</td><td>10 >= 5 (True)</td><td>0</td><td>10</td><td>10</td><td>8</td></tr>
+                                <tr><td>2</td><td>8 >= 5 (True)</td><td>10</td><td>8</td><td>18</td><td>6</td></tr>
+                                <tr><td>3</td><td>6 >= 5 (True)</td><td>18</td><td>6</td><td>24</td><td>4</td></tr>
+                                <tr><td>4</td><td>4 >= 5 (False)</td><td>24</td><td>4</td><td>-</td><td>-</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 30</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การนับรอบลูป (และเงื่อนไขการหยุด)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>num = 100
+rounds = 0
+while num > 10:
+    num = num // 2 # หารเอาส่วน
+    rounds = rounds + 1
+print(rounds)</code></pre>
+                        <p>จงหาจำนวนรอบที่ลูปทำงาน และค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า num และ rounds ในแต่ละรอบ</li>
+                            <li>สังเกตเงื่อนไข num > 10</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>เงื่อนไข</th>
+                                    <th>num ก่อน</th>
+                                    <th>num หลัง</th>
+                                    <th>rounds</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เริ่มต้น</td><td>-</td><td>100</td><td>-</td><td>0</td></tr>
+                                <tr><td>1</td><td>100 > 10 (True)</td><td>100</td><td>50</td><td>1</td></tr>
+                                <tr><td>2</td><td>50 > 10 (True)</td><td>50</td><td>25</td><td>2</td></tr>
+                                <tr><td>3</td><td>25 > 10 (True)</td><td>25</td><td>12</td><td>3</td></tr>
+                                <tr><td>4</td><td>12 > 10 (True)</td><td>12</td><td>6</td><td>4</td></tr>
+                                <tr><td>5</td><td>6 > 10 (False)</td><td>6</td><td>-</td><td>4</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> จำนวนรอบ 4, ผลลัพธ์ 4</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การเขียนลูป while (นับถอยหลัง)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงเขียนรหัส Python โดยใช้ลูป while เพื่อแสดงผลตัวเลขตั้งแต่ 10 ถึง 1 (นับถอยหลัง)</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>กำหนดค่าเริ่มต้น</li>
+                            <li>กำหนดเงื่อนไขการวนซ้ำ</li>
+                            <li>กำหนดการอัปเดตค่าที่เหมาะสมเพื่อให้ลดลง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <pre><code>num = 10
+while num >= 1:
+    print(num)
+    num = num - 1</code></pre>
+                        <p><strong>คำตอบ:</strong> ดูรหัส Python ข้างต้น</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การระบุลูปไม่รู้จบ (การเปลี่ยนแปลงค่า)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>x = 0
+while x < 5:
+    print("Hello")
+    x = x + 1 # มีการเปลี่ยนแปลงค่า
+    x = x - 1 # มีการเปลี่ยนแปลงค่า</code></pre>
+                        <p>รหัสนี้จะทำงานอย่างไร? (ลูปไม่รู้จบหรือไม่) ถ้าไม่รู้จบเพราะอะไร?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบว่าค่าของ x มีการเปลี่ยนแปลงที่ทำให้เงื่อนไข x < 5 เป็นเท็จได้ในที่สุดหรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>รหัสนี้จะทำงานเป็น <strong>ลูปไม่รู้จบ (Infinite Loop)</strong></p>
+                        <p><strong>เหตุผล:</strong> แม้ว่า x จะมีการเปลี่ยนแปลงค่าในแต่ละรอบ (x = x + 1 แล้ว x = x - 1) แต่ผลลัพธ์สุดท้ายคือ x กลับไปมีค่าเดิมเสมอ (x จะเป็น 0 ตลอด) ทำให้เงื่อนไข x < 5 (0 < 5) เป็นจริงตลอดเวลา ลูปจึงทำงานซ้ำๆ ไม่มีที่สิ้นสุด</p>
+                        <p><strong>คำตอบ:</strong> ลูปไม่รู้จบ, เพราะค่าของ x ไม่มีการเปลี่ยนแปลงสุทธิ ทำให้เงื่อนไขของลูปเป็นจริงตลอดไป</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
