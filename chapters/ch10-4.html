@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 10.4: การวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลงวิธีการคิดในบางจุด - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 10.4: การวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลงวิธีการคิดในบางจุด</span>
+            </nav>
+            <h1>บทที่ 10.4: การวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลงวิธีการคิดในบางจุด</h1>
+            <p class="chapter-intro">การฝึกฝนทักษะการวิเคราะห์ผลกระทบของการเปลี่ยนแปลงในอัลกอริทึมต่อผลลัพธ์สุดท้าย</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">10.4.1 ความหมายของการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง</a></li>
+                    <li><a href="#section-2">10.4.2 วิธีการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง</a></li>
+                    <li><a href="#section-3">10.4.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">10.4.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะฝึกฝนทักษะการคิดเชิงวิเคราะห์ขั้นสูงขึ้น นั่นคือ การวิเคราะห์ผลลัพธ์ของขั้นตอนวิธี (Algorithm Output) เมื่อมีการเปลี่ยนแปลงวิธีการคิด หรือคำสั่งบางส่วนในโปรแกรม การทำความเข้าใจว่าการเปลี่ยนแปลงเล็กน้อยในโค้ดสามารถส่งผลกระทบต่อผลลัพธ์สุดท้ายได้อย่างไร เป็นสิ่งสำคัญอย่างยิ่งในการแก้ไขข้อผิดพลาด (Debugging) การปรับปรุงประสิทธิภาพ และการพัฒนาโปรแกรมให้ตรงตามความต้องการ</p>
+            </section>
+
+            <!-- Section 1: ความหมายของการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง -->
+            <section id="section-1" class="content-section">
+                <h2>10.4.1 ความหมายของการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง</h2>
+                
+                <p>การวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลงวิธีการคิดในบางจุด (Analysis of Output Changes due to Algorithm Modifications) คือ กระบวนการที่เราประเมินว่าผลลัพธ์ของโปรแกรมจะเปลี่ยนไปอย่างไร เมื่อมีการแก้ไขคำสั่ง, ค่าเริ่มต้น, เงื่อนไข, หรือการดำเนินการใดๆ ภายในขั้นตอนวิธี</p>
+
+                <h3>ทำไมต้องวิเคราะห์การเปลี่ยนแปลง?</h3>
+                <div class="definition-box">
+                    <h4>1. การดีบัก:</h4>
+                    <p>เมื่อโปรแกรมทำงานผิดพลาด การระบุว่าการเปลี่ยนแปลงในส่วนใดที่ทำให้เกิดปัญหาเป็นสิ่งสำคัญ</p>
+
+                    <h4>2. การปรับแต่ง:</h4>
+                    <p>เพื่อปรับปรุงอัลกอริทึมให้มีประสิทธิภาพดีขึ้น หรือให้ผลลัพธ์ที่แตกต่างออกไปตามที่ต้องการ</p>
+
+                    <h4>3. การทำความเข้าใจเชิงลึก:</h4>
+                    <p>ช่วยให้เข้าใจถึงความสัมพันธ์ระหว่างส่วนต่างๆ ของโค้ด และผลกระทบที่เกิดขึ้น</p>
+
+                    <h4>4. เตรียมสอบ:</h4>
+                    <p>ข้อสอบ สอวน. คอมพิวเตอร์ มักมีโจทย์ลักษณะนี้เพื่อทดสอบความเข้าใจตรรกะของโปรแกรม</p>
+                </div>
+            </section>
+
+            <!-- Section 2: วิธีการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง -->
+            <section id="section-2" class="content-section">
+                <h2>10.4.2 วิธีการวิเคราะห์ผลลัพธ์เมื่อมีการเปลี่ยนแปลง</h2>
+                
+                <p>หัวใจสำคัญของการวิเคราะห์นี้คือการใช้เทคนิค การแกะรอยโปรแกรม (Program Tracing) ร่วมกับการเปรียบเทียบ</p>
+
+                <h3>ขั้นตอนการวิเคราะห์:</h3>
+                <div class="definition-box">
+                    <h4>1. ทำความเข้าใจโค้ดต้นฉบับ:</h4>
+                    <p>แกะรอยโปรแกรมต้นฉบับเพื่อหาผลลัพธ์ที่คาดหวัง</p>
+
+                    <h4>2. ระบุจุดที่เปลี่ยนแปลง:</h4>
+                    <p>หาว่าคำสั่ง, ค่า, หรือเงื่อนไขใดที่ถูกแก้ไข</p>
+
+                    <h4>3. แกะรอยโปรแกรมที่แก้ไขแล้ว:</h4>
+                    <ul>
+                        <li>เริ่มต้นแกะรอยโปรแกรมใหม่ตั้งแต่ต้น</li>
+                        <li>เมื่อถึงจุดที่มีการเปลี่ยนแปลง ให้ประมวลผลตามคำสั่งที่แก้ไขใหม่นั้น</li>
+                        <li>ติดตามผลกระทบของการเปลี่ยนแปลงนั้นต่อค่าของตัวแปรอื่นๆ และลำดับการทำงานของโปรแกรมที่เหลือ</li>
+                    </ul>
+
+                    <h4>4. เปรียบเทียบผลลัพธ์:</h4>
+                    <p>เปรียบเทียบผลลัพธ์สุดท้ายที่ได้จากโปรแกรมที่แก้ไขแล้ว กับผลลัพธ์จากโปรแกรมต้นฉบับ เพื่อระบุความแตกต่าง</p>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>10.4.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การเปลี่ยนแปลงค่าเริ่มต้น</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET A TO 10
+  SET B TO A + 5
+  PRINT B
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 1 จาก <code>SET A TO 10</code> เป็น <code>SET A TO 20</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-1')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า A และ B</li>
+                            <li>สังเกตว่าการเปลี่ยนค่าเริ่มต้นของ A จะส่งผลต่อค่า B ที่คำนวณจาก A</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-1')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>START</td><td></td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>1</td><td>SET A TO 20</td><td>20</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>SET B TO A + 5</td><td>20</td><td>25</td><td></td></tr>
+                                <tr><td>3</td><td>PRINT B</td><td>20</td><td>25</td><td>25</td></tr>
+                                <tr><td>END</td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 25</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การเปลี่ยนแปลงการดำเนินการในลูป</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET i TO 1
+  SET total TO 0
+  WHILE i <= 3 DO
+    total = total + i
+    i = i + 1
+  END WHILE
+  PRINT total
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 4 จาก <code>total = total + i</code> เป็น <code>total = total + (i * 2)</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-2')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ลูปยังคงทำงาน 3 รอบ (สำหรับ i เป็น 1, 2, 3)</li>
+                            <li>การเปลี่ยนแปลงคือการคำนวณ total ในแต่ละรอบ</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-2')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด/คำสั่ง</th>
+                                    <th>i</th>
+                                    <th>total</th>
+                                    <th>i <= 3</th>
+                                    <th>i * 2</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>SET i TO 1</td><td>1</td><td>-</td><td></td><td></td><td></td></tr>
+                                <tr><td>-</td><td>SET total TO 0</td><td>1</td><td>0</td><td></td><td></td><td></td></tr>
+                                <tr><td>1</td><td>WHILE i <= 3 DO</td><td>1</td><td>0</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 2)</td><td>1</td><td>2</td><td></td><td>2</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>2</td><td>2</td><td></td><td></td><td></td></tr>
+                                <tr><td>2</td><td>WHILE i <= 3 DO</td><td>2</td><td>2</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 2)</td><td>2</td><td>6</td><td></td><td>4</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>3</td><td>6</td><td></td><td></td><td></td></tr>
+                                <tr><td>3</td><td>WHILE i <= 3 DO</td><td>3</td><td>6</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 2)</td><td>3</td><td>12</td><td></td><td>6</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>4</td><td>12</td><td></td><td></td><td></td></tr>
+                                <tr><td>4</td><td>WHILE i <= 3 DO</td><td>4</td><td>12</td><td>False</td><td></td><td></td></tr>
+                                <tr><td>-</td><td>PRINT total</td><td>4</td><td>12</td><td></td><td></td><td>12</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 12</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การเปลี่ยนแปลงเงื่อนไข IF</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  INPUT score
+  IF score >= 50 THEN
+    PRINT "ผ่าน"
+  ELSE
+    PRINT "ไม่ผ่าน"
+  END IF
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าผู้ใช้ป้อนค่า Score = 48 และเปลี่ยนบรรทัดที่ 3 จาก <code>IF score >= 50 THEN</code> เป็น <code>IF score > 40 THEN</code> จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-3')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เงื่อนไข IF เปลี่ยนไป</li>
+                            <li>ประเมินเงื่อนไขใหม่ด้วย Input ที่กำหนด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-3')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><strong>Start:</strong> โปรแกรมเริ่มต้น</li>
+                            <li><strong>Input Score:</strong> รับค่า Score = 48</li>
+                            <li><strong>IF score > 40 THEN:</strong> ตรวจสอบเงื่อนไข 48 > 40 ซึ่งเป็น True</li>
+                            <li>ตามเส้นทาง <strong>True</strong> ไปยังสัญลักษณ์ประมวลผล</li>
+                            <li><strong>Print "ผ่าน":</strong> แสดงผล "ผ่าน"</li>
+                            <li><strong>End:</strong> โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ผ่าน</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การเปลี่ยนแปลงเงื่อนไข WHILE</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET x TO 1
+  WHILE x < 10 DO
+    x = x * 2
+  END WHILE
+  PRINT x
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 3 จาก <code>WHILE x < 10 DO</code> เป็น <code>WHILE x <= 10 DO</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-4')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เงื่อนไข WHILE เปลี่ยนไป ทำให้ลูปอาจทำงานเพิ่มอีก 1 รอบ</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-4')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด/คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>x <= 10</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>SET x TO 1</td><td>1</td><td></td><td></td></tr>
+                                <tr><td>1</td><td>WHILE x <= 10 DO</td><td>1</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>x = x * 2</td><td>2</td><td></td><td></td></tr>
+                                <tr><td>2</td><td>WHILE x <= 10 DO</td><td>2</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>x = x * 2</td><td>4</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>WHILE x <= 10 DO</td><td>4</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>x = x * 2</td><td>8</td><td></td><td></td></tr>
+                                <tr><td>4</td><td>WHILE x <= 10 DO</td><td>8</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>x = x * 2</td><td>16</td><td></td><td></td></tr>
+                                <tr><td>5</td><td>WHILE x <= 10 DO</td><td>16</td><td>False</td><td></td></tr>
+                                <tr><td>-</td><td>PRINT x</td><td>16</td><td></td><td>16</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 16</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การเปลี่ยนแปลงการอัปเดตในลูป</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET count TO 1
+  WHILE count <= 5 DO
+    PRINT count
+    count = count + 1
+  END WHILE
+  PRINT "จบ"
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 4 จาก <code>count = count + 1</code> เป็น <code>count = count + 2</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-5')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>การอัปเดต count เปลี่ยนไป ทำให้ลูปทำงานน้อยลง หรือข้ามบางค่า</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-5')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด/คำสั่ง</th>
+                                    <th>count</th>
+                                    <th>count <= 5</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>SET count TO 1</td><td>1</td><td></td><td></td></tr>
+                                <tr><td>1</td><td>WHILE count <= 5 DO</td><td>1</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>PRINT count</td><td>1</td><td></td><td>1</td></tr>
+                                <tr><td></td><td>count = count + 2</td><td>3</td><td></td><td></td></tr>
+                                <tr><td>2</td><td>WHILE count <= 5 DO</td><td>3</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>PRINT count</td><td>3</td><td></td><td>3</td></tr>
+                                <tr><td></td><td>count = count + 2</td><td>5</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>WHILE count <= 5 DO</td><td>5</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>PRINT count</td><td>5</td><td></td><td>5</td></tr>
+                                <tr><td></td><td>count = count + 2</td><td>7</td><td></td><td></td></tr>
+                                <tr><td>4</td><td>WHILE count <= 5 DO</td><td>7</td><td>False</td><td></td></tr>
+                                <tr><td>-</td><td>PRINT "จบ"</td><td>7</td><td></td><td>จบ</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>1
+3
+5
+จบ</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>10.4.4 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การเปลี่ยนแปลงค่าเริ่มต้น</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET X TO 5
+  SET Y TO X * 2
+  Y = Y - 3
+  PRINT Y
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 1 จาก <code>SET X TO 5</code> เป็น <code>SET X TO 8</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-6')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-6" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ค่าเริ่มต้นของ X เปลี่ยนไป ส่งผลต่อการคำนวณ Y</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-6')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-6" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>X = 8, Y = 8 × 2 = 16, Y = 16 - 3 = 13</p>
+                        <p><strong>ผลลัพธ์คือ 13</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การเปลี่ยนแปลงการดำเนินการในลูป</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET i TO 1
+  SET sum TO 0
+  WHILE i <= 3 DO
+    sum = sum + i
+    i = i + 1
+  END WHILE
+  PRINT sum
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 4 จาก <code>sum = sum + i</code> เป็น <code>sum = sum + (i * i)</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-7')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-7" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ลูปยังคงทำงาน 3 รอบ</li>
+                            <li>การคำนวณ sum ในแต่ละรอบเปลี่ยนไป (บวกด้วยกำลังสองของ i)</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-7')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-7" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รอบ 1: sum = 0 + (1 × 1) = 1</p>
+                        <p>รอบ 2: sum = 1 + (2 × 2) = 5</p>
+                        <p>รอบ 3: sum = 5 + (3 × 3) = 14</p>
+                        <p><strong>ผลลัพธ์คือ 14</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การเปลี่ยนแปลงเงื่อนไข IF-ELSE</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  INPUT num
+  IF num % 2 == 0 THEN
+    PRINT "Even"
+  ELSE
+    PRINT "Odd"
+  END IF
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าผู้ใช้ป้อนค่า num = 7 และเปลี่ยนบรรทัดที่ 3 จาก <code>IF num % 2 == 0 THEN</code> เป็น <code>IF num > 5 THEN</code> จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-8')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-8" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เงื่อนไข IF เปลี่ยนไป</li>
+                            <li>ประเมินเงื่อนไขใหม่ด้วย Input ที่กำหนด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-8')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-8" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>num = 7, เงื่อนไข 7 > 5 เป็น True</p>
+                        <p>ดังนั้นจะเข้าบล็อก THEN และแสดงผล "Even"</p>
+                        <p><strong>ผลลัพธ์คือ "Even"</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การเปลี่ยนแปลงเงื่อนไข WHILE</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET count TO 0
+  WHILE count < 5 DO
+    PRINT count
+    count = count + 1
+  END WHILE
+  PRINT "Done"
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 3 จาก <code>WHILE count < 5 DO</code> เป็น <code>WHILE count <= 5 DO</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-9')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-9" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เงื่อนไข WHILE เปลี่ยนไป ทำให้ลูปทำงานเพิ่มอีก 1 รอบ</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-9')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-9" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ลูปจะทำงานเมื่อ count เป็น 0, 1, 2, 3, 4, 5 (6 รอบ)</p>
+                        <p><strong>ผลลัพธ์คือ:</strong></p>
+                        <pre>0
+1
+2
+3
+4
+5
+Done</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การเปลี่ยนแปลงการอัปเดตในลูป (และผลลัพธ์)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong></p>
+                        <p>กำหนดรหัสเทียมต้นฉบับ:</p>
+                        <pre><code>START
+  SET x TO 10
+  WHILE x > 0 DO
+    PRINT x
+    x = x - 2
+  END WHILE
+  PRINT "Finished"
+END</code></pre>
+                        <p><strong>คำถามย่อย:</strong> ถ้าเปลี่ยนบรรทัดที่ 4 จาก <code>x = x - 2</code> เป็น <code>x = x - 3</code> จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-10')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-10" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>การอัปเดต x เปลี่ยนไป ทำให้ลูปทำงานน้อยลง และค่าที่พิมพ์ออกมาก็เปลี่ยนไป</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-10')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-10" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รอบ 1: PRINT 10, x = 10 - 3 = 7</p>
+                        <p>รอบ 2: PRINT 7, x = 7 - 3 = 4</p>
+                        <p>รอบ 3: PRINT 4, x = 4 - 3 = 1</p>
+                        <p>รอบ 4: PRINT 1, x = 1 - 3 = -2</p>
+                        <p>รอบ 5: x = -2 (≤ 0), ออกจากลูป</p>
+                        <p><strong>ผลลัพธ์คือ:</strong></p>
+                        <pre>10
+7
+4
+1
+Finished</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
