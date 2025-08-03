@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 10.5: โจทย์ปัญหาเชิงตรรกะและปริศนา - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 10.5: โจทย์ปัญหาเชิงตรรกะและปริศนา</span>
+            </nav>
+            <h1>บทที่ 10.5: โจทย์ปัญหาเชิงตรรกะและปริศนา</h1>
+            <p class="chapter-intro">การฝึกฝนทักษะการคิดเชิงวิเคราะห์และการแก้ปัญหาที่ซับซ้อนผ่านโจทย์ปัญหาเชิงตรรกะและปริศนา</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">10.5.1 ลักษณะของโจทย์ปัญหาเชิงตรรกะและปริศนา</a></li>
+                    <li><a href="#section-2">10.5.2 แนวทางการแก้ปัญหา</a></li>
+                    <li><a href="#section-3">10.5.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะฝึกฝนทักษะการคิดเชิงวิเคราะห์และการแก้ปัญหาที่ซับซ้อนผ่าน โจทย์ปัญหาเชิงตรรกะและปริศนา (Logical Puzzles) ซึ่งมักไม่เกี่ยวข้องกับการคำนวณทางคณิตศาสตร์โดยตรง แต่เน้นการใช้เหตุผล การจัดระบบข้อมูล การตั้งสมมติฐาน และการหักล้างเพื่อหาข้อสรุปที่ถูกต้อง ปัญหาเหล่านี้เป็นส่วนสำคัญในการทดสอบความสามารถในการคิดอย่างเป็นระบบและเป็นตรรกะ ซึ่งเป็นทักษะที่จำเป็นอย่างยิ่งในวิทยาการคอมพิวเตอร์</p>
+            </section>
+
+            <!-- Section 1: ลักษณะของโจทย์ปัญหาเชิงตรรกะและปริศนา -->
+            <section id="section-1" class="content-section">
+                <h2>10.5.1 ลักษณะของโจทย์ปัญหาเชิงตรรกะและปริศนา</h2>
+                
+                <p>โจทย์ประเภทนี้มักจะให้ข้อมูลมาเป็นชุด โดยข้อมูลบางส่วนอาจดูขัดแย้งกัน หรือมีเงื่อนไขที่ต้องพิจารณาอย่างรอบคอบ เป้าหมายคือการหาข้อสรุปที่สอดคล้องกับข้อมูลและเงื่อนไขทั้งหมด</p>
+
+                <h3>ประเภทของปัญหาที่พบบ่อย:</h3>
+                <div class="definition-box">
+                    <h4>1. ปัญหาการจัดสรร/การกำหนด (Allocation/Assignment Problems):</h4>
+                    <p>การจับคู่คนกับสิ่งของ, การจัดตำแหน่ง, การจัดตารางเวลา โดยมีเงื่อนไขจำกัด</p>
+
+                    <h4>2. ปัญหาเส้นทาง/การเดินทาง (Pathfinding/Route Problems):</h4>
+                    <p>การหาเส้นทางที่สั้นที่สุด, การเดินทางที่ผ่านเงื่อนไขบางอย่าง (มักเกี่ยวข้องกับกราฟ)</p>
+
+                    <h4>3. ปัญหาการชั่งน้ำหนัก (Weighing Problems):</h4>
+                    <p>การใช้เครื่องชั่งเพื่อหาสิ่งของที่แตกต่าง (เช่น น้ำหนักไม่เท่ากัน) จากกลุ่มสิ่งของ</p>
+
+                    <h4>4. ปัญหาคนพูดจริง/พูดโกหก (Liar Puzzles):</h4>
+                    <p>(ได้เรียนรู้ไปในบทที่ 6.3) การระบุว่าใครพูดจริงใครพูดโกหกจากข้อความที่ให้มา</p>
+
+                    <h4>5. ปริศนาตรรกะทั่วไป (General Logical Puzzles):</h4>
+                    <p>ปัญหาอื่นๆ ที่ต้องใช้การอนุมานเชิงตรรกะ</p>
+                </div>
+            </section>
+
+            <!-- Section 2: แนวทางการแก้ปัญหา -->
+            <section id="section-2" class="content-section">
+                <h2>10.5.2 แนวทางการแก้ปัญหา</h2>
+                
+                <h3>ขั้นตอนการแก้ปัญหา:</h3>
+                <div class="definition-box">
+                    <h4>1. ทำความเข้าใจโจทย์:</h4>
+                    <p>อ่านโจทย์ให้ละเอียด ระบุข้อมูลทั้งหมดที่ให้มา และเงื่อนไขต่างๆ</p>
+
+                    <h4>2. กำหนดตัวแปร/สัญลักษณ์:</h4>
+                    <p>ใช้สัญลักษณ์หรือตัวแปรเพื่อแทนบุคคล, สิ่งของ, สถานะ, หรือข้อเท็จจริงที่เกี่ยวข้อง เพื่อให้ง่ายต่อการจดบันทึกและอ้างอิง</p>
+
+                    <h4>3. สร้างตาราง/แผนภาพ:</h4>
+                    <p>ใช้เครื่องมือช่วยคิด เช่น</p>
+                    <ul>
+                        <li><strong>ตาราง (Table/Matrix):</strong> เหมาะสำหรับปัญหาการจัดสรร การจับคู่ เพื่อบันทึกความเป็นไปได้และตัดความเป็นไปไม่ได้</li>
+                        <li><strong>แผนภาพ (Diagram/Graph):</strong> เหมาะสำหรับปัญหาเส้นทาง หรือปัญหาที่เกี่ยวข้องกับความสัมพันธ์เชิงพื้นที่</li>
+                        <li><strong>ผังต้นไม้ (Decision Tree):</strong> สำหรับปัญหาที่ต้องมีการตัดสินใจเป็นลำดับ</li>
+                    </ul>
+
+                    <h4>4. ตั้งสมมติฐาน (Hypothesis) และหักล้าง (Elimination):</h4>
+                    <ul>
+                        <li>เริ่มต้นด้วยข้อมูลที่ชัดเจนที่สุด หรือเงื่อนไขที่จำกัดที่สุด</li>
+                        <li>หากไม่แน่ใจ ให้ตั้งสมมติฐานสำหรับความเป็นไปได้หนึ่ง (เช่น สมมติว่าคนนี้ทำสิ่งนี้)</li>
+                        <li>จากสมมติฐานนั้น ให้หาข้อสรุปที่ตามมา และบันทึกผลลงในตาราง/แผนภาพ</li>
+                        <li>หากข้อสรุปที่ได้นำไปสู่ ความขัดแย้ง (Contradiction) กับข้อมูลหรือเงื่อนไขอื่น ๆ แสดงว่าสมมติฐานเริ่มต้นนั้นผิด ให้หักล้างความเป็นไปได้นั้นทิ้งไป</li>
+                        <li>ทำซ้ำขั้นตอนการตั้งสมมติฐานและหักล้างจนกว่าจะเหลือข้อสรุปที่ถูกต้องเพียงหนึ่งเดียว</li>
+                    </ul>
+
+                    <h4>5. ตรวจสอบคำตอบ:</h4>
+                    <p>เมื่อได้ข้อสรุปแล้ว ให้ย้อนกลับไปตรวจสอบกับข้อมูลและเงื่อนไขทั้งหมดในโจทย์อีกครั้งว่าสอดคล้องกันหรือไม่</p>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>10.5.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: ปัญหาการจัดสรร (ตาราง)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> มี 3 คน (A, B, C) และ 3 อาชีพ (หมอ, ครู, วิศวกร) โดยมีข้อมูลดังนี้:</p>
+                        <ul>
+                            <li>A ไม่ใช่หมอ</li>
+                            <li>B ไม่ใช่ครู</li>
+                            <li>คนที่ทำงานครูคือ C</li>
+                        </ul>
+                        <p>จงระบุว่าแต่ละคนมีอาชีพอะไร</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-1')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างตาราง 3x3 เพื่อบันทึกความเป็นไปได้ (✓) และความเป็นไปไม่ได้ (X)</li>
+                            <li>ใช้ข้อมูลที่ให้มาในการหักล้างความเป็นไปได้</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-1')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p><strong>ขั้นตอนที่ 1:</strong> A ไม่ใช่หมอ</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>คน</th>
+                                    <th>หมอ</th>
+                                    <th>ครู</th>
+                                    <th>วิศวกร</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td></td><td></td></tr>
+                                <tr><td>B</td><td></td><td></td><td></td></tr>
+                                <tr><td>C</td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <p><strong>ขั้นตอนที่ 2:</strong> B ไม่ใช่ครู</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>คน</th>
+                                    <th>หมอ</th>
+                                    <th>ครู</th>
+                                    <th>วิศวกร</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td></td><td></td></tr>
+                                <tr><td>B</td><td></td><td>X</td><td></td></tr>
+                                <tr><td>C</td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <p><strong>ขั้นตอนที่ 3:</strong> คนที่ทำงานครูคือ C</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>คน</th>
+                                    <th>หมอ</th>
+                                    <th>ครู</th>
+                                    <th>วิศวกร</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td>X</td><td></td></tr>
+                                <tr><td>B</td><td></td><td>X</td><td></td></tr>
+                                <tr><td>C</td><td>X</td><td>✓</td><td>X</td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <p><strong>ขั้นตอนที่ 4:</strong> สรุปผลจากตาราง</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>คน</th>
+                                    <th>หมอ</th>
+                                    <th>ครู</th>
+                                    <th>วิศวกร</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td>X</td><td>✓</td></tr>
+                                <tr><td>B</td><td>✓</td><td>X</td><td>X</td></tr>
+                                <tr><td>C</td><td>X</td><td>✓</td><td>X</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> A เป็นวิศวกร, B เป็นหมอ, C เป็นครู</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: ปัญหาเส้นทาง (กราฟ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จากแผนที่เมือง A, B, C, D, E ดังรูป (ตัวเลขบนเส้นคือระยะทาง) จงหาเส้นทางที่สั้นที่สุดจากเมือง A ไปเมือง E</p>
+                        <pre>
+     A ----3---- B
+     |           |
+     2           4
+     |           |
+     C ----1---- D ----5---- E
+        </pre>
+                    </div>
+
+                    <button onclick="toggleSection('approach-2')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้การไล่เส้นทางที่เป็นไปได้ทั้งหมดจาก A ไป E และคำนวณระยะทางรวม</li>
+                            <li>หรือใช้ Algorithm เช่น Dijkstra's Algorithm (สำหรับโจทย์ที่ซับซ้อนกว่านี้)</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-2')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>เส้นทางที่เป็นไปได้จาก A ไป E:</p>
+                        <ul>
+                            <li><strong>A → B → D → E:</strong> ระยะทาง: 3+4+5=12</li>
+                            <li><strong>A → C → D → E:</strong> ระยะทาง: 2+1+5=8</li>
+                        </ul>
+                        <p>เปรียบเทียบระยะทาง: 12 และ 8</p>
+                        <p><strong>คำตอบ:</strong> A → C → D → E, ระยะทาง 8</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: ปัญหาการชั่งน้ำหนัก (เหรียญปลอม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> มีเหรียญ 9 เหรียญ ซึ่งมีเหรียญปลอม 1 เหรียญที่มีน้ำหนักเบากว่าเหรียญจริง จงหาวิธีใช้เครื่องชั่งสองแขน (ตาชั่ง) เพียง 2 ครั้ง เพื่อหาเหรียญปลอม</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-3')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แบ่งกลุ่มเหรียญอย่างเป็นระบบ</li>
+                            <li>ผลลัพธ์จากการชั่งแต่ละครั้งจะช่วยลดจำนวนเหรียญที่ต้องสงสัย</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-3')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p><strong>การชั่งครั้งที่ 1:</strong></p>
+                        <ul>
+                            <li>แบ่งเหรียญ 9 เหรียญออกเป็น 3 กอง กองละ 3 เหรียญ: (ก1, ก2, ก3)</li>
+                            <li>นำกองที่ 1 (ก1) ไปชั่งกับกองที่ 2 (ก2)</li>
+                        </ul>
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        <ul>
+                            <li>ถ้า ก1 = ก2 (สมดุล): แสดงว่าเหรียญปลอมอยู่ในกองที่ 3 (ก3)</li>
+                            <li>ถ้า ก1 < ก2 (ก1 เบากว่า): แสดงว่าเหรียญปลอมอยู่ในกองที่ 1 (ก1)</li>
+                            <li>ถ้า ก1 > ก2 (ก2 เบากว่า): แสดงว่าเหรียญปลอมอยู่ในกองที่ 2 (ก2)</li>
+                        </ul>
+                        <p>ตอนนี้เราเหลือเหรียญที่ต้องสงสัยเพียง 3 เหรียญ</p>
+                        
+                        <p><strong>การชั่งครั้งที่ 2:</strong></p>
+                        <ul>
+                            <li>นำกองเหรียญที่ต้องสงสัย 3 เหรียญนั้นมา (สมมติว่าเป็น $H_1, H_2, H_3$)</li>
+                            <li>นำ $H_1$ ไปชั่งกับ $H_2$</li>
+                        </ul>
+                        <p><strong>ผลลัพธ์:</strong></p>
+                        <ul>
+                            <li>ถ้า $H_1 = H_2$ (สมดุล): แสดงว่าเหรียญปลอมคือ $H_3$</li>
+                            <li>ถ้า $H_1 < H_2$ ($H_1$ เบากว่า): แสดงว่าเหรียญปลอมคือ $H_1$</li>
+                            <li>ถ้า $H_1 > H_2$ ($H_2$ เบากว่า): แสดงว่าเหรียญปลอมคือ $H_2$</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> ด้วย 2 ครั้ง คุณสามารถหาเหรียญปลอมได้เสมอ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: ปริศนาตรรกะ (อายุ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> มี 3 คน (สมชาย, สมหญิง, สมศักดิ์) มีอายุ 10, 12, 15 ปี (ไม่เรียงตามลำดับ)</p>
+                        <ul>
+                            <li>สมชายอายุมากกว่าสมหญิง</li>
+                            <li>สมศักดิ์อายุไม่ถึง 12 ปี</li>
+                        </ul>
+                        <p>จงหาอายุของแต่ละคน</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-4')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ข้อมูลที่ให้มาในการหักล้างความเป็นไปได้ในตาราง</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-4')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>อายุที่เป็นไปได้: 10, 12, 15</p>
+                        
+                        <p><strong>สมศักดิ์อายุไม่ถึง 12 ปี:</strong></p>
+                        <p>แสดงว่าสมศักดิ์อายุ 10 ปี (เพราะ 12 และ 15 เกิน 12)</p>
+                        <p>สมศักดิ์ = 10 ปี</p>
+                        
+                        <p><strong>สมชายอายุมากกว่าสมหญิง:</strong></p>
+                        <p>อายุที่เหลือคือ 12 และ 15</p>
+                        <ul>
+                            <li>ถ้าสมชาย 12, สมหญิงจะเป็น 15 (ขัดแย้ง: สมชายต้องมากกว่าสมหญิง)</li>
+                            <li>ถ้าสมชาย 15, สมหญิงจะเป็น 12 (สอดคล้อง)</li>
+                        </ul>
+                        <p>สมชาย = 15 ปี</p>
+                        <p>สมหญิง = 12 ปี</p>
+                        
+                        <p><strong>คำตอบ:</strong> สมชายอายุ 15 ปี, สมหญิงอายุ 12 ปี, สมศักดิ์อายุ 10 ปี</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: ปริศนาตรรกะ (การจัดกลุ่ม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> มีลูกบอล 3 สี (แดง, เขียว, น้ำเงิน) และกล่อง 3 ใบ (A, B, C) โดยแต่ละกล่องจะใส่ลูกบอลได้ 1 สีเท่านั้น</p>
+                        <ul>
+                            <li>กล่อง A ไม่ใช่สีแดง</li>
+                            <li>กล่อง B ไม่ใช่สีน้ำเงิน</li>
+                            <li>กล่อง C ไม่ใช่สีเขียว</li>
+                            <li>กล่อง B ไม่ใช่สีแดง</li>
+                        </ul>
+                        <p>จงระบุว่าแต่ละกล่องใส่ลูกบอลสีอะไร</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-5')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างตารางเพื่อบันทึกความเป็นไปได้และหักล้าง</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-5')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รวมข้อมูลในตาราง:</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>กล่อง</th>
+                                    <th>แดง</th>
+                                    <th>เขียว</th>
+                                    <th>น้ำเงิน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td></td><td></td></tr>
+                                <tr><td>B</td><td>X</td><td></td><td>X</td></tr>
+                                <tr><td>C</td><td></td><td>X</td><td></td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>จากตาราง:</p>
+                        <p><strong>สำหรับกล่อง B:</strong> ช่องแดงและน้ำเงินเป็น X ดังนั้นกล่อง B ต้องเป็นสีเขียว</p>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>กล่อง</th>
+                                    <th>แดง</th>
+                                    <th>เขียว</th>
+                                    <th>น้ำเงิน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>A</td><td>X</td><td>X</td><td>✓</td></tr>
+                                <tr><td>B</td><td>X</td><td>✓</td><td>X</td></tr>
+                                <tr><td>C</td><td>✓</td><td>X</td><td>X</td></tr>
+                            </tbody>
+                        </table>
+                        
+                        <p><strong>คำตอบ:</strong> กล่อง A ใส่ลูกบอลสีน้ำเงิน, กล่อง B ใส่ลูกบอลสีเขียว, กล่อง C ใส่ลูกบอลสีแดง</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
