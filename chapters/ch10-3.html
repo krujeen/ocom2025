@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 10.3: การวิเคราะห์จำนวนครั้งของการคิดคำนวณในกระบวนการทำงาน - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 10.3: การวิเคราะห์จำนวนครั้งของการคิดคำนวณในกระบวนการทำงาน</span>
+            </nav>
+            <h1>บทที่ 10.3: การวิเคราะห์จำนวนครั้งของการคิดคำนวณในกระบวนการทำงาน</h1>
+            <p class="chapter-intro">การฝึกฝนทักษะการวิเคราะห์ประสิทธิภาพของอัลกอริทึมผ่านการนับจำนวนครั้งของการดำเนินการพื้นฐาน</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">10.3.1 ความหมายของการวิเคราะห์จำนวนครั้งของการคิดคำนวณ</a></li>
+                    <li><a href="#section-2">10.3.2 วิธีการนับจำนวนครั้งของการคิดคำนวณ</a></li>
+                    <li><a href="#section-3">10.3.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">10.3.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะฝึกฝนทักษะสำคัญในการคิดเชิงวิเคราะห์ นั่นคือ การวิเคราะห์จำนวนครั้งของการคิดคำนวณ หรือการประเมินว่าขั้นตอนวิธี (Algorithm) หรือโปรแกรมหนึ่งๆ ใช้ทรัพยากร (เช่น เวลาในการประมวลผล) ไปมากน้อยเพียงใด โดยการนับจำนวนครั้งของการดำเนินการพื้นฐานต่างๆ ซึ่งเป็นสิ่งจำเป็นอย่างยิ่งสำหรับการออกแบบและเลือกใช้อัลกอริทึมที่มีประสิทธิภาพในวิทยาการคอมพิวเตอร์</p>
+            </section>
+
+            <!-- Section 1: ความหมายของการวิเคราะห์จำนวนครั้งของการคิดคำนวณ -->
+            <section id="section-1" class="content-section">
+                <h2>10.3.1 ความหมายของการวิเคราะห์จำนวนครั้งของการคิดคำนวณ</h2>
+                
+                <p>การวิเคราะห์จำนวนครั้งของการคิดคำนวณ (Analysis of Computational Steps/Operations) คือ กระบวนการที่เราประเมินประสิทธิภาพของขั้นตอนวิธี โดยการนับจำนวนครั้งที่คำสั่งพื้นฐานต่างๆ ถูกดำเนินการเมื่อโปรแกรมทำงานจนเสร็จสิ้น</p>
+
+                <h3>ทำไมต้องวิเคราะห์?</h3>
+                <div class="definition-box">
+                    <h4>1. ประสิทธิภาพ:</h4>
+                    <p>เพื่อเปรียบเทียบว่าขั้นตอนวิธีใดทำงานได้เร็วกว่าหรือใช้ทรัพยากรน้อยกว่า เมื่อต้องจัดการกับข้อมูลขนาดใหญ่</p>
+
+                    <h4>2. การคาดการณ์:</h4>
+                    <p>เพื่อคาดการณ์ว่าโปรแกรมจะใช้เวลานานเท่าใดในการประมวลผลข้อมูลขนาดต่างๆ</p>
+
+                    <h4>3. การออกแบบ:</h4>
+                    <p>เพื่อช่วยในการออกแบบอัลกอริทึมที่มีประสิทธิภาพสูงสุด</p>
+                </div>
+
+                <h3>การดำเนินการพื้นฐาน (Basic Operations):</h3>
+                <p>ในการวิเคราะห์ เราจะนับการดำเนินการที่เป็นหน่วยย่อยที่สุดของการประมวลผล เช่น:</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>ประเภทการดำเนินการ</th>
+                            <th>สัญลักษณ์/ตัวอย่าง</th>
+                            <th>คำอธิบาย</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>การกำหนดค่า</td>
+                            <td><code>=</code></td>
+                            <td>Assignment: การกำหนดค่าให้ตัวแปร</td>
+                        </tr>
+                        <tr>
+                            <td>การคำนวณทางคณิตศาสตร์</td>
+                            <td><code>+, -, *, /, %, **</code></td>
+                            <td>Arithmetic: การดำเนินการทางคณิตศาสตร์</td>
+                        </tr>
+                        <tr>
+                            <td>การเปรียบเทียบ</td>
+                            <td><code>==, !=, <, <=, >, >=</code></td>
+                            <td>Comparison: การเปรียบเทียบค่า</td>
+                        </tr>
+                        <tr>
+                            <td>การรับข้อมูลนำเข้า</td>
+                            <td><code>INPUT</code></td>
+                            <td>Input: การรับข้อมูลจากผู้ใช้</td>
+                        </tr>
+                        <tr>
+                            <td>การแสดงผล</td>
+                            <td><code>PRINT</code></td>
+                            <td>Output: การแสดงผลลัพธ์</td>
+                        </tr>
+                        <tr>
+                            <td>การเข้าถึงหน่วยความจำ</td>
+                            <td>การเข้าถึงค่าในตัวแปร</td>
+                            <td>Memory Access: การอ่านค่าจากตัวแปร</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 2: วิธีการนับจำนวนครั้งของการคิดคำนวณ -->
+            <section id="section-2" class="content-section">
+                <h2>10.3.2 วิธีการนับจำนวนครั้งของการคิดคำนวณ</h2>
+                
+                <p>การนับจำนวนครั้งของการคิดคำนวณจะขึ้นอยู่กับโครงสร้างของขั้นตอนวิธี:</p>
+
+                <h3>ก. โครงสร้างแบบลำดับขั้นตอน (Sequential Structure)</h3>
+                <div class="definition-box">
+                    <p>นับจำนวนครั้งของการดำเนินการพื้นฐานในแต่ละบรรทัดตามลำดับ</p>
+                    <div class="example-container">
+                        <h4>ตัวอย่าง:</h4>
+                        <div class="example-box">
+                            <pre><code>SET x TO 5      # 1 Assignment
+SET y TO x + 3  # 1 Arithmetic (+), 1 Assignment
+PRINT y         # 1 Print</code></pre>
+                            <p><strong>รวม:</strong> 2 Assignment, 1 Arithmetic, 1 Print</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>ข. โครงสร้างแบบเลือกทำ (Conditional Structure: IF-ELSE)</h3>
+                <div class="definition-box">
+                    <p>นับจำนวนครั้งของการดำเนินการพื้นฐานในส่วนที่<strong>ทำงานจริง</strong></p>
+                    <p>หากโจทย์ต้องการการวิเคราะห์ใน<strong>กรณีที่เลวร้ายที่สุด (Worst-Case)</strong> ให้เลือกเส้นทางของเงื่อนไขที่ทำให้มีการดำเนินการมากที่สุด</p>
+                    <div class="example-container">
+                        <h4>ตัวอย่าง:</h4>
+                        <div class="example-box">
+                            <pre><code>IF x > 0 THEN     # 1 Comparison
+  PRINT "Positive"  # 1 Print (ถ้าเงื่อนไขเป็น True)
+ELSE
+  PRINT "Not Positive" # 1 Print (ถ้าเงื่อนไขเป็น False)
+END IF</code></pre>
+                            <p><strong>ในทุกกรณี:</strong> 1 Comparison, 1 Print</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>ค. โครงสร้างแบบวนซ้ำ (Repetitive Structure: WHILE Loop)</h3>
+                <div class="definition-box">
+                    <h4>1. นับจำนวนรอบที่ลูปทำงาน:</h4>
+                    <p>นี่คือปัจจัยหลักที่ส่งผลต่อจำนวนครั้งของการดำเนินการ</p>
+
+                    <h4>2. นับการดำเนินการภายในลูป:</h4>
+                    <p>คำสั่งที่อยู่ในบล็อกของลูปจะถูกทำซ้ำตามจำนวนรอบ</p>
+
+                    <h4>3. นับการตรวจสอบเงื่อนไขลูป:</h4>
+                    <p>เงื่อนไขของลูปจะถูกตรวจสอบในทุกๆ รอบที่ลูปทำงาน และอีก 1 ครั้งเมื่อเงื่อนไขเป็นเท็จเพื่อออกจากลูป</p>
+
+                    <div class="example-container">
+                        <h4>ตัวอย่าง:</h4>
+                        <div class="example-box">
+                            <pre><code>SET i TO 1          # 1 Assignment (ก่อนลูป)
+WHILE i <= 3 DO     # การตรวจสอบเงื่อนไข (4 ครั้ง: 3 True + 1 False)
+  PRINT i           # 1 Print × 3 รอบ = 3 Print
+  i = i + 1         # (1 Arithmetic + 1 Assignment) × 3 รอบ = 3 Arithmetic, 3 Assignment
+END WHILE</code></pre>
+                            <p><strong>รวม:</strong> 4 Assignment (1+3), 3 Arithmetic, 4 Comparison, 3 Print</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>10.3.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>ในส่วนนี้ เราจะมาฝึกทำความเข้าใจและวิเคราะห์จำนวนครั้งของการคิดคำนวณในขั้นตอนวิธีที่กำหนดให้</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การวิเคราะห์รหัสเทียม (ลำดับขั้นตอน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  INPUT num1       # บรรทัดที่ 1
+  INPUT num2       # บรรทัดที่ 2
+  SET sum TO num1 + num2 # บรรทัดที่ 3
+  SET product TO num1 * num2 # บรรทัดที่ 4
+  PRINT sum        # บรรทัดที่ 5
+  PRINT product    # บรรทัดที่ 6
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Input, Arithmetic, Assignment, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-1')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่คำสั่งทีละบรรทัดและนับการดำเนินการแต่ละประเภท</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-1')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ul>
+                            <li><strong>บรรทัดที่ 1:</strong> INPUT num1 (1 Input)</li>
+                            <li><strong>บรรทัดที่ 2:</strong> INPUT num2 (1 Input)</li>
+                            <li><strong>บรรทัดที่ 3:</strong> SET sum TO num1 + num2 (1 Arithmetic: +, 1 Assignment: =)</li>
+                            <li><strong>บรรทัดที่ 4:</strong> SET product TO num1 * num2 (1 Arithmetic: *, 1 Assignment: =)</li>
+                            <li><strong>บรรทัดที่ 5:</strong> PRINT sum (1 Print)</li>
+                            <li><strong>บรรทัดที่ 6:</strong> PRINT product (1 Print)</li>
+                        </ul>
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการ:</strong></p>
+                        <ul>
+                            <li>Input: 2 ครั้ง</li>
+                            <li>Arithmetic: 2 ครั้ง</li>
+                            <li>Assignment: 2 ครั้ง</li>
+                            <li>Print: 2 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Input 2, Arithmetic 2, Assignment 2, Print 2</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การวิเคราะห์ผังงาน (การเลือกทำ IF-ELSE)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input Score
+      ↓
+🔷 Score >= 50?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+📄 Print  📄 Print
+ "ผ่าน"   "ไม่ผ่าน"
+     ↘     ↙
+       ↓
+    🔴 End</pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Input, Comparison, Print, Assignment) ในกรณีที่เลวร้ายที่สุด (Worst-Case)</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-2')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุเส้นทางที่ทำงานมากที่สุด</li>
+                            <li>นับการดำเนินการในเส้นทางนั้น</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-2')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ในผังงานนี้ ไม่ว่า Score >= 50 จะเป็น True หรือ False จำนวนการดำเนินการจะเท่ากัน:</p>
+                        <ol>
+                            <li><strong>Start:</strong> (ไม่นับ)</li>
+                            <li><strong>Input Score:</strong> (1 Input)</li>
+                            <li><strong>Score >= 50?:</strong> (1 Comparison)</li>
+                            <li><strong>Print "ผ่าน"</strong> (ถ้าเงื่อนไขเป็น True) หรือ <strong>Print "ไม่ผ่าน"</strong> (ถ้าเงื่อนไขเป็น False): (1 Print)</li>
+                            <li><strong>End:</strong> (ไม่นับ)</li>
+                        </ol>
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการ:</strong></p>
+                        <ul>
+                            <li>Input: 1 ครั้ง</li>
+                            <li>Comparison: 1 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Input 1, Comparison 1, Print 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การวิเคราะห์รหัสเทียม (การวนซ้ำ WHILE)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET i TO 1       # บรรทัดที่ 1
+  SET total TO 0   # บรรทัดที่ 2
+  WHILE i <= 3 DO  # บรรทัดที่ 3 (เงื่อนไขลูป)
+    total = total + i # บรรทัดที่ 4
+    i = i + 1      # บรรทัดที่ 5
+  END WHILE
+  PRINT total      # บรรทัดที่ 6
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-3')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>นับการดำเนินการก่อนลูป</li>
+                            <li>นับการดำเนินการภายในลูป (คูณด้วยจำนวนรอบที่ลูปทำงาน)</li>
+                            <li>นับการตรวจสอบเงื่อนไขลูป (จำนวนรอบ + 1 ครั้งสุดท้าย)</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-3')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>ก่อนลูป:</h5>
+                        <ul>
+                            <li><strong>บรรทัดที่ 1:</strong> SET i TO 1 (1 Assignment)</li>
+                            <li><strong>บรรทัดที่ 2:</strong> SET total TO 0 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป:</h5>
+                        <p>ลูป WHILE i <= 3 จะทำงานเมื่อ i เป็น 1, 2, 3 (รวม 3 รอบ)</p>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป (บรรทัดที่ 3):</strong> i <= 3 จะถูกตรวจสอบ 4 ครั้ง (3 ครั้งเป็น True, 1 ครั้งเป็น False เพื่อออกจากลูป) = <strong>4 Comparisons</strong></li>
+                            <li><strong>การดำเนินการในแต่ละรอบ (3 รอบ):</strong>
+                                <ul>
+                                    <li>บรรทัดที่ 4: total = total + i (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>บรรทัดที่ 5: i = i + 1 (1 Arithmetic: +, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวมภายในลูป 1 รอบ:</strong> 2 Arithmetic, 2 Assignment</li>
+                            <li><strong>รวม 3 รอบ:</strong> $3 \times (2 \text{ Arithmetic}, 2 \text{ Assignment}) = 6 \text{ Arithmetic}, 6 \text{ Assignment}$</li>
+                        </ul>
+
+                        <h5>หลังลูป:</h5>
+                        <ul>
+                            <li><strong>บรรทัดที่ 6:</strong> PRINT total (1 Print)</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Assignment: $1 + 1 + 6 = 8$ ครั้ง</li>
+                            <li>Arithmetic: 6 ครั้ง</li>
+                            <li>Comparison: 4 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Assignment 8, Arithmetic 6, Comparison 4, Print 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การวิเคราะห์ผังงาน (การวนซ้ำและเลือกทำ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📦 num = 1, sum_even = 0, sum_odd = 0
+      ↓
+🔷 num <= 5?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+🔷 num % 2 == 0?  📄 Print sum_even
+ ↙   ↘         📄 Print sum_odd
+Yes   No           ↓
+ ↓     ↓        🔴 End
+📦 sum_even = 📦 sum_odd =
+sum_even + num sum_odd + num
+  ↓       ↓
+   ↘     ↙
+📦 num = num + 1
+       ↓
+    (ไปยัง num <= 5?)</pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-4')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและติดตามค่า num, sum_even, sum_odd ในแต่ละรอบ</li>
+                            <li>นับการดำเนินการในแต่ละสัญลักษณ์และเส้นทางที่ถูกเลือก</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-4')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>การกำหนดค่าเริ่มต้น (ก่อนลูป):</h5>
+                        <ul>
+                            <li>num = 1 (1 Assignment)</li>
+                            <li>sum_even = 0 (1 Assignment)</li>
+                            <li>sum_odd = 0 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป:</h5>
+                        <p>ลูป num <= 5 จะทำงานเมื่อ num เป็น 1, 2, 3, 4, 5 (รวม 5 รอบ)</p>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป (num <= 5?):</strong> 6 ครั้ง (5 True, 1 False) = <strong>6 Comparisons</strong></li>
+                            <li><strong>การตรวจสอบเงื่อนไข if (num % 2 == 0?):</strong> 5 ครั้ง (1 ครั้งต่อรอบ) = <strong>5 Comparisons</strong></li>
+                            <li><strong>การดำเนินการภายใน if-else (5 รอบ):</strong>
+                                <ul>
+                                    <li>num % 2 == 0 (1 Arithmetic: %, 1 Comparison: ==)</li>
+                                    <li>ถ้า True: sum_even = sum_even + num (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>ถ้า False: sum_odd = sum_odd + num (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>num = num + 1 (1 Arithmetic: +, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวม 1 รอบ:</strong> (1 Arithmetic: %, 1 Comparison: ==) + (1 Arithmetic: +, 1 Assignment: =) + (1 Arithmetic: +, 1 Assignment: =)</li>
+                            <li><strong>รวม 5 รอบ:</strong>
+                                <ul>
+                                    <li>Arithmetic: $5 \times (1 \text{ (for %)} + 2 \text{ (for +)}) = 15$ ครั้ง</li>
+                                    <li>Assignment: $5 \times 2 = 10$ ครั้ง</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h5>หลังลูป:</h5>
+                        <ul>
+                            <li>Print sum_even (1 Print)</li>
+                            <li>Print sum_odd (1 Print)</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Assignment: $1 + 1 + 1 + 10 = 13$ ครั้ง</li>
+                            <li>Arithmetic: 15 ครั้ง</li>
+                            <li>Comparison: $6 + 5 = 11$ ครั้ง</li>
+                            <li>Print: $1 + 1 = 2$ ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Assignment 13, Arithmetic 15, Comparison 11, Print 2</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การวิเคราะห์รหัสเทียม (เงื่อนไขซับซ้อนหลายชั้น)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  INPUT age              # บรรทัดที่ 1
+  INPUT has_license      # บรรทัดที่ 2
+  INPUT has_car          # บรรทัดที่ 3
+  IF age >= 18 AND has_license == TRUE THEN # บรรทัดที่ 4
+    IF has_car == TRUE THEN  # บรรทัดที่ 5
+      PRINT "คุณสามารถขับรถของตัวเองได้" # บรรทัดที่ 6
+    ELSE                     # บรรทัดที่ 7
+      PRINT "คุณสามารถขับรถได้ แต่ไม่มีรถ" # บรรทัดที่ 8
+    END IF
+  ELSE IF age >= 18 AND has_license == FALSE THEN # บรรทัดที่ 9
+    PRINT "คุณมีอายุพอ แต่ยังไม่มีใบขับขี่" # บรรทัดที่ 10
+  ELSE                     # บรรทัดที่ 11
+    PRINT "คุณยังเด็กเกินไป" # บรรทัดที่ 12
+  END IF
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Input, Comparison, Arithmetic, Print) ในกรณีที่ผู้ใช้ป้อน age = 25, has_license = TRUE, และ has_car = FALSE</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-5')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามเส้นทางที่กำหนดโดย Input ที่ให้มา</li>
+                            <li>นับการดำเนินการในเส้นทางนั้น</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-5')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p><strong>เส้นทางการทำงาน:</strong> บรรทัด 1, 2, 3 → 4 (True) → 5 (False) → 8</p>
+                        
+                        <ol>
+                            <li><strong>Input age:</strong> (1 Input)</li>
+                            <li><strong>Input has_license:</strong> (1 Input)</li>
+                            <li><strong>Input has_car:</strong> (1 Input)</li>
+                            <li><strong>IF age >= 18 AND has_license == TRUE THEN:</strong> (2 Comparisons: >=, ==, 1 Logical: AND)
+                                <ul>
+                                    <li>25 >= 18 (True)</li>
+                                    <li>TRUE == TRUE (True)</li>
+                                    <li>True AND True (True)</li>
+                                </ul>
+                            </li>
+                            <li><strong>IF has_car == TRUE THEN:</strong> (1 Comparison: ==)
+                                <ul>
+                                    <li>FALSE == TRUE (False)</li>
+                                </ul>
+                            </li>
+                            <li><strong>ELSE:</strong> (ไม่มีการดำเนินการ)</li>
+                            <li><strong>PRINT "คุณสามารถขับรถได้ แต่ไม่มีรถ":</strong> (1 Print)</li>
+                        </ol>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Input: 3 ครั้ง</li>
+                            <li>Comparison: $2 + 1 = 3$ ครั้ง</li>
+                            <li>Logical: 1 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Input 3, Comparison 3, Logical 1, Print 1</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>10.3.4 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การวิเคราะห์รหัสเทียม (การคำนวณสะสมในลูป)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET i TO 1
+  SET total_sum TO 0
+  WHILE i <= 5 DO
+    total_sum = total_sum + i
+    i = i + 1
+  END WHILE
+  PRINT total_sum
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-6')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-6" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>นับการดำเนินการก่อนลูป</li>
+                            <li>นับการดำเนินการภายในลูป (คูณด้วยจำนวนรอบ)</li>
+                            <li>นับการตรวจสอบเงื่อนไขลูป</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-6')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-6" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>ก่อนลูป:</h5>
+                        <ul>
+                            <li>SET i TO 1 (1 Assignment)</li>
+                            <li>SET total_sum TO 0 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป:</h5>
+                        <p>ลูป WHILE i <= 5 จะทำงานเมื่อ i เป็น 1, 2, 3, 4, 5 (รวม 5 รอบ)</p>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป:</strong> 6 ครั้ง (5 True, 1 False) = <strong>6 Comparisons</strong></li>
+                            <li><strong>การดำเนินการในแต่ละรอบ (5 รอบ):</strong>
+                                <ul>
+                                    <li>total_sum = total_sum + i (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>i = i + 1 (1 Arithmetic: +, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวมภายในลูป 1 รอบ:</strong> 2 Arithmetic, 2 Assignment</li>
+                            <li><strong>รวม 5 รอบ:</strong> $5 \times (2 \text{ Arithmetic}, 2 \text{ Assignment}) = 10 \text{ Arithmetic}, 10 \text{ Assignment}$</li>
+                        </ul>
+
+                        <h5>หลังลูป:</h5>
+                        <ul>
+                            <li>PRINT total_sum (1 Print)</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Assignment: $1 + 1 + 10 = 12$ ครั้ง</li>
+                            <li>Arithmetic: 10 ครั้ง</li>
+                            <li>Comparison: 6 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Assignment 12, Arithmetic 10, Comparison 6, Print 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การวิเคราะห์ผังงาน (การคำนวณผลรวมเลขคู่)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input N
+      ↓
+📦 num = 2, sum_even = 0
+      ↓
+🔷 num <= N?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+📦 sum_even =  📄 Print sum_even
+sum_even + num   ↓
+  ↓            🔴 End
+📦 num = num + 2
+       ↓
+    (ไปยัง num <= N?)</pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น (กรณี N = 8)</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-7')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-7" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและติดตามค่า num และ sum_even</li>
+                            <li>นับการดำเนินการในแต่ละสัญลักษณ์และเส้นทางที่ถูกเลือก</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-7')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-7" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>การกำหนดค่าเริ่มต้น (ก่อนลูป):</h5>
+                        <ul>
+                            <li>Input N (1 Input)</li>
+                            <li>num = 2 (1 Assignment)</li>
+                            <li>sum_even = 0 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป:</h5>
+                        <p>ลูป num <= 8 จะทำงานเมื่อ num เป็น 2, 4, 6, 8 (รวม 4 รอบ)</p>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป (num <= 8?):</strong> 5 ครั้ง (4 True, 1 False) = <strong>5 Comparisons</strong></li>
+                            <li><strong>การดำเนินการในแต่ละรอบ (4 รอบ):</strong>
+                                <ul>
+                                    <li>sum_even = sum_even + num (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>num = num + 2 (1 Arithmetic: +, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวมภายในลูป 1 รอบ:</strong> 2 Arithmetic, 2 Assignment</li>
+                            <li><strong>รวม 4 รอบ:</strong> $4 \times (2 \text{ Arithmetic}, 2 \text{ Assignment}) = 8 \text{ Arithmetic}, 8 \text{ Assignment}$</li>
+                        </ul>
+
+                        <h5>หลังลูป:</h5>
+                        <ul>
+                            <li>Print sum_even (1 Print)</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Input: 1 ครั้ง</li>
+                            <li>Assignment: $1 + 1 + 8 = 10$ ครั้ง</li>
+                            <li>Arithmetic: 8 ครั้ง</li>
+                            <li>Comparison: 5 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Input 1, Assignment 10, Arithmetic 8, Comparison 5, Print 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การวิเคราะห์รหัสเทียม (ลูปไม่รู้จบ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET x TO 5
+  WHILE x < 10 DO
+    PRINT x
+    x = x - 1
+  END WHILE
+  PRINT "จบ"
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) ถ้าโปรแกรมนี้ทำงานไปเรื่อยๆ ไม่มีที่สิ้นสุด</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-8')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-8" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>นับการดำเนินการก่อนลูป</li>
+                            <li>นับการดำเนินการภายในลูปต่อ 1 รอบ</li>
+                            <li>ระบุว่าลูปไม่รู้จบ จึงไม่มีการออกจากลูป</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-8')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-8" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>ก่อนลูป:</h5>
+                        <ul>
+                            <li>SET x TO 5 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป (ต่อ 1 รอบ):</h5>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป (WHILE x < 10 DO):</strong> 1 Comparison (จะถูกทำซ้ำไม่รู้จบ)</li>
+                            <li><strong>การดำเนินการใน 1 รอบ:</strong>
+                                <ul>
+                                    <li>PRINT x (1 Print)</li>
+                                    <li>x = x - 1 (1 Arithmetic: -, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวมภายในลูป 1 รอบ:</strong> 1 Print, 1 Arithmetic, 1 Assignment</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด (ต่อ 1 รอบของลูป):</strong></p>
+                        <ul>
+                            <li>Assignment: $1 + 1 = 2$ ครั้ง</li>
+                            <li>Arithmetic: 1 ครั้ง</li>
+                            <li>Comparison: 1 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong></p>
+                        <ul>
+                            <li>Assignment: 2 ครั้ง</li>
+                            <li>Arithmetic: 1 ครั้ง</li>
+                            <li>Comparison: 1 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><em>(ต่อ 1 รอบการทำงานของลูป ซึ่งจะทำงานไปเรื่อยๆ ไม่มีที่สิ้นสุด)</em></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การวิเคราะห์ผังงาน (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input Temperature, IsRaining
+      ↓
+🔷 Temperature > 25?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+🔷 IsRaining == TRUE?  📄 Print
+ ↙   ↘         "Go Outside"
+Yes   No           ↓
+ ↓     ↓        🔴 End
+📄 Print 📄 Print
+"Stay    "Go To
+Indoors"  Beach"
+     ↘     ↙
+       ↓
+    🔴 End</pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Input, Comparison, Logical, Print) ในกรณีที่ผู้ใช้ป้อนค่า Temperature = 28 และ IsRaining = TRUE</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-9')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-9" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและประเมินเงื่อนไข Temperature > 25 และ IsRaining == TRUE</li>
+                            <li>นับการดำเนินการในเส้นทางที่ถูกเลือก</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-9')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-9" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p><strong>เส้นทางการทำงาน:</strong> Input Temperature, Input IsRaining → (Temperature > 25 AND IsRaining == TRUE?) → Print "Stay Indoors"</p>
+                        
+                        <ol>
+                            <li><strong>Input Temperature:</strong> (1 Input)</li>
+                            <li><strong>Input IsRaining:</strong> (1 Input)</li>
+                            <li><strong>Temperature > 25:</strong> 28 > 25 (True) = <strong>1 Comparison</strong></li>
+                            <li><strong>IsRaining == TRUE:</strong> TRUE == TRUE (True) = <strong>1 Comparison</strong></li>
+                            <li><strong>Print "Stay Indoors":</strong> (1 Print)</li>
+                        </ol>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Input: 2 ครั้ง</li>
+                            <li>Comparison: 2 ครั้ง</li>
+                            <li>Print: 1 ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Input 2, Comparison 2, Print 1</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การวิเคราะห์รหัสเทียม (การสลับค่าในลูป)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET A TO 1
+  SET B TO 0
+  SET count TO 0
+  WHILE count < 4 DO
+    SET temp TO A
+    A = B
+    B = temp + B
+    count = count + 1
+  END WHILE
+  PRINT A
+  PRINT B
+END</code></pre>
+                        <p>จงวิเคราะห์จำนวนครั้งของการดำเนินการพื้นฐาน (Assignment, Comparison, Arithmetic, Print) เมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-10')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-10" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า A, B, temp, count ในแต่ละรอบ</li>
+                            <li>นับการดำเนินการในแต่ละรอบและรวมทั้งหมด</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-10')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-10" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <h5>ก่อนลูป:</h5>
+                        <ul>
+                            <li>SET A TO 1 (1 Assignment)</li>
+                            <li>SET B TO 0 (1 Assignment)</li>
+                            <li>SET count TO 0 (1 Assignment)</li>
+                        </ul>
+
+                        <h5>ภายในลูป:</h5>
+                        <p>ลูป WHILE count < 4 จะทำงานเมื่อ count เป็น 0, 1, 2, 3 (รวม 4 รอบ)</p>
+                        <ul>
+                            <li><strong>การตรวจสอบเงื่อนไขลูป:</strong> 5 ครั้ง (4 True, 1 False) = <strong>5 Comparisons</strong></li>
+                            <li><strong>การดำเนินการในแต่ละรอบ (4 รอบ):</strong>
+                                <ul>
+                                    <li>SET temp TO A (1 Assignment)</li>
+                                    <li>A = B (1 Assignment)</li>
+                                    <li>B = temp + B (1 Arithmetic: +, 1 Assignment: =)</li>
+                                    <li>count = count + 1 (1 Arithmetic: +, 1 Assignment: =)</li>
+                                </ul>
+                            </li>
+                            <li><strong>รวมภายในลูป 1 รอบ:</strong> 4 Assignment, 2 Arithmetic</li>
+                            <li><strong>รวม 4 รอบ:</strong> $4 \times (4 \text{ Assignment}, 2 \text{ Arithmetic}) = 16 \text{ Assignment}, 8 \text{ Arithmetic}$</li>
+                        </ul>
+
+                        <h5>หลังลูป:</h5>
+                        <ul>
+                            <li>PRINT A (1 Print)</li>
+                            <li>PRINT B (1 Print)</li>
+                        </ul>
+
+                        <p><strong>รวมจำนวนครั้งของการดำเนินการทั้งหมด:</strong></p>
+                        <ul>
+                            <li>Assignment: $1 + 1 + 1 + 16 = 19$ ครั้ง</li>
+                            <li>Arithmetic: 8 ครั้ง</li>
+                            <li>Comparison: 5 ครั้ง</li>
+                            <li>Print: $1 + 1 = 2$ ครั้ง</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong> Assignment 19, Arithmetic 8, Comparison 5, Print 2</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
