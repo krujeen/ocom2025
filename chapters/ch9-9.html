@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.9: การแกะรอยโปรแกรม (Program Tracing) เพื่อหาผลลัพธ์ - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.9: การแกะรอยโปรแกรม (Program Tracing) เพื่อหาผลลัพธ์</span>
+            </nav>
+            <h1>บทที่ 9.9: การแกะรอยโปรแกรม (Program Tracing) เพื่อหาผลลัพธ์</h1>
+            <p class="chapter-intro">การเรียนรู้เทคนิคการติดตามการทำงานของโปรแกรมเพื่อหาผลลัพธ์อย่างแม่นยำ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.9.1 การแกะรอยโปรแกรมคืออะไร?</a></li>
+                    <li><a href="#section-2">9.9.2 วิธีการแกะรอยโปรแกรม</a></li>
+                    <li><a href="#section-3">9.9.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">9.9.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เทคนิคที่สำคัญอย่างยิ่งในการทำความเข้าใจการทำงานของโปรแกรมคอมพิวเตอร์ นั่นคือ การแกะรอยโปรแกรม (Program Tracing) การแกะรอยโปรแกรมคือกระบวนการติดตามการเปลี่ยนแปลงค่าของตัวแปรและลำดับการทำงานของคำสั่งทีละบรรทัด เพื่อให้สามารถคาดการณ์ผลลัพธ์สุดท้ายของโปรแกรมได้อย่างถูกต้อง ซึ่งเป็นทักษะที่จำเป็นอย่างยิ่งสำหรับการวิเคราะห์อัลกอริทึม การดีบัก (Debugging) และการทำความเข้าใจโค้ดที่ซับซ้อน</p>
+            </section>
+
+            <!-- Section 1: การแกะรอยโปรแกรมคืออะไร -->
+            <section id="section-1" class="content-section">
+                <h2>9.9.1 การแกะรอยโปรแกรมคืออะไร?</h2>
+                
+                <p>การแกะรอยโปรแกรม (Program Tracing) คือ การจำลองการทำงานของโปรแกรมในสมองหรือบนกระดาษ โดยการไล่ดูคำสั่งทีละบรรทัด และบันทึกการเปลี่ยนแปลงค่าของตัวแปรทุกตัวที่เกี่ยวข้อง ผลลัพธ์ที่ได้จากการแกะรอยโปรแกรมคือสถานะของโปรแกรมในแต่ละช่วงเวลา และผลลัพธ์สุดท้ายที่โปรแกรมจะแสดงออกมา</p>
+
+                <div class="definition-box">
+                    <h4>ทำไมต้องแกะรอยโปรแกรม?</h4>
+                    <ul>
+                        <li><strong>ทำความเข้าใจ:</strong> ช่วยให้เข้าใจว่าโปรแกรมทำงานอย่างไรในแต่ละขั้นตอน</li>
+                        <li><strong>คาดการณ์ผลลัพธ์:</strong> สามารถหาผลลัพธ์ของโปรแกรมได้โดยไม่ต้องรันจริง</li>
+                        <li><strong>หาข้อผิดพลาด (Debugging):</strong> เมื่อโปรแกรมทำงานผิดพลาด การแกะรอยจะช่วยให้ pinpoint (ระบุตำแหน่ง) ของข้อผิดพลาดได้ง่ายขึ้น</li>
+                        <li><strong>เตรียมสอบ:</strong> ข้อสอบ สอวน. คอมพิวเตอร์ มักมีโจทย์ให้แกะรอยโปรแกรมเพื่อหาผลลัพธ์</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 2: วิธีการแกะรอยโปรแกรม -->
+            <section id="section-2" class="content-section">
+                <h2>9.9.2 วิธีการแกะรอยโปรแกรม</h2>
+                
+                <p>การแกะรอยโปรแกรมทำได้ดีที่สุดโดยการสร้าง <strong>ตารางติดตามตัวแปร (Trace Table)</strong></p>
+
+                <div class="definition-box">
+                    <h4>ขั้นตอนการแกะรอย:</h4>
+                    <ol>
+                        <li><strong>สร้างตาราง:</strong> สร้างตารางที่มีคอลัมน์สำหรับ:
+                            <ul>
+                                <li><strong>บรรทัด/รอบ:</strong> ระบุหมายเลขบรรทัดที่กำลังประมวลผล หรือรอบของลูป</li>
+                                <li><strong>คำสั่ง:</strong> คำสั่งที่กำลังถูกประมวลผล</li>
+                                <li><strong>คอลัมน์สำหรับตัวแปรแต่ละตัว:</strong> สร้างคอลัมน์สำหรับตัวแปรทุกตัวที่ปรากฏในโปรแกรม</li>
+                                <li><strong>ผลลัพธ์ที่พิมพ์:</strong> คอลัมน์สำหรับบันทึกสิ่งที่โปรแกรมพิมพ์ออกมา</li>
+                            </ul>
+                        </li>
+                        <li><strong>กำหนดค่าเริ่มต้น:</strong> บันทึกค่าเริ่มต้นของตัวแปรที่ถูกกำหนดไว้ในโปรแกรม (ถ้ามี)</li>
+                        <li><strong>ประมวลผลทีละบรรทัด/รอบ:</strong>
+                            <ul>
+                                <li>อ่านคำสั่งทีละบรรทัดตามลำดับ</li>
+                                <li>ประเมินนิพจน์ทางขวาของเครื่องหมายเท่ากับ (=) หรือเงื่อนไขของ if / while</li>
+                                <li>อัปเดตค่าของตัวแปรที่อยู่ทางซ้ายของเครื่องหมายเท่ากับ</li>
+                                <li>บันทึกค่าที่เปลี่ยนแปลงในตาราง</li>
+                                <li>ถ้าเป็นคำสั่ง print() ให้บันทึกสิ่งที่พิมพ์ลงในคอลัมน์ "ผลลัพธ์ที่พิมพ์"</li>
+                            </ul>
+                        </li>
+                        <li><strong>วนซ้ำ (สำหรับลูป):</strong> หากเจอคำสั่งลูป (while) ให้ทำซ้ำขั้นตอนที่ 3 สำหรับแต่ละรอบของลูป จนกว่าเงื่อนไขของลูปจะเป็นเท็จ</li>
+                        <li><strong>สิ้นสุด:</strong> ทำเช่นนี้ไปเรื่อยๆ จนกว่าจะถึงจุดสิ้นสุดของโปรแกรม</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>9.9.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ (การแกะรอยโปรแกรม)</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการแกะรอยโปรแกรมและการใช้ตารางติดตาม เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การแกะรอยโปรแกรมลำดับขั้นตอนพื้นฐาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>x = 5
+y = x + 3
+z = y * 2
+print(z)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-1')">💡 แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า x, y, z ตามลำดับบรรทัด</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-1')">✅ แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>z</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 5</td><td>5</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>y = x + 3</td><td>5</td><td>8</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>z = y * 2</td><td>5</td><td>8</td><td>16</td><td></td></tr>
+                                <tr><td>4</td><td>print(z)</td><td>5</td><td>8</td><td>16</td><td>16</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 16</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การแกะรอยโปรแกรมที่มี if-else</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>score = 65
+
+if score >= 70:
+    result = "Pass"
+else:
+    result = "Fail"
+print(result)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-2')">💡 แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข if score >= 70</li>
+                            <li>เลือกบล็อกคำสั่งที่ถูกต้อง (if หรือ else) แล้วติดตามค่า result</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-2')">✅ แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>score</th>
+                                    <th>result</th>
+                                    <th>score >= 70</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>score = 65</td><td>65</td><td>-</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>if score >= 70:</td><td>65</td><td>-</td><td>False</td><td></td></tr>
+                                <tr><td>5</td><td>else:</td><td>65</td><td>-</td><td></td><td></td></tr>
+                                <tr><td>6</td><td>result = "Fail"</td><td>65</td><td>"Fail"</td><td></td><td></td></tr>
+                                <tr><td>7</td><td>print(result)</td><td>65</td><td>"Fail"</td><td></td><td>Fail</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> Fail</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การแกะรอยโปรแกรมที่มี while loop</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>count = 1
+total = 0
+while count <= 3:
+    total = total + count
+    count = count + 1
+print(total)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-3')">💡 แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างคอลัมน์สำหรับ "รอบ" ของลูป</li>
+                            <li>ติดตาม count และ total ในแต่ละรอบ</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-3')">✅ แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>count</th>
+                                    <th>total</th>
+                                    <th>count <= 3</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>1</td><td>count = 1</td><td>1</td><td>-</td><td></td><td></td></tr>
+                                <tr><td>-</td><td>2</td><td>total = 0</td><td>1</td><td>0</td><td></td><td></td></tr>
+                                <tr><td>1</td><td>3</td><td>while count <= 3:</td><td>1</td><td>0</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>4</td><td>total = total + count</td><td>1</td><td>1</td><td></td><td></td></tr>
+                                <tr><td></td><td>5</td><td>count = count + 1</td><td>2</td><td>1</td><td></td><td></td></tr>
+                                <tr><td>2</td><td>3</td><td>while count <= 3:</td><td>2</td><td>1</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>4</td><td>total = total + count</td><td>2</td><td>3</td><td></td><td></td></tr>
+                                <tr><td></td><td>5</td><td>count = count + 1</td><td>3</td><td>3</td><td></td><td></td></tr>
+                                <tr><td>3</td><td>3</td><td>while count <= 3:</td><td>3</td><td>3</td><td>True</td><td></td></tr>
+                                <tr><td></td><td>4</td><td>total = total + count</td><td>3</td><td>6</td><td></td><td></td></tr>
+                                <tr><td></td><td>5</td><td>count = count + 1</td><td>4</td><td>6</td><td></td><td></td></tr>
+                                <tr><td>4</td><td>3</td><td>while count <= 3:</td><td>4</td><td>6</td><td>False</td><td></td></tr>
+                                <tr><td>-</td><td>6</td><td>print(total)</td><td>4</td><td>6</td><td></td><td>6</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 6</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การแกะรอยโปรแกรมที่มี if-elif-else</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>grade = 82
+
+if grade >= 90:
+    message = "Excellent"
+elif grade >= 80:
+    message = "Good"
+elif grade >= 70:
+    message = "Fair"
+else:
+    message = "Poor"
+print(message)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-4')">💡 แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไขจากบนลงล่าง และหยุดเมื่อเจอเงื่อนไขแรกที่เป็นจริง</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-4')">✅ แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>grade</th>
+                                    <th>message</th>
+                                    <th>grade >= 90</th>
+                                    <th>grade >= 80</th>
+                                    <th>grade >= 70</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>grade = 82</td><td>82</td><td>-</td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td>3</td><td>if grade >= 90:</td><td>82</td><td>-</td><td>False</td><td></td><td></td><td></td></tr>
+                                <tr><td>5</td><td>elif grade >= 80:</td><td>82</td><td>-</td><td></td><td>True</td><td></td><td></td></tr>
+                                <tr><td>6</td><td>message = "Good"</td><td>82</td><td>"Good"</td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td>11</td><td>print(message)</td><td>82</td><td>"Good"</td><td></td><td></td><td></td><td>Good</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> Good</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การแกะรอยโปรแกรมที่มี if ซ้อน if ภายใน while</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>i = 1
+result = 0
+while i <= 4:
+    if i % 2 == 0: # ถ้า i เป็นเลขคู่
+        result = result + i
+    else: # ถ้า i เป็นเลขคี่
+        result = result - i
+    i = i + 1
+print(result)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-5')">💡 แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า i และ result ในแต่ละรอบของลูป while</li>
+                            <li>ในแต่ละรอบ ตรวจสอบเงื่อนไข if เพื่อตัดสินใจว่าจะบวกหรือลบค่า i ออกจาก result</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-5')">✅ แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>i</th>
+                                    <th>result</th>
+                                    <th>i <= 4</th>
+                                    <th>i % 2 == 0</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>1</td><td>i = 1</td><td>1</td><td>-</td><td></td><td></td><td></td></tr>
+                                <tr><td>-</td><td>2</td><td>result = 0</td><td>1</td><td>0</td><td></td><td></td><td></td></tr>
+                                <tr><td>1</td><td>3</td><td>while i <= 4:</td><td>1</td><td>0</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>6</td><td>else:</td><td>1</td><td>0</td><td></td><td>False</td><td></td></tr>
+                                <tr><td></td><td>7</td><td>result = result - i</td><td>1</td><td>-1</td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td>8</td><td>i = i + 1</td><td>2</td><td>-1</td><td></td><td></td><td></td></tr>
+                                <tr><td>2</td><td>3</td><td>while i <= 4:</td><td>2</td><td>-1</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>4</td><td>if i % 2 == 0:</td><td>2</td><td>-1</td><td></td><td>True</td><td></td></tr>
+                                <tr><td></td><td>5</td><td>result = result + i</td><td>2</td><td>1</td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td>8</td><td>i = i + 1</td><td>3</td><td>1</td><td></td><td></td><td></td></tr>
+                                <tr><td>3</td><td>3</td><td>while i <= 4:</td><td>3</td><td>1</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>6</td><td>else:</td><td>3</td><td>1</td><td></td><td>False</td><td></td></tr>
+                                <tr><td></td><td>7</td><td>result = result - i</td><td>3</td><td>-2</td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td>8</td><td>i = i + 1</td><td>4</td><td>-2</td><td></td><td></td><td></td></tr>
+                                <tr><td>4</td><td>3</td><td>while i <= 4:</td><td>4</td><td>-2</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>4</td><td>if i % 2 == 0:</td><td>4</td><td>-2</td><td></td><td>True</td><td></td></tr>
+                                <tr><td></td><td>5</td><td>result = result + i</td><td>4</td><td>2</td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td>8</td><td>i = i + 1</td><td>5</td><td>2</td><td></td><td></td><td></td></tr>
+                                <tr><td>5</td><td>3</td><td>while i <= 4:</td><td>5</td><td>2</td><td>False</td><td></td><td></td></tr>
+                                <tr><td>-</td><td>9</td><td>print(result)</td><td>5</td><td>2</td><td></td><td></td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 2</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>9.9.4 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การแกะรอยโปรแกรม (Program Tracing) เพื่อหาผลลัพธ์" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การแกะรอยโปรแกรม (การคำนวณสะสม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>total = 0
+for_loop_count = 0
+while for_loop_count < 4:
+    total = total + (for_loop_count * 10)
+    for_loop_count = for_loop_count + 1
+print(total)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-6')">💡 แสดงแนวคิด</button>
+                    <div id="approach-6" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม total และ for_loop_count ในแต่ละรอบของลูป while</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-6')">✅ แสดงเฉลย</button>
+                    <div id="solution-6" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รอบ 1: total = 0 + (0 × 10) = 0, for_loop_count = 1</p>
+                        <p>รอบ 2: total = 0 + (1 × 10) = 10, for_loop_count = 2</p>
+                        <p>รอบ 3: total = 10 + (2 × 10) = 30, for_loop_count = 3</p>
+                        <p>รอบ 4: total = 30 + (3 × 10) = 60, for_loop_count = 4</p>
+                        <p><strong>คำตอบ:</strong> 60</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การแกะรอยโปรแกรม (เงื่อนไขเริ่มต้นลูป)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>start_val = 20
+
+if start_val > 10:
+    i = start_val
+    while i < 25:
+        print(i)
+        i = i + 3
+else:
+    print("Start value is too small.")
+print("End of program.")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-7')">💡 แสดงแนวคิด</button>
+                    <div id="approach-7" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข if start_val > 10 ก่อน</li>
+                            <li>ถ้าเป็นจริง ลูป while จะทำงาน</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-7')">✅ แสดงเฉลย</button>
+                    <div id="solution-7" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>เงื่อนไข: 20 > 10 เป็น True</p>
+                        <p>i = 20, ลูป while:</p>
+                        <ul>
+                            <li>รอบ 1: i = 20 (< 25), พิมพ์ 20, i = 23</li>
+                            <li>รอบ 2: i = 23 (< 25), พิมพ์ 23, i = 26</li>
+                            <li>รอบ 3: i = 26 (≥ 25), ออกจากลูป</li>
+                        </ul>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>20
+23
+End of program.</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การแกะรอยโปรแกรม (การนับรอบ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>counter = 0
+value = 100
+while value > 1:
+    value = value // 3
+    counter = counter + 1
+print(counter)</code></pre>
+                        <p>จงหาจำนวนรอบที่ลูปทำงาน และค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-8')">💡 แสดงแนวคิด</button>
+                    <div id="approach-8" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม value และ counter ในแต่ละรอบ</li>
+                            <li>สังเกตเงื่อนไข value > 1</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-8')">✅ แสดงเฉลย</button>
+                    <div id="solution-8" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รอบ 1: value = 100 // 3 = 33, counter = 1</p>
+                        <p>รอบ 2: value = 33 // 3 = 11, counter = 2</p>
+                        <p>รอบ 3: value = 11 // 3 = 3, counter = 3</p>
+                        <p>รอบ 4: value = 3 // 3 = 1, counter = 4</p>
+                        <p>รอบ 5: value = 1 (≤ 1), ออกจากลูป</p>
+                        <p><strong>คำตอบ:</strong> จำนวนรอบ 4, ผลลัพธ์ 4</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การแกะรอยโปรแกรม (การประมวลผลข้อความ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>text = "Python"
+index = 0
+result_text = ""
+while index < len(text):
+    if index % 2 == 0:
+        result_text = result_text + text[index]
+    index = index + 1
+print(result_text)</code></pre>
+                        <p>(หมายเหตุ: len(text) คือความยาวของข้อความ, text[index] คือตัวอักษรที่ตำแหน่ง index โดยเริ่มจาก 0)<br>
+                        จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-9')">💡 แสดงแนวคิด</button>
+                    <div id="approach-9" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม index และ result_text ในแต่ละรอบ</li>
+                            <li>index % 2 == 0 หมายถึงตำแหน่งคู่ (0, 2, 4, ...)</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-9')">✅ แสดงเฉลย</button>
+                    <div id="solution-9" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>"Python" มีความยาว 6 ตัวอักษร (P=0, y=1, t=2, h=3, o=4, n=5)</p>
+                        <p>รอบ 1: index=0 (คู่), result_text += "P" → "P"</p>
+                        <p>รอบ 2: index=1 (คี่), ข้าม</p>
+                        <p>รอบ 3: index=2 (คู่), result_text += "t" → "Pt"</p>
+                        <p>รอบ 4: index=3 (คี่), ข้าม</p>
+                        <p>รอบ 5: index=4 (คู่), result_text += "o" → "Pto"</p>
+                        <p>รอบ 6: index=5 (คี่), ข้าม</p>
+                        <p><strong>คำตอบ:</strong> "Pto"</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การแกะรอยโปรแกรม (การคำนวณที่ซับซ้อนและเงื่อนไข)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>a = 1
+b = 1
+count = 0
+while count < 5:
+    if count % 2 == 0:
+        a = a + b
+    else:
+        b = a + b
+    count = count + 1
+print(a)
+print(b)</code></pre>
+                        <p>จงหาค่าของ a และ b ที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('approach-10')">💡 แสดงแนวคิด</button>
+                    <div id="approach-10" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม a, b, count ในแต่ละรอบ</li>
+                            <li>สังเกตว่าการอัปเดต a หรือ b ขึ้นอยู่กับ count เป็นคู่หรือคี่</li>
+                        </ul>
+                    </div>
+
+                    <button class="toggle-btn" onclick="toggleSection('solution-10')">✅ แสดงเฉลย</button>
+                    <div id="solution-10" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>count</th>
+                                    <th>count % 2 == 0</th>
+                                    <th>a (ก่อน)</th>
+                                    <th>b (ก่อน)</th>
+                                    <th>การคำนวณ</th>
+                                    <th>a (หลัง)</th>
+                                    <th>b (หลัง)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เริ่มต้น</td><td>0</td><td>-</td><td>1</td><td>1</td><td>-</td><td>1</td><td>1</td></tr>
+                                <tr><td>1</td><td>0</td><td>True</td><td>1</td><td>1</td><td>a = 1 + 1 = 2</td><td>2</td><td>1</td></tr>
+                                <tr><td>2</td><td>1</td><td>False</td><td>2</td><td>1</td><td>b = 2 + 1 = 3</td><td>2</td><td>3</td></tr>
+                                <tr><td>3</td><td>2</td><td>True</td><td>2</td><td>3</td><td>a = 2 + 3 = 5</td><td>5</td><td>3</td></tr>
+                                <tr><td>4</td><td>3</td><td>False</td><td>5</td><td>3</td><td>b = 5 + 3 = 8</td><td>5</td><td>8</td></tr>
+                                <tr><td>5</td><td>4</td><td>True</td><td>5</td><td>8</td><td>a = 5 + 8 = 13</td><td>13</td><td>8</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>a = 13
+b = 8</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
