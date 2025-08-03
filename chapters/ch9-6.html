@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.6: การเปรียบเทียบด้วยเงื่อนไขประกอบ (not, and, or) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.6: การเปรียบเทียบด้วยเงื่อนไขประกอบ (not, and, or)</span>
+            </nav>
+            <h1>บทที่ 9.6: การเปรียบเทียบด้วยเงื่อนไขประกอบ</h1>
+            <p class="chapter-intro">การเรียนรู้ตัวดำเนินการทางตรรกศาสตร์และการสร้างเงื่อนไขที่ซับซ้อน</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.6.1 ตัวดำเนินการทางตรรกศาสตร์ (Logical Operators)</a></li>
+                    <li><a href="#section-2">9.6.2 ลำดับความสำคัญของตัวดำเนินการ</a></li>
+                    <li><a href="#section-3">9.6.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">9.6.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ การเปรียบเทียบด้วยเงื่อนไขประกอบ (Compound Conditions) โดยใช้ตัวดำเนินการทางตรรกศาสตร์ (not, and, or) ในภาษา Python ซึ่งช่วยให้เราสามารถสร้างเงื่อนไขที่ซับซ้อนและหลากหลายขึ้นในการควบคุมการทำงานของโปรแกรม</p>
+            </section>
+
+            <!-- Section 1: ตัวดำเนินการทางตรรกศาสตร์ -->
+            <section id="section-1" class="content-section">
+                <h2>9.6.1 ตัวดำเนินการทางตรรกศาสตร์ (Logical Operators)</h2>
+                
+                <p>ตัวดำเนินการทางตรรกศาสตร์ใช้เพื่อเชื่อมโยงหรือปรับเปลี่ยนนิพจน์เปรียบเทียบ (ซึ่งให้ผลลัพธ์เป็น True หรือ False) เพื่อสร้างเงื่อนไขที่ซับซ้อนยิ่งขึ้น ผลลัพธ์ของตัวดำเนินการเหล่านี้จะเป็นค่าบูลีน (True หรือ False) เสมอ</p>
+
+                <h3>ก. and (และ)</h3>
+                <div class="definition-box">
+                    <h4>ความหมาย</h4>
+                    <p>นิพจน์ที่เชื่อมด้วย <code>and</code> จะให้ผลลัพธ์เป็น <strong>True</strong> ก็ต่อเมื่อ นิพจน์ย่อยทั้งสองฝั่งเป็น <strong>True</strong> ทั้งคู่ เท่านั้น กรณีอื่นจะให้ผลลัพธ์เป็น <strong>False</strong></p>
+                </div>
+
+                <h4>ตารางค่าความจริง:</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Condition1</th>
+                            <th>Condition2</th>
+                            <th>Condition1 and Condition2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>True</td><td>True</td><td><strong>True</strong></td></tr>
+                        <tr><td>True</td><td>False</td><td>False</td></tr>
+                        <tr><td>False</td><td>True</td><td>False</td></tr>
+                        <tr><td>False</td><td>False</td><td>False</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p><code>(age > 18) and (has_license == True)</code> จะเป็น True ก็ต่อเมื่อ age มากกว่า 18 และ has_license เป็น True ทั้งสองเงื่อนไข</p>
+                    </div>
+                </div>
+
+                <h3>ข. or (หรือ)</h3>
+                <div class="definition-box">
+                    <h4>ความหมาย</h4>
+                    <p>นิพจน์ที่เชื่อมด้วย <code>or</code> จะให้ผลลัพธ์เป็น <strong>False</strong> ก็ต่อเมื่อ นิพจน์ย่อยทั้งสองฝั่งเป็น <strong>False</strong> ทั้งคู่ เท่านั้น กรณีอื่นจะให้ผลลัพธ์เป็น <strong>True</strong></p>
+                </div>
+
+                <h4>ตารางค่าความจริง:</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Condition1</th>
+                            <th>Condition2</th>
+                            <th>Condition1 or Condition2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>True</td><td>True</td><td><strong>True</strong></td></tr>
+                        <tr><td>True</td><td>False</td><td><strong>True</strong></td></tr>
+                        <tr><td>False</td><td>True</td><td><strong>True</strong></td></tr>
+                        <tr><td>False</td><td>False</td><td>False</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p><code>(score >= 80) or (attendance >= 90)</code> จะเป็น True ถ้า score มากกว่าหรือเท่ากับ 80 หรือ attendance มากกว่าหรือเท่ากับ 90 อย่างน้อยหนึ่งเงื่อนไข (หรือทั้งสองเงื่อนไข)</p>
+                    </div>
+                </div>
+
+                <h3>ค. not (นิเสธ)</h3>
+                <div class="definition-box">
+                    <h4>ความหมาย</h4>
+                    <p><code>not</code> ใช้เพื่อกลับค่าความจริงของนิพจน์ที่อยู่ด้านหลัง (จาก True เป็น False และจาก False เป็น True)</p>
+                </div>
+
+                <h4>ตารางค่าความจริง:</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Condition</th>
+                            <th>not Condition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>True</td><td>False</td></tr>
+                        <tr><td>False</td><td><strong>True</strong></td></tr>
+                    </tbody>
+                </table>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p><code>not (is_raining == True)</code> จะเป็น True ถ้า is_raining เป็น False (ไม่ฝนตก)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ลำดับความสำคัญ -->
+            <section id="section-2" class="content-section">
+                <h2>9.6.2 ลำดับความสำคัญของตัวดำเนินการ (Operator Precedence)</h2>
+                
+                <p>เมื่อมีตัวดำเนินการหลายตัวในนิพจน์เดียวกัน Python จะประมวลผลตามลำดับความสำคัญ:</p>
+
+                <div class="definition-box">
+                    <h4>ลำดับความสำคัญ (จากสูงไปต่ำ)</h4>
+                    <ol>
+                        <li><strong>วงเล็บ <code>()</code>:</strong> คำนวณสิ่งที่อยู่ในวงเล็บก่อนเสมอ</li>
+                        <li><strong>ตัวดำเนินการทางคณิตศาสตร์</strong> (<code>+, -, *, /, **, //, %</code>)</li>
+                        <li><strong>ตัวดำเนินการเปรียบเทียบ</strong> (<code>==, !=, &lt;, &lt;=, &gt;, &gt;=</code>)</li>
+                        <li><strong>not</strong></li>
+                        <li><strong>and</strong></li>
+                        <li><strong>or</strong></li>
+                    </ol>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p><code>not score > 50 and age < 18</code></p>
+                        <ol>
+                            <li><code>score > 50</code> (เปรียบเทียบ)</li>
+                            <li><code>age < 18</code> (เปรียบเทียบ)</li>
+                            <li><code>not</code> (กลับค่าของ score > 50)</li>
+                            <li><code>and</code> (เชื่อมผลลัพธ์ของ not กับ age < 18)</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>9.6.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจตัวดำเนินการทางตรรกศาสตร์และการสร้างเงื่อนไขประกอบ เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การใช้ and</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ x = 10, y = 5 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(x > 5) and (y < 10)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินค่าของแต่ละนิพจน์เปรียบเทียบในวงเล็บก่อน</li>
+                            <li>ใช้กฎของ and เพื่อหาผลลัพธ์สุดท้าย</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(x > 5)</code>: 10 > 5 คือ True</li>
+                            <li><code>(y < 10)</code>: 5 < 10 คือ True</li>
+                            <li>True and True คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การใช้ or</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ temp = 30, is_sunny = False จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(temp > 25) or (is_sunny == True)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินค่าของแต่ละนิพจน์เปรียบเทียบ</li>
+                            <li>ใช้กฎของ or เพื่อหาผลลัพธ์สุดท้าย</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(temp > 25)</code>: 30 > 25 คือ True</li>
+                            <li><code>(is_sunny == True)</code>: False == True คือ False</li>
+                            <li>True or False คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การใช้ not</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ has_permission = False จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>not has_permission</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้กฎของ not เพื่อกลับค่าความจริง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>not False คือ True</p>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การผสมผสาน not, and, or</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ age = 16, has_id = True จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(age >= 18) or (not has_id)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินค่าของแต่ละนิพจน์เปรียบเทียบ</li>
+                            <li>ทำ not ก่อน</li>
+                            <li>ใช้กฎของ or</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(age >= 18)</code>: 16 >= 18 คือ False</li>
+                            <li><code>(not has_id)</code>: not True คือ False</li>
+                            <li>False or False คือ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การประเมินนิพจน์ที่ซับซ้อนขึ้น</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ score = 85, attendance = 90 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(score > 90 and attendance >= 90) or (score >= 80 and attendance < 90)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินนิพจน์ในวงเล็บแต่ละชุดก่อน</li>
+                            <li>ทำ and ก่อนในแต่ละวงเล็บ</li>
+                            <li>สุดท้ายใช้ or</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>วงเล็บแรก:</strong> <code>(score > 90 and attendance >= 90)</code></p>
+                        <ol>
+                            <li>score > 90: 85 > 90 คือ False</li>
+                            <li>attendance >= 90: 90 >= 90 คือ True</li>
+                            <li>False and True คือ False</li>
+                        </ol>
+                        
+                        <p><strong>วงเล็บที่สอง:</strong> <code>(score >= 80 and attendance < 90)</code></p>
+                        <ol>
+                            <li>score >= 80: 85 >= 80 คือ True</li>
+                            <li>attendance < 90: 90 < 90 คือ False</li>
+                            <li>True and False คือ False</li>
+                        </ol>
+                        
+                        <p><strong>เชื่อมด้วย or:</strong> False or False คือ False</p>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>9.6.4 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การเปรียบเทียบด้วยเงื่อนไขประกอบ" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การใช้ and</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ a = 5, b = 10 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(a < b) and (a + b == 15)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินแต่ละส่วนแล้วใช้ and</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(a < b)</code>: 5 < 10 คือ True</li>
+                            <li><code>(a + b == 15)</code>: 5 + 10 == 15 → 15 == 15 คือ True</li>
+                            <li>True and True คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การใช้ or</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ is_weekend = False, is_holiday = True จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>is_weekend or is_holiday</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินแต่ละส่วนแล้วใช้ or</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>is_weekend: False</li>
+                            <li>is_holiday: True</li>
+                            <li>False or True คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การใช้ not</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ is_active = True จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>not (is_active == False)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินวงเล็บในสุดก่อน</li>
+                            <li>ทำ not</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(is_active == False)</code>: True == False คือ False</li>
+                            <li><code>not (False)</code>: not False คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การผสมผสาน not และ and</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ temp = 15, is_cold = True จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>not (temp > 20) and is_cold</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เปรียบเทียบก่อน</li>
+                            <li>ทำ not</li>
+                            <li>ทำ and</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(temp > 20)</code>: 15 > 20 คือ False</li>
+                            <li><code>not (False)</code>: not False คือ True</li>
+                            <li><code>True and is_cold</code>: True and True คือ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การผสมผสาน and และ or</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ x = 20, y = 30, z = 40 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(x < y and y < z) or (x == z)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ทำ and ก่อน</li>
+                            <li>ทำ or</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>วงเล็บแรก:</strong> <code>(x < y and y < z)</code></p>
+                        <ol>
+                            <li>x < y: 20 < 30 คือ True</li>
+                            <li>y < z: 30 < 40 คือ True</li>
+                            <li>True and True คือ True</li>
+                        </ol>
+                        
+                        <p><strong>วงเล็บที่สอง:</strong> <code>(x == z)</code></p>
+                        <ol>
+                            <li>x == z: 20 == 40 คือ False</li>
+                        </ol>
+                        
+                        <p><strong>เชื่อมด้วย or:</strong> True or False คือ True</p>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
