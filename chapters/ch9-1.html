@@ -39,18 +39,32 @@
     </header>
 
     <main class="container">
-        <div class="content">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.1.1 การทำงานแบบลำดับขั้นตอน (Sequential Execution)</a></li>
+                    <li><a href="#section-2">9.1.2 การแทนโครงสร้างพื้นฐานของโปรแกรม</a></li>
+                    <li><a href="#section-3">9.1.3 ความสำคัญของการทำงานแบบลำดับขั้นตอน</a></li>
+                    <li><a href="#section-4">9.1.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">9.1.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
             <section class="introduction">
                 <p>ในบทเรียนนี้ เราจะมาทำความเข้าใจเกี่ยวกับ "โครงสร้างพื้นฐานของโปรแกรม" โดยเฉพาะแนวคิดของ "ลำดับขั้นตอน" หรือการทำงานแบบเรียงลำดับ ซึ่งเป็นหลักการพื้นฐานที่สุดในการเขียนโปรแกรมคอมพิวเตอร์ การเข้าใจหลักการนี้เป็นสิ่งจำเป็นอย่างยิ่งสำหรับการสร้างโปรแกรมที่ทำงานได้อย่างถูกต้องและคาดการณ์ผลลัพธ์ได้ครับ</p>
             </section>
 
-            <section id="sequential-execution">
+            <!-- Section 1: การทำงานแบบลำดับขั้นตอน -->
+            <section id="section-1" class="content-section">
                 <h2>9.1.1 การทำงานแบบลำดับขั้นตอน (Sequential Execution)</h2>
                 
                 <p>การทำงานแบบลำดับขั้นตอน (Sequential Execution) คือ รูปแบบการทำงานของโปรแกรมที่คำสั่งต่างๆ จะถูกประมวลผล ทีละคำสั่งตามลำดับที่เขียนไว้จากบนลงล่าง และจากซ้ายไปขวา (สำหรับบรรทัดเดียวกัน) จนกว่าจะสิ้นสุดการทำงานของโปรแกรม</p>
 
-                <div class="highlight-box">
-                    <h4>แนวคิดหลัก:</h4>
+                <div class="definition-box">
+                    <h4>แนวคิดหลัก</h4>
                     <p>โปรแกรมจะทำตาม "ขั้นตอนที่ 1, แล้วทำขั้นตอนที่ 2, แล้วทำขั้นตอนที่ 3, ..." โดยไม่มีการข้ามคำสั่งหรือย้อนกลับไปทำซ้ำ (ในโครงสร้างพื้นฐานนี้)</p>
                 </div>
 
@@ -64,7 +78,8 @@
                 </ul>
             </section>
 
-            <section id="program-representation">
+            <!-- Section 2: การแทนโครงสร้างพื้นฐานของโปรแกรม -->
+            <section id="section-2" class="content-section">
                 <h2>9.1.2 การแทนโครงสร้างพื้นฐานของโปรแกรม</h2>
                 
                 <p>เราสามารถแสดงการทำงานแบบลำดับขั้นตอนได้หลายวิธี เช่น:</p>
@@ -116,19 +131,18 @@
                     </tbody>
                 </table>
 
-                <div class="code-example">
-                    <h4>ตัวอย่างรหัสเทียม (การบวกเลข 2 จำนวน):</h4>
-                    <pre><code>START
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่างรหัสเทียม (การบวกเลข 2 จำนวน):</strong></p>
+                        <pre><code>START
   INPUT number1
   INPUT number2
   SET sum TO number1 + number2
   PRINT sum
 END</code></pre>
-                </div>
-
-                <div class="code-example">
-                    <h4>เทียบเท่าในภาษา Python:</h4>
-                    <pre><code># รับค่าจากผู้ใช้ (input() จะรับเป็นข้อความ จึงต้องแปลงเป็นตัวเลขด้วย int())
+                        <p><strong>เทียบเท่าในภาษา Python:</strong></p>
+                        <pre><code># รับค่าจากผู้ใช้ (input() จะรับเป็นข้อความ จึงต้องแปลงเป็นตัวเลขด้วย int())
 number1 = int(input("ป้อนตัวเลขแรก: "))
 number2 = int(input("ป้อนตัวเลขที่สอง: "))
 
@@ -137,6 +151,7 @@ sum_result = number1 + number2
 
 # แสดงผลลัพธ์
 print("ผลรวมคือ:", sum_result)</code></pre>
+                    </div>
                 </div>
 
                 <h3>ข. ผังงาน (Flowchart)</h3>
@@ -150,13 +165,17 @@ print("ผลรวมคือ:", sum_result)</code></pre>
                     <li><strong>ลูกศร (Flowline):</strong> แสดงทิศทางของลำดับการทำงาน</li>
                 </ul>
 
-                <div class="note">
-                    <p><strong>ตัวอย่างผังงาน (การบวกเลข 2 จำนวน):</strong><br>
-                    [Start] → [Input number1] → [Input number2] → [sum = number1 + number2] → [Print sum] → [End]</p>
+                <div class="example-container">
+                    <h4>ตัวอย่างผังงาน</h4>
+                    <div class="example-box">
+                        <p><strong>ตัวอย่างผังงาน (การบวกเลข 2 จำนวน):</strong></p>
+                        <p>[Start] → [Input number1] → [Input number2] → [sum = number1 + number2] → [Print sum] → [End]</p>
+                    </div>
                 </div>
             </section>
 
-            <section id="importance">
+            <!-- Section 3: ความสำคัญของการทำงานแบบลำดับขั้นตอน -->
+            <section id="section-3" class="content-section">
                 <h2>9.1.3 ความสำคัญของการทำงานแบบลำดับขั้นตอน</h2>
                 
                 <ul>
@@ -167,15 +186,19 @@ print("ผลรวมคือ:", sum_result)</code></pre>
                 </ul>
             </section>
 
-            <section id="examples">
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
                 <h2>9.1.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
 
-                <div class="problem">
+                <div class="subsection">
                     <h3>โจทย์ข้อที่ 1: การเขียนรหัส Python และผังงาน (บวกเลข)</h3>
-                    <p><strong>คำถาม:</strong> จงเขียนรหัส Python และผังงานแสดงขั้นตอนการทำงานของโปรแกรมที่รับตัวเลขจำนวนเต็ม 2 จำนวน แล้วคำนวณผลบวกของตัวเลขทั้งสอง และแสดงผลลัพธ์ออกทางหน้าจอ</p>
                     
-                    <div class="approach">
-                        <h4>แนวคิด:</h4>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงเขียนรหัส Python และผังงานแสดงขั้นตอนการทำงานของโปรแกรมที่รับตัวเลขจำนวนเต็ม 2 จำนวน แล้วคำนวณผลบวกของตัวเลขทั้งสอง และแสดงผลลัพธ์ออกทางหน้าจอ</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
                         <ul>
                             <li>ระบุขั้นตอน: เริ่มต้น, รับข้อมูล, ประมวลผล, แสดงผล, สิ้นสุด</li>
                             <li>แปลงแต่ละขั้นตอนเป็นรหัส Python</li>
@@ -183,8 +206,8 @@ print("ผลรวมคือ:", sum_result)</code></pre>
                         </ul>
                     </div>
 
-                    <div class="solution">
-                        <h4>เฉลย:</h4>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
                         <p><strong>รหัส Python:</strong></p>
                         <pre><code># รับตัวเลขสองจำนวนจากผู้ใช้
 num1 = int(input("ป้อนตัวเลขแรก: "))
@@ -198,11 +221,15 @@ print("ผลรวมคือ:", sum_result)</code></pre>
                         
                         <p><strong>ผังงาน:</strong><br>
                         [Start] → [Input num1] → [Input num2] → [sum_result = num1 + num2] → [Print sum_result] → [End]</p>
+                        
+                        <p><strong>คำตอบ:</strong> ดูรหัส Python และผังงานข้างต้น</p>
                     </div>
                 </div>
 
-                <div class="problem">
+                <div class="subsection">
                     <h3>โจทย์ข้อที่ 2: การติดตามการทำงานของรหัส Python (Tracing Code)</h3>
+                    
+                    <div class="problem-box">
                     <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
                     <pre><code>a = 10
 b = 5
@@ -299,7 +326,8 @@ print(a)</code></pre>
                 </div>
             </section>
 
-            <section id="practice-problems">
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
                 <h2>9.1.5 ตัวอย่างข้อสอบฝึกทำ</h2>
 
                 <div class="problem">
