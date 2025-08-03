@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.3: การเขียนนิพจน์เพื่อคำนวณทางคณิตศาสตร์ - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.3: การเขียนนิพจน์เพื่อคำนวณทางคณิตศาสตร์</span>
+            </nav>
+            <h1>บทที่ 9.3: การเขียนนิพจน์เพื่อคำนวณทางคณิตศาสตร์</h1>
+            <p class="chapter-intro">การเรียนรู้การใช้ตัวดำเนินการทางคณิตศาสตร์และลำดับความสำคัญในการคำนวณ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.3.1 นิพจน์ทางคณิตศาสตร์ (Arithmetic Expressions)</a></li>
+                    <li><a href="#section-2">9.3.2 ตัวดำเนินการทางคณิตศาสตร์ใน Python</a></li>
+                    <li><a href="#section-3">9.3.3 ลำดับความสำคัญของตัวดำเนินการ</a></li>
+                    <li><a href="#section-4">9.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">9.3.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ การเขียนนิพจน์ทางคณิตศาสตร์ ในภาษา Python ซึ่งเป็นส่วนสำคัญของการประมวลผลข้อมูลในโปรแกรมคอมพิวเตอร์ การเข้าใจตัวดำเนินการ (operators) และลำดับความสำคัญของการคำนวณจะช่วยให้คุณสามารถเขียนโปรแกรมที่คำนวณผลลัพธ์ได้อย่างถูกต้องตามที่ต้องการ</p>
+            </section>
+
+            <!-- Section 1: นิพจน์ทางคณิตศาสตร์ -->
+            <section id="section-1" class="content-section">
+                <h2>9.3.1 นิพจน์ทางคณิตศาสตร์ (Arithmetic Expressions)</h2>
+                
+                <p>นิพจน์ทางคณิตศาสตร์ (Arithmetic Expression) คือ การรวมกันของตัวเลข (Literals), ตัวแปร (Variables) และตัวดำเนินการทางคณิตศาสตร์ (Arithmetic Operators) เพื่อให้ได้ผลลัพธ์เป็นค่าตัวเลข</p>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li><code>5 + 3</code></li>
+                            <li><code>price * quantity</code></li>
+                            <li><code>(x + y) / 2</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ตัวดำเนินการทางคณิตศาสตร์ -->
+            <section id="section-2" class="content-section">
+                <h2>9.3.2 ตัวดำเนินการทางคณิตศาสตร์ใน Python (Arithmetic Operators)</h2>
+                
+                <p>Python มีตัวดำเนินการพื้นฐานสำหรับการคำนวณทางคณิตศาสตร์ดังนี้:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>ตัวดำเนินการ</th>
+                            <th>ความหมาย</th>
+                            <th>ตัวอย่าง</th>
+                            <th>ผลลัพธ์</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>+</code></td>
+                            <td>การบวก</td>
+                            <td><code>5 + 3</code></td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td><code>-</code></td>
+                            <td>การลบ</td>
+                            <td><code>10 - 4</code></td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td><code>*</code></td>
+                            <td>การคูณ</td>
+                            <td><code>6 * 7</code></td>
+                            <td>42</td>
+                        </tr>
+                        <tr>
+                            <td><code>/</code></td>
+                            <td>การหาร (ผลลัพธ์เป็นทศนิยม)</td>
+                            <td><code>10 / 3</code></td>
+                            <td>3.333...</td>
+                        </tr>
+                        <tr>
+                            <td><code>//</code></td>
+                            <td>การหารปัดเศษทิ้ง (หารเอาส่วน)</td>
+                            <td><code>10 // 3</code></td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td><code>%</code></td>
+                            <td>การหารเอาเศษ (Modulo)</td>
+                            <td><code>10 % 3</code></td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td><code>**</code></td>
+                            <td>การยกกำลัง</td>
+                            <td><code>2 ** 3</code></td>
+                            <td>8</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="definition-box">
+                    <h4>ข้อควรระวัง</h4>
+                    <ul>
+                        <li><strong>/ (หารปกติ):</strong> ผลลัพธ์จะเป็น float เสมอ แม้ว่าผลหารจะเป็นจำนวนเต็มก็ตาม (เช่น 4 / 2 ได้ 2.0)</li>
+                        <li><strong>// (หารปัดเศษทิ้ง):</strong> ผลลัพธ์จะเป็น int ถ้าตัวถูกหารและตัวหารเป็น int ทั้งคู่ แต่จะเป็น float ถ้ามีตัวใดตัวหนึ่งเป็น float (เช่น 10.0 // 3 ได้ 3.0)</li>
+                        <li><strong>% (หารเอาเศษ):</strong> เศษเหลือจะมีเครื่องหมายเหมือนตัวหาร (ถ้าตัวหารเป็นบวก เศษจะเป็นบวก)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 3: ลำดับความสำคัญ -->
+            <section id="section-3" class="content-section">
+                <h2>9.3.3 ลำดับความสำคัญของตัวดำเนินการ (Operator Precedence)</h2>
+                
+                <p>เมื่อมีตัวดำเนินการหลายตัวในนิพจน์เดียวกัน Python จะประมวลผลตามลำดับความสำคัญ (คล้ายกับหลัก PEMDAS/BODMAS ในคณิตศาสตร์)</p>
+
+                <div class="definition-box">
+                    <h4>ลำดับความสำคัญ (จากสูงไปต่ำ)</h4>
+                    <ol>
+                        <li><strong>วงเล็บ <code>()</code>:</strong> คำนวณสิ่งที่อยู่ในวงเล็บก่อนเสมอ</li>
+                        <li><strong>ยกกำลัง <code>**</code>:</strong> มีความสำคัญสูงสุดถัดจากวงเล็บ</li>
+                        <li><strong>คูณ <code>*</code>, หาร <code>/</code>, หารปัดเศษทิ้ง <code>//</code>, หารเอาเศษ <code>%</code>:</strong> มีความสำคัญเท่ากัน ประมวลผลจากซ้ายไปขวา</li>
+                        <li><strong>บวก <code>+</code>, ลบ <code>-</code>:</strong> มีความสำคัญต่ำสุด ประมวลผลจากซ้ายไปขวา</li>
+                    </ol>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li><code>2 + 3 * 4</code> จะคำนวณ <code>3 * 4</code> ก่อน ได้ 12 แล้วบวก 2 ได้ 14</li>
+                            <li><code>(2 + 3) * 4</code> จะคำนวณ <code>(2 + 3)</code> ก่อน ได้ 5 แล้วคูณ 4 ได้ 20</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>9.3.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการคำนวณนิพจน์ทางคณิตศาสตร์และลำดับความสำคัญของตัวดำเนินการ เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การคำนวณพื้นฐาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>10 + 5 * 2 - 1</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ใช้ลำดับความสำคัญ: คูณก่อน แล้วค่อยบวก/ลบจากซ้ายไปขวา</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>5 * 2</code> คำนวณก่อน ได้ 10</li>
+                            <li>นิพจน์กลายเป็น <code>10 + 10 - 1</code></li>
+                            <li><code>10 + 10</code> คำนวณก่อน ได้ 20</li>
+                            <li>นิพจน์กลายเป็น <code>20 - 1</code></li>
+                            <li>ได้ผลลัพธ์ 19</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 19</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การใช้ตัวดำเนินการหารปัดเศษทิ้งและหารเอาเศษ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>17 // 5 + 17 % 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li><code>//</code> คือการหารเอาส่วน (ปัดเศษทิ้ง)</li>
+                            <li><code>%</code> คือการหารเอาเศษ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>17 // 5</code> คำนวณก่อน ได้ 3</li>
+                            <li><code>17 % 5</code> คำนวณก่อน ได้ 2</li>
+                            <li>นิพจน์กลายเป็น <code>3 + 2</code></li>
+                            <li>ได้ผลลัพธ์ 5</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 5</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การใช้ตัวดำเนินการยกกำลัง</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>3 ** 2 + 4 * 2</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li><code>**</code> (ยกกำลัง) มีความสำคัญสูงสุด</li>
+                            <li><code>*</code> (คูณ) มีความสำคัญรองลงมา</li>
+                            <li><code>+</code> (บวก) มีความสำคัญต่ำสุด</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>3 ** 2</code> คำนวณก่อน ได้ 9</li>
+                            <li><code>4 * 2</code> คำนวณก่อน ได้ 8</li>
+                            <li>นิพจน์กลายเป็น <code>9 + 8</code></li>
+                            <li>ได้ผลลัพธ์ 17</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 17</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การใช้วงเล็บ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(10 + 2) / 3</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บ <code>()</code> ถูกประมวลผลก่อนเสมอ</li>
+                            <li><code>/</code> (หารปกติ) ให้ผลลัพธ์เป็นทศนิยม</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(10 + 2)</code> คำนวณก่อน ได้ 12</li>
+                            <li>นิพจน์กลายเป็น <code>12 / 3</code></li>
+                            <li>ได้ผลลัพธ์ 4.0 (เนื่องจากการหารปกติ)</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 4.0</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การผสมผสานตัวดำเนินการหลายชนิด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>2 * (5 - 1) ** 2 % 3</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บก่อน</li>
+                            <li>ยกกำลัง</li>
+                            <li>คูณ</li>
+                            <li>หารเอาเศษ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(5 - 1)</code> คำนวณก่อน ได้ 4</li>
+                            <li>นิพจน์กลายเป็น <code>2 * 4 ** 2 % 3</code></li>
+                            <li><code>4 ** 2</code> คำนวณก่อน ได้ 16</li>
+                            <li>นิพจน์กลายเป็น <code>2 * 16 % 3</code></li>
+                            <li><code>2 * 16</code> คำนวณก่อน ได้ 32</li>
+                            <li>นิพจน์กลายเป็น <code>32 % 3</code></li>
+                            <li>ได้ผลลัพธ์ 2 (เพราะ 32 = 3 × 10 + 2)</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 2</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>9.3.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การเขียนนิพจน์เพื่อคำนวณทางคณิตศาสตร์" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การคำนวณพื้นฐาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>20 - 4 * 3 + 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>คูณก่อน แล้วบวก/ลบจากซ้ายไปขวา</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>4 * 3</code> คำนวณก่อน ได้ 12</li>
+                            <li>นิพจน์กลายเป็น <code>20 - 12 + 5</code></li>
+                            <li><code>20 - 12</code> คำนวณก่อน ได้ 8</li>
+                            <li>นิพจน์กลายเป็น <code>8 + 5</code></li>
+                            <li>ได้ผลลัพธ์ 13</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 13</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การใช้ตัวดำเนินการหารปัดเศษทิ้งและหารเอาเศษ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>25 // 4 - 25 % 4</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li><code>//</code> คือการหารเอาส่วน</li>
+                            <li><code>%</code> คือการหารเอาเศษ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>25 // 4</code> คำนวณก่อน ได้ 6</li>
+                            <li><code>25 % 4</code> คำนวณก่อน ได้ 1</li>
+                            <li>นิพจน์กลายเป็น <code>6 - 1</code></li>
+                            <li>ได้ผลลัพธ์ 5</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 5</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การใช้ตัวดำเนินการยกกำลังและวงเล็บ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(2 + 3) ** 2 / 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บก่อน</li>
+                            <li>ยกกำลัง</li>
+                            <li>หารปกติ (ผลลัพธ์เป็นทศนิยม)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(2 + 3)</code> คำนวณก่อน ได้ 5</li>
+                            <li>นิพจน์กลายเป็น <code>5 ** 2 / 5</code></li>
+                            <li><code>5 ** 2</code> คำนวณก่อน ได้ 25</li>
+                            <li>นิพจน์กลายเป็น <code>25 / 5</code></li>
+                            <li>ได้ผลลัพธ์ 5.0</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 5.0</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การผสมผสานตัวดำเนินการหลายชนิด (ซับซ้อนขึ้น)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>100 - (5 * 4 + 10) / 2</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บในสุดก่อน</li>
+                            <li>คูณ</li>
+                            <li>บวก</li>
+                            <li>หาร</li>
+                            <li>ลบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>5 * 4</code> คำนวณก่อน ได้ 20</li>
+                            <li>นิพจน์กลายเป็น <code>100 - (20 + 10) / 2</code></li>
+                            <li><code>(20 + 10)</code> คำนวณก่อน ได้ 30</li>
+                            <li>นิพจน์กลายเป็น <code>100 - 30 / 2</code></li>
+                            <li><code>30 / 2</code> คำนวณก่อน ได้ 15.0</li>
+                            <li>นิพจน์กลายเป็น <code>100 - 15.0</code></li>
+                            <li>ได้ผลลัพธ์ 85.0</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 85.0</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การประเมินนิพจน์ที่มีตัวแปร</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ x = 7 และ y = 2 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(x + y) * x // y</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าตัวแปร</li>
+                            <li>ประมวลผลตามลำดับความสำคัญ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>แทนค่า: <code>(7 + 2) * 7 // 2</code></li>
+                            <li><code>(7 + 2)</code> คำนวณก่อน ได้ 9</li>
+                            <li>นิพจน์กลายเป็น <code>9 * 7 // 2</code></li>
+                            <li><code>9 * 7</code> คำนวณก่อน ได้ 63</li>
+                            <li>นิพจน์กลายเป็น <code>63 // 2</code></li>
+                            <li>ได้ผลลัพธ์ 31</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 31</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
