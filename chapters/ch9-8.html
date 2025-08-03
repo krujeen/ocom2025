@@ -198,7 +198,8 @@ print("สิ้นสุดการตรวจสอบ")</code></pre>
                         <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
                     </div>
 
-                    <div class="approach-box">
+                    <button class="toggle-btn" onclick="toggleSection('approach-1')">💡 แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
                         <h4>แนวคิด</h4>
                         <ul>
                             <li>ติดตามค่า num ในแต่ละรอบของลูป while</li>
@@ -206,7 +207,8 @@ print("สิ้นสุดการตรวจสอบ")</code></pre>
                         </ul>
                     </div>
 
-                    <div class="solution-box">
+                    <button class="toggle-btn" onclick="toggleSection('solution-1')">✅ แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
                         <h4>เฉลย</h4>
                         <table class="comparison-table">
                             <thead>
@@ -255,7 +257,8 @@ print("จบโปรแกรม")</code></pre>
                         <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
                     </div>
 
-                    <div class="approach-box">
+                    <button class="toggle-btn" onclick="toggleSection('approach-2')">💡 แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
                         <h4>แนวคิด</h4>
                         <ul>
                             <li>ตรวจสอบเงื่อนไข if start_value > 5 ก่อน</li>
@@ -264,7 +267,8 @@ print("จบโปรแกรม")</code></pre>
                         </ul>
                     </div>
 
-                    <div class="solution-box">
+                    <button class="toggle-btn" onclick="toggleSection('solution-2')">✅ แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
                         <h4>เฉลย</h4>
                         <ol>
                             <li>start_value = 10, เงื่อนไข if (10 > 5) เป็น True</li>
@@ -304,7 +308,8 @@ print("ประเมินผลเสร็จสิ้น")</code></pre>
                         <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
                     </div>
 
-                    <div class="approach-box">
+                    <button class="toggle-btn" onclick="toggleSection('approach-3')">💡 แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
                         <h4>แนวคิด</h4>
                         <ul>
                             <li>ติดตามค่า score ในแต่ละรอบ</li>
@@ -312,7 +317,8 @@ print("ประเมินผลเสร็จสิ้น")</code></pre>
                         </ul>
                     </div>
 
-                    <div class="solution-box">
+                    <button class="toggle-btn" onclick="toggleSection('solution-3')">✅ แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
                         <h4>เฉลย</h4>
                         <table class="comparison-table">
                             <thead>
@@ -359,14 +365,16 @@ print("จบการตรวจสอบ")</code></pre>
                         <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
                     </div>
 
-                    <div class="approach-box">
+                    <button class="toggle-btn" onclick="toggleSection('approach-4')">💡 แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
                         <h4>แนวคิด</h4>
                         <ul>
                             <li>ติดตามค่า i และเงื่อนไข if ภายนอกและภายในในแต่ละรอบ</li>
                         </ul>
                     </div>
 
-                    <div class="solution-box">
+                    <button class="toggle-btn" onclick="toggleSection('solution-4')">✅ แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
                         <h4>เฉลย</h4>
                         <table class="comparison-table">
                             <thead>
@@ -409,7 +417,8 @@ print(f"ผลรวมสุดท้าย: {total_sum}")</code></pre>
                         <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
                     </div>
 
-                    <div class="approach-box">
+                    <button class="toggle-btn" onclick="toggleSection('approach-5')">💡 แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
                         <h4>แนวคิด</h4>
                         <ul>
                             <li>ติดตาม total_sum และ counter ในแต่ละรอบ</li>
@@ -417,7 +426,8 @@ print(f"ผลรวมสุดท้าย: {total_sum}")</code></pre>
                         </ul>
                     </div>
 
-                    <div class="solution-box">
+                    <button class="toggle-btn" onclick="toggleSection('solution-5')">✅ แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
                         <h4>เฉลย</h4>
                         <table class="comparison-table">
                             <thead>
@@ -656,5 +666,15 @@ while counter < limit:
     </main>
 
     <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
