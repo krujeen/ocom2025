@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.8: การผสมผสานทั้งการเลือกทำ (if) และการวนทำซ้ำ (while) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.8: การผสมผสานทั้งการเลือกทำ (if) และการวนทำซ้ำ (while)</span>
+            </nav>
+            <h1>บทที่ 9.8: การผสมผสานทั้งการเลือกทำ (if) และการวนทำซ้ำ (while)</h1>
+            <p class="chapter-intro">การเรียนรู้การใช้โครงสร้างควบคุมแบบผสมผสานเพื่อสร้างโปรแกรมที่มีประสิทธิภาพ</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.8.1 แนวคิดการผสมผสาน if และ while</a></li>
+                    <li><a href="#section-2">9.8.2 ผังงานแสดงการผสมผสาน</a></li>
+                    <li><a href="#section-3">9.8.3 ความสำคัญของการผสมผสาน</a></li>
+                    <li><a href="#section-4">9.8.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">9.8.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้การผสมผสานโครงสร้างควบคุมสองแบบเข้าด้วยกัน คือ การเลือกทำ (Conditional Execution) ด้วยคำสั่ง if และ การวนทำซ้ำ (Repetitive Execution) ด้วยลูป while การรวมกันของโครงสร้างทั้งสองนี้ช่วยให้โปรแกรมมีความสามารถในการตัดสินใจที่ซับซ้อนและทำงานซ้ำๆ ได้อย่างชาญฉลาด ซึ่งเป็นหัวใจสำคัญของการเขียนโปรแกรมที่ใช้งานได้จริง</p>
+            </section>
+
+            <!-- Section 1: แนวคิดการผสมผสาน -->
+            <section id="section-1" class="content-section">
+                <h2>9.8.1 แนวคิดการผสมผสาน if และ while</h2>
+                
+                <p>การผสมผสาน if และ while ช่วยให้เราสามารถ:</p>
+                
+                <ul>
+                    <li><strong>ตัดสินใจในแต่ละรอบของการวนซ้ำ:</strong> ทำสิ่งหนึ่งในรอบนี้ แต่ทำอีกสิ่งหนึ่งในรอบถัดไป ขึ้นอยู่กับเงื่อนไขที่เปลี่ยนแปลงไป</li>
+                    <li><strong>ควบคุมการวนซ้ำตามเงื่อนไขที่ซับซ้อน:</strong> ลูปอาจทำงานภายใต้เงื่อนไขหลัก แต่ภายในลูปมีการตัดสินใจย่อยๆ เพื่อปรับเปลี่ยนพฤติกรรม</li>
+                </ul>
+
+                <h3>ก. if ภายใน while (Nested if inside while)</h3>
+                <p>นี่คือรูปแบบที่พบบ่อยที่สุด โดยลูป while จะทำซ้ำไปเรื่อยๆ และในแต่ละรอบของการวนซ้ำ โปรแกรมจะตรวจสอบเงื่อนไข if เพื่อตัดสินใจว่าจะทำคำสั่งใด</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code># กำหนดค่าเริ่มต้น
+variable = initial_value
+while condition_for_loop:
+    # คำสั่งที่ทำในทุกรอบของลูป
+    if condition_for_if:
+        # คำสั่งที่จะทำเมื่อ condition_for_if เป็น True
+    else:
+        # คำสั่งที่จะทำเมื่อ condition_for_if เป็น False
+    
+    # คำสั่งอัปเดตค่าที่ทำให้ condition_for_loop เป็น False ในที่สุด
+    variable = update_value</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง: การนับเลขคู่/คี่ในแต่ละรอบ</h4>
+                    <div class="example-box">
+                        <pre><code>count = 1
+while count <= 5:
+    if count % 2 == 0:  # ตรวจสอบว่าเป็นเลขคู่
+        print(f"{count} เป็นเลขคู่")
+    else:
+        print(f"{count} เป็นเลขคี่")
+    count += 1
+print("จบการนับและตรวจสอบ")</code></pre>
+                        
+                        <p><strong>คำอธิบาย:</strong><br>
+                        ลูป while ทำงาน 5 รอบ (ตั้งแต่ count 1 ถึง 5) ในแต่ละรอบ:</p>
+                        <ul>
+                            <li>ถ้า count เป็นเลขคู่ (เช่น 2, 4) จะพิมพ์ว่า "เป็นเลขคู่"</li>
+                            <li>ถ้า count เป็นเลขคี่ (เช่น 1, 3, 5) จะพิมพ์ว่า "เป็นเลขคี่"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>ข. while ภายใน if (Nested while inside if)</h3>
+                <p>รูปแบบนี้หมายถึง ลูป while จะทำงาน ก็ต่อเมื่อเงื่อนไข if ภายนอกเป็นจริงเท่านั้น หากเงื่อนไข if เป็นเท็จ ลูป while จะไม่ถูกเรียกใช้เลย</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>if condition_for_if:
+    # คำสั่งที่จะทำเมื่อ condition_for_if เป็น True
+    
+    # ลูป while ที่จะทำงานต่อเมื่อ if เป็น True
+    variable = initial_value_for_loop
+    while condition_for_loop:
+        # คำสั่งภายในลูป
+        variable = update_value_for_loop
+else:
+    # คำสั่งที่จะทำเมื่อ condition_for_if เป็น False</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง: พิมพ์เลขคี่เท่านั้น</h4>
+                    <div class="example-box">
+                        <pre><code>start_num = 7
+
+if start_num % 2 != 0: # ถ้า start_num เป็นเลขคี่
+    print(f"เริ่มต้นที่เลขคี่: {start_num}")
+    current_num = start_num
+    while current_num < 15:
+        print(current_num)
+        current_num += 2 # เพิ่มทีละ 2 เพื่อให้ยังคงเป็นเลขคี่
+else:
+    print(f"เริ่มต้นที่เลขคู่: {start_num} ไม่เข้าเงื่อนไข")</code></pre>
+                        
+                        <p><strong>คำอธิบาย:</strong></p>
+                        <ul>
+                            <li>start_num (7) เป็นเลขคี่ (เงื่อนไข if เป็น True)</li>
+                            <li>โปรแกรมเข้าบล็อก if และพิมพ์ "เริ่มต้นที่เลขคี่: 7"</li>
+                            <li>จากนั้นลูป while จะทำงาน พิมพ์ 7, 9, 11, 13</li>
+                            <li>ถ้า start_num เป็น 6 (เลขคู่) โปรแกรมจะพิมพ์ "เริ่มต้นที่เลขคู่: 6 ไม่เข้าเงื่อนไข" และลูป while จะไม่ทำงาน</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ผังงาน -->
+            <section id="section-2" class="content-section">
+                <h2>9.8.2 ผังงานแสดงการผสมผสาน</h2>
+                
+                <p>ผังงาน (Flowchart) ช่วยให้เห็นภาพของการทำงานของโครงสร้างควบคุมแบบผสมผสานได้ชัดเจนขึ้น</p>
+                
+                <div class="definition-box">
+                    <h4>องค์ประกอบสำคัญในผังงาน</h4>
+                    <ul>
+                        <li><strong>รูปสี่เหลี่ยมผืนผ้า:</strong> แสดงคำสั่งหรือการดำเนินการ</li>
+                        <li><strong>รูปสี่เหลี่ยมข้าวหลามตัด:</strong> แสดงเงื่อนไข (condition) ที่ต้องตัดสินใจ</li>
+                        <li><strong>ลูกศร:</strong> แสดงทิศทางการทำงานของโปรแกรม</li>
+                        <li><strong>วงกลม:</strong> แสดงจุดเริ่มต้นและจุดสิ้นสุด</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 3: ความสำคัญ -->
+            <section id="section-3" class="content-section">
+                <h2>9.8.3 ความสำคัญของการผสมผสาน</h2>
+                
+                <ul>
+                    <li><strong>ความยืดหยุ่นสูง:</strong> สามารถสร้างโปรแกรมที่ตอบสนองต่อข้อมูลและสถานการณ์ที่หลากหลาย</li>
+                    <li><strong>การจัดการข้อมูล:</strong> ใช้ในการประมวลผลข้อมูลในรายการ (list) หรือฐานข้อมูล โดยตรวจสอบเงื่อนไขสำหรับแต่ละรายการ</li>
+                    <li><strong>การสร้างเกม/แอปพลิเคชัน:</strong> ใช้ในการสร้างพฤติกรรมของตัวละครในเกม หรือการทำงานของปุ่มต่างๆ ที่ต้องมีการวนซ้ำและตัดสินใจ</li>
+                </ul>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>9.8.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการผสมผสานโครงสร้างควบคุม if และ while เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: if-else ภายใน while (นับและตรวจสอบ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>num = 1
+while num <= 6:
+    if num % 3 == 0:
+        print(f"{num} หาร 3 ลงตัว")
+    else:
+        print(f"{num} หาร 3 ไม่ลงตัว")
+    num += 1
+print("สิ้นสุดการตรวจสอบ")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า num ในแต่ละรอบของลูป while</li>
+                            <li>ในแต่ละรอบ ตรวจสอบเงื่อนไข if num % 3 == 0 (หาร 3 ลงตัว)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>num</th>
+                                    <th>num % 3 == 0</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>1</td><td>False</td><td>1 หาร 3 ไม่ลงตัว</td></tr>
+                                <tr><td>2</td><td>2</td><td>False</td><td>2 หาร 3 ไม่ลงตัว</td></tr>
+                                <tr><td>3</td><td>3</td><td>True</td><td>3 หาร 3 ลงตัว</td></tr>
+                                <tr><td>4</td><td>4</td><td>False</td><td>4 หาร 3 ไม่ลงตัว</td></tr>
+                                <tr><td>5</td><td>5</td><td>False</td><td>5 หาร 3 ไม่ลงตัว</td></tr>
+                                <tr><td>6</td><td>6</td><td>True</td><td>6 หาร 3 ลงตัว</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>1 หาร 3 ไม่ลงตัว
+2 หาร 3 ไม่ลงตัว
+3 หาร 3 ลงตัว
+4 หาร 3 ไม่ลงตัว
+5 หาร 3 ไม่ลงตัว
+6 หาร 3 ลงตัว
+สิ้นสุดการตรวจสอบ</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: while ภายใน if (เงื่อนไขเริ่มต้น)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>start_value = 10
+
+if start_value > 5:
+    print("เริ่มการนับจากค่าที่มากกว่า 5")
+    i = start_value
+    while i <= 15:
+        print(i)
+        i += 2
+else:
+    print("ค่าเริ่มต้นไม่เข้าเงื่อนไข")
+print("จบโปรแกรม")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข if start_value > 5 ก่อน</li>
+                            <li>ถ้าเป็นจริง ลูป while จะทำงาน</li>
+                            <li>ติดตามค่า i และเงื่อนไขของลูป while</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>start_value = 10, เงื่อนไข if (10 > 5) เป็น True</li>
+                            <li>พิมพ์ "เริ่มการนับจากค่าที่มากกว่า 5"</li>
+                            <li>i = 10, ลูป while ทำงาน:</li>
+                            <ul>
+                                <li>รอบ 1: i = 10 (≤ 15), พิมพ์ 10, i = 12</li>
+                                <li>รอบ 2: i = 12 (≤ 15), พิมพ์ 12, i = 14</li>
+                                <li>รอบ 3: i = 14 (≤ 15), พิมพ์ 14, i = 16</li>
+                                <li>รอบ 4: i = 16 (> 15), ออกจากลูป</li>
+                            </ul>
+                            <li>พิมพ์ "จบโปรแกรม"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>เริ่มการนับจากค่าที่มากกว่า 5
+10
+12
+14
+จบโปรแกรม</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: if-elif-else ภายใน while (การจัดกลุ่มคะแนน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>score = 10
+while score <= 30:
+    if score >= 25:
+        print(f"Score {score}: ดีมาก")
+    elif score >= 15:
+        print(f"Score {score}: ดี")
+    else:
+        print(f"Score {score}: พอใช้")
+    score += 5
+print("ประเมินผลเสร็จสิ้น")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า score ในแต่ละรอบ</li>
+                            <li>ในแต่ละรอบ ตรวจสอบเงื่อนไข if-elif-else ตามลำดับ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>score (เริ่มต้นรอบ)</th>
+                                    <th>score >= 25</th>
+                                    <th>score >= 15</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>10</td><td>False</td><td>False</td><td>Score 10: พอใช้</td></tr>
+                                <tr><td>15</td><td>False</td><td>True</td><td>Score 15: ดี</td></tr>
+                                <tr><td>20</td><td>False</td><td>True</td><td>Score 20: ดี</td></tr>
+                                <tr><td>25</td><td>True</td><td>-</td><td>Score 25: ดีมาก</td></tr>
+                                <tr><td>30</td><td>True</td><td>-</td><td>Score 30: ดีมาก</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>Score 10: พอใช้
+Score 15: ดี
+Score 20: ดี
+Score 25: ดีมาก
+Score 30: ดีมาก
+ประเมินผลเสร็จสิ้น</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: if ซ้อน if ภายใน while (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>i = 1
+while i <= 4:
+    if i % 2 == 0: # ถ้า i เป็นเลขคู่
+        if i > 2:
+            print(f"เลขคู่ใหญ่: {i}")
+        else:
+            print(f"เลขคู่เล็ก: {i}")
+    else: # ถ้า i เป็นเลขคี่
+        print(f"เลขคี่: {i}")
+    i += 1
+print("จบการตรวจสอบ")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า i และเงื่อนไข if ภายนอกและภายในในแต่ละรอบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>i</th>
+                                    <th>i % 2 == 0</th>
+                                    <th>i > 2 (ถ้า i คู่)</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>False</td><td>-</td><td>เลขคี่: 1</td></tr>
+                                <tr><td>2</td><td>True</td><td>False</td><td>เลขคู่เล็ก: 2</td></tr>
+                                <tr><td>3</td><td>False</td><td>-</td><td>เลขคี่: 3</td></tr>
+                                <tr><td>4</td><td>True</td><td>True</td><td>เลขคู่ใหญ่: 4</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>เลขคี่: 1
+เลขคู่เล็ก: 2
+เลขคี่: 3
+เลขคู่ใหญ่: 4
+จบการตรวจสอบ</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การคำนวณสะสมในลูปที่มีเงื่อนไข</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>total_sum = 0
+counter = 1
+while counter <= 5:
+    if counter % 2 != 0: # ถ้าเป็นเลขคี่
+        total_sum += counter
+    else: # ถ้าเป็นเลขคู่
+        total_sum -= counter
+    counter += 1
+print(f"ผลรวมสุดท้าย: {total_sum}")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม total_sum และ counter ในแต่ละรอบ</li>
+                            <li>สังเกตว่า total_sum จะบวกเมื่อ counter เป็นคี่ และลบเมื่อ counter เป็นคู่</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>counter</th>
+                                    <th>counter % 2 != 0</th>
+                                    <th>การคำนวณ total_sum</th>
+                                    <th>total_sum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>True</td><td>0 + 1</td><td>1</td></tr>
+                                <tr><td>2</td><td>False</td><td>1 - 2</td><td>-1</td></tr>
+                                <tr><td>3</td><td>True</td><td>-1 + 3</td><td>2</td></tr>
+                                <tr><td>4</td><td>False</td><td>2 - 4</td><td>-2</td></tr>
+                                <tr><td>5</td><td>True</td><td>-2 + 5</td><td>3</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> ผลรวมสุดท้าย: 3</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>9.8.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การผสมผสานทั้งการเลือกทำ (if) และการวนทำซ้ำ (while)" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: if ภายใน while (นับเฉพาะบางเงื่อนไข)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>count = 0
+num = 1
+while num <= 10:
+    if num % 2 == 0: # ถ้าเป็นเลขคู่
+        count += 1
+    num += 1
+print(f"จำนวนเลขคู่: {count}")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>count จะเพิ่มขึ้นเมื่อ num เป็นเลขคู่เท่านั้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>ในช่วง 1 ถึง 10 มีเลขคู่: 2, 4, 6, 8, 10 (รวม 5 ตัว)</p>
+                        <p><strong>คำตอบ:</strong> จำนวนเลขคู่: 5</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: while ภายใน if (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>start_val = 15
+
+if start_val > 10 and start_val % 3 == 0:
+    print("เงื่อนไขเริ่มต้นตรงตามที่ต้องการ")
+    i = start_val
+    while i >= 5:
+        print(i)
+        i -= 5
+else:
+    print("เงื่อนไขเริ่มต้นไม่ตรง")
+print("จบการทำงาน")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข if ภายนอกทั้งหมดก่อน</li>
+                            <li>ถ้าเป็นจริง ลูป while จะทำงาน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>start_val = 15</li>
+                            <li>เงื่อนไข: (15 > 10) และ (15 % 3 == 0) → True และ True = True</li>
+                            <li>พิมพ์ "เงื่อนไขเริ่มต้นตรงตามที่ต้องการ"</li>
+                            <li>i = 15, ลูป while ทำงาน:</li>
+                            <ul>
+                                <li>รอบ 1: i = 15 (≥ 5), พิมพ์ 15, i = 10</li>
+                                <li>รอบ 2: i = 10 (≥ 5), พิมพ์ 10, i = 5</li>
+                                <li>รอบ 3: i = 5 (≥ 5), พิมพ์ 5, i = 0</li>
+                                <li>รอบ 4: i = 0 (< 5), ออกจากลูป</li>
+                            </ul>
+                            <li>พิมพ์ "จบการทำงาน"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>เงื่อนไขเริ่มต้นตรงตามที่ต้องการ
+15
+10
+5
+จบการทำงาน</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: if-elif-else ภายใน while (การจัดกลุ่ม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>x = 1
+while x <= 7:
+    if x < 3:
+        print(f"{x}: กลุ่ม A")
+    elif x < 6:
+        print(f"{x}: กลุ่ม B")
+    else:
+        print(f"{x}: กลุ่ม C")
+    x += 1
+print("จัดกลุ่มเสร็จสิ้น")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า x ในแต่ละรอบ</li>
+                            <li>ในแต่ละรอบ ตรวจสอบเงื่อนไข if-elif-else ตามลำดับ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>x</th>
+                                    <th>x < 3</th>
+                                    <th>x < 6</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>True</td><td>-</td><td>1: กลุ่ม A</td></tr>
+                                <tr><td>2</td><td>True</td><td>-</td><td>2: กลุ่ม A</td></tr>
+                                <tr><td>3</td><td>False</td><td>True</td><td>3: กลุ่ม B</td></tr>
+                                <tr><td>4</td><td>False</td><td>True</td><td>4: กลุ่ม B</td></tr>
+                                <tr><td>5</td><td>False</td><td>True</td><td>5: กลุ่ม B</td></tr>
+                                <tr><td>6</td><td>False</td><td>False</td><td>6: กลุ่ม C</td></tr>
+                                <tr><td>7</td><td>False</td><td>False</td><td>7: กลุ่ม C</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong></p>
+                        <pre>1: กลุ่ม A
+2: กลุ่ม A
+3: กลุ่ม B
+4: กลุ่ม B
+5: กลุ่ม B
+6: กลุ่ม C
+7: กลุ่ม C
+จัดกลุ่มเสร็จสิ้น</pre>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การคำนวณผลคูณในลูปที่มีเงื่อนไข</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>product = 1
+num = 1
+while num <= 5:
+    if num % 2 != 0: # ถ้าเป็นเลขคี่
+        product *= num
+    num += 1
+print(f"ผลคูณสุดท้าย: {product}")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>product จะถูกคูณด้วย num เมื่อ num เป็นเลขคี่เท่านั้น</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>เลขคี่ในช่วง 1 ถึง 5: 1, 3, 5</p>
+                        <p>ผลคูณ = 1 × 1 × 3 × 5 = 15</p>
+                        <p><strong>คำตอบ:</strong> ผลคูณสุดท้าย: 15</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: if ซ้อน if ภายใน while (เงื่อนไขซับซ้อนและลูปไม่รู้จบ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>counter = 0
+limit = 5
+while counter < limit:
+    if counter % 2 == 0:
+        print(f"Even: {counter}")
+        counter += 1
+    else:
+        print(f"Odd: {counter}")
+        # ไม่มี counter += 1 ในบล็อก else
+# print("End")</code></pre>
+                        <p>รหัสนี้จะทำงานอย่างไร? (ลูปไม่รู้จบหรือไม่) ถ้าไม่รู้จบเพราะอะไร?</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า counter อย่างละเอียด</li>
+                            <li>สังเกตว่า counter จะเพิ่มขึ้นเมื่อ counter เป็นเลขคู่เท่านั้น</li>
+                            <li>ถ้า counter เป็นเลขคี่ จะไม่มีการอัปเดตค่า counter ทำให้ติดอยู่ในลูป</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>รหัสนี้จะทำงานเป็น <strong>ลูปไม่รู้จบ (Infinite Loop)</strong></p>
+                        <p><strong>เหตุผล:</strong></p>
+                        <ol>
+                            <li>counter เริ่มที่ 0 (คู่) → พิมพ์ "Even: 0", counter เป็น 1</li>
+                            <li>counter เป็น 1 (คี่) → พิมพ์ "Odd: 1"</li>
+                            <li>ในบล็อก else (เมื่อ counter เป็นคี่) ไม่มีคำสั่ง counter += 1</li>
+                            <li>ดังนั้น counter จะติดอยู่ที่ค่า 1 ตลอดไป (1 < 5 เป็น True เสมอ) ทำให้ลูปทำงานซ้ำๆ ไม่มีที่สิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ลูปไม่รู้จบ, เพราะเมื่อ counter เป็นเลขคี่ จะไม่มีการอัปเดตค่า counter ทำให้เงื่อนไข counter < limit เป็นจริงตลอดไป</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
