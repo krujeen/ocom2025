@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.1: โครงสร้างพื้นฐานของโปรแกรม (ลำดับขั้นตอน) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.1: โครงสร้างพื้นฐานของโปรแกรม (ลำดับขั้นตอน)</span>
+            </nav>
+            <h1>บทที่ 9.1: โครงสร้างพื้นฐานของโปรแกรม (ลำดับขั้นตอน)</h1>
+            <p class="chapter-intro">การทำความเข้าใจพื้นฐานการทำงานแบบลำดับขั้นตอนในการเขียนโปรแกรม</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="content">
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาทำความเข้าใจเกี่ยวกับ "โครงสร้างพื้นฐานของโปรแกรม" โดยเฉพาะแนวคิดของ "ลำดับขั้นตอน" หรือการทำงานแบบเรียงลำดับ ซึ่งเป็นหลักการพื้นฐานที่สุดในการเขียนโปรแกรมคอมพิวเตอร์ การเข้าใจหลักการนี้เป็นสิ่งจำเป็นอย่างยิ่งสำหรับการสร้างโปรแกรมที่ทำงานได้อย่างถูกต้องและคาดการณ์ผลลัพธ์ได้ครับ</p>
+            </section>
+
+            <section id="sequential-execution">
+                <h2>9.1.1 การทำงานแบบลำดับขั้นตอน (Sequential Execution)</h2>
+                
+                <p>การทำงานแบบลำดับขั้นตอน (Sequential Execution) คือ รูปแบบการทำงานของโปรแกรมที่คำสั่งต่างๆ จะถูกประมวลผล ทีละคำสั่งตามลำดับที่เขียนไว้จากบนลงล่าง และจากซ้ายไปขวา (สำหรับบรรทัดเดียวกัน) จนกว่าจะสิ้นสุดการทำงานของโปรแกรม</p>
+
+                <div class="highlight-box">
+                    <h4>แนวคิดหลัก:</h4>
+                    <p>โปรแกรมจะทำตาม "ขั้นตอนที่ 1, แล้วทำขั้นตอนที่ 2, แล้วทำขั้นตอนที่ 3, ..." โดยไม่มีการข้ามคำสั่งหรือย้อนกลับไปทำซ้ำ (ในโครงสร้างพื้นฐานนี้)</p>
+                </div>
+
+                <p><strong>ตัวอย่างเปรียบเทียบ:</strong> ลองนึกถึงการทำอาหารตามสูตรอาหาร โปรแกรมจะทำตามคำสั่งทีละข้อตามลำดับที่ระบุไว้ หากข้ามขั้นตอนใดไป หรือทำผิดลำดับ ผลลัพธ์ที่ได้อาจจะไม่ถูกต้อง</p>
+
+                <h3>องค์ประกอบพื้นฐานของการทำงานแบบลำดับขั้นตอน:</h3>
+                <ul>
+                    <li><strong>การรับข้อมูลนำเข้า (Input):</strong> การนำข้อมูลจากภายนอกเข้าสู่โปรแกรม (เช่น รับค่าจากผู้ใช้, อ่านจากไฟล์)</li>
+                    <li><strong>การประมวลผล (Process):</strong> การคำนวณ, การเปรียบเทียบ, การจัดการข้อมูลภายในโปรแกรม</li>
+                    <li><strong>การแสดงผล (Output):</strong> การแสดงผลลัพธ์หรือข้อมูลออกสู่ภายนอก (เช่น แสดงบนหน้าจอ, เขียนลงไฟล์)</li>
+                </ul>
+            </section>
+
+            <section id="program-representation">
+                <h2>9.1.2 การแทนโครงสร้างพื้นฐานของโปรแกรม</h2>
+                
+                <p>เราสามารถแสดงการทำงานแบบลำดับขั้นตอนได้หลายวิธี เช่น:</p>
+
+                <h3>ก. รหัสเทียม (Pseudocode) และ ภาษา Python</h3>
+                <p>รหัสเทียม (Pseudocode) คือ การอธิบายขั้นตอนการทำงานของโปรแกรมหรืออัลกอริทึมด้วยภาษาที่คล้ายภาษาคอมพิวเตอร์แต่ไม่ต้องมีไวยากรณ์ที่เคร่งครัด ใช้คำพูดที่เข้าใจง่าย เพื่อให้มนุษย์เข้าใจได้โดยไม่ต้องกังวลถึงรายละเอียดทางเทคนิคของภาษาโปรแกรมใดๆ</p>
+
+                <h4>คำสั่งพื้นฐานในรหัสเทียมและเทียบกับภาษา Python:</h4>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>คำสั่งในรหัสเทียม</th>
+                            <th>ความหมาย</th>
+                            <th>คำสั่งในภาษา Python (ตัวอย่าง)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>START / BEGIN</td>
+                            <td>จุดเริ่มต้นของโปรแกรม</td>
+                            <td>(ไม่จำเป็นต้องมีคำสั่งเฉพาะ, โปรแกรมเริ่มจากบรรทัดแรก)</td>
+                        </tr>
+                        <tr>
+                            <td>INPUT &lt;ตัวแปร&gt;</td>
+                            <td>รับค่าเข้าสู่ตัวแปร</td>
+                            <td>variable = input("Enter value: ") (รับเป็นข้อความ)</td>
+                        </tr>
+                        <tr>
+                            <td>SET &lt;ตัวแปร&gt; TO &lt;ค่า/นิพจน์&gt; หรือ &lt;ตัวแปร&gt; = &lt;ค่า/นิพจน์&gt;</td>
+                            <td>กำหนดค่าให้ตัวแปร</td>
+                            <td>variable = 10 หรือ result = a + b</td>
+                        </tr>
+                        <tr>
+                            <td>CALCULATE &lt;นิพจน์&gt;</td>
+                            <td>ประมวลผล</td>
+                            <td>result = num1 * num2 (มักจะรวมกับการกำหนดค่า)</td>
+                        </tr>
+                        <tr>
+                            <td>PRINT &lt;ข้อความ/ตัวแปร&gt; / DISPLAY &lt;ข้อความ/ตัวแปร&gt;</td>
+                            <td>แสดงผลลัพธ์</td>
+                            <td>print("Hello World") หรือ print(variable)</td>
+                        </tr>
+                        <tr>
+                            <td>END</td>
+                            <td>จุดสิ้นสุดของโปรแกรม</td>
+                            <td>(ไม่จำเป็นต้องมีคำสั่งเฉพาะ, โปรแกรมสิ้นสุดเมื่อไม่มีคำสั่งให้ทำ)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-example">
+                    <h4>ตัวอย่างรหัสเทียม (การบวกเลข 2 จำนวน):</h4>
+                    <pre><code>START
+  INPUT number1
+  INPUT number2
+  SET sum TO number1 + number2
+  PRINT sum
+END</code></pre>
+                </div>
+
+                <div class="code-example">
+                    <h4>เทียบเท่าในภาษา Python:</h4>
+                    <pre><code># รับค่าจากผู้ใช้ (input() จะรับเป็นข้อความ จึงต้องแปลงเป็นตัวเลขด้วย int())
+number1 = int(input("ป้อนตัวเลขแรก: "))
+number2 = int(input("ป้อนตัวเลขที่สอง: "))
+
+# คำนวณผลรวม
+sum_result = number1 + number2
+
+# แสดงผลลัพธ์
+print("ผลรวมคือ:", sum_result)</code></pre>
+                </div>
+
+                <h3>ข. ผังงาน (Flowchart)</h3>
+                <p>ผังงาน (Flowchart) คือ การแสดงขั้นตอนการทำงานของโปรแกรมหรืออัลกอริทึมด้วยสัญลักษณ์ภาพมาตรฐาน ซึ่งช่วยให้เห็นภาพรวมของลำดับการทำงานได้อย่างชัดเจน</p>
+
+                <h4>สัญลักษณ์พื้นฐานในผังงาน (สำหรับลำดับขั้นตอน):</h4>
+                <ul>
+                    <li><strong>วงรี / สี่เหลี่ยมโค้งมน (Terminal):</strong> จุดเริ่มต้น (Start) หรือจุดสิ้นสุด (End) ของโปรแกรม</li>
+                    <li><strong>สี่เหลี่ยมด้านขนาน (Input/Output):</strong> การรับข้อมูลนำเข้า (Input) หรือการแสดงผลลัพธ์ (Output)</li>
+                    <li><strong>สี่เหลี่ยมผืนผ้า (Process):</strong> การประมวลผล, การคำนวณ, การกำหนดค่า</li>
+                    <li><strong>ลูกศร (Flowline):</strong> แสดงทิศทางของลำดับการทำงาน</li>
+                </ul>
+
+                <div class="note">
+                    <p><strong>ตัวอย่างผังงาน (การบวกเลข 2 จำนวน):</strong><br>
+                    [Start] → [Input number1] → [Input number2] → [sum = number1 + number2] → [Print sum] → [End]</p>
+                </div>
+            </section>
+
+            <section id="importance">
+                <h2>9.1.3 ความสำคัญของการทำงานแบบลำดับขั้นตอน</h2>
+                
+                <ul>
+                    <li><strong>พื้นฐาน:</strong> เป็นโครงสร้างหลักของโปรแกรมทุกชนิด อัลกอริทึมส่วนใหญ่เริ่มต้นจากการทำงานแบบลำดับ</li>
+                    <li><strong>คาดการณ์ผลลัพธ์ได้:</strong> การทำตามลำดับช่วยให้โปรแกรมทำงานอย่างเป็นระบบ ทำให้สามารถคาดเดาผลลัพธ์ได้ง่าย</li>
+                    <li><strong>ง่ายต่อการดีบัก:</strong> หากเกิดข้อผิดพลาด สามารถไล่ตามลำดับคำสั่งเพื่อหาจุดที่ผิดพลาดได้ง่าย</li>
+                    <li><strong>สร้างความเข้าใจ:</strong> เป็นรากฐานสำหรับการเรียนรู้โครงสร้างโปรแกรมที่ซับซ้อนขึ้น เช่น การเลือกทำ (เงื่อนไข) และการทำซ้ำ (ลูป)</li>
+                </ul>
+            </section>
+
+            <section id="examples">
+                <h2>9.1.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 1: การเขียนรหัส Python และผังงาน (บวกเลข)</h3>
+                    <p><strong>คำถาม:</strong> จงเขียนรหัส Python และผังงานแสดงขั้นตอนการทำงานของโปรแกรมที่รับตัวเลขจำนวนเต็ม 2 จำนวน แล้วคำนวณผลบวกของตัวเลขทั้งสอง และแสดงผลลัพธ์ออกทางหน้าจอ</p>
+                    
+                    <div class="approach">
+                        <h4>แนวคิด:</h4>
+                        <ul>
+                            <li>ระบุขั้นตอน: เริ่มต้น, รับข้อมูล, ประมวลผล, แสดงผล, สิ้นสุด</li>
+                            <li>แปลงแต่ละขั้นตอนเป็นรหัส Python</li>
+                            <li>แปลงแต่ละขั้นตอนเป็นสัญลักษณ์ผังงาน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <p><strong>รหัส Python:</strong></p>
+                        <pre><code># รับตัวเลขสองจำนวนจากผู้ใช้
+num1 = int(input("ป้อนตัวเลขแรก: "))
+num2 = int(input("ป้อนตัวเลขที่สอง: "))
+
+# คำนวณผลบวก
+sum_result = num1 + num2
+
+# แสดงผลลัพธ์
+print("ผลรวมคือ:", sum_result)</code></pre>
+                        
+                        <p><strong>ผังงาน:</strong><br>
+                        [Start] → [Input num1] → [Input num2] → [sum_result = num1 + num2] → [Print sum_result] → [End]</p>
+                    </div>
+                </div>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 2: การติดตามการทำงานของรหัส Python (Tracing Code)</h3>
+                    <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                    <pre><code>a = 10
+b = 5
+c = a * b
+a = a + c
+print(a)</code></pre>
+                    <p>ถ้าเริ่มต้น a มีค่า 10 และ b มีค่า 5 จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+
+                    <div class="approach">
+                        <h4>แนวคิด:</h4>
+                        <ul>
+                            <li>สร้างตารางเพื่อติดตามค่าของตัวแปรในแต่ละบรรทัด</li>
+                            <li>ไล่คำสั่งทีละบรรทัดและอัปเดตค่าในตาราง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>c</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>a = 10</td>
+                                    <td>10</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>b = 5</td>
+                                    <td>10</td>
+                                    <td>5</td>
+                                    <td>-</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>c = a * b</td>
+                                    <td>10</td>
+                                    <td>5</td>
+                                    <td>50</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>a = a + c</td>
+                                    <td>60</td>
+                                    <td>5</td>
+                                    <td>50</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>print(a)</td>
+                                    <td>60</td>
+                                    <td>5</td>
+                                    <td>50</td>
+                                    <td>60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 60</p>
+                    </div>
+                </div>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 3: การวิเคราะห์ผลลัพธ์จากผังงาน</h3>
+                    <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                    <p>[Start] → [Input X] → [Y = X + 5] → [Print Y] → [End]</p>
+                    <p>ถ้าผู้ใช้ป้อนค่า X=15 จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <ol>
+                            <li>Start: โปรแกรมเริ่มต้น</li>
+                            <li>Input X: รับค่า X จากผู้ใช้ ซึ่งคือ 15</li>
+                            <li>Y = X + 5: คำนวณค่า Y โดยนำค่า X มาบวก 5<br>Y = 15 + 5 = 20</li>
+                            <li>Print Y: แสดงค่า Y ออกทางหน้าจอ ซึ่งคือ 20</li>
+                            <li>End: โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 20</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practice-problems">
+                <h2>9.1.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 6: การติดตามการทำงานของรหัส Python (การคำนวณซับซ้อนขึ้น)</h3>
+                    <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                    <pre><code>x = 3
+y = 4
+z = 5
+x = x + y
+y = y * z
+z = x - y
+print(z)</code></pre>
+                    <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>z</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 3</td><td>3</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>y = 4</td><td>3</td><td>4</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>z = 5</td><td>3</td><td>4</td><td>5</td><td></td></tr>
+                                <tr><td>4</td><td>x = x + y</td><td>7</td><td>4</td><td>5</td><td></td></tr>
+                                <tr><td>5</td><td>y = y * z</td><td>7</td><td>20</td><td>5</td><td></td></tr>
+                                <tr><td>6</td><td>z = x - y</td><td>7</td><td>20</td><td>-13</td><td></td></tr>
+                                <tr><td>7</td><td>print(z)</td><td>7</td><td>20</td><td>-13</td><td>-13</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> -13</p>
+                    </div>
+                </div>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 8: การเขียนรหัส Python (คำนวณพื้นที่วงกลม)</h3>
+                    <p><strong>คำถาม:</strong> จงเขียนรหัส Python แสดงขั้นตอนการคำนวณพื้นที่ของรูปวงกลม โดยรับค่ารัศมีจากผู้ใช้ และแสดงผลลัพธ์พื้นที่ (ใช้ค่า π = 3.14)</p>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <pre><code># รับค่ารัศมีจากผู้ใช้
+radius = float(input("ป้อนรัศมีวงกลม: "))
+
+# กำหนดค่า Pi
+PI = 3.14
+
+# คำนวณพื้นที่วงกลม
+area = PI * radius * radius
+
+# แสดงผลลัพธ์
+print("พื้นที่ของวงกลมคือ:", area)</code></pre>
+                    </div>
+                </div>
+
+                <div class="problem">
+                    <h3>โจทย์ข้อที่ 10: การวิเคราะห์การทำงานของตัวแปร (สลับค่าแบบมีค่าเริ่มต้น)</h3>
+                    <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                    <pre><code>a = 2
+b = 7
+c = 0
+c = a
+a = b
+b = c
+print(a)
+print(b)</code></pre>
+                    <p>จงหาค่าของ a และ b ที่พิมพ์ออกมา</p>
+
+                    <div class="solution">
+                        <h4>เฉลย:</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>c</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>a = 2</td><td>2</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>b = 7</td><td>2</td><td>7</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>c = 0</td><td>2</td><td>7</td><td>0</td><td></td></tr>
+                                <tr><td>4</td><td>c = a</td><td>2</td><td>7</td><td>2</td><td></td></tr>
+                                <tr><td>5</td><td>a = b</td><td>7</td><td>7</td><td>2</td><td></td></tr>
+                                <tr><td>6</td><td>b = c</td><td>7</td><td>2</td><td>2</td><td></td></tr>
+                                <tr><td>7</td><td>print(a)</td><td>7</td><td>2</td><td>2</td><td>7</td></tr>
+                                <tr><td>8</td><td>print(b)</td><td>7</td><td>2</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> a = 7, b = 2</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
