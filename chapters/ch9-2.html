@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.2: การกำหนดค่าให้ตัวแปร (=) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.2: การกำหนดค่าให้ตัวแปร (=)</span>
+            </nav>
+            <h1>บทที่ 9.2: การกำหนดค่าให้ตัวแปร (=)</h1>
+            <p class="chapter-intro">การเรียนรู้เกี่ยวกับการกำหนดค่าให้ตัวแปรและการทำงานของ Assignment Operator</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.2.1 ตัวแปร (Variables)</a></li>
+                    <li><a href="#section-2">9.2.2 การกำหนดค่าให้ตัวแปร (Assignment Operator: =)</a></li>
+                    <li><a href="#section-3">9.2.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-4">9.2.4 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ การกำหนดค่าให้ตัวแปร (Variable Assignment) ซึ่งเป็นแนวคิดพื้นฐานที่สำคัญที่สุดในการเขียนโปรแกรมคอมพิวเตอร์ การกำหนดค่าคือการนำข้อมูลไปเก็บไว้ในหน่วยความจำที่ถูกตั้งชื่อไว้ (ตัวแปร) เพื่อให้โปรแกรมสามารถนำข้อมูลนั้นไปใช้ ประมวลผล หรือเปลี่ยนแปลงได้ในภายหลัง</p>
+            </section>
+
+            <!-- Section 1: ตัวแปร (Variables) -->
+            <section id="section-1" class="content-section">
+                <h2>9.2.1 ตัวแปร (Variables)</h2>
+                
+                <p>ตัวแปร (Variable) คือ ชื่อที่ใช้สำหรับอ้างอิงถึงตำแหน่งในหน่วยความจำของคอมพิวเตอร์ที่ใช้เก็บข้อมูล ค่าของตัวแปรสามารถเปลี่ยนแปลงได้ในระหว่างการทำงานของโปรแกรม</p>
+
+                <div class="definition-box">
+                    <h4>ชื่อตัวแปร</h4>
+                    <p>ควรตั้งชื่อให้สื่อความหมายถึงข้อมูลที่เก็บอยู่ (เช่น score, user_name, total_amount) ใน Python นิยมใช้รูปแบบ snake_case สำหรับชื่อตัวแปร</p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>ประเภทข้อมูล</h4>
+                    <p>Python เป็นภาษาแบบ Dynamic Typing ซึ่งหมายความว่าคุณไม่จำเป็นต้องประกาศประเภทของตัวแปรอย่างชัดเจนเมื่อสร้างตัวแปร ตัวแปรสามารถเก็บข้อมูลได้หลายประเภท เช่น:</p>
+                    <ul>
+                        <li>จำนวนเต็ม (Integer)</li>
+                        <li>จำนวนจริง (Float)</li>
+                        <li>ข้อความ (String)</li>
+                        <li>ค่าความจริง (Boolean)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 2: การกำหนดค่าให้ตัวแปร -->
+            <section id="section-2" class="content-section">
+                <h2>9.2.2 การกำหนดค่าให้ตัวแปร (Assignment Operator: =)</h2>
+                
+                <p>การกำหนดค่าให้ตัวแปรเป็นการนำค่าทางด้านขวาของเครื่องหมาย = ไปเก็บไว้ในตัวแปรทางด้านซ้าย</p>
+
+                <div class="definition-box">
+                    <h4>สัญลักษณ์</h4>
+                    <p><strong>=</strong> (อ่านว่า "เท่ากับ" ในทางคณิตศาสตร์ แต่ในทางโปรแกรมมิ่งมักอ่านว่า "กำหนดค่าให้" หรือ "เก็บค่า")</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>รูปแบบทั่วไปในภาษา Python</h4>
+                    <pre><code>&lt;variable_name&gt; = &lt;value_or_expression&gt;</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <pre><code>score = 100         # กำหนดให้ตัวแปร score เก็บค่า 100 (จำนวนเต็ม)
+name = "Alice"      # กำหนดให้ตัวแปร name เก็บข้อความ "Alice"
+price = 25.50       # กำหนดให้ตัวแปร price เก็บค่า 25.50 (จำนวนจริง)
+quantity = 4        # กำหนดให้ตัวแปร quantity เก็บค่า 4
+total = price * quantity # กำหนดให้ตัวแปร total เก็บผลคูณของ price กับ quantity</code></pre>
+                    </div>
+                </div>
+
+                <h3>หลักการสำคัญของการกำหนดค่า:</h3>
+                <ol>
+                    <li><strong>ค่าทางขวาถูกประมวลผลก่อน:</strong> โปรแกรมจะคำนวณหรือประเมินค่านิพจน์ทางด้านขวาของเครื่องหมาย = ให้เรียบร้อยก่อน</li>
+                    <li><strong>นำผลลัพธ์ไปเก็บทางซ้าย:</strong> ผลลัพธ์ที่ได้จากขั้นตอนที่ 1 จะถูกนำไปเก็บไว้ในตัวแปรทางด้านซ้าย</li>
+                    <li><strong>ค่าเดิมของตัวแปรจะถูกแทนที่:</strong> หากตัวแปรทางด้านซ้ายเคยมีค่าอยู่แล้ว ค่าเดิมนั้นจะถูกลบทิ้งไปและแทนที่ด้วยค่าใหม่</li>
+                </ol>
+
+                <div class="example-container">
+                    <h4>ตัวอย่างการทำงานแบบลำดับใน Python</h4>
+                    <div class="example-box">
+                        <pre><code>x = 5    # x มีค่า 5
+x = x + 2 # ประมวลผล x + 2 (ซึ่งคือ 5 + 2 = 7) แล้วนำ 7 ไปเก็บใน x
+          # ตอนนี้ x มีค่า 7 (ค่า 5 เดิมหายไป)
+print(x)  # แสดงผล 7</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-3" class="content-section">
+                <h2>9.2.3 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการกำหนดค่าให้ตัวแปรและการติดตามการทำงานของโปรแกรม เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การกำหนดค่าพื้นฐาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>a = 25
+b = a + 10
+print(b)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่คำสั่งทีละบรรทัดและติดตามการเปลี่ยนแปลงค่าของตัวแปร</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>a = 25</td><td>25</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>b = a + 10</td><td>25</td><td>35</td><td></td></tr>
+                                <tr><td>3</td><td>print(b)</td><td>25</td><td>35</td><td>35</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 35</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การกำหนดค่าซ้ำ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>count = 0
+count = count + 1
+count = count + 1
+print(count)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สังเกตว่าตัวแปร count ถูกกำหนดค่าใหม่ในแต่ละบรรทัด ทำให้ค่าเดิมถูกทับ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>count</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>count = 0</td><td>0</td><td></td></tr>
+                                <tr><td>2</td><td>count = count + 1</td><td>1</td><td></td></tr>
+                                <tr><td>3</td><td>count = count + 1</td><td>2</td><td></td></tr>
+                                <tr><td>4</td><td>print(count)</td><td>2</td><td>2</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 2</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การใช้ตัวแปรหลายตัวในการคำนวณ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>x = 10
+y = 5
+z = x * y
+x = z - y
+print(x)
+print(z)</code></pre>
+                        <p>จงหาค่าของ x และ z ที่พิมพ์ออกมา</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปรทุกตัวในแต่ละบรรทัดอย่างละเอียด</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>z</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 10</td><td>10</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>y = 5</td><td>10</td><td>5</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>z = x * y</td><td>10</td><td>5</td><td>50</td><td></td></tr>
+                                <tr><td>4</td><td>x = z - y</td><td>45</td><td>5</td><td>50</td><td></td></tr>
+                                <tr><td>5</td><td>print(x)</td><td>45</td><td>5</td><td>50</td><td>45</td></tr>
+                                <tr><td>6</td><td>print(z)</td><td>45</td><td>5</td><td>50</td><td>50</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> x = 45 และ z = 50</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การกำหนดค่าด้วยข้อความ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>first_name = "John"
+last_name = "Doe"
+full_name = first_name + " " + last_name
+print(full_name)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>การดำเนินการ + กับข้อความคือการนำข้อความมาต่อกัน (String Concatenation)</li>
+                            <li>สังเกตว่ามีช่องว่าง (" ") เป็นส่วนหนึ่งของข้อความที่นำมาต่อด้วย</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>first_name</th>
+                                    <th>last_name</th>
+                                    <th>full_name</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>first_name = "John"</td><td>"John"</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>last_name = "Doe"</td><td>"John"</td><td>"Doe"</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>full_name = ...</td><td>"John"</td><td>"Doe"</td><td>"John Doe"</td><td></td></tr>
+                                <tr><td>4</td><td>print(full_name)</td><td>"John"</td><td>"Doe"</td><td>"John Doe"</td><td>John Doe</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> John Doe</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การสลับค่าตัวแปรโดยใช้ตัวแปรชั่วคราว</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>a = 10
+b = 20
+temp = a
+a = b
+b = temp
+print(a)
+print(b)</code></pre>
+                        <p>จงหาค่าของ a และ b ที่พิมพ์ออกมา</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร a, b, temp ในแต่ละบรรทัดอย่างละเอียด</li>
+                            <li>สังเกตว่านี่คือเทคนิคมาตรฐานในการสลับค่าตัวแปรโดยใช้ตัวแปรชั่วคราว</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>temp</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>a = 10</td><td>10</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>b = 20</td><td>10</td><td>20</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>temp = a</td><td>10</td><td>20</td><td>10</td><td></td></tr>
+                                <tr><td>4</td><td>a = b</td><td>20</td><td>20</td><td>10</td><td></td></tr>
+                                <tr><td>5</td><td>b = temp</td><td>20</td><td>10</td><td>10</td><td></td></tr>
+                                <tr><td>6</td><td>print(a)</td><td>20</td><td>10</td><td>10</td><td>20</td></tr>
+                                <tr><td>7</td><td>print(b)</td><td>20</td><td>10</td><td>10</td><td>10</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> a = 20 และ b = 10</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-4" class="content-section">
+                <h2>9.2.4 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การกำหนดค่าให้ตัวแปร" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การกำหนดค่าและการคำนวณลำดับ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>value = 100
+value = value / 2  # การหารปกติจะได้ float
+value = value + 15
+print(value)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามการเปลี่ยนแปลงของ value ทีละบรรทัด</li>
+                            <li>ระวังว่าการหารด้วย / ใน Python 3 จะให้ผลลัพธ์เป็นจำนวนจริง (float) เสมอ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>value</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>value = 100</td><td>100</td><td></td></tr>
+                                <tr><td>2</td><td>value = value / 2</td><td>50.0</td><td></td></tr>
+                                <tr><td>3</td><td>value = value + 15</td><td>65.0</td><td></td></tr>
+                                <tr><td>4</td><td>print(value)</td><td>65.0</td><td>65.0</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 65.0</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การกำหนดค่าและการใช้ตัวแปรหลายตัว</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>num1 = 7
+num2 = 3
+result = num1 * num2
+num1 = num1 + result
+print(num1)
+print(result)</code></pre>
+                        <p>จงหาค่าของ num1 และ result ที่พิมพ์ออกมา</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของ num1, num2, result ในแต่ละบรรทัดอย่างรอบคอบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>num1</th>
+                                    <th>num2</th>
+                                    <th>result</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>num1 = 7</td><td>7</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>num2 = 3</td><td>7</td><td>3</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>result = num1 * num2</td><td>7</td><td>3</td><td>21</td><td></td></tr>
+                                <tr><td>4</td><td>num1 = num1 + result</td><td>28</td><td>3</td><td>21</td><td></td></tr>
+                                <tr><td>5</td><td>print(num1)</td><td>28</td><td>3</td><td>21</td><td>28</td></tr>
+                                <tr><td>6</td><td>print(result)</td><td>28</td><td>3</td><td>21</td><td>21</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> num1 = 28, result = 21</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การกำหนดค่าด้วยข้อความและการต่อข้อความ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>greeting = "Hi"
+name = "Alice"
+message = greeting + " " + name + "!"
+print(message)</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>การดำเนินการ + กับข้อความคือการนำข้อความมาต่อกัน (String Concatenation)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>greeting</th>
+                                    <th>name</th>
+                                    <th>message</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>greeting = "Hi"</td><td>"Hi"</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>name = "Alice"</td><td>"Hi"</td><td>"Alice"</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>message = ...</td><td>"Hi"</td><td>"Alice"</td><td>"Hi Alice!"</td><td></td></tr>
+                                <tr><td>4</td><td>print(message)</td><td>"Hi"</td><td>"Alice"</td><td>"Hi Alice!"</td><td>Hi Alice!</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> Hi Alice!</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การกำหนดค่าแบบลำดับและผลกระทบต่อตัวแปรอื่น</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>a = 1
+b = a + 5
+a = b * 2
+print(a)
+print(b)</code></pre>
+                        <p>จงหาค่าของ a และ b ที่พิมพ์ออกมา</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระวังว่าการเปลี่ยนแปลงค่าของ a ในบรรทัดที่ 3 จะไม่ส่งผลย้อนหลังต่อ b ที่ถูกกำหนดค่าไปแล้วในบรรทัดที่ 2</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>a</th>
+                                    <th>b</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>a = 1</td><td>1</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>b = a + 5</td><td>1</td><td>6</td><td></td></tr>
+                                <tr><td>3</td><td>a = b * 2</td><td>12</td><td>6</td><td></td></tr>
+                                <tr><td>4</td><td>print(a)</td><td>12</td><td>6</td><td>12</td></tr>
+                                <tr><td>5</td><td>print(b)</td><td>12</td><td>6</td><td>6</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> a = 12, b = 6</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การกำหนดค่าและการคำนวณที่ซับซ้อนขึ้น</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>x = 2
+y = 3
+z = x + y
+x = y * z
+y = x - z
+z = y / x
+print(z)</code></pre>
+                        <p>(หมายเหตุ: / คือการหารปกติ)<br>
+                        จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร x, y, z ในแต่ละบรรทัดอย่างละเอียด</li>
+                            <li>ระวังลำดับการประมวลผลและการหารด้วย / ที่ให้ผลลัพธ์เป็น float</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>z</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 2</td><td>2</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>y = 3</td><td>2</td><td>3</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>z = x + y</td><td>2</td><td>3</td><td>5</td><td></td></tr>
+                                <tr><td>4</td><td>x = y * z</td><td>15</td><td>3</td><td>5</td><td></td></tr>
+                                <tr><td>5</td><td>y = x - z</td><td>15</td><td>10</td><td>5</td><td></td></tr>
+                                <tr><td>6</td><td>z = y / x</td><td>15</td><td>10</td><td>0.6666...</td><td></td></tr>
+                                <tr><td>7</td><td>print(z)</td><td>15</td><td>10</td><td>0.6666...</td><td>0.6666...</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 0.6666666666666666 (หรือ 2/3)</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
