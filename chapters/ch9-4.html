@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.4: การเขียนนิพจน์เพื่อการเปรียบเทียบ - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.4: การเขียนนิพจน์เพื่อการเปรียบเทียบ</span>
+            </nav>
+            <h1>บทที่ 9.4: การเขียนนิพจน์เพื่อการเปรียบเทียบ</h1>
+            <p class="chapter-intro">การเรียนรู้การใช้ตัวดำเนินการเปรียบเทียบและการสร้างเงื่อนไขในโปรแกรม</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.4.1 นิพจน์เพื่อการเปรียบเทียบ (Comparison Expressions)</a></li>
+                    <li><a href="#section-2">9.4.2 ตัวดำเนินการเปรียบเทียบใน Python</a></li>
+                    <li><a href="#section-3">9.4.3 ลำดับความสำคัญของตัวดำเนินการ</a></li>
+                    <li><a href="#section-4">9.4.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-5">9.4.5 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ การเขียนนิพจน์เพื่อการเปรียบเทียบ (Comparison Expressions) ในภาษา Python ซึ่งเป็นสิ่งสำคัญสำหรับการสร้างเงื่อนไข (conditions) ในโปรแกรมคอมพิวเตอร์ การเข้าใจตัวดำเนินการเปรียบเทียบจะช่วยให้โปรแกรมของคุณสามารถตัดสินใจและทำงานตามเงื่อนไขที่กำหนดได้อย่างถูกต้อง</p>
+            </section>
+
+            <!-- Section 1: นิพจน์เพื่อการเปรียบเทียบ -->
+            <section id="section-1" class="content-section">
+                <h2>9.4.1 นิพจน์เพื่อการเปรียบเทียบ (Comparison Expressions)</h2>
+                
+                <p>นิพจน์เพื่อการเปรียบเทียบ (Comparison Expression) คือ การเปรียบเทียบค่าสองค่า (ตัวเลข, ตัวแปร, หรือนิพจน์) โดยใช้ตัวดำเนินการเปรียบเทียบ ผลลัพธ์ของการเปรียบเทียบจะเป็นค่าความจริงแบบ บูลีน (Boolean) ซึ่งมีเพียงสองค่าเท่านั้นคือ <strong>True</strong> (จริง) หรือ <strong>False</strong> (เท็จ)</p>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li><code>5 > 3</code> จะให้ผลลัพธ์เป็น <strong>True</strong></li>
+                            <li><code>x == y</code> จะให้ผลลัพธ์เป็น <strong>True</strong> ถ้า x มีค่าเท่ากับ y มิฉะนั้นจะเป็น <strong>False</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: ตัวดำเนินการเปรียบเทียบ -->
+            <section id="section-2" class="content-section">
+                <h2>9.4.2 ตัวดำเนินการเปรียบเทียบใน Python (Comparison Operators)</h2>
+                
+                <p>Python มีตัวดำเนินการพื้นฐานสำหรับการเปรียบเทียบดังนี้:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>ตัวดำเนินการ</th>
+                            <th>ความหมาย</th>
+                            <th>ตัวอย่าง Python</th>
+                            <th>ผลลัพธ์</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>==</code></td>
+                            <td>เท่ากับ</td>
+                            <td><code>x == 5</code></td>
+                            <td>True (ถ้า x คือ 5), False (ถ้า x ไม่ใช่ 5)</td>
+                        </tr>
+                        <tr>
+                            <td><code>!=</code></td>
+                            <td>ไม่เท่ากับ</td>
+                            <td><code>y != 10</code></td>
+                            <td>True (ถ้า y ไม่ใช่ 10), False (ถ้า y คือ 10)</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;</code></td>
+                            <td>น้อยกว่า</td>
+                            <td><code>age &lt; 18</code></td>
+                            <td>True (ถ้า age น้อยกว่า 18)</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;=</code></td>
+                            <td>น้อยกว่าหรือเท่ากับ</td>
+                            <td><code>score &lt;= 100</code></td>
+                            <td>True (ถ้า score น้อยกว่าหรือเท่ากับ 100)</td>
+                        </tr>
+                        <tr>
+                            <td><code>&gt;</code></td>
+                            <td>มากกว่า</td>
+                            <td><code>temp &gt; 25</code></td>
+                            <td>True (ถ้า temp มากกว่า 25)</td>
+                        </tr>
+                        <tr>
+                            <td><code>&gt;=</code></td>
+                            <td>มากกว่าหรือเท่ากับ</td>
+                            <td><code>level &gt;= 5</code></td>
+                            <td>True (ถ้า level มากกว่าหรือเท่ากับ 5)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="definition-box">
+                    <h4>ข้อควรระวัง</h4>
+                    <ul>
+                        <li><strong>== (เท่ากับ)</strong> แตกต่างจาก <strong>= (กำหนดค่าให้ตัวแปร)</strong></li>
+                        <li>การเปรียบเทียบข้อความ (String) จะเปรียบเทียบตามลำดับตัวอักษรในรหัส ASCII/Unicode (เช่น "apple" &lt; "banana" ให้ True)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 3: ลำดับความสำคัญ -->
+            <section id="section-3" class="content-section">
+                <h2>9.4.3 ลำดับความสำคัญของตัวดำเนินการ (Operator Precedence)</h2>
+                
+                <p>ตัวดำเนินการเปรียบเทียบมีความสำคัญต่ำกว่าตัวดำเนินการทางคณิตศาสตร์ แต่สูงกว่าตัวดำเนินการทางตรรกศาสตร์ (เช่น and, or)</p>
+
+                <div class="definition-box">
+                    <h4>ลำดับความสำคัญ (จากสูงไปต่ำ)</h4>
+                    <ol>
+                        <li><strong>ตัวดำเนินการทางคณิตศาสตร์</strong> (<code>+, -, *, /, **, //, %</code>) จะถูกประมวลผลก่อน</li>
+                        <li><strong>ตัวดำเนินการเปรียบเทียบ</strong> (<code>==, !=, &lt;, &lt;=, &gt;, &gt;=</code>) จะถูกประมวลผลถัดมา</li>
+                        <li><strong>ตัวดำเนินการทางตรรกศาสตร์</strong> (<code>not, and, or</code>) จะถูกประมวลผลสุดท้าย</li>
+                    </ol>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <ul>
+                            <li><code>5 + 3 > 10</code> จะคำนวณ <code>5 + 3</code> ก่อน ได้ 8 แล้วเปรียบเทียบ <code>8 > 10</code> ได้ False</li>
+                            <li><code>(x * 2) == 10</code> จะคำนวณ <code>x * 2</code> ก่อน แล้วค่อยเปรียบเทียบ</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-4" class="content-section">
+                <h2>9.4.4 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการเปรียบเทียบนิพจน์และการประเมินค่าความจริง เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การเปรียบเทียบพื้นฐาน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>7 > 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>เปรียบเทียบค่าตรงๆ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p>7 มากกว่า 5 ดังนั้นผลลัพธ์คือ True</p>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การเปรียบเทียบความเท่ากัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(10 + 2) == 12</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บก่อน</li>
+                            <li>เปรียบเทียบความเท่ากัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(10 + 2)</code> คำนวณก่อน ได้ 12</li>
+                            <li>นิพจน์กลายเป็น <code>12 == 12</code></li>
+                            <li>ได้ผลลัพธ์ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การเปรียบเทียบความไม่เท่ากัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(20 / 4) != 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หารก่อน (ระวังผลลัพธ์เป็น float)</li>
+                            <li>เปรียบเทียบความไม่เท่ากัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(20 / 4)</code> คำนวณก่อน ได้ 5.0</li>
+                            <li>นิพจน์กลายเป็น <code>5.0 != 5</code></li>
+                            <li>5.0 เท่ากับ 5 (ในเชิงค่า) ดังนั้นผลลัพธ์คือ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การเปรียบเทียบที่มีตัวแปร</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ x = 15 และ y = 10 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>x - y >= 5</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าตัวแปร</li>
+                            <li>ลบก่อน</li>
+                            <li>เปรียบเทียบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>แทนค่า: <code>15 - 10 >= 5</code></li>
+                            <li><code>15 - 10</code> คำนวณก่อน ได้ 5</li>
+                            <li>นิพจน์กลายเป็น <code>5 >= 5</code></li>
+                            <li>ได้ผลลัพธ์ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การผสมผสานตัวดำเนินการหลายชนิด</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(3 ** 2) < (2 * 5)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>วงเล็บก่อน</li>
+                            <li>ยกกำลัง</li>
+                            <li>คูณ</li>
+                            <li>เปรียบเทียบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(3 ** 2)</code> คำนวณก่อน ได้ 9</li>
+                            <li><code>(2 * 5)</code> คำนวณก่อน ได้ 10</li>
+                            <li>นิพจน์กลายเป็น <code>9 < 10</code></li>
+                            <li>ได้ผลลัพธ์ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-5" class="content-section">
+                <h2>9.4.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "การเขียนนิพจน์เพื่อการเปรียบเทียบ" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การเปรียบเทียบความเท่ากัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(10 * 3) == 30</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>คูณก่อน</li>
+                            <li>เปรียบเทียบความเท่ากัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(10 * 3)</code> คำนวณก่อน ได้ 30</li>
+                            <li>นิพจน์กลายเป็น <code>30 == 30</code></li>
+                            <li>ได้ผลลัพธ์ True</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> True</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การเปรียบเทียบความไม่เท่ากัน</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(15 % 4) != 3</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หารเอาเศษก่อน</li>
+                            <li>เปรียบเทียบความไม่เท่ากัน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(15 % 4)</code> คำนวณก่อน ได้ 3</li>
+                            <li>นิพจน์กลายเป็น <code>3 != 3</code></li>
+                            <li>ได้ผลลัพธ์ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การเปรียบเทียบมากกว่าหรือเท่ากับ</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>2 ** 3 >= 9</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ยกกำลังก่อน</li>
+                            <li>เปรียบเทียบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>2 ** 3</code> คำนวณก่อน ได้ 8</li>
+                            <li>นิพจน์กลายเป็น <code>8 >= 9</code></li>
+                            <li>ได้ผลลัพธ์ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การเปรียบเทียบน้อยกว่า</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(100 / 10) < 10.0</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>หารก่อน (ระวังผลลัพธ์เป็น float)</li>
+                            <li>เปรียบเทียบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><code>(100 / 10)</code> คำนวณก่อน ได้ 10.0</li>
+                            <li>นิพจน์กลายเป็น <code>10.0 < 10.0</code></li>
+                            <li>ได้ผลลัพธ์ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การเปรียบเทียบที่มีตัวแปรผสม</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดให้ a = 5, b = 2 จงหาผลลัพธ์ของนิพจน์ Python ต่อไปนี้:</p>
+                        <p><code>(a * b) <= (a + b)</code></p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>แทนค่าตัวแปร</li>
+                            <li>คูณและบวกก่อน</li>
+                            <li>เปรียบเทียบ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>แทนค่า: <code>(5 * 2) <= (5 + 2)</code></li>
+                            <li><code>(5 * 2)</code> คำนวณก่อน ได้ 10</li>
+                            <li><code>(5 + 2)</code> คำนวณก่อน ได้ 7</li>
+                            <li>นิพจน์กลายเป็น <code>10 <= 7</code></li>
+                            <li>ได้ผลลัพธ์ False</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> False</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
