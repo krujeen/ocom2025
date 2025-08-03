@@ -324,6 +324,89 @@ print(a)</code></pre>
                         <p><strong>คำตอบ:</strong> 20</p>
                     </div>
                 </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 4: การคำนวณพื้นที่ (ผสมผสาน)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงเขียนรหัส Python และผังงานแสดงขั้นตอนการคำนวณพื้นที่ของรูปสี่เหลี่ยมผืนผ้า โดยรับค่าความกว้างและความยาวจากผู้ใช้ และแสดงผลลัพธ์พื้นที่</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุข้อมูลที่ต้องการ (ความกว้าง, ความยาว)</li>
+                            <li>ระบุการประมวลผล (คำนวณพื้นที่ = กว้าง × ยาว)</li>
+                            <li>ระบุการแสดงผล (พื้นที่)</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <p><strong>รหัส Python:</strong></p>
+                        <pre><code># รับค่าความกว้างและความยาวจากผู้ใช้
+width = float(input("ป้อนความกว้าง: "))
+length = float(input("ป้อนความยาว: "))
+
+# คำนวณพื้นที่
+area = width * length
+
+# แสดงผลลัพธ์
+print("พื้นที่ของรูปสี่เหลี่ยมผืนผ้าคือ:", area)</code></pre>
+                        
+                        <p><strong>ผังงาน:</strong><br>
+                        [Start] → [Input width] → [Input length] → [area = width × length] → [Print area] → [End]</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>โจทย์ข้อที่ 5: การทำงานพื้นฐานของตัวแปร (การสลับค่า)</h3>
+                    
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>num1 = 5
+num2 = 10
+num1 = num1 + num2
+num2 = num1 - num2
+num1 = num1 - num2
+print(num1)
+print(num2)</code></pre>
+                        <p>จงหาค่าของ num1 และ num2 ที่พิมพ์ออกมา</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร num1 และ num2 อย่างรอบคอบในแต่ละบรรทัด</li>
+                            <li>สังเกตว่าการดำเนินการเหล่านี้เป็นการสลับค่าตัวแปรโดยไม่ใช้ตัวแปรชั่วคราว</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>num1</th>
+                                    <th>num2</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>num1 = 5</td><td>5</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>num2 = 10</td><td>5</td><td>10</td><td></td></tr>
+                                <tr><td>3</td><td>num1 = num1 + num2</td><td>15</td><td>10</td><td></td></tr>
+                                <tr><td>4</td><td>num2 = num1 - num2</td><td>15</td><td>5</td><td></td></tr>
+                                <tr><td>5</td><td>num1 = num1 - num2</td><td>10</td><td>5</td><td></td></tr>
+                                <tr><td>6</td><td>print(num1)</td><td>10</td><td>5</td><td>10</td></tr>
+                                <tr><td>7</td><td>print(num2)</td><td>10</td><td>5</td><td>5</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> num1 = 10, num2 = 5</p>
+                    </div>
+                </div>
             </section>
 
             <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
