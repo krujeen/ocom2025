@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 9.5: ลำดับการทำงานเลือกทำ (if-then-else) - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 9.5: ลำดับการทำงานเลือกทำ (if-then-else)</span>
+            </nav>
+            <h1>บทที่ 9.5: ลำดับการทำงานเลือกทำ (if-then-else)</h1>
+            <p class="chapter-intro">การเรียนรู้โครงสร้างควบคุมแบบเลือกทำและการสร้างเงื่อนไขในโปรแกรม</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">9.5.1 การทำงานแบบมีเงื่อนไข (Conditional Execution)</a></li>
+                    <li><a href="#section-2">9.5.2 คำสั่ง if (if Statement)</a></li>
+                    <li><a href="#section-3">9.5.3 คำสั่ง if-else (if-else Statement)</a></li>
+                    <li><a href="#section-4">9.5.4 คำสั่ง if-elif-else (if-elif-else Statement)</a></li>
+                    <li><a href="#section-5">9.5.5 คำสั่ง if ซ้อน if (Nested if Statements)</a></li>
+                    <li><a href="#section-6">9.5.6 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-7">9.5.7 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะมาเรียนรู้เกี่ยวกับ ลำดับการทำงานแบบเลือกทำ (Conditional Execution) ซึ่งเป็นโครงสร้างควบคุมที่สำคัญอย่างยิ่งในการเขียนโปรแกรมคอมพิวเตอร์ การทำงานแบบเลือกทำช่วยให้โปรแกรมสามารถตัดสินใจว่าจะทำคำสั่งชุดใดตามเงื่อนไขที่กำหนด ทำให้โปรแกรมมีความยืดหยุ่นและสามารถตอบสนองต่อสถานการณ์ต่างๆ ได้</p>
+            </section>
+
+            <!-- Section 1: การทำงานแบบมีเงื่อนไข -->
+            <section id="section-1" class="content-section">
+                <h2>9.5.1 การทำงานแบบมีเงื่อนไข (Conditional Execution)</h2>
+                
+                <p>การทำงานแบบมีเงื่อนไข คือ การที่โปรแกรมจะประมวลผลคำสั่งบางชุด ก็ต่อเมื่อเงื่อนไขที่กำหนดเป็นจริง เท่านั้น หากเงื่อนไขเป็นเท็จ โปรแกรมอาจจะข้ามคำสั่งชุดนั้นไป หรือไปทำคำสั่งชุดอื่นแทน</p>
+
+                <div class="definition-box">
+                    <h4>แนวคิดหลัก</h4>
+                    <ul>
+                        <li><strong>"ถ้าสิ่งนี้เป็นจริง, ให้ทำสิ่งนั้น"</strong> หรือ <strong>"ถ้าสิ่งนี้เป็นจริง, ให้ทำสิ่งนั้น; มิฉะนั้น, ให้ทำสิ่งอื่น"</strong></li>
+                        <li><strong>การตัดสินใจ:</strong> โปรแกรมใช้ผลลัพธ์จากนิพจน์เปรียบเทียบ (ซึ่งเป็นค่า True หรือ False) ในการตัดสินใจ</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 2: คำสั่ง if -->
+            <section id="section-2" class="content-section">
+                <h2>9.5.2 คำสั่ง if (if Statement)</h2>
+                
+                <p>คำสั่ง if เป็นโครงสร้างการเลือกทำที่ง่ายที่สุด โปรแกรมจะทำคำสั่งที่อยู่ภายใต้ if ก็ต่อเมื่อเงื่อนไขเป็นจริงเท่านั้น หากเงื่อนไขเป็นเท็จ โปรแกรมจะข้ามคำสั่งเหล่านั้นไปและทำคำสั่งถัดจากบล็อก if ทันที</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>if condition:
+    # คำสั่งที่จะทำเมื่อ condition เป็น True
+    # (ต้องมี indent หรือการเยื้อง)</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <pre><code>score = 75
+
+if score >= 50:
+    print("คุณสอบผ่าน!")
+print("โปรแกรมจบ.")</code></pre>
+                        <p><strong>คำอธิบาย:</strong></p>
+                        <ul>
+                            <li>ถ้า score (75) มากกว่าหรือเท่ากับ 50 (ซึ่งเป็น True) โปรแกรมจะพิมพ์ "คุณสอบผ่าน!"</li>
+                            <li>จากนั้นจะพิมพ์ "โปรแกรมจบ."</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: คำสั่ง if-else -->
+            <section id="section-3" class="content-section">
+                <h2>9.5.3 คำสั่ง if-else (if-else Statement)</h2>
+                
+                <p>คำสั่ง if-else ใช้เมื่อโปรแกรมต้องการทำคำสั่งชุดหนึ่งถ้าเงื่อนไขเป็นจริง และทำคำสั่งอีกชุดหนึ่งถ้าเงื่อนไขเป็นเท็จ (คือมีทางเลือก 2 ทางเสมอ)</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>if condition:
+    # คำสั่งที่จะทำเมื่อ condition เป็น True
+else:
+    # คำสั่งที่จะทำเมื่อ condition เป็น False</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <pre><code>age = 17
+
+if age >= 18:
+    print("คุณสามารถโหวตได้")
+else:
+    print("คุณยังไม่สามารถโหวตได้")
+print("โปรแกรมจบ.")</code></pre>
+                        <p><strong>คำอธิบาย:</strong></p>
+                        <ul>
+                            <li>ถ้า age (17) มากกว่าหรือเท่ากับ 18 (ซึ่งเป็น False) โปรแกรมจะข้ามบล็อก if ไปทำบล็อก else</li>
+                            <li>โปรแกรมจะพิมพ์ "คุณยังไม่สามารถโหวตได้"</li>
+                            <li>จากนั้นจะพิมพ์ "โปรแกรมจบ."</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: คำสั่ง if-elif-else -->
+            <section id="section-4" class="content-section">
+                <h2>9.5.4 คำสั่ง if-elif-else (if-elif-else Statement)</h2>
+                
+                <p>คำสั่ง if-elif-else ใช้เมื่อมีหลายเงื่อนไขที่ต้องพิจารณา โปรแกรมจะตรวจสอบเงื่อนไขจากบนลงล่าง และจะทำคำสั่งในบล็อกแรกที่เงื่อนไขเป็นจริงเท่านั้น หากไม่มีเงื่อนไขใดเป็นจริงเลย โปรแกรมจะทำคำสั่งในบล็อก else (ถ้ามี)</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>if condition1:
+    # คำสั่งเมื่อ condition1 เป็น True
+elif condition2:
+    # คำสั่งเมื่อ condition1 เป็น False แต่ condition2 เป็น True
+elif condition3:
+    # คำสั่งเมื่อ condition1, condition2 เป็น False แต่ condition3 เป็น True
+else:
+    # คำสั่งเมื่อทุก condition เป็น False</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <pre><code>grade = 85
+
+if grade >= 90:
+    print("ได้เกรด A")
+elif grade >= 80:
+    print("ได้เกรด B")
+elif grade >= 70:
+    print("ได้เกรด C")
+else:
+    print("ได้เกรด D หรือ F")</code></pre>
+                        <p><strong>คำอธิบาย:</strong></p>
+                        <ul>
+                            <li>grade (85) ไม่เข้าเงื่อนไข grade >= 90 (False)</li>
+                            <li>โปรแกรมจะตรวจสอบ grade >= 80 (85 >= 80 ซึ่งเป็น True)</li>
+                            <li>โปรแกรมจะพิมพ์ "ได้เกรด B" และข้ามบล็อก elif และ else ที่เหลือ</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: คำสั่ง if ซ้อน if -->
+            <section id="section-5" class="content-section">
+                <h2>9.5.5 คำสั่ง if ซ้อน if (Nested if Statements)</h2>
+                
+                <p>คำสั่ง if ซ้อน if คือ การมีคำสั่ง if (หรือ if-else, if-elif-else) อยู่ภายในบล็อกของคำสั่ง if (หรือ else, elif) อื่นๆ เพื่อสร้างเงื่อนไขที่ซับซ้อนและละเอียดอ่อนยิ่งขึ้น</p>
+
+                <div class="formula-box">
+                    <h4>รูปแบบในภาษา Python</h4>
+                    <pre><code>if condition1:
+    # คำสั่งเมื่อ condition1 เป็น True
+    if condition2:
+        # คำสั่งเมื่อ condition1 และ condition2 เป็น True
+    else:
+        # คำสั่งเมื่อ condition1 เป็น True แต่ condition2 เป็น False
+else:
+    # คำสั่งเมื่อ condition1 เป็น False</code></pre>
+                </div>
+
+                <div class="example-container">
+                    <h4>ตัวอย่าง</h4>
+                    <div class="example-box">
+                        <pre><code>age = 20
+has_license = True
+
+if age >= 18:
+    print("คุณมีอายุพอที่จะขับรถได้")
+    if has_license:
+        print("คุณสามารถขับรถได้!")
+    else:
+        print("แต่คุณยังไม่มีใบขับขี่")
+else:
+    print("คุณยังเด็กเกินไปที่จะขับรถ")</code></pre>
+                        <p><strong>คำอธิบาย:</strong></p>
+                        <ul>
+                            <li>age (20) มากกว่าหรือเท่ากับ 18 (True) โปรแกรมจะเข้าบล็อก if แรก</li>
+                            <li>พิมพ์ "คุณมีอายุพอที่จะขับรถได้"</li>
+                            <li>จากนั้นตรวจสอบเงื่อนไขที่ซ้อนอยู่ has_license (True)</li>
+                            <li>โปรแกรมจะเข้าบล็อก if ที่ซ้อนอยู่และพิมพ์ "คุณสามารถขับรถได้!"</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 6: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-6" class="content-section">
+                <h2>9.5.6 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างโจทย์พื้นฐานสำหรับการทำความเข้าใจการทำงานแบบเลือกทำและการใช้งานโครงสร้าง if ต่างๆ เพื่อเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: คำสั่ง if เดี่ยว</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>temperature = 28
+
+if temperature > 25:
+    print("อากาศร้อน")
+print("จบโปรแกรม")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข temperature > 25 (28 > 25) ว่าเป็น True หรือ False</li>
+                            <li>ถ้าเป็น True ทำคำสั่งในบล็อก if</li>
+                            <li>ไม่ว่าจะเกิดอะไรขึ้น คำสั่ง print("จบโปรแกรม") จะถูกทำเสมอ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>temperature = 28</li>
+                            <li>if temperature > 25: (28 > 25 เป็น True)</li>
+                            <li>เข้าบล็อก if: print("อากาศร้อน") → แสดงผล "อากาศร้อน"</li>
+                            <li>print("จบโปรแกรม") → แสดงผล "จบโปรแกรม"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong><br>
+                        อากาศร้อน<br>
+                        จบโปรแกรม</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: คำสั่ง if-else</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>score = 45
+
+if score >= 50:
+    print("ผ่าน")
+else:
+    print("ไม่ผ่าน")
+print("ผลการสอบ")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข score >= 50 (45 >= 50)</li>
+                            <li>ถ้าเป็น True ทำบล็อก if, ถ้าเป็น False ทำบล็อก else</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>score = 45</li>
+                            <li>if score >= 50: (45 >= 50 เป็น False)</li>
+                            <li>ข้ามบล็อก if ไปทำบล็อก else: print("ไม่ผ่าน") → แสดงผล "ไม่ผ่าน"</li>
+                            <li>print("ผลการสอบ") → แสดงผล "ผลการสอบ"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong><br>
+                        ไม่ผ่าน<br>
+                        ผลการสอบ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: คำสั่ง if-elif-else</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>points = 75
+
+if points >= 90:
+    print("ยอดเยี่ยม")
+elif points >= 70:
+    print("ดี")
+else:
+    print("พอใช้")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไขจากบนลงล่าง</li>
+                            <li>เมื่อเงื่อนไขใดเป็นจริง จะทำบล็อกนั้นแล้วข้ามที่เหลือ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>points = 75</li>
+                            <li>if points >= 90: (75 >= 90 เป็น False)</li>
+                            <li>elif points >= 70: (75 >= 70 เป็น True)</li>
+                            <li>เข้าบล็อก elif: print("ดี") → แสดงผล "ดี"</li>
+                            <li>โปรแกรมจบ (ข้าม else ที่เหลือ)</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ดี</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: คำสั่ง if ซ้อน if</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>age = 22
+is_student = True
+
+if age >= 18:
+    if is_student:
+        print("คุณเป็นนักศึกษาผู้ใหญ่")
+    else:
+        print("คุณเป็นผู้ใหญ่")
+else:
+    print("คุณยังไม่เป็นผู้ใหญ่")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไข if ภายนอกก่อน</li>
+                            <li>ถ้าเงื่อนไขภายนอกเป็นจริง ค่อยเข้าไปตรวจสอบเงื่อนไข if ภายใน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>age = 22, is_student = True</li>
+                            <li>if age >= 18: (22 >= 18 เป็น True)</li>
+                            <li>เข้าบล็อก if ภายนอก:</li>
+                            <li>if is_student: (True เป็น True)</li>
+                            <li>เข้าบล็อก if ภายใน: print("คุณเป็นนักศึกษาผู้ใหญ่") → แสดงผล "คุณเป็นนักศึกษาผู้ใหญ่"</li>
+                            <li>โปรแกรมจบ</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> คุณเป็นนักศึกษาผู้ใหญ่</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การทำงานแบบมีเงื่อนไข (ไม่มีการพิมพ์ผลลัพธ์)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>x = 10
+y = 20
+
+if x > y:
+    print("X มากกว่า Y")
+elif x == y:
+    print("X เท่ากับ Y")
+else:
+    # ไม่มีคำสั่ง print ในบล็อกนี้
+    pass
+print("สิ้นสุด")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไขแต่ละอัน</li>
+                            <li>สังเกตว่าบล็อก else ไม่มีคำสั่ง print</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>x = 10, y = 20</li>
+                            <li>if x > y: (10 > 20 เป็น False)</li>
+                            <li>elif x == y: (10 == 20 เป็น False)</li>
+                            <li>else: (เงื่อนไขทั้งหมดเป็น False)</li>
+                            <li>เข้าบล็อก else แต่ไม่มีคำสั่ง print</li>
+                            <li>print("สิ้นสุด") → แสดงผล "สิ้นสุด"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> สิ้นสุด</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-7" class="content-section">
+                <h2>9.5.7 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "ลำดับการทำงานเลือกทำ" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: คำสั่ง if-else (กับตัวแปรที่เปลี่ยนแปลง)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>num = 10
+num = num * 2
+
+if num > 20:
+    print("ใหญ่")
+else:
+    print("เล็กหรือเท่ากับ")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร num ที่เปลี่ยนแปลงก่อนเข้าเงื่อนไข</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>num = 10</li>
+                            <li>num = num * 2 → num = 10 * 2 = 20</li>
+                            <li>if num > 20: (20 > 20 เป็น False)</li>
+                            <li>เข้าบล็อก else: print("เล็กหรือเท่ากับ") → แสดงผล "เล็กหรือเท่ากับ"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> เล็กหรือเท่ากับ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: คำสั่ง if-elif-else (หลายเงื่อนไข)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>value = 50
+
+if value < 20:
+    print("น้อยกว่า 20")
+elif value < 50:
+    print("น้อยกว่า 50")
+elif value < 80:
+    print("น้อยกว่า 80")
+else:
+    print("80 ขึ้นไป")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไขจากบนลงล่าง และหยุดเมื่อเจอเงื่อนไขแรกที่เป็นจริง</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>value = 50</li>
+                            <li>if value < 20: (50 < 20 เป็น False)</li>
+                            <li>elif value < 50: (50 < 50 เป็น False)</li>
+                            <li>elif value < 80: (50 < 80 เป็น True)</li>
+                            <li>เข้าบล็อก elif ที่สาม: print("น้อยกว่า 80") → แสดงผล "น้อยกว่า 80"</li>
+                            <li>โปรแกรมจบ (ข้าม else ที่เหลือ)</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> น้อยกว่า 80</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: คำสั่ง if ซ้อน if (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>is_member = True
+total_purchase = 1200
+
+if is_member:
+    if total_purchase > 1000:
+        print("รับส่วนลดพิเศษ")
+    else:
+        print("รับส่วนลดปกติ")
+else:
+    print("ไม่มีสิทธิ์ส่วนลด")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบเงื่อนไขภายนอกก่อน แล้วค่อยตรวจสอบเงื่อนไขภายใน</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>is_member = True, total_purchase = 1200</li>
+                            <li>if is_member: (True เป็น True)</li>
+                            <li>เข้าบล็อก if ภายนอก:</li>
+                            <li>if total_purchase > 1000: (1200 > 1000 เป็น True)</li>
+                            <li>เข้าบล็อก if ภายใน: print("รับส่วนลดพิเศษ") → แสดงผล "รับส่วนลดพิเศษ"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> รับส่วนลดพิเศษ</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การทำงานแบบมีเงื่อนไข (ไม่มีการพิมพ์ผลลัพธ์ในบางกรณี)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>speed = 60
+
+if speed > 80:
+    print("เร็วเกินไป")
+elif speed < 40:
+    print("ช้าเกินไป")
+# ไม่มี else
+print("ขับขี่ปลอดภัย")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สังเกตว่าไม่มีบล็อก else และค่าของ speed อาจไม่ตรงกับเงื่อนไข if หรือ elif</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>speed = 60</li>
+                            <li>if speed > 80: (60 > 80 เป็น False)</li>
+                            <li>elif speed < 40: (60 < 40 เป็น False)</li>
+                            <li>ไม่มีบล็อก else และไม่มีเงื่อนไขใดเป็นจริง</li>
+                            <li>print("ขับขี่ปลอดภัย") → แสดงผล "ขับขี่ปลอดภัย"</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ขับขี่ปลอดภัย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การทำงานแบบมีเงื่อนไข (การคำนวณในเงื่อนไข)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python</p>
+                        <pre><code>a = 5
+b = 10
+
+if (a + b) > 12:
+    print("ผลรวมมาก")
+elif (b - a) == 5:
+    print("ผลต่างเท่ากับ 5")
+else:
+    print("อื่นๆ")</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>คำนวณนิพจน์ภายในเงื่อนไขก่อน แล้วค่อยตรวจสอบค่าความจริงของเงื่อนไขนั้นๆ</li>
+                        </ul>
+                    </div>
+
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>a = 5, b = 10</li>
+                            <li>if (a + b) > 12: (5 + 10) > 12 → 15 > 12 เป็น True</li>
+                            <li>เข้าบล็อก if: print("ผลรวมมาก") → แสดงผล "ผลรวมมาก"</li>
+                            <li>โปรแกรมจบ (ข้าม elif และ else ที่เหลือ)</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ผลรวมมาก</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+</body>
+</html>
