@@ -329,21 +329,31 @@ print(a)</code></pre>
             <!-- Section 5: ตัวอย่างข้อสอบฝึกทำ -->
             <section id="section-5" class="content-section">
                 <h2>9.1.5 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <p>เอกสารนี้รวบรวมตัวอย่างข้อสอบสำหรับนักเรียนได้ฝึกทำในหัวข้อ "โครงสร้างพื้นฐานของโปรแกรม (ลำดับขั้นตอน)" เพื่อเสริมสร้างความเข้าใจและเตรียมความพร้อมสำหรับการสอบ สอวน. คอมพิวเตอร์ครับ</p>
 
-                <div class="problem">
+                <div class="practice-problem">
                     <h3>โจทย์ข้อที่ 6: การติดตามการทำงานของรหัส Python (การคำนวณซับซ้อนขึ้น)</h3>
-                    <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
-                    <pre><code>x = 3
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>x = 3
 y = 4
 z = 5
 x = x + y
 y = y * z
 z = x - y
 print(z)</code></pre>
-                    <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
-
-                    <div class="solution">
-                        <h4>เฉลย:</h4>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างตารางเพื่อติดตามค่าของตัวแปร x, y, z ในแต่ละบรรทัด</li>
+                            <li>ไล่คำสั่งทีละบรรทัดและอัปเดตค่าในตาราง</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
                         <table class="trace-table">
                             <thead>
                                 <tr>
@@ -369,12 +379,49 @@ print(z)</code></pre>
                     </div>
                 </div>
 
-                <div class="problem">
-                    <h3>โจทย์ข้อที่ 8: การเขียนรหัส Python (คำนวณพื้นที่วงกลม)</h3>
-                    <p><strong>คำถาม:</strong> จงเขียนรหัส Python แสดงขั้นตอนการคำนวณพื้นที่ของรูปวงกลม โดยรับค่ารัศมีจากผู้ใช้ และแสดงผลลัพธ์พื้นที่ (ใช้ค่า π = 3.14)</p>
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การวิเคราะห์ผลลัพธ์จากผังงาน (การคำนวณหลายขั้นตอน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <p>[Start] → [Input A] → [B = A * 2] → [C = B + 10] → [Print C] → [End]</p>
+                        <p>ถ้าผู้ใช้ป้อนค่า A=8 จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามทิศทางของลูกศรในผังงาน</li>
+                            <li>ดำเนินการตามคำสั่งในแต่ละสัญลักษณ์</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li>Start: โปรแกรมเริ่มต้น</li>
+                            <li>Input A: รับค่า A จากผู้ใช้ ซึ่งคือ 8</li>
+                            <li>B = A * 2: คำนวณค่า B โดยนำค่า A มาคูณ 2<br>B = 8 × 2 = 16</li>
+                            <li>C = B + 10: คำนวณค่า C โดยนำค่า B มาบวก 10<br>C = 16 + 10 = 26</li>
+                            <li>Print C: แสดงค่า C ออกทางหน้าจอ ซึ่งคือ 26</li>
+                            <li>End: โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 26</p>
+                    </div>
+                </div>
 
-                    <div class="solution">
-                        <h4>เฉลย:</h4>
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การเขียนรหัส Python (คำนวณพื้นที่วงกลม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> จงเขียนรหัส Python แสดงขั้นตอนการคำนวณพื้นที่ของรูปวงกลม โดยรับค่ารัศมีจากผู้ใช้ และแสดงผลลัพธ์พื้นที่ (ใช้ค่า π = 3.14)</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ระบุข้อมูลที่ต้องการ (รัศมี)</li>
+                            <li>ระบุการประมวลผล (คำนวณพื้นที่ = π × รัศมี²)</li>
+                            <li>ระบุการแสดงผล (พื้นที่)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
                         <pre><code># รับค่ารัศมีจากผู้ใช้
 radius = float(input("ป้อนรัศมีวงกลม: "))
 
@@ -389,10 +436,61 @@ print("พื้นที่ของวงกลมคือ:", area)</code></p
                     </div>
                 </div>
 
-                <div class="problem">
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การติดตามการทำงานของรหัส Python (การคำนวณเศษส่วน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>x = 10
+y = 3
+result = x / y
+x = x % y
+y = y + 1
+print(result)
+print(x)
+print(y)</code></pre>
+                        <p>(หมายเหตุ: / คือการหารปกติ, % คือการหารเอาเศษ)<br>
+                        จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร x, y, result ในแต่ละบรรทัด</li>
+                            <li>ทำความเข้าใจความแตกต่างระหว่าง / และ % ใน Python</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>result</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1</td><td>x = 10</td><td>10</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>y = 3</td><td>10</td><td>3</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>result = x / y</td><td>10</td><td>3</td><td>3.333333...</td><td></td></tr>
+                                <tr><td>4</td><td>x = x % y</td><td>1</td><td>3</td><td>3.333333...</td><td></td></tr>
+                                <tr><td>5</td><td>y = y + 1</td><td>1</td><td>4</td><td>3.333333...</td><td></td></tr>
+                                <tr><td>6</td><td>print(result)</td><td>1</td><td>4</td><td>3.333333...</td><td>3.333333...</td></tr>
+                                <tr><td>7</td><td>print(x)</td><td>1</td><td>4</td><td>3.333333...</td><td>1</td></tr>
+                                <tr><td>8</td><td>print(y)</td><td>1</td><td>4</td><td>3.333333...</td><td>4</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> result = 3.333333..., x = 1, y = 4</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
                     <h3>โจทย์ข้อที่ 10: การวิเคราะห์การทำงานของตัวแปร (สลับค่าแบบมีค่าเริ่มต้น)</h3>
-                    <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
-                    <pre><code>a = 2
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัส Python ต่อไปนี้</p>
+                        <pre><code>a = 2
 b = 7
 c = 0
 c = a
@@ -400,10 +498,17 @@ a = b
 b = c
 print(a)
 print(b)</code></pre>
-                    <p>จงหาค่าของ a และ b ที่พิมพ์ออกมา</p>
-
-                    <div class="solution">
-                        <h4>เฉลย:</h4>
+                        <p>จงหาค่าของ a และ b ที่พิมพ์ออกมา</p>
+                    </div>
+                    <div class="approach-box">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่าของตัวแปร a, b, c อย่างรอบคอบในแต่ละบรรทัด</li>
+                            <li>สังเกตว่านี่คือเทคนิคมาตรฐานในการสลับค่าตัวแปรโดยใช้ตัวแปรชั่วคราว (c)</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h4>เฉลย</h4>
                         <table class="trace-table">
                             <thead>
                                 <tr>
