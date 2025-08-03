@@ -57,12 +57,25 @@ Each chapter is subdivided into multiple sections with individual HTML pages in 
 
 ## Content Development
 
-- Chapter content pages should be created in `chapters/` directory
+### Chapter Page Template Structure
+All chapter pages in `chapters/` directory follow this standard structure:
 - Follow naming convention: `ch{chapter}-{section}.html` (e.g., `ch1-1.html`)
-- Each content page should include:
-  - MathJax configuration for mathematical expressions
-  - Breadcrumb navigation linking back to main page and section
-  - Both `../styles.css` and `../chapter-styles.css` stylesheets
-  - Reference to `../chapter-script.js` for TOC functionality
-- Mathematical content uses LaTeX syntax with MathJax rendering
-- Maintain consistent styling with the main page design
+- HTML structure includes:
+  - MathJax configuration in `<head>` for LaTeX rendering
+  - Breadcrumb navigation: หน้าหลัก > [Section] > [Current Page]
+  - TOC (Table of Contents) with anchor links to sections within the page
+  - Content sections with IDs matching TOC links
+- Required stylesheets: `../styles.css` and `../chapter-styles.css`
+- Required JavaScript: `../chapter-script.js` for TOC navigation functionality
+- Mathematical expressions use LaTeX syntax with MathJax (inline: `$...$`, display: `$$...$$`)
+
+### Content Organization
+- **Mathematics (Chapters 1-8)**: พื้นฐานคณิตศาสตร์ for competitive programming
+- **Computer Science (Chapters 9-10)**: วิทยาการคำนวณ and algorithms  
+- **Exam Prep (Chapters 11-12)**: แนวข้อสอบและกลยุทธ์
+
+### Architecture Notes
+- Two-tier JavaScript system: `script.js` handles main page navigation, `chapter-script.js` handles chapter page TOC
+- Smooth scrolling and active state tracking implemented across both tiers
+- All content is Thai language with UTF-8 encoding
+- Responsive design supports both desktop and mobile viewing
