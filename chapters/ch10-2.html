@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>บทที่ 10.2: การหาผลลัพธ์เมื่อกำหนด Input ตามวิธีการที่กำหนด - เอกสารติว สอวน. คอมพิวเตอร์</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../chapter-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">หน้าหลัก</a> > 
+                <a href="../index.html#computer-science">วิทยาการคำนวณ</a> > 
+                <span>บทที่ 10.2: การหาผลลัพธ์เมื่อกำหนด Input ตามวิธีการที่กำหนด</span>
+            </nav>
+            <h1>บทที่ 10.2: การหาผลลัพธ์เมื่อกำหนด Input ตามวิธีการที่กำหนด</h1>
+            <p class="chapter-intro">การฝึกฝนทักษะการคิดเชิงวิเคราะห์ในการหาผลลัพธ์ของอัลกอริทึมเมื่อมีข้อมูลนำเข้าที่กำหนด</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="chapter-content">
+            
+            <!-- Table of Contents -->
+            <div class="toc-container">
+                <h3>เนื้อหาในบทเรียน</h3>
+                <ul class="toc">
+                    <li><a href="#section-1">10.2.1 การหาผลลัพธ์จากข้อมูลนำเข้า (Finding Output from Input)</a></li>
+                    <li><a href="#section-2">10.2.2 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</a></li>
+                    <li><a href="#section-3">10.2.3 ตัวอย่างข้อสอบฝึกทำ</a></li>
+                </ul>
+            </div>
+
+            <section class="introduction">
+                <p>ในบทเรียนนี้ เราจะฝึกฝนทักษะสำคัญในการคิดเชิงวิเคราะห์ นั่นคือ การหาผลลัพธ์ของขั้นตอนวิธี (Algorithm Output) เมื่อมีการกำหนดข้อมูลนำเข้า (Input) ให้ การทำความเข้าใจและตีความขั้นตอนวิธีที่นำเสนอในรูปแบบของรหัสเทียม (Pseudocode) หรือผังงาน (Flowchart) และการติดตามการทำงานของมันอย่างเป็นระบบ เป็นหัวใจสำคัญของการเขียนโปรแกรมและการแก้ปัญหาในวิทยาการคอมพิวเตอร์</p>
+            </section>
+
+            <!-- Section 1: การหาผลลัพธ์จากข้อมูลนำเข้า -->
+            <section id="section-1" class="content-section">
+                <h2>10.2.1 การหาผลลัพธ์จากข้อมูลนำเข้า (Finding Output from Input)</h2>
+                
+                <p>การหาผลลัพธ์เมื่อกำหนด Input ตามวิธีการที่กำหนด คือกระบวนการที่เราจำลองการทำงานของโปรแกรมหรืออัลกอริทึมทีละขั้นตอน โดยใช้ข้อมูลนำเข้าที่ระบุไว้ เพื่อติดตามการเปลี่ยนแปลงของตัวแปรและการทำงานของคำสั่งต่างๆ จนกว่าจะได้ผลลัพธ์สุดท้าย</p>
+
+                <h3>หลักการสำคัญ:</h3>
+                <div class="definition-box">
+                    <h4>1. การแกะรอย (Tracing):</h4>
+                    <p>เป็นเทคนิคหลักที่ใช้ในขั้นตอนนี้ โดยการสร้างตารางติดตามตัวแปร (Trace Table) เพื่อบันทึกค่าของตัวแปรทุกตัวในแต่ละบรรทัดหรือแต่ละรอบของการทำงาน</p>
+
+                    <h4>2. การประมวลผลตามลำดับ:</h4>
+                    <p>คำสั่งจะถูกประมวลผลจากบนลงล่าง และจากซ้ายไปขวา (ในบรรทัดเดียวกัน) เสมอ</p>
+
+                    <h4>3. การตัดสินใจ:</h4>
+                    <p>เมื่อเจอเงื่อนไข (เช่น IF, ELSE IF) ให้ประเมินค่าความจริงของเงื่อนไขนั้น (True หรือ False) แล้วเลือกเส้นทางที่ถูกต้อง</p>
+
+                    <h4>4. การวนซ้ำ:</h4>
+                    <p>เมื่อเจอลูป (WHILE) ให้ทำคำสั่งในบล็อกของลูปซ้ำๆ ตราบเท่าที่เงื่อนไขของลูปยังเป็นจริง และอย่าลืมอัปเดตค่าตัวแปรที่ใช้ในเงื่อนไขเพื่อป้องกันลูปไม่รู้จบ</p>
+                </div>
+            </section>
+
+            <!-- Section 2: ตัวอย่างโจทย์และแนวทางการทำข้อสอบ -->
+            <section id="section-2" class="content-section">
+                <h2>10.2.2 ตัวอย่างโจทย์และแนวทางการทำข้อสอบ</h2>
+                
+                <p>ในส่วนนี้ เราจะมาฝึกทำความเข้าใจและหาผลลัพธ์จากขั้นตอนวิธีที่กำหนดให้</p>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 1: การหาผลลัพธ์จากรหัสเทียม (ลำดับขั้นตอน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  INPUT num1
+  INPUT num2
+  SET sum TO num1 + num2
+  SET product TO num1 * num2
+  PRINT sum
+  PRINT product
+END</code></pre>
+                        <p>ถ้าผู้ใช้ป้อน num1 = 5 และ num2 = 3 จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-1')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-1" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างตารางติดตามตัวแปรเพื่อบันทึกค่า num1, num2, sum, product</li>
+                            <li>ไล่คำสั่งทีละบรรทัดตามลำดับ</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-1')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-1" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด</th>
+                                    <th>คำสั่ง</th>
+                                    <th>num1</th>
+                                    <th>num2</th>
+                                    <th>sum</th>
+                                    <th>product</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>START</td><td></td><td>-</td><td>-</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>1</td><td>INPUT num1</td><td>5</td><td>-</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>2</td><td>INPUT num2</td><td>5</td><td>3</td><td>-</td><td>-</td><td></td></tr>
+                                <tr><td>3</td><td>SET sum TO num1 + num2</td><td>5</td><td>3</td><td>8</td><td>-</td><td></td></tr>
+                                <tr><td>4</td><td>SET product TO num1 * num2</td><td>5</td><td>3</td><td>8</td><td>15</td><td></td></tr>
+                                <tr><td>5</td><td>PRINT sum</td><td>5</td><td>3</td><td>8</td><td>15</td><td>8</td></tr>
+                                <tr><td>6</td><td>PRINT product</td><td>5</td><td>3</td><td>8</td><td>15</td><td>15</td></tr>
+                                <tr><td>END</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 8 และ 15</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 2: การหาผลลัพธ์จากผังงาน (การเลือกทำ IF-ELSE)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input Score
+      ↓
+🔷 Score >= 50?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+📄 Print  📄 Print
+ "ผ่าน"   "ไม่ผ่าน"
+     ↘     ↙
+       ↓
+    🔴 End</pre>
+                        <p>ถ้าผู้ใช้ป้อนค่า Score = 48 จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-2')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-2" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรในผังงาน</li>
+                            <li>เมื่อเจอสัญลักษณ์ตัดสินใจ (สี่เหลี่ยมข้าวหลามตัด) ให้ประเมินเงื่อนไข (Score >= 50) แล้วไปตามทางที่ถูกต้อง</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-2')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-2" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><strong>Start:</strong> โปรแกรมเริ่มต้น</li>
+                            <li><strong>Input Score:</strong> รับค่า Score = 48</li>
+                            <li><strong>Score >= 50?:</strong> ตรวจสอบเงื่อนไข 48 >= 50 ซึ่งเป็น False</li>
+                            <li>ตามเส้นทาง <strong>No</strong> ไปยังสัญลักษณ์ประมวลผล</li>
+                            <li><strong>Print "ไม่ผ่าน":</strong> แสดงผล "ไม่ผ่าน"</li>
+                            <li><strong>End:</strong> โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> ไม่ผ่าน</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 3: การหาผลลัพธ์จากรหัสเทียม (การวนซ้ำ WHILE)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET i TO 1
+  SET total TO 0
+  WHILE i <= 3 DO
+    total = total + (i * 10)
+    i = i + 1
+  END WHILE
+  PRINT total
+END</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-3')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-3" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>สร้างตารางติดตามตัวแปร โดยเพิ่มคอลัมน์ "รอบ" เพื่อติดตามการวนซ้ำ</li>
+                            <li>ในแต่ละรอบ ให้ตรวจสอบเงื่อนไข WHILE ก่อนเสมอ</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-3')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-3" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>บรรทัด/คำสั่ง</th>
+                                    <th>i</th>
+                                    <th>total</th>
+                                    <th>i <= 3</th>
+                                    <th>i * 10</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>-</td><td>SET i TO 1</td><td>1</td><td>-</td><td></td><td></td><td></td></tr>
+                                <tr><td>-</td><td>SET total TO 0</td><td>1</td><td>0</td><td></td><td></td><td></td></tr>
+                                <tr><td>1</td><td>WHILE i <= 3 DO</td><td>1</td><td>0</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 10)</td><td>1</td><td>10</td><td></td><td>10</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>2</td><td>10</td><td></td><td></td><td></td></tr>
+                                <tr><td>2</td><td>WHILE i <= 3 DO</td><td>2</td><td>10</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 10)</td><td>2</td><td>30</td><td></td><td>20</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>3</td><td>30</td><td></td><td></td><td></td></tr>
+                                <tr><td>3</td><td>WHILE i <= 3 DO</td><td>3</td><td>30</td><td>True</td><td></td><td></td></tr>
+                                <tr><td></td><td>total = total + (i * 10)</td><td>3</td><td>60</td><td></td><td>30</td><td></td></tr>
+                                <tr><td></td><td>i = i + 1</td><td>4</td><td>60</td><td></td><td></td><td></td></tr>
+                                <tr><td>4</td><td>WHILE i <= 3 DO</td><td>4</td><td>60</td><td>False</td><td></td><td></td></tr>
+                                <tr><td>-</td><td>PRINT total</td><td>4</td><td>60</td><td></td><td></td><td>60</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> 60</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 4: การหาผลลัพธ์จากผังงาน (การวนซ้ำและเลือกทำ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📦 num = 1, sum_even = 0, sum_odd = 0
+      ↓
+🔷 num <= 5?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+🔷 num % 2 == 0?  📄 Print sum_even
+ ↙   ↘         📄 Print sum_odd
+Yes   No           ↓
+ ↓     ↓        🔴 End
+📦 sum_even = 📦 sum_odd =
+sum_even + num sum_odd + num
+  ↓       ↓
+   ↘     ↙
+📦 num = num + 1
+       ↓
+    (ไปยัง num <= 5?)</pre>
+                        <p>จงหาค่าที่แสดงผลบนหน้าจอเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-4')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-4" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและติดตามค่า num และ sum_even / sum_odd ในแต่ละรอบ</li>
+                            <li>เมื่อเจอสัญลักษณ์ตัดสินใจ (num % 2 == 0?) ให้เลือกทางเดินที่ถูกต้อง</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-4')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-4" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><strong>Start:</strong> โปรแกรมเริ่มต้น</li>
+                            <li><strong>num = 1, sum_even = 0, sum_odd = 0:</strong> กำหนดค่าเริ่มต้น</li>
+                            <li><strong>num <= 5?:</strong> (1 ≤ 5) เป็น True</li>
+                            <li><strong>num % 2 == 0?:</strong> (1 % 2 == 0) เป็น False (num เป็นเลขคี่)</li>
+                            <li><strong>sum_odd = sum_odd + num:</strong> sum_odd กลายเป็น 0 + 1 = 1</li>
+                            <li><strong>num = num + 1:</strong> num กลายเป็น 2</li>
+                            <li><strong>num <= 5?:</strong> (2 ≤ 5) เป็น True</li>
+                            <li><strong>num % 2 == 0?:</strong> (2 % 2 == 0) เป็น True (num เป็นเลขคู่)</li>
+                            <li><strong>sum_even = sum_even + num:</strong> sum_even กลายเป็น 0 + 2 = 2</li>
+                            <li><strong>num = num + 1:</strong> num กลายเป็น 3</li>
+                            <li><strong>num <= 5?:</strong> (3 ≤ 5) เป็น True</li>
+                            <li><strong>num % 2 == 0?:</strong> (3 % 2 == 0) เป็น False</li>
+                            <li><strong>sum_odd = sum_odd + num:</strong> sum_odd กลายเป็น 1 + 3 = 4</li>
+                            <li><strong>num = num + 1:</strong> num กลายเป็น 4</li>
+                            <li><strong>num <= 5?:</strong> (4 ≤ 5) เป็น True</li>
+                            <li><strong>num % 2 == 0?:</strong> (4 % 2 == 0) เป็น True</li>
+                            <li><strong>sum_even = sum_even + num:</strong> sum_even กลายเป็น 2 + 4 = 6</li>
+                            <li><strong>num = num + 1:</strong> num กลายเป็น 5</li>
+                            <li><strong>num <= 5?:</strong> (5 ≤ 5) เป็น True</li>
+                            <li><strong>num % 2 == 0?:</strong> (5 % 2 == 0) เป็น False</li>
+                            <li><strong>sum_odd = sum_odd + num:</strong> sum_odd กลายเป็น 4 + 5 = 9</li>
+                            <li><strong>num = num + 1:</strong> num กลายเป็น 6</li>
+                            <li><strong>num <= 5?:</strong> (6 ≤ 5) เป็น False</li>
+                            <li><strong>Print sum_even:</strong> แสดงผล 6</li>
+                            <li><strong>Print sum_odd:</strong> แสดงผล 9</li>
+                            <li><strong>End:</strong> โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>คำตอบ:</strong> 6 และ 9</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 5: การหาผลลัพธ์จากรหัสเทียม (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  INPUT age
+  INPUT has_license
+  INPUT has_car
+  IF age >= 18 AND has_license == TRUE THEN
+    IF has_car == TRUE THEN
+      PRINT "คุณสามารถขับรถของตัวเองได้"
+    ELSE
+      PRINT "คุณสามารถขับรถได้ แต่ไม่มีรถ"
+    END IF
+  ELSE IF age >= 18 AND has_license == FALSE THEN
+    PRINT "คุณมีอายุพอ แต่ยังไม่มีใบขับขี่"
+  ELSE
+    PRINT "คุณยังเด็กเกินไป"
+  END IF
+END</code></pre>
+                        <p>ถ้าผู้ใช้ป้อน age = 25, has_license = TRUE, และ has_car = FALSE จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-5')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-5" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ประเมินเงื่อนไข AND ก่อน</li>
+                            <li>ตรวจสอบเงื่อนไข IF และ ELSE IF ตามลำดับ</li>
+                            <li>หากเข้าบล็อก IF หลัก ให้ตรวจสอบเงื่อนไข IF ที่ซ้อนอยู่ภายในอีกครั้ง</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-5')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-5" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>บรรทัด/คำสั่ง</th>
+                                    <th>age</th>
+                                    <th>has_license</th>
+                                    <th>has_car</th>
+                                    <th>age >= 18 AND has_license == TRUE</th>
+                                    <th>has_car == TRUE</th>
+                                    <th>ผลลัพธ์ที่พิมพ์</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>INPUT age</td><td>25</td><td>-</td><td>-</td><td></td><td></td><td></td></tr>
+                                <tr><td>INPUT has_license</td><td>25</td><td>TRUE</td><td>-</td><td></td><td></td><td></td></tr>
+                                <tr><td>INPUT has_car</td><td>25</td><td>TRUE</td><td>FALSE</td><td></td><td></td><td></td></tr>
+                                <tr><td>IF age >= 18 AND has_license == TRUE THEN</td><td>25</td><td>TRUE</td><td>FALSE</td><td>True</td><td></td><td></td></tr>
+                                <tr><td>IF has_car == TRUE THEN</td><td>25</td><td>TRUE</td><td>FALSE</td><td></td><td>False</td><td></td></tr>
+                                <tr><td>ELSE</td><td>25</td><td>TRUE</td><td>FALSE</td><td></td><td></td><td></td></tr>
+                                <tr><td>PRINT "คุณสามารถขับรถได้ แต่ไม่มีรถ"</td><td>25</td><td>TRUE</td><td>FALSE</td><td></td><td></td><td>คุณสามารถขับรถได้ แต่ไม่มีรถ</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>คำตอบ:</strong> คุณสามารถขับรถได้ แต่ไม่มีรถ</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ตัวอย่างข้อสอบฝึกทำ -->
+            <section id="section-3" class="content-section">
+                <h2>10.2.3 ตัวอย่างข้อสอบฝึกทำ</h2>
+                
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 6: การหาผลลัพธ์จากรหัสเทียม (การคำนวณสะสมในลูป)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET i TO 1
+  SET total_sum TO 0
+  WHILE i <= 5 DO
+    total_sum = total_sum + (i * 2)
+    i = i + 1
+  END WHILE
+  PRINT total_sum
+END</code></pre>
+                        <p>จงหาค่าที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-6')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-6" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตาม i และ total_sum ในแต่ละรอบของลูป while</li>
+                            <li>total_sum จะเก็บผลรวมสะสม</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-6')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-6" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รอบ 1: total_sum = 0 + (1 × 2) = 2, i = 2</p>
+                        <p>รอบ 2: total_sum = 2 + (2 × 2) = 6, i = 3</p>
+                        <p>รอบ 3: total_sum = 6 + (3 × 2) = 12, i = 4</p>
+                        <p>รอบ 4: total_sum = 12 + (4 × 2) = 20, i = 5</p>
+                        <p>รอบ 5: total_sum = 20 + (5 × 2) = 30, i = 6</p>
+                        <p>รอบ 6: i = 6 (> 5), ออกจากลูป</p>
+                        <p><strong>ผลลัพธ์คือ 30</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 7: การหาผลลัพธ์จากผังงาน (การคำนวณผลรวม)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input N
+      ↓
+📦 num = 2, sum = 0
+      ↓
+🔷 num <= N?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+🔷 num % 2 == 0?  📄 Print sum
+ ↙   ↘         ↓
+Yes   No      🔴 End
+ ↓     ↓
+📦 sum = 📦 (skip)
+sum + num  ↓
+  ↓       ↙
+   ↘     ↙
+📦 num = num + 1
+       ↓
+    (ไปยัง num <= N?)</pre>
+                        <p>ถ้าผู้ใช้ป้อนค่า N = 8 จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-7')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-7" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและติดตามค่า num และ sum</li>
+                            <li>เงื่อนไข num <= N และ num % 2 == 0</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-7')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-7" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>ผังงานนี้หาผลรวมของเลขคู่จาก 2 ถึง N</p>
+                        <p>N = 8, เลขคู่ที่น้อยกว่าหรือเท่ากับ 8 คือ: 2, 4, 6, 8</p>
+                        <p>ผลรวม = 2 + 4 + 6 + 8 = 20</p>
+                        <p><strong>ผลลัพธ์คือ 20</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 8: การหาผลลัพธ์จากรหัสเทียม (ลูปไม่รู้จบ)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET x TO 5
+  WHILE x < 10 DO
+    PRINT x
+    x = x - 1
+  END WHILE
+  PRINT "จบ"
+END</code></pre>
+                        <p>รหัสนี้จะทำงานอย่างไร? (ลูปไม่รู้จบหรือไม่) ถ้าไม่รู้จบเพราะอะไร?</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-8')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-8" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ตรวจสอบว่าตัวแปรที่ใช้ในเงื่อนไขมีการเปลี่ยนแปลงที่ทำให้เงื่อนไขเป็นเท็จได้หรือไม่</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-8')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-8" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <p>รหัสนี้จะทำงานเป็น <strong>ลูปไม่รู้จบ (Infinite Loop)</strong></p>
+                        <p><strong>เหตุผล:</strong> ค่า x เริ่มต้นที่ 5 และในแต่ละรอบของลูป x จะถูกลดค่าลงเรื่อยๆ (x = x - 1) ทำให้เงื่อนไข x < 10 เป็นจริงตลอดไป ไม่มีทางที่ x จะมากกว่าหรือเท่ากับ 10 ได้เลย</p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 9: การหาผลลัพธ์จากผังงาน (เงื่อนไขซับซ้อน)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดผังงานต่อไปนี้</p>
+                        <pre>🔴 Start
+      ↓
+📄 Input Temperature, IsRaining
+      ↓
+🔷 Temperature > 25?
+   ↙   ↘
+ Yes    No
+  ↓      ↓
+🔷 IsRaining == TRUE?  📄 Print
+ ↙   ↘         "Go Outside"
+Yes   No           ↓
+ ↓     ↓        🔴 End
+📄 Print 📄 Print
+"Stay    "Go To
+Indoors"  Beach"
+     ↘     ↙
+       ↓
+    🔴 End</pre>
+                        <p>ถ้าผู้ใช้ป้อนค่า Temperature = 28 และ IsRaining = TRUE จงหาผลลัพธ์ที่แสดงบนหน้าจอ</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-9')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-9" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ไล่ตามลูกศรและประเมินเงื่อนไข Temperature > 25 และ IsRaining == TRUE</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-9')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-9" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <ol>
+                            <li><strong>Input Temperature, IsRaining:</strong> Temperature = 28, IsRaining = TRUE</li>
+                            <li><strong>Temperature > 25?:</strong> 28 > 25 เป็น True</li>
+                            <li><strong>IsRaining == TRUE?:</strong> TRUE == TRUE เป็น True</li>
+                            <li><strong>Print "Stay Indoors":</strong> แสดงผล "Stay Indoors"</li>
+                            <li><strong>End:</strong> โปรแกรมสิ้นสุด</li>
+                        </ol>
+                        <p><strong>ผลลัพธ์คือ "Stay Indoors"</strong></p>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>โจทย์ข้อที่ 10: การหาผลลัพธ์จากรหัสเทียม (การสลับค่าในลูป)</h3>
+                    <div class="problem-box">
+                        <p><strong>คำถาม:</strong> กำหนดรหัสเทียมต่อไปนี้</p>
+                        <pre><code>START
+  SET A TO 1
+  SET B TO 0
+  SET count TO 0
+  WHILE count < 4 DO
+    SET temp TO A
+    A = B
+    B = temp + B
+    count = count + 1
+  END WHILE
+  PRINT A
+  PRINT B
+END</code></pre>
+                        <p>จงหาค่าของ A และ B ที่แสดงผลเมื่อโปรแกรมทำงานเสร็จสิ้น</p>
+                    </div>
+
+                    <button onclick="toggleSection('approach-10')" class="toggle-btn">แสดงแนวคิด</button>
+                    <div id="approach-10" class="approach-box" style="display: none;">
+                        <h4>แนวคิด</h4>
+                        <ul>
+                            <li>ติดตามค่า A, B, temp, count ในแต่ละรอบ</li>
+                            <li>สังเกตว่านี่คือการคำนวณลำดับที่คล้ายฟิโบนักชีแต่มีการสลับค่า</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="toggleSection('solution-10')" class="toggle-btn">แสดงเฉลย</button>
+                    <div id="solution-10" class="solution-box" style="display: none;">
+                        <h4>เฉลย</h4>
+                        <table class="trace-table">
+                            <thead>
+                                <tr>
+                                    <th>รอบ</th>
+                                    <th>A (เริ่มต้น)</th>
+                                    <th>B (เริ่มต้น)</th>
+                                    <th>temp</th>
+                                    <th>A (หลัง)</th>
+                                    <th>B (หลัง)</th>
+                                    <th>count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>เริ่มต้น</td><td>1</td><td>0</td><td>-</td><td>1</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+                                <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>2</td></tr>
+                                <tr><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td><td>3</td></tr>
+                                <tr><td>4</td><td>1</td><td>2</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+                            </tbody>
+                        </table>
+                        <p><strong>ผลลัพธ์คือ:</strong></p>
+                        <pre>A = 2
+B = 3</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../chapter-script.js"></script>
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
